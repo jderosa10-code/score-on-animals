@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 21:35 CT · jacob-claude
+**Done:** Hatch patches in every pen: `Workspace.Plots.PlotN.Patches.PatchN` (our own build, not copied: orange stud-surface disc with a rim and a groove cross, 6.2 wide, 8 apart, rows from the back). Base pens 6, upgraded once 9, twice 12 (Plot attribute `Slots`). Looked at the Fake an Egg place file for reference only (it is a saved copy of another dev's game, so nothing was copied from it). Two undo steps.
+**Next:** Hatching eggs on the patches; luck purchase; Save Power vs Kick Power.
+**Blockers / questions:** none
+
 ## 2026-11-10 21:20 CT · jacob-claude
 **Done:** Luck shops are now purple: purple and lilac roof stripes, purple pad with light-purple beams and lilac sparkles, "Egg Luck" sign lilac-to-purple with a dark-purple outline, subtitle light purple. All 5 `Workspace.LuckShops`. One undo step.
 **Next:** Luck purchase on the shop pad; Save Power vs Kick Power.
