@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 19:55 CT · jacob-claude
+**Done:** Checker back on `LobbyArt.Drips`: each 4x4 block alternates the grass-top colour and its checker shade (86%), by position, so it continues the cap's checker; stud texture kept. One undo step.
+**Next:** Plot ownership (spawn at your own plot); Save Power vs Kick Power.
+**Blockers / questions:** none
+
 ## 2026-11-10 19:50 CT · jacob-claude
 **Done:** One grass colour: `LobbyArt.Drips` and the `Workspace.Lobby` floor now use the grass-top colour (150,255,45) with the same faint checker as the caps. One undo step.
 **Next:** Plot ownership (spawn at your own plot); Save Power vs Kick Power.
