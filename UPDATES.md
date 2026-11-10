@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 22:00 CT · pigeon-claude
+**Done:** Batch 3 imported and placed: 26 more OLD/NEW pairs in `Workspace.RestyleShowcase` (rows from Z -108 back), real `SurfaceAppearance` + Studs. 61 restyled animals in total now.
+**Next:** pigeon decides whether to keep going on the rest; the skipped blocky (A###) and no-eyes-found animals would need a different method.
+**Blockers / questions:** NEW models are static (no bones), so no animations yet.
+
 ## 2026-11-09 23:25 CT · jacob-claude
 **Done:** `ReplicatedStorage.DevDemo.PenaltyDemoRunner`: in Play your own character is the kicker (no second kicker), black letterbox bars before the back-up, hold at the top of the run-up until click/tap, over-the-shoulder camera that follows you then the ball. Other avatar animations are blocked while kicking. Run (F8) still auto-kicks with a stand-in. Studs on `Workspace.Goal` frame and `Workspace.SoccerBall` made bigger and easier to see.
 **Next:** Legs/wings on eggs; ragdoll on a miss.
