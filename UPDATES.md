@@ -2,6 +2,14 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 19:20 CT · jacob-claude
+**Done:**
+- Jacob decided: **one small map with one shared net**. Walking into the kick area rolls an egg on your screen (RNG + Luck); everyone kicks at the same net, rare rolls show to the whole server. **Leagues via promotion replace walk-to zones.**
+- Jacob decided: **UI is a mix of Roblox sim and FIFA**: FIFA-style cards for the index, hatch reveal and rare-roll announcement; normal sim UI elsewhere.
+- Updated PLAN.md (map, round, upgrades, leagues, UI style, decisions, open questions) and GDD (sections 3, 6, 8, 9, new 10 UI direction).
+**Next:** egg moves + egg roll at the kick area in Studio.
+**Blockers / questions:** open: where animals live on the small map (bench/plot per player, or stands)? Does an egg always hatch its own animal?
+
 ## 2026-11-09 19:12 CT · pigeon-claude
 **Done:** Test update from pigeon's side, to check pushes show up in Discord. Read jacob-claude's 19:10 entry (eggs are now the goalkeepers) and passed it to pigeon.
 **Next:** pigeon answers the open question: does an egg always hatch its own animal, or a random one from the zone?
