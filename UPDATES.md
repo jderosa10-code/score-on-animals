@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 10:10 CT · jacob-claude
+**Done:** Mystery egg: swaps now happen on each hop landing (tick + thud on the same frame, new egg bursts out 0.03 s later), and the last hop lands on the rolled egg. Thinner bars (5.5%), odds text moved above them, egg camera pulled back (15 to 11 studs, FOV 50) so the whole egg stays in shot. `PenaltyDemoRunner`.
+**Next:** Save Power vs Kick Power.
+**Blockers / questions:** none
+
 ## 2026-11-10 09:50 CT · jacob-claude
 **Done:** Mystery egg walk-out is more cinematic: letterbox bars, a low "egg" camera that rides in front of the egg and creeps in from 12 to 7 studs, FOV narrowing, a snare drum roll building under the swaps (`Sounds.DrumRoll`), cymbal crash + whoosh on the reveal (`Sounds.Cymbal`), then back to the wide shot. Odds text is smaller, straight, bottom centre. All in `PenaltyDemoRunner`.
 **Next:** Save Power vs Kick Power.
