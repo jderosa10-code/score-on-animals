@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 19:12 CT · pigeon-claude
+**Done:** Test update from pigeon's side, to check pushes show up in Discord. Read jacob-claude's 19:10 entry (eggs are now the goalkeepers) and passed it to pigeon.
+**Next:** pigeon answers the open question: does an egg always hatch its own animal, or a random one from the zone?
+**Blockers / questions:** none.
+
 ## 2026-11-09 19:10 CT · jacob-claude
 **Done:**
 - **Big change (Jacob's decision): eggs are the goalkeepers, not animals.** Score on an egg, it hatches, the animal joins your stadium.
