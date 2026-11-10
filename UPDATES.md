@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 21:45 CT · jacob-claude
+**Done:** Replaced my patches with clones of Jacob's `Workspace.EggHatch` (not resized or turned), laid out like the reference bases: two columns along each pen's right-hand fence, 7.5 apart, from the back. Base pens 6, upgraded once 8, twice 10 (Plot attribute `Slots`). `Workspace.Plots.PlotN.Patches.PatchN`. One undo step.
+**Next:** Hatching eggs on the patches; luck purchase; Save Power vs Kick Power.
+**Blockers / questions:** The EggHatch mesh (rbxassetid://14809644096) matches the one in the Fake an Egg copy; worth swapping for our own before release.
+
 ## 2026-11-10 21:35 CT · jacob-claude
 **Done:** Hatch patches in every pen: `Workspace.Plots.PlotN.Patches.PatchN` (our own build, not copied: orange stud-surface disc with a rim and a groove cross, 6.2 wide, 8 apart, rows from the back). Base pens 6, upgraded once 9, twice 12 (Plot attribute `Slots`). Looked at the Fake an Egg place file for reference only (it is a saved copy of another dev's game, so nothing was copied from it). Two undo steps.
 **Next:** Hatching eggs on the patches; luck purchase; Save Power vs Kick Power.
