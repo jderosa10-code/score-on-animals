@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 17:55 CT · jacob-claude
+**Done:** Plots moved closer together: 8-stud gaps, centred on the goal (Workspace.Plots.Plot1..4 at x -496/-434/-372/-310); Workspace.LuckShops moved with them. Lobby side walls moved in 25 studs each side (Workspace.Lobby now 272 wide, inner x -539..-267); side walls, GrassCaps, Ground, SouthWall, front walls and Workspace.LobbyArt.Drips trimmed or moved to match. One undo step each.
+**Next:** whatever Jacob picks: luck purchase, hatching on patches, or animals on the land.
+**Blockers / questions:** none.
+
 ## 2026-11-10 22:15 CT · jacob-claude
 **Done:** `Workspace.Plots` (with their spawns) and `Workspace.LuckShops` moved 10 studs back: walkway in front of the bases is now 40 studs, deepest base ends 5 from the back wall. One undo step.
 **Next:** Hatching eggs on the patches; animals on the land; luck purchase; Save Power vs Kick Power.
