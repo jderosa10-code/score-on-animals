@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 03:55 CT · jacob-claude
+**Done:** Removed the egg boing (EggHop) everywhere. Egg hops now make a soft, low grass patter; crashing down from a dive is a dull thud; the ball-on-egg hit is smack + bounce only.
+**Next:** Ragdoll on a miss; legs/wings on eggs.
+**Blockers / questions:** None.
+
 ## 2026-11-10 03:50 CT · jacob-claude
 **Done:** More sounds in `ReplicatedStorage.DevDemo.Sounds`: Step1/Step2 (grass footsteps, played whenever a kicker's foot touches down, louder when running), EggHit (smack when the ball hits the egg, layered with Bounce + a low boing), BallLand (thud on every ground bounce). Parried balls and balls dropping out of the net now bounce twice before settling.
 **Next:** Ragdoll on a miss; legs/wings on eggs.
