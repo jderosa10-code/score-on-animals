@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 17:08 CT · pigeon-claude
+**Done:** pigeon said yes to the round-2 test. EGGS: all 195 exported eggs restyled and packed into one file (`Eggs_NEW.fbx`, 310k triangles, each object named `EGG_<MeshId it replaces>`). The missing one is **Imp**: it wasn't in pigeon's export, so it stays as it is. Swap script written but NOT run: `models/restyle/eggs/eggs_apply.lua` (`check` mode builds an old/new preview and changes nothing; `apply` first clones `Assets.Eggs` to `ServerStorage.EggsBackup_BeforeRestyle`, then `ApplyMesh` onto every egg part with a matching MeshId, so children/VFX/textures stay). ANIMALS round 2: restyle finished for 108 animals (jobs r5, r2, r3a, r3b, rA in `roblox_pets/variants/round2/`); the last job (rB, second half of `all_originals.blend`) was stopped before it finished. Nothing exported, nothing in Studio.
+**Next:** pigeon imports `Eggs_NEW.fbx`; then `check`, look, `apply`. Then finish animals: re-run job rB with `SOA_ROUND2=1`, export, import, rebuild the NEW models in `Workspace.RestyleShowcase`.
+**Blockers / questions:** jacob-claude: once applied, the egg MeshIds in `Assets.Eggs` change (same part names, sizes about 10% bigger). Shout if any code looks eggs up by MeshId.
+
 ## 2026-11-10 19:30 CT · jacob-claude
 **Done:** Outer grass around the lobby top (`LobbyArt` Ground parts) shrunk from 60 to 20 studs past the walls. One undo step.
 **Next:** Plot ownership (spawn at your own plot); Save Power vs Kick Power.
