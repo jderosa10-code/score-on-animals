@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 20:50 CT · pigeon-claude
+**Done:** Pigeon's feedback on the imported restyle: blush looked weird and out of place on some animals, edges too soft. Blush is now a small rounded dome seated into the cheek like the eyes (smooth-shaded, partly sunk), on the most front-facing cheek spot under the eye, mirrored. Bodies are flat-shaded (crisp facets like the originals). All 5 in ONE file: `models/restyle/fbx/Restyle_NEW_all.fbx`.
+**Next:** pigeon imports that one file; then I swap it into `Workspace.RestyleShowcase` (scale, stand up, real `SurfaceAppearance`, Studs textures).
+**Blockers / questions:** none.
+
 ## 2026-11-09 20:45 CT · pigeon-claude
 **Done:** Pigeon imported the 5 restyle FBX (Import 3D), so the NEW animals are now real uploaded meshes everyone can see. Set up in `Workspace.RestyleShowcase` (in front of the spawn): `<Name> OLD` (clones of `BaseAnimals`) next to `<Name> NEW` (imported; scaled 0.01 from cm, stood up and turned to face the spawn; body + eyes wear the original `SurfaceAppearance`; pink blush parts). Pivots are the bottom centre. Removed the temporary runtime builder: `ReplicatedStorage.RestyleBuilder`, `ReplicatedStorage.RestyleData`, `StarterPlayerScripts.RestyleShowcaseClient`.
 **Next:** pigeon and Jacob decide on the look; if yes, the same restyle for the other animals.

@@ -19,6 +19,7 @@ EYE_SCALE = 1.4
 EYE_DEPTH = 0.75     # eye flattened to 75% along the face normal (set-in look)
 EYE_OUT = 0.35       # eye centre sits this many half-depths outside the head surface
 EYE_MAX_FRAC = 0.13  # eye radius never more than 13% of the head's height
+BLUSH_SIZE = 0.5     # blush dome radius as a fraction of the eye radius
 ADD_SHINE = False    # the game's own eye texture already has a shine (pigeon: old eyes look much better)
 LEG_SCALE = 0.72
 WIDTH_SCALE = 1.08
@@ -430,22 +431,29 @@ def add_face_bits(ob, eye_data, bvh, cx, eye_obj):
                            sn.to_track_quat('Z', 'Y').to_euler(), shine, ob, 8, 5)
         # cheek = on the HEAD piece, a bit below and slightly in front of the eye, on this side
         hb, hc = ed.get("head_bvh"), ed.get("head_ctr")
+        # Try a small grid of spots under the eye and keep the most FRONT-facing one, so on long
+        # heads (polar bear) it sits on the cheek toward the snout, not on the side edge of the head.
         best = None
         if hb:
-            for down, fwd, out in ((1.25, 0.2, 0.3), (1.0, 0.35, 0.2), (1.5, 0.1, 0.35), (0.8, 0.5, 0.1)):
-                want = c + Vector((side * r * out, r * fwd, -r * down))
-                loc, nrm, _, _ = hb.find_nearest(want)
-                if loc is None: continue
-                n = nrm.normalized()
-                if n.dot(loc - hc) < 0: n = -n           # point out of the head
-                ok = (loc.z < c.z - r * 0.4                  # below the eye
-                      and (loc - c).length < r * 3.0          # close to the eye
-                      and n.y > -0.2                          # not on the back of the head
-                      and (loc.x - cx) * side > 0)            # on this eye's side
-                if ok:
-                    best = (loc, n); break
+            for down in (0.9, 1.2, 1.5):
+                for fwd in (0.2, 0.5, 0.8):
+                    for out in (0.0, 0.25):
+                        want = c + Vector((side * r * out, r * fwd, -r * down))
+                        loc, nrm, _, _ = hb.find_nearest(want)
+                        if loc is None: continue
+                        n = nrm.normalized()
+                        if n.dot(loc - hc) < 0: n = -n       # point out of the head
+                        ok = (loc.z < c.z - r * 0.5              # below the eye
+                              and (loc - c).length < r * 2.6      # close to the eye
+                              and n.y > 0.0                       # facing forward-ish
+                              and n.x * side > -0.15              # not facing the other side
+                              and (loc.x - cx) * side > r * 0.3)  # on this eye's side of the face
+                        if ok:
+                            score = n.y - abs(fwd - 0.5) * 0.2
+                            if best is None or score > best[2]:
+                                best = (loc, n, score)
         if best:
-            blush_spots.append((best[0], best[1], r))
+            blush_spots.append((best[0], best[1], r))   # (loc, normal, eye radius)
         print("BLUSH", ob.name, side, bool(best))
 
     # Both cheeks from ONE spot: take the most front-facing hit and mirror it across the animal's
@@ -453,7 +461,10 @@ def add_face_bits(ob, eye_data, bvh, cx, eye_obj):
     # The disc sits fully ON the skin (offset by its own thickness), never half-sunk.
     if blush_spots:
         loc, nrm, r = max(blush_spots, key=lambda s: s[1].y)
-        thick = r * 0.05
+        # a rounded dome set into the cheek the same way the eyes are (pigeon: "make the blush look
+        # kinda like the eyes"): smooth, puffy, partly sunk, never a flat sticker
+        rb = r * BLUSH_SIZE                 # radius across the cheek
+        hb_depth = rb * 0.45                # half-depth along the cheek normal
         hb = eye_data[0].get("head_bvh")
         for sx in (1, -1):
             l = loc if sx == 1 else Vector((2 * cx - loc.x, loc.y, loc.z))
@@ -463,8 +474,21 @@ def add_face_bits(ob, eye_data, bvh, cx, eye_obj):
                 near = hb.find_nearest(l)
                 if near[0] is not None and (near[0] - l).length < r:
                     l = near[0]
-            add_sphere(ob.name + "_Blush", l + n * (thick + 0.015), (r * 0.6, r * 0.4, thick),
-                       n.to_track_quat('Z', 'Y').to_euler(), blush, ob, 12, 6)
+            o = add_sphere(ob.name + "_Blush", l + n * (hb_depth * EYE_OUT), (rb * 1.2, rb * 0.85, hb_depth),
+                           n.to_track_quat('Z', 'Y').to_euler(), blush, ob, 16, 8)
+            for p in o.data.polygons:
+                p.use_smooth = True
+
+
+def set_shading(ob, smooth):
+    """Flat or smooth shading, with any imported custom normals removed (they made the bodies soft)."""
+    bpy.ops.object.select_all(action='DESELECT')
+    ob.select_set(True); bpy.context.view_layer.objects.active = ob
+    if ob.data.has_custom_normals:
+        bpy.ops.mesh.customdata_custom_splitnormals_clear()
+    for p in ob.data.polygons:
+        p.use_smooth = smooth
+    ob.select_set(False)
 
 
 def check_floating(ob, tol=0.03):
@@ -524,6 +548,10 @@ for name in names:
     gradient_and_bake(new)
     eye_obj = split_eyes(new, eye_vidx)
     add_face_bits(new, eye_data, bvh, cx, eye_obj)
+    # crisp faceted body like Jacob's models (pigeon: "define the edges a bit more"), smooth eyes
+    set_shading(new, smooth=False)
+    if eye_obj:
+        set_shading(eye_obj, smooth=True)
     info["float_NEW"] = check_floating(new)
     info["float_OLD"] = check_floating(src)
     report[name] = info
