@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 10:20 CT · jacob-claude
+**Done:** Timing bar marker moves at a constant speed (no easing at the ends) and faster: 1.1 s for a full bottom-top-bottom sweep (was 1.6 s eased). `PenaltyDemoRunner` waitForClick.
+**Next:** Save Power vs Kick Power.
+**Blockers / questions:** none
+
 ## 2026-11-10 10:10 CT · jacob-claude
 **Done:** Mystery egg: swaps now happen on each hop landing (tick + thud on the same frame, new egg bursts out 0.03 s later), and the last hop lands on the rolled egg. Thinner bars (5.5%), odds text moved above them, egg camera pulled back (15 to 11 studs, FOV 50) so the whole egg stays in shot. `PenaltyDemoRunner`.
 **Next:** Save Power vs Kick Power.
