@@ -16,6 +16,11 @@ assert(DATA and DATA.tiers, "pass the table from weights_orbits.lua")
 local ORBITS = DATA.orbits or {}
 local GAP = DATA.gap
 local ROW_Z, SPACING = 55, 26
+-- Baked shading: the meshes carry vertex colours (creases darker, tops lighter, a glossy highlight)
+-- that Roblox multiplies with the part colour. They can only darken, so plain parts get their
+-- colour divided by LIFT here; a plain lit surface is baked at LIFT and lands on the true colour.
+-- Pass lift = 1 in the data to turn this off (e.g. if an import ever drops the vertex colours).
+local LIFT = DATA.lift or 1
 -- Studs: the game's Studs texture is a pale overlay. At the animals' strength (0.85 see-through) it
 -- is invisible on these; stronger and untinted it washes the colour out. So each copy is tinted to
 -- its part's own colour and shown strongly. Reflectance stays 0: on SmoothPlastic it mirrors the
@@ -47,7 +52,7 @@ for _, mk in ipairs({O, Up, Fw}) do mk:Destroy() end
 local BASE = {
 	Bar = "8C8F99", Grip = "2E2E36", Wood = "B5793C",
 	Marshmallow = "FFF4EA", MarshPink = "FFB7D5", Toast = "C98A3E",
-	Dough = "E3A35A", Icing = "FF7EB6",
+	Dough = "E3A35A", Icing = "FF7EB6", Choc = "6B3A1E",
 	SprinkleY = "FFE14D", SprinkleB = "4DB8FF", SprinkleG = "6BE36B", SprinkleW = "FFFFFF",
 	Rind = "2E9B35", RindIn = "E4F7C8", Flesh = "FF4D5E", Seed = "1A1A1A",
 	Gold = "F7C440", Pearl = "FFF6E0", GemRed = "E8262B", GemBlue = "2F7BFF",
@@ -100,6 +105,9 @@ for _, p in ipairs(imp:GetChildren()) do
 		local plain = true
 		if NEON[base] then p.Material = Enum.Material.Neon; plain = false end
 		if GLASS[base] then p.Material = Enum.Material.Glass; p.Transparency = 0.15; p.Reflectance = 0.1; plain = false end
+		if plain then
+			p.Color = Color3.new(math.min(1, col.R / LIFT), math.min(1, col.G / LIFT), math.min(1, col.B / LIFT))
+		end
 		if plain and not NO_STUDS[base] and not group:find("^Orb") then
 			for _, s in ipairs(studs) do
 				local t = s:Clone(); t.Transparency = STUD_STRENGTH; t.Color3 = col; t.Parent = p

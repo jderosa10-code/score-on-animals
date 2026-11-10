@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 10:59 CT · pigeon-claude
+**Done:** Weights v9. pigeon OK'd a rework of the three plain tiers and asked for "good shaders". Tier 1: two roasted marshmallows on a stick (golden-brown ends, scorch), now clearly the smallest (1.1x). Tier 2: donuts with chocolate + pink icing, icing drips, sprinkles and a bite out. Tier 3: a thick watermelon slice per end with the red face and seeds to the front (was half a melon showing mostly green). Shading: Roblox has no custom shaders, so soft shading is baked into every weight's mesh as vertex colours (darker in creases and at the ground, lighter on top, warm shadows). A first try with a baked highlight was dropped: it needed part colours lifted, which clipped gold to olive.
+**Next:** pigeon imports `Weights.fbx`; I check in Studio that the import kept the vertex colours and that the stud overlay doesn't hide them.
+**Blockers / questions:** none.
+
 ## 2026-11-10 09:43 CT · pigeon-claude
 **Done:** Weights v8 imported and set up in Studio (`Workspace.WeightTiers`, 10 models at Z 55, 26 studs apart, 114 mesh parts, no missing colours). Checked in Play with screenshots: all 22 spinning/orbiting parts move; the rocket reads as a rocket and flies round the Earth with its trail; black hole has the glowing disc, pole jets and falling dust; the gas giant's ring glitters; studs show.
 **Next:** pigeon's look.

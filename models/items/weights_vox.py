@@ -33,14 +33,22 @@ GAP = 12.0         # spacing between tiers in the file (along -Y)
 #   * every tier is designed at the old size and then built K times bigger, K growing with the tier
 #   * the grip zone stays 2 studs each side in the finished model, so the bar is short and thick
 #   * the bar, grips and collars take the tier's own colours; from tier 5 a glowing collar ring
-K_TIER = [1.3, 1.4, 1.4, 1.45, 1.5, 1.5, 1.35, 1.55, 1.5, 1.6]
+K_TIER = [1.1, 1.25, 1.35, 1.45, 1.5, 1.5, 1.35, 1.55, 1.5, 1.6]     # v9: tier 1 is clearly the baby
+# v9 "shaders" (pigeon: "add good like shaders to it"). Roblox can't run custom shaders, so the
+# shading is BAKED into the mesh as vertex colours, which Roblox multiplies with the part's colour:
+#   * darker in creases and where the weight meets the ground (ambient occlusion)
+#   * lighter on top, darker underneath (soft sky light), shadows leaning warm
+# Vertex colours can only darken. A baked highlight would need every part colour lifted first
+# (LIFT < 1), and that was tried: any colour with a channel near full (gold, pink, white) clips and
+# shifts hue, gold went olive. So LIFT stays 1 and the shine is left to Roblox's own lighting.
+LIFT = 1.0
 HS_WORLD = 2.0
 HS = 2.6           # heads never come closer to the middle than this, in design units (set per tier)
 
 BASE = {
     "Bar": "#8C8F99", "Grip": "#2E2E36", "Wood": "#B5793C",
     "Marshmallow": "#FFF4EA", "MarshPink": "#FFB7D5", "Toast": "#C98A3E",
-    "Dough": "#E3A35A", "Icing": "#FF7EB6",
+    "Dough": "#E3A35A", "Icing": "#FF7EB6", "Choc": "#6B3A1E",
     "SprinkleY": "#FFE14D", "SprinkleB": "#4DB8FF", "SprinkleG": "#6BE36B", "SprinkleW": "#FFFFFF",
     "Rind": "#2E9B35", "RindIn": "#E4F7C8", "Flesh": "#FF4D5E", "Seed": "#1A1A1A",
     "Gold": "#F7C440", "Pearl": "#FFF6E0", "GemRed": "#E8262B", "GemBlue": "#2F7BFF",
@@ -79,12 +87,21 @@ def material(name):
     m = bpy.data.materials.get(name)
     if m: return m
     m = bpy.data.materials.new(name); m.use_nodes = True
-    c = [((x + 0.055) / 1.055) ** 2.4 if x > 0.04045 else x / 12.92 for x in shade(name)]
-    bs = m.node_tree.nodes["Principled BSDF"]
+    lin = lambda x: ((x + 0.055) / 1.055) ** 2.4 if x > 0.04045 else x / 12.92
+    c = [lin(x) for x in shade(name)]
+    nt = m.node_tree
+    bs = nt.nodes["Principled BSDF"]
     bs.inputs["Base Color"].default_value = (*c, 1)
     bs.inputs["Roughness"].default_value = 0.35
     if name.startswith(GLOW):
         bs.inputs["Emission Color"].default_value = (*c, 1); bs.inputs["Emission Strength"].default_value = 1.2
+    elif not name.startswith(SEE_THROUGH) and name != "Dummy":
+        # preview only: show the baked shading the way Studio will (lifted colour x vertex colour)
+        vc = nt.nodes.new("ShaderNodeVertexColor"); vc.layer_name = "Col"
+        mul = nt.nodes.new("ShaderNodeVectorMath"); mul.operation = 'MULTIPLY'
+        mul.inputs[1].default_value = [lin(min(1.0, x / LIFT)) for x in shade(name)]
+        nt.links.new(vc.outputs["Color"], mul.inputs[0])
+        nt.links.new(mul.outputs[0], bs.inputs["Base Color"])
     return m
 
 
@@ -137,28 +154,65 @@ def build(prefix, fn, bounds, coll, offset=(0, 0, 0), scale=1.0, iters=SMOOTH_IT
             if v[2] == k0: p2.z = p.z
             new[v] = p2
         pos = new
+    # BAKED SHADING, one brightness per surface corner (see LIFT at the top).
+    # Normals come from the whole surface, not per colour mesh, so the shading runs straight across
+    # colour boundaries.
+    nrm = {v: Vector() for v in pos}
+    for qs in quads.values():
+        for q in qs:
+            fn_ = (pos[q[1]] - pos[q[0]]).cross(pos[q[3]] - pos[q[0]])
+            for v in q: nrm[v] += fn_
+    ztop = max((p.z for p in pos.values()), default=1.0) or 1.0
+    ground = (k0 == 0)
+    boxed = {}
+    for v in pos:
+        i, j, k = v
+        solid = 0
+        for a in (-2, -1, 0, 1):                       # how boxed-in this corner is: 4x4x4 cells round it
+            for b in (-2, -1, 0, 1):
+                for c in (-2, -1, 0, 1):
+                    if (i + a, j + b, k + c) in grid or (ground and k + c < k0): solid += 1
+        boxed[v] = solid / 64.0
+    # First try shaded straight from this and every stair-step showed as a dotted grain (a step's
+    # outer corner reads "open", its inner corner "boxed-in"). Blurring along the surface cancels
+    # the steps and leaves only real creases.
+    for _ in range(5):
+        boxed = {v: 0.3 * f + 0.7 * sum(boxed[w] for w in nbr[v]) / len(nbr[v]) for v, f in boxed.items()}
+    shade_at = {}
+    for v, p in pos.items():
+        ao = max(0.6, 1 - max(0.0, boxed[v] - 0.52) * 1.6)
+        n = nrm[v].normalized() if nrm[v].length > 1e-9 else Vector((0, 0, 1))
+        sky = (0.9 + 0.1 * (0.5 + 0.5 * n.z)) * (0.96 + 0.04 * min(1.0, max(0.0, p.z / ztop)))
+        shade_at[v] = max(0.0, min(1.0, ao * sky))
     objs = []
     for (group, mat), qs in sorted(quads.items()):
+        lit = not mat.startswith(GLOW) and not mat.startswith(SEE_THROUGH)      # glow and glass stay pure
         bm = bmesh.new()
+        shl = bm.verts.layers.float.new("shade")        # all layers are made BEFORE any geometry
+        uv = bm.loops.layers.uv.new("UVMap")
+        col = bm.loops.layers.color.new("Col")
         vmap = {}
         for q in qs:
             fv = []
             for v in q:
                 bv = vmap.get(v)
-                if bv is None: bv = vmap[v] = bm.verts.new(pos[v])
+                if bv is None:
+                    bv = vmap[v] = bm.verts.new(pos[v])
+                    bv[shl] = shade_at[v] if lit else 1.0
                 fv.append(bv)
             try: bm.faces.new(fv)
             except ValueError: pass
         bmesh.ops.dissolve_limit(bm, angle_limit=math.radians(2.5), verts=bm.verts[:], edges=bm.edges[:])
         bm.normal_update()
         # box-mapped UVs, one tile = 3 studs (same as the animals' Studs textures), so studs show
-        uv = bm.loops.layers.uv.new("UVMap")
         for f in bm.faces:
             nx, ny, nz = abs(f.normal.x), abs(f.normal.y), abs(f.normal.z)
             for l in f.loops:
                 co = l.vert.co
                 l[uv].uv = ((co.y, co.z) if nx >= ny and nx >= nz else ((co.x, co.z) if ny >= nz else (co.x, co.y)))
                 l[uv].uv = (l[uv].uv[0] / 3.0, l[uv].uv[1] / 3.0)
+                s = l.vert[shl]
+                l[col] = (s ** 0.85, s, s ** 1.15, 1.0)             # shadows lean warm, not grey
         bmesh.ops.translate(bm, vec=Vector(offset), verts=bm.verts[:])
         me = bpy.data.meshes.new(f"{prefix}{group}__{mat}")
         bm.to_mesh(me); bm.free()
@@ -211,55 +265,74 @@ for a in range(12):
 
 
 # ---------------------------------------------------------------- the 10 tiers
+# v9, the three plain tiers (pigeon OK'd: readable at a glance, clean shading, tier 1 clearly the
+# baby). No effects on these on purpose: tier 4 up is where the showing off starts.
 def t_marshmallow(x, y, z, i, j, k):
-    h, hx, R = 1.2, HS + 1.25, 1.15
-    ax = abs(x); u = ax - hx; dz = z - h; r = math.hypot(y, dz)
-    if -1.25 <= u < 1.25:
-        outer = u >= 0
-        t = u if outer else u + 1.25
-        edge = min(t, 1.25 - t)
-        rad = R - (0.4 if edge < 0.125 else (0.15 if edge < 0.25 else 0.0))       # puffy rounded ends
+    """Two ROASTED marshmallows on a stick: golden-brown ends with a scorch, fading to white."""
+    h, L, R = 1.2, 1.2, 1.12
+    ax = abs(x); u = ax - HS; dz = z - h; r = math.hypot(y, dz)
+    if 0 <= u < 2 * L:
+        outer = u >= L
+        t = u - L if outer else u
+        edge = min(t, L - t)
+        rad = R - 0.38 * max(0.0, 1 - edge / 0.4) ** 2 + 0.05 * math.sin(math.pi * t / L)   # puffy pillow
         if r < rad:
-            if outer and t >= 1.125:
-                return ("Vox", "ToastLo" if r < 0.45 else "Toast")
-            m = "MarshPink" if outer else "Marshmallow"
-            if dz > 0.55: m += "Hi"
-            elif dz < -0.75: m += "Lo"
-            return ("Vox", m)
-    return handle(ax, y, z, h, hx + 1.25, metal="Wood", grip="Toast", collars=False)
+            wob = 0.07 * math.sin(math.atan2(dz, y) * 3 + (2.0 if outer else 0.5))           # uneven toast line
+            if edge < 0.14 + wob * 0.5: return ("Vox", "ToastLo" if r < 0.55 else "Toast")
+            if edge < 0.34 + wob: return ("Vox", "ToastHi")
+            return ("Vox", "Marshmallow")
+    return handle(ax, y, z, h, HS + 2 * L, metal="Wood", grip="Toast", collars=False)
 
 
 def t_donut(x, y, z, i, j, k):
+    """Two donuts a side: chocolate icing facing the hands, pink facing out, icing DRIPS down the
+    sides, sprinkles, and a bite out of the outer one."""
     h, hx, Rt, a = 1.4, HS + 1.0, 0.9, 0.48
     ax = abs(x); u = ax - hx; dz = z - h; r = math.hypot(y, dz)
     if abs(u) < 1.0:
-        for uc in (-0.5, 0.5):
+        ang = math.atan2(dz, y)
+        for uc, side, ice in ((-0.5, -1, "Choc"), (0.5, 1, "Icing")):
             du = u - uc
             d = math.hypot(r - Rt, du)
             if d < a:
-                if du > 0 and d > 0.24:
+                crumb = False
+                if side > 0:                                       # the bite: three overlapping scoops, top front
+                    for ba, br in ((118, 0.4), (135, 0.56), (152, 0.4)):
+                        b = math.radians(ba)
+                        bd = math.sqrt(du * du + (y - (Rt + 0.34) * math.cos(b)) ** 2 + (dz - (Rt + 0.34) * math.sin(b)) ** 2)
+                        if bd < br: return None
+                        if bd < br + 0.12: crumb = True
+                if crumb: return ("Vox", "DoughHi")
+                face = du * side                                   # > 0 on the iced side of this donut
+                drip = -0.02 - 0.26 * max(0.0, math.sin(ang * 6 + uc * 2)) ** 2
+                if d > 0.24 and face > drip:
                     if d > 0.36 and hsh(i // 2, j // 2, k // 2) % 5 == 0:
                         return ("Vox", ("SprinkleY", "SprinkleB", "SprinkleG", "SprinkleW")[hsh(j // 2, k // 2, i // 2) % 4])
-                    return ("Vox", "IcingHi" if dz > 0.7 else "Icing")
-                return ("Vox", "DoughHi" if dz > 0.7 else ("DoughLo" if dz < -0.8 else "Dough"))
+                    return ("Vox", ice)
+                return ("Vox", "Dough")
     return handle(ax, y, z, h, hx + 1.0, metal="Dough", grip="Icing")
 
 
+_SEEDS = ((-0.8, -0.1), (-0.5, -0.55), (-0.15, -0.25), (0.0, -0.8), (0.25, -0.3), (0.5, -0.6), (0.8, -0.1))
+
+
 def t_watermelon(x, y, z, i, j, k):
-    h, hx, R, face = 1.4, HS + 1.0, 1.375, 0.4
-    ax = abs(x); u = ax - hx; dz = z - h; r = math.hypot(y, dz)
-    rho = math.hypot(u - face, r)
-    if u < face and rho < R:
-        if rho > R - 0.22:
-            sector = int((math.atan2(dz, y) + math.pi) / (2 * math.pi) * 12) % 2
+    """A thick watermelon SLICE hanging on each end: red faces with seeds to the front and back,
+    striped rind round the bottom. (v8 was half a melon facing sideways: you mostly saw green.)"""
+    h, R, th = 1.4, 1.4, 0.55
+    hx = HS + R + 0.05
+    ax = abs(x); u = ax - hx; dz = z - h; ay = abs(y)
+    rho = math.hypot(u, dz)
+    if rho < R and dz < 0.5 and ay < th:
+        if rho > R - 0.2:
+            sector = int((math.atan2(dz, u) + math.pi) / (2 * math.pi) * 14) % 2
             return ("Vox", "RindLo" if sector else "Rind")
-        if rho > R - 0.4: return ("Vox", "RindIn")
-        if u > face - 0.125:
-            for n in range(7):
-                a = math.radians(n * 360 / 7 + 15)
-                if math.hypot(y - 0.62 * math.cos(a), dz - 0.62 * math.sin(a)) < 0.11: return ("Vox", "Seed")
-        return ("Vox", "FleshHi" if r < 0.35 else "Flesh")
-    return handle(ax, y, z, h, hx + face, metal="Rind", grip="Flesh")
+        if rho > R - 0.36: return ("Vox", "RindIn")
+        if ay > th - 0.13:
+            for su, sz in _SEEDS:
+                if math.hypot((u - su) / 0.09, (dz - sz) / 0.15) < 1: return ("Vox", "Seed")
+        return ("Vox", "FleshHi" if rho < 0.55 else "Flesh")
+    return handle(ax, y, z, h, hx + R, metal="Rind", grip="Flesh")
 
 
 def t_egg(x, y, z, i, j, k):
@@ -429,7 +502,7 @@ def t_blackhole(x, y, z, i, j, k):
 TIERS = [
     ("Marshmallow", t_marshmallow, ((-5.75, 5.75), (-1.25, 1.25), (0, 2.5))),
     ("Donut", t_donut, ((-5.25, 5.25), (-1.5, 1.5), (0, 2.875))),
-    ("Watermelon", t_watermelon, ((-4.625, 4.625), (-1.5, 1.5), (0, 2.875))),
+    ("Watermelon", t_watermelon, ((-5.375, 5.375), (-1.0, 1.0), (0, 2.875))),
     ("GoldenEgg", t_egg, ((-5.75, 5.75), (-1.75, 1.75), (0, 3.375))),
     ("Diamond", t_diamond, ((-6.25, 6.25), (-1.625, 1.625), (0, 2.75))),
     ("Trophy", t_trophy, ((-6.125, 6.125), (-2.25, 2.25), (0, 3.125))),
@@ -443,7 +516,7 @@ TIERS = [
 BAR_H = {"Marshmallow": 1.2, "Donut": 1.4, "Watermelon": 1.4, "GoldenEgg": 1.4, "Diamond": 1.8, "Trophy": 2.0,
          "Rocket": 2.5, "SoccerBall": 1.5, "Planets": PL["h"], "BlackHole": BH["h"]}
 # where each weight's centre is, for Studio's HeadA / HeadB anchors: (distance past HS, height, size), design units
-HEAD = {"Marshmallow": (1.25, 1.2, 2.3), "Donut": (1.0, 1.4, 2.8), "Watermelon": (1.0, 1.4, 2.8), "GoldenEgg": (1.4, 1.5, 2.8),
+HEAD = {"Marshmallow": (1.2, 1.2, 2.3), "Donut": (1.0, 1.4, 2.8), "Watermelon": (1.45, 1.1, 2.8), "GoldenEgg": (1.4, 1.5, 2.8),
         "Diamond": (1.6, 1.5, 2.8), "Trophy": (1.6, 2.1, 2.8), "Rocket": (1.8, 3.0, 2.4), "SoccerBall": (1.4, 1.5, 2.8),
         "Planets": (2.6, 1.4, 2.6), "BlackHole": (2.6, 1.4, 2.0)}
 ORBITS = {}        # tier number -> {group: (centre, axis, speed)} in design units; written out (scaled) for Studio
@@ -520,7 +593,8 @@ with open(os.path.join(os.path.dirname(fbx_out), "weights_orbits.lua"), "w") as 
     fh.write("-- generated by weights_vox.py, in studs.\n")
     fh.write("-- tiers[n]  = k (how much bigger than the design), h (bar height), hx / hz / size (the weights' centres)\n")
     fh.write("-- orbits[n][group] = {centre x,y,z, axis x,y,z, speed} in the model's Root space\n")
-    fh.write(f"return {{\n\tgap = {GAP},\n\ttiers = {{\n")
+    fh.write("-- lift = the baked shading's level for a plain lit surface: Studio divides part colours by it\n")
+    fh.write(f"return {{\n\tgap = {GAP},\n\tlift = {LIFT},\n\ttiers = {{\n")
     for n, (name, _, _) in enumerate(TIERS):
         K = K_TIER[n]; dx, hz, size = HEAD[name]
         fh.write(f"\t\t{{ k = {K}, h = {BAR_H[name] * K:.4f}, hx = {HS_WORLD + dx * K:.4f}, hz = {hz * K:.4f}, size = {size * K:.4f} }},\n")
@@ -536,7 +610,8 @@ with open(os.path.join(os.path.dirname(fbx_out), "weights_orbits.lua"), "w") as 
 
 # ---------------------------------------------------------------- preview
 sc = bpy.context.scene
-dm = material("Bar")
+BASE["Dummy"] = BASE["Bar"]
+dm = material("Dummy")
 for size, loc in [((2, 1, 2), (0, 0, 3)), ((1.1, 1.1, 1.1), (0, 0, 4.55)), ((0.95, 1, 2), (-0.5, 0, 1)),
                   ((0.95, 1, 2), (0.5, 0, 1)), ((0.95, 1, 2), (-1.5, 0, 3)), ((0.95, 1, 2), (1.5, 0, 3))]:
     for n in (0, 6):     # a 5-stud dummy behind tier 1 and tier 7 for scale
@@ -571,5 +646,6 @@ bpy.ops.object.select_all(action='DESELECT')
 for o in allobjs: o.select_set(True)
 bpy.context.view_layer.objects.active = allobjs[0]
 bpy.ops.export_scene.fbx(filepath=fbx_out, use_selection=True, object_types={'MESH'},
-                         apply_unit_scale=True, mesh_smooth_type='OFF', axis_forward='-Z', axis_up='Y')
+                         apply_unit_scale=True, mesh_smooth_type='OFF', axis_forward='-Z', axis_up='Y',
+                         colors_type='SRGB')
 print("DONE")
