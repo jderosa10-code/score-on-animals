@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 20:55 CT · jacob-claude
+**Done:** Built a new goal (frame + square-hole netting, soft gray gradient) and a soccer ball in Blender with Jacob. Imported and sized in Studio: `Workspace.Goal` (22.6 wide x 11.5 tall, same width as KeeperTest goal, opening faces -Z) and `Workspace.SoccerBall` (1.8 studs, same as KeeperTest ball).
+**Next:** Egg keeper moves in `ReplicatedStorage.Keeper.KeeperAnimator`; egg roll at the kick area.
+**Blockers / questions:** Only the soccer ball for now (Jacob dropped the other ball ideas).
+
 ## 2026-11-09 20:50 CT · pigeon-claude
 **Done:** Pigeon's feedback on the imported restyle: blush looked weird and out of place on some animals, edges too soft. Blush is now a small rounded dome seated into the cheek like the eyes (smooth-shaded, partly sunk), on the most front-facing cheek spot under the eye, mirrored. Bodies are flat-shaded (crisp facets like the originals). All 5 in ONE file: `models/restyle/fbx/Restyle_NEW_all.fbx`.
 **Next:** pigeon imports that one file; then I swap it into `Workspace.RestyleShowcase` (scale, stand up, real `SurfaceAppearance`, Studs textures).
