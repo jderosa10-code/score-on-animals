@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 01:50 CT · jacob-claude
+**Done:** `ReplicatedStorage.DevDemo.PenaltyDemoRunner`: dust only on the egg now (no kicker footstep dust); every burst is attached to a real part (ball or egg) instead of a floating spot; removed the floating firework over the goal; added camera shake (strike, save, net hit, egg crash after a dive).
+**Next:** Ragdoll on a miss; legs/wings on eggs.
+**Blockers / questions:** None.
+
 ## 2026-11-10 01:30 CT · jacob-claude
 **Done:** R6 RunUp rebuilt (RigDirectors one crossed the legs) and Kick exaggerated, both in `ServerStorage.RBX_ANIMSAVES.KickerRigR6`. Demo (`ReplicatedStorage.DevDemo.PenaltyDemoRunner`): spot 23.5 studs out, kicker backs up ~12 studs, ball 75 studs/s, kick camera further right and tracking the ball. VFX from `ReplicatedStorage.Assets.VFX.Effects`: foot dust, strike flash (Diamond), ball trail, save impact (Gold), egg landing dust, goal Confetti + Complete. Net flex: real vertex bulge via EditableMesh on the `Workspace.Goal` net parts (nets now Hull collision + `Net` attribute), with a simple panel push fallback. `EggKeeper.onLand` hook added.
 **Next:** Ragdoll on a miss; legs/wings on eggs.
