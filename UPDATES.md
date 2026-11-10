@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 09:05 CT · jacob-claude
+**Done:** Fixed the mystery egg sometimes vanishing between swaps (`PenaltyDemoRunner` mysteryEnter): the new egg is placed before it appears, the old one stays a frame longer, and it only squeezes down to 22% instead of 5%. Tested: 0 empty frames over a full walk-out.
+**Next:** Save Power vs Kick Power.
+**Blockers / questions:** none
+
 ## 2026-11-10 08:40 CT · jacob-claude
 **Done:** Penalty demo now starts when you walk onto `Workspace.KickArea` (one egg per visit; walk off and back on for the next). It takes your controls (and your character if R6) and gives them back after the egg. Mystery egg walk-out: until it reaches the goal the egg is a black silhouette with a glowing white outline (Highlight + PointLight), swapping between eggs; each swap shrinks to a dot and the next bursts out with white VFX (`Assets.VFX.Effects.Mystery` + `Poof`), slowing down, landing on the Luck-rolled egg, then a white flash reveal (Mystery + Diamond + Poof; sting for Epic+). All in `ReplicatedStorage.DevDemo.PenaltyDemoRunner`; `ServerScriptService.PenaltyDemo` also passes KickCF/KickSize.
 **Next:** Save Power vs Kick Power; Jacob switching the game to R6.
