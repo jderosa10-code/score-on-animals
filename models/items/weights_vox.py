@@ -1,4 +1,5 @@
-"""Weight tiers v6 for Score on Animals: chunky STEPPED style, fine steps.
+"""Weight tiers v8 for Score on Animals: chunky STEPPED style, fine rounded steps, big heads on a
+short thick bar, every tier in its own colours and bigger than the last (see K_TIER below).
 
 History of pigeon's notes that shaped this:
   - a reference weight from another game = "a great model": huge heads, thick handle, stepped
@@ -24,10 +25,17 @@ argv = sys.argv[sys.argv.index("--") + 1:]
 blend_out, fbx_out, png_out = argv
 bpy.ops.wm.read_factory_settings(use_empty=True)
 
-C = 0.1            # step size in studs
-SMOOTH, SMOOTH_ITERS = 0.5, 2     # how much the steps are rounded off (0 = hard blocks)
-GAP = 9.0          # spacing between tiers in the file (along -Y)
-HS = 2.6           # heads never come closer to the middle than this (hands need the bar)
+C = 0.125          # step size in studs, in the finished model
+SMOOTH, SMOOTH_ITERS = 0.5, 3     # how much the steps are rounded off (0 = hard blocks)
+GAP = 12.0         # spacing between tiers in the file (along -Y)
+# v8 (pigeon: "they all missing something, you need to find out"). Side by side with the reference
+# weight, ours were thin sticks with small ends and the same grey bar on every tier. So:
+#   * every tier is designed at the old size and then built K times bigger, K growing with the tier
+#   * the grip zone stays 2 studs each side in the finished model, so the bar is short and thick
+#   * the bar, grips and collars take the tier's own colours; from tier 5 a glowing collar ring
+K_TIER = [1.3, 1.4, 1.4, 1.45, 1.5, 1.5, 1.35, 1.55, 1.5, 1.6]
+HS_WORLD = 2.0
+HS = 2.6           # heads never come closer to the middle than this, in design units (set per tier)
 
 BASE = {
     "Bar": "#8C8F99", "Grip": "#2E2E36", "Wood": "#B5793C",
@@ -45,9 +53,9 @@ BASE = {
     "MoonIce": "#8DF4FF", "MoonLava": "#FF8A3D", "Ocean": "#2F7BFF", "Land": "#3FCF5A", "Ice": "#F4FBFF",
     "Moon": "#C9CCD6",
     "Void": "#0B0B14", "VoidGrip": "#7B4DFF", "Disc": "#FF8A2A", "DiscHot": "#FFE9A8", "DiscOut": "#C24DFF",
-    "Star": "#FFF3B0",
+    "Star": "#FFF3B0", "GlowCyan": "#7DF3FF", "GlowGold": "#FFD866",
 }
-GLOW = ("RingA", "RingB", "RocketWindow", "MoonLava", "Flame", "FlameCore", "Disc", "DiscHot", "DiscOut", "Star")
+GLOW = ("RingA", "RingB", "RocketWindow", "MoonLava", "Flame", "FlameCore", "Disc", "DiscHot", "DiscOut", "Star", "Glow")
 SEE_THROUGH = ("Diamond",)      # Glass in Studio: neighbours still need their faces
 
 
@@ -86,9 +94,11 @@ DIRS = [((1, 0, 0), [(1, 0, 0), (1, 1, 0), (1, 1, 1), (1, 0, 1)]), ((-1, 0, 0), 
         ((0, 0, 1), [(0, 0, 1), (1, 0, 1), (1, 1, 1), (0, 1, 1)]), ((0, 0, -1), [(0, 0, 0), (0, 1, 0), (1, 1, 0), (1, 0, 0)])]
 
 
-def build(prefix, fn, bounds, coll, offset=(0, 0, 0), cell=C):
+def build(prefix, fn, bounds, coll, offset=(0, 0, 0), scale=1.0, iters=SMOOTH_ITERS):
     """Sample fn(x, y, z, i, j, k) -> None | (group, material) on the grid and make one mesh per
-    (group, material) with only the outside faces."""
+    (group, material) with only the outside faces. fn and bounds are in design units; the mesh
+    comes out `scale` times bigger with steps of C studs."""
+    cell = C / scale
     (x0, x1), (y0, y1), (z0, z1) = bounds
     i0, i1 = round(x0 / cell), round(x1 / cell)
     j0, j1 = round(y0 / cell), round(y1 / cell)
@@ -117,9 +127,9 @@ def build(prefix, fn, bounds, coll, offset=(0, 0, 0), cell=C):
         for q in qs:
             for a in range(4):
                 v, w = q[a], q[(a + 1) % 4]
-                pos[v] = Vector(v) * cell
+                pos[v] = Vector(v) * C
                 nbr.setdefault(v, set()).add(w); nbr.setdefault(w, set()).add(v)
-    for _ in range(SMOOTH_ITERS):
+    for _ in range(iters):
         new = {}
         for v, p in pos.items():
             avg = sum((pos[w] for w in nbr[v]), Vector()) / len(nbr[v])
@@ -166,20 +176,21 @@ def hsh(i, j, k):
 
 
 # ---------------------------------------------------------------- shared handle
-def handle(ax, y, z, h, end, metal="Bar", grip="Grip", collars=True):
+def handle(ax, y, z, h, end, metal="Bar", grip="Grip", collars=True, glow=None):
     """Thick bar. Between the collars nothing is wider than the bar itself, so hands fit:
-    centre band 0..0.5, ribbed grip 0.5..2.2, stepped collar 2.2..2.6, then the head, then an end cap."""
+    centre band, ribbed grip, stepped collar (its first ring can glow), then the head, then an end cap."""
     dz = z - h
     r = math.hypot(y, dz)
-    if r >= 0.7: return None
-    if ax < 0.5:
-        return ("Vox", metal + "Hi") if r < 0.3 else None
-    if ax < 2.2:
-        if r < 0.3: return ("Vox", grip if int(ax / 0.2 + 0.001) % 2 else grip + "Hi")
+    if r >= 0.72: return None
+    a, b = 0.16 * HS, 0.8 * HS
+    if ax < a:
+        return ("Vox", metal + "Hi") if r < 0.34 else None
+    if ax < b:
+        if r < 0.34: return ("Vox", grip if int((ax - a) / ((b - a) / 6) + 0.001) % 2 else grip + "Hi")
         return None
     if collars and ax < HS:
-        if ax < 2.35: return ("Vox", metal + "Hi") if r < 0.48 else None
-        return ("Vox", metal + "Lo") if r < 0.66 else None
+        if ax < b + 0.45 * (HS - b): return ("Vox", glow or metal + "Hi") if r < 0.5 else None
+        return ("Vox", metal + "Lo") if r < 0.7 else None
     if end <= ax < end + 0.25 and r < 0.6: return ("Vox", metal + "Hi")
     if end + 0.25 <= ax < end + 0.5 and r < 0.45: return ("Vox", metal + "Lo")
     if ax < end + 0.25 and r < 0.3: return ("Vox", metal)
@@ -231,7 +242,7 @@ def t_donut(x, y, z, i, j, k):
                         return ("Vox", ("SprinkleY", "SprinkleB", "SprinkleG", "SprinkleW")[hsh(j // 2, k // 2, i // 2) % 4])
                     return ("Vox", "IcingHi" if dz > 0.7 else "Icing")
                 return ("Vox", "DoughHi" if dz > 0.7 else ("DoughLo" if dz < -0.8 else "Dough"))
-    return handle(ax, y, z, h, hx + 1.0)
+    return handle(ax, y, z, h, hx + 1.0, metal="Dough", grip="Icing")
 
 
 def t_watermelon(x, y, z, i, j, k):
@@ -248,7 +259,7 @@ def t_watermelon(x, y, z, i, j, k):
                 a = math.radians(n * 360 / 7 + 15)
                 if math.hypot(y - 0.62 * math.cos(a), dz - 0.62 * math.sin(a)) < 0.11: return ("Vox", "Seed")
         return ("Vox", "FleshHi" if r < 0.35 else "Flesh")
-    return handle(ax, y, z, h, hx + face)
+    return handle(ax, y, z, h, hx + face, metal="Rind", grip="Flesh")
 
 
 def t_egg(x, y, z, i, j, k):
@@ -267,7 +278,7 @@ def t_egg(x, y, z, i, j, k):
         if q < w:
             return ("Vox", "GoldHi" if z >= 2.25 else ("GoldLo" if z < 0.75 else "Gold"))
     if H <= z < H + 0.25 and q < 0.25: return ("Vox", "Pearl")
-    return handle(ax, y, z, h, hx + 1.2, metal="Gold")
+    return handle(ax, y, z, h, hx + 1.2, metal="Gold", grip="Pearl")
 
 
 def t_diamond(x, y, z, i, j, k):
@@ -283,7 +294,7 @@ def t_diamond(x, y, z, i, j, k):
             if z >= 1.8: return ("Vox", "Diamond" if diag else "DiamondHi")
             if z >= 1.625: return ("Vox", "DiamondLo")
             return ("Vox", "DiamondLo" if diag else "Diamond")
-    return handle(ax, y, z, h, hx + 1.5, metal="Chrome")
+    return handle(ax, y, z, h, hx + 1.5, metal="Chrome", grip="GemBlue", glow="GlowCyan")
 
 
 def t_trophy(x, y, z, i, j, k):
@@ -304,7 +315,7 @@ def t_trophy(x, y, z, i, j, k):
                 return ("Vox", "Gold")
         d = math.hypot(ay - 1.5, z - 2.1)
         if au < 0.19 and 0.32 <= d < 0.6 and ay >= 1.2: return ("Vox", "GoldHi")
-    return handle(ax, y, z, h, hx + 1.3, metal="Gold")
+    return handle(ax, y, z, h, hx + 1.3, metal="Gold", grip="TrophyBase", glow="GlowGold")
 
 
 def t_rocket(x, y, z, i, j, k):
@@ -333,7 +344,7 @@ def t_rocket(x, y, z, i, j, k):
             reach = 0.8 + (2.6 - z) * 0.6
             if (ay < 0.15 and 0.8 <= au < reach) or (au < 0.15 and 0.8 <= ay < reach):
                 return ("Vox", "RocketRedLo" if z < 1.25 else "RocketRed")
-    return handle(ax, y, z, h, hx + 0.85, metal="Chrome", grip="RocketRed")
+    return handle(ax, y, z, h, hx + 0.85, metal="Chrome", grip="RocketRed", glow="Flame")
 
 
 _pent_r, _hex_r = math.radians(20.1), math.radians(23.8)
@@ -354,14 +365,14 @@ def t_soccer(x, y, z, i, j, k):
             if ap < ah: return (g, "BallBlack")
             if ah2 - ah < 0.17: return (g, "GoldLo")               # seam between two gold panels
             return (g, "Gold")
-    return handle(ax, y, z, h, hx + 1.4, metal="BallBlack", grip="Gold")
+    return handle(ax, y, z, h, hx + 1.4, metal="BallBlack", grip="Gold", glow="GlowGold")
 
 
-PL = dict(h=1.4, hx=HS + 2.6, R=1.3, tilt=math.radians(25))
+PL = dict(h=1.4, off=2.6, R=1.3, tilt=math.radians(25))
 
 
 def t_planets(x, y, z, i, j, k):
-    h, hx, R, tau = PL["h"], PL["hx"], PL["R"], PL["tilt"]
+    h, hx, R, tau = PL["h"], HS + PL["off"], PL["R"], PL["tilt"]
     s = 1 if x > 0 else -1
     ax = abs(x)
     if ax > hx - 2.2:
@@ -384,15 +395,15 @@ def t_planets(x, y, z, i, j, k):
                     + 0.6 * math.sin((d.y + d.z) * 6.0))
             if land > 0.05: return ("Globe", "LandHi" if land > 0.8 else "Land")
             return ("Globe", "OceanHi" if land < -1.0 else "Ocean")
-    return handle(ax, y, z, h, hx + 1.3, metal="SpaceBar", grip="GasA")
+    return handle(ax, y, z, h, hx + 1.3, metal="SpaceBar", grip="GasA", glow="RingB")
 
 
-BH = dict(h=1.4, hx=HS + 2.6, R=1.0, tilt=math.radians(20))
+BH = dict(h=1.4, off=2.6, R=1.0, tilt=math.radians(20))
 
 
 def t_blackhole(x, y, z, i, j, k):
     """A black sphere with a glowing tilted disc and a bright halo ring facing the viewer."""
-    h, hx, R, tau = BH["h"], BH["hx"], BH["R"], BH["tilt"]
+    h, hx, R, tau = BH["h"], HS + BH["off"], BH["R"], BH["tilt"]
     s = 1 if x > 0 else -1
     ax = abs(x)
     if ax > hx - 2.4:
@@ -412,7 +423,7 @@ def t_blackhole(x, y, z, i, j, k):
                 if rho < 1.9: return (g, "DiscHot" if arm else "Disc")
                 return (g, "Disc" if arm else "DiscOut")
         if abs(q.y) < 0.1 and 1.06 <= math.hypot(q.x, q.z) < 1.26: return ("Halo", "DiscHot")
-    return handle(ax, y, z, h, hx + 1.0, metal="Void", grip="VoidGrip")
+    return handle(ax, y, z, h, hx + 1.0, metal="Void", grip="VoidGrip", glow="DiscOut")
 
 
 TIERS = [
@@ -431,7 +442,11 @@ TIERS = [
 
 BAR_H = {"Marshmallow": 1.2, "Donut": 1.4, "Watermelon": 1.4, "GoldenEgg": 1.4, "Diamond": 1.8, "Trophy": 2.0,
          "Rocket": 2.5, "SoccerBall": 1.5, "Planets": PL["h"], "BlackHole": BH["h"]}
-ORBITS = {}        # tier number -> {group: (centre, axis, speed)} in Blender tier space; written out for Studio
+# where each weight's centre is, for Studio's HeadA / HeadB anchors: (distance past HS, height, size), design units
+HEAD = {"Marshmallow": (1.25, 1.2, 2.3), "Donut": (1.0, 1.4, 2.8), "Watermelon": (1.0, 1.4, 2.8), "GoldenEgg": (1.4, 1.5, 2.8),
+        "Diamond": (1.6, 1.5, 2.8), "Trophy": (1.6, 2.1, 2.8), "Rocket": (1.8, 3.0, 2.4), "SoccerBall": (1.4, 1.5, 2.8),
+        "Planets": (2.6, 1.4, 2.6), "BlackHole": (2.6, 1.4, 2.0)}
+ORBITS = {}        # tier number -> {group: (centre, axis, speed)} in design units; written out (scaled) for Studio
 
 
 def orbit(n, name, group, s, hx, cz, Rr, phi, tau, shift, speed):
@@ -452,15 +467,13 @@ for n, (name, fn, bounds) in enumerate(TIERS):
     bpy.context.scene.collection.children.link(coll)
     prefix = f"Weight{n + 1}_{name}_"
     off = Vector((0, -n * GAP, 0))
-    objs = build(prefix, fn, bounds, coll, offset=tuple(off))
+    K = K_TIER[n]
+    HS = HS_WORLD / K                       # the tier functions read this: grip zone = 2 studs when built
+    objs = build(prefix, fn, bounds, coll, offset=tuple(off), scale=K)
 
     def ball(tag, mat, pos, rad):
         f = lambda x, y, z, i, j, k: ("Orb" + tag, mat + ("Hi" if z > 0.1 else "")) if math.sqrt(x * x + y * y + z * z) < rad else None
-        return build(prefix, f, ((-0.75, 0.75),) * 3, coll, offset=tuple(pos + off))
-
-    def gem(group, mat, pos, rx, rz):          # little double-pyramid: a shard / a sparkle star
-        f = lambda x, y, z, i, j, k: (group, mat) if (abs(x) + abs(y)) / rx + abs(z) / rz < 1 else None
-        return build(prefix, f, ((-0.625, 0.625),) * 3, coll, offset=tuple(pos + off))
+        return build(prefix, f, ((-0.75, 0.75),) * 3, coll, offset=tuple(pos * K + off), scale=K, iters=2)
 
     # ONE signature thing per tier (pigeon: orbiting belongs to the planets, the others must be unique):
     #   Soccer Ball: the balls spin on the bar.   Planets: moons + a rocket orbit.
@@ -470,23 +483,31 @@ for n, (name, fn, bounds) in enumerate(TIERS):
             ORBITS.setdefault(n + 1, {})[g] = (Vector((s * (HS + 1.4), 0, 0)), Vector((1, 0, 0)), 1.6)
     if name == "BlackHole":
         for s, g in ((1, "DiscP"), (-1, "DiscN")):
-            ORBITS.setdefault(n + 1, {})[g] = (Vector((s * BH["hx"], 0, 0)), Vector((s * math.sin(BH["tilt"]), 0, math.cos(BH["tilt"]))), 0.9)
+            ORBITS.setdefault(n + 1, {})[g] = (Vector((s * (HS + BH["off"]), 0, 0)), Vector((s * math.sin(BH["tilt"]), 0, math.cos(BH["tilt"]))), 1.5)
     if name == "Planets":
-        h, hx, tau = PL["h"], PL["hx"], PL["tilt"]
+        h, hx, tau = PL["h"], HS + PL["off"], PL["tilt"]
         objs += ball("Ice", "MoonIce", orbit(n, name, "OrbIce", 1, hx, h + 0.6, 2.6, 70, tau, 0, 1.1)[0], 0.5)
         objs += ball("Lava", "MoonLava", orbit(n, name, "OrbLava", 1, hx, h + 0.6, 2.6, 250, tau, 0, 1.1)[0], 0.42)
-        objs += ball("Moon", "Moon", orbit(n, name, "OrbMoon", -1, hx, h + 0.6, 2.5, 250, tau, 0, 0.9)[0], 0.5)
-        pos, tan = orbit(n, name, "OrbSatBody", -1, hx, h + 0.3, 1.9, 60, tau, 0, 1.7)
+        objs += ball("Moon", "Moon", orbit(n, name, "OrbMoon", -1, hx, h + 0.6, 2.9, 250, tau, 0, 0.9)[0], 0.45)
+        # The rocket that flies round the Earth. v7's was 0.5 studs wide and the smoothing melted it
+        # into a red blob (pigeon: "why doesn't the rocket fly around the planet any more"). Now a
+        # proper little rocket, 3 studs long: body, red nose + band, four fins, window, flame.
+        pos, tan = orbit(n, name, "OrbSatBody", -1, hx, h + 0.8, 2.2, 60, math.radians(40), 0, 1.7)
         for g in ("OrbSatNose", "OrbSatFlame"): ORBITS[n + 1][g] = ORBITS[n + 1]["OrbSatBody"]
         def sat(x, y, z, i, j, k):
-            q = max(abs(x), abs(y))
-            if -0.5 <= z < 0.25 and q < 0.25: return ("OrbSatBody", "RocketBody")
-            if 0.25 <= z < 0.75 and q < 0.25 - (z - 0.25) * 0.5 + 0.02: return ("OrbSatNose", "RocketRed")
-            if -0.5 <= z < -0.1 and ((abs(x) < 0.07 and q < 0.5) or (abs(y) < 0.07 and q < 0.5)): return ("OrbSatNose", "RocketRed")
-            if -0.75 <= z < -0.5 and q < 0.13: return ("OrbSatFlame", "Flame")
+            ax_, ay_ = abs(x), abs(y); rr = math.hypot(x, y)
+            if 0.4 <= z < 1.1 and rr < 0.36 * (1 - ((z - 0.4) / 0.7) ** 1.5): return ("OrbSatNose", "RocketRed")
+            if 0.24 <= z < 0.4 and rr < 0.43: return ("OrbSatNose", "RocketRed")
+            if -0.7 <= z < 0.4 and rr < 0.36:
+                if -0.1 <= z < 0.16 and rr >= 0.24 and ay_ > ax_ and ax_ < 0.14: return ("OrbSatNose", "RocketWindow")
+                return ("OrbSatBody", "RocketBody")
+            if -0.7 <= z < -0.1:
+                reach = 0.36 + (-0.1 - z) * 0.6
+                if (ax_ < 0.09 and ay_ < reach) or (ay_ < 0.09 and ax_ < reach): return ("OrbSatNose", "RocketRed")
+            if -1.1 <= z < -0.7 and rr < 0.27 * (1 - (-0.7 - z) / 0.4 * 0.8): return ("OrbSatFlame", "Flame")
             return None
-        so = build(prefix, sat, ((-0.625, 0.625), (-0.625, 0.625), (-0.75, 0.75)), coll)
-        aim = Matrix.Translation(pos + off) @ Vector((0, 0, 1)).rotation_difference(tan).to_matrix().to_4x4()
+        so = build(prefix, sat, ((-0.8, 0.8), (-0.8, 0.8), (-1.15, 1.15)), coll, scale=K, iters=1)
+        aim = Matrix.Translation(pos * K + off) @ Vector((0, 0, 1)).rotation_difference(tan).to_matrix().to_4x4()
         for o in so: o.data.transform(aim)
         objs += so
     tris = sum(sum(len(p.vertices) - 2 for p in o.data.polygons) for o in objs)
@@ -496,13 +517,22 @@ for n, (name, fn, bounds) in enumerate(TIERS):
 # orbit table for Studio, in each model's Root space (Blender x, y, z -> Roblox x, z, -y)
 import os
 with open(os.path.join(os.path.dirname(fbx_out), "weights_orbits.lua"), "w") as fh:
-    fh.write("-- generated by weights_vox.py: [tier][group] = {centre x,y,z, axis x,y,z, speed} in Root space\nreturn {\n")
+    fh.write("-- generated by weights_vox.py, in studs.\n")
+    fh.write("-- tiers[n]  = k (how much bigger than the design), h (bar height), hx / hz / size (the weights' centres)\n")
+    fh.write("-- orbits[n][group] = {centre x,y,z, axis x,y,z, speed} in the model's Root space\n")
+    fh.write(f"return {{\n\tgap = {GAP},\n\ttiers = {{\n")
+    for n, (name, _, _) in enumerate(TIERS):
+        K = K_TIER[n]; dx, hz, size = HEAD[name]
+        fh.write(f"\t\t{{ k = {K}, h = {BAR_H[name] * K:.4f}, hx = {HS_WORLD + dx * K:.4f}, hz = {hz * K:.4f}, size = {size * K:.4f} }},\n")
+    fh.write("\t},\n\torbits = {\n")
     for tier in sorted(ORBITS):
-        fh.write(f"\t[{tier}] = {{\n")
+        K = K_TIER[tier - 1]
+        fh.write(f"\t\t[{tier}] = {{\n")
         for g, (c, a, sp) in sorted(ORBITS[tier].items()):
-            fh.write(f"\t\t{g} = {{{c.x:.4f}, {c.z:.4f}, {-c.y:.4f}, {a.x:.4f}, {a.z:.4f}, {-a.y:.4f}, {sp}}},\n")
-        fh.write("\t},\n")
-    fh.write("}\n")
+            c = c * K
+            fh.write(f"\t\t\t{g} = {{{c.x:.4f}, {c.z:.4f}, {-c.y:.4f}, {a.x:.4f}, {a.z:.4f}, {-a.y:.4f}, {sp}}},\n")
+        fh.write("\t\t},\n")
+    fh.write("\t},\n}\n")
 
 # ---------------------------------------------------------------- preview
 sc = bpy.context.scene
@@ -510,7 +540,7 @@ dm = material("Bar")
 for size, loc in [((2, 1, 2), (0, 0, 3)), ((1.1, 1.1, 1.1), (0, 0, 4.55)), ((0.95, 1, 2), (-0.5, 0, 1)),
                   ((0.95, 1, 2), (0.5, 0, 1)), ((0.95, 1, 2), (-1.5, 0, 3)), ((0.95, 1, 2), (1.5, 0, 3))]:
     for n in (0, 6):     # a 5-stud dummy behind tier 1 and tier 7 for scale
-        bpy.ops.mesh.primitive_cube_add(size=1, location=(loc[0], loc[1] + 2.2 - n * GAP, loc[2]))
+        bpy.ops.mesh.primitive_cube_add(size=1, location=(loc[0], loc[1] + 4.5 - n * GAP, loc[2]))
         o = bpy.context.active_object; o.scale = size; o.data.materials.append(dm)
 bpy.ops.mesh.primitive_plane_add(size=400, location=(0, -40, 0))
 g = bpy.data.materials.new("Ground"); g.use_nodes = True
@@ -526,9 +556,9 @@ sc.render.engine = 'CYCLES'; sc.cycles.device = 'CPU'; sc.cycles.samples = 16; s
 sc.render.resolution_x = 1100; sc.render.resolution_y = 620
 bpy.ops.wm.save_as_mainfile(filepath=blend_out)
 for n in range(len(TIERS)):          # one shot per tier, from the front-left like a player would see it
-    tgt = Vector((0, -n * GAP, 1.6))
+    tgt = Vector((0, -n * GAP, 2.2))
     cam.data.lens = 34
-    cam.location = tgt + Vector((7.5, -15, 6.5))
+    cam.location = tgt + Vector((9.5, -19, 8))
     cam.rotation_euler = (tgt - cam.location).to_track_quat('-Z', 'Y').to_euler()
     sc.render.filepath = png_out.replace(".png", f"_{n + 1:02d}.png")
     bpy.ops.render.render(write_still=True)

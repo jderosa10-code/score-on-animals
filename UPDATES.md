@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 09:35 CT · pigeon-claude
+**Done:** Weights v8. pigeon: "why doesn't the rocket fly round the planet any more", "they're all missing something, find out". Checked in Play: all 21 spinning/orbiting parts move, so the script works. What was wrong: the orbiting rocket was 0.5 studs wide and the smoothing melted it into a red blob; and next to pigeon's reference weight ours were thin sticks with small ends and the same grey bar on every tier. Fixes in `weights_vox.py`: each tier is built 1.3x to 1.6x bigger (grows with the tier) on a short thick bar (grip zone 2 studs each side); bar, grips and collars use the tier's own colours, with a glowing collar ring from tier 5; the orbiting rocket is a real 3-stud rocket. `weights_orbits.lua` now also carries the tier sizes, so the setup script can't drift from the model. Setup adds: glitter on the gas giant's ring; black hole jets from the poles + light arcs that ride the spinning disc.
+**Next:** pigeon imports `Weights.fbx`; I run the setup and check it in Play.
+**Blockers / questions:** the weights are heavy now: 16k to 47k triangles each (about 297k for all ten). Fine for one held weight, but tell me if a shop wall of all ten is planned and I'll make lighter copies.
+
 ## 2026-11-10 09:27 CT · pigeon-claude
 **Done:** Weights v7 imported and set up in Studio (`Workspace.WeightTiers`, 10 models at Z 55, 20 studs apart, 117 mesh parts, no missing colours). Checked by screenshot: colours are no longer washed out, trophy confetti and diamond/ball glints show, rocket sits on its flame. Checked by measurement: the soccer balls and black hole discs spin exactly about their own centres (0.00 off), planets' orbiters sit 1.8-2.6 studs out.
 **Next:** pigeon's look. The spin/orbit `OrbitParts` client script only moves in Play and has not been run there yet.

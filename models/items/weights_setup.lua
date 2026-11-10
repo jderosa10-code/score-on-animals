@@ -1,6 +1,6 @@
--- Sets up the imported Weights.fbx (weights_vox.py v6) in Studio. Run in the edit context with
---   ORBITS = <the table from weights_orbits.lua>   passed in as the first argument (see bottom of file
---   for how it's fetched), e.g.  loadstring(src)(orbitTable)
+-- Sets up the imported Weights.fbx (weights_vox.py v8) in Studio. Run in the edit context with the
+--   table from weights_orbits.lua (gap, tiers, orbits) as the first argument:
+--   loadstring(setupSrc)(loadstring(orbitsSrc)())
 -- What it does:
 --   * fixes size + rotation from the three SOA_Axis marker cubes
 --   * colours every part from its name (..__<Material>; Hi / Lo = lighter / darker step)
@@ -11,9 +11,11 @@
 --   * effects kept to what looked good in Studio: white 4-point sparkles, soft lights, a few sparks
 --   * orbit: every Orb* part gets OrbitSpeed / OrbitCenter / OrbitAxis and a thin trail, and each
 --     model with orbiters gets the client script OrbitParts
-local ORBITS = ... or {}
-local GAP = 9
-local ROW_Z, SPACING = 55, 20
+local DATA = ...
+assert(DATA and DATA.tiers, "pass the table from weights_orbits.lua")
+local ORBITS = DATA.orbits or {}
+local GAP = DATA.gap
+local ROW_Z, SPACING = 55, 26
 -- Studs: the game's Studs texture is a pale overlay. At the animals' strength (0.85 see-through) it
 -- is invisible on these; stronger and untinted it washes the colour out. So each copy is tinted to
 -- its part's own colour and shown strongly. Reflectance stays 0: on SmoothPlastic it mirrors the
@@ -58,10 +60,10 @@ local BASE = {
 	MoonIce = "8DF4FF", MoonLava = "FF8A3D", Ocean = "2F7BFF", Land = "3FCF5A", Ice = "F4FBFF",
 	Moon = "C9CCD6",
 	Void = "0B0B14", VoidGrip = "7B4DFF", Disc = "FF8A2A", DiscHot = "FFE9A8", DiscOut = "C24DFF",
-	Star = "FFF3B0",
+	Star = "FFF3B0", GlowCyan = "7DF3FF", GlowGold = "FFD866",
 }
 local NEON = { RingA = true, RingB = true, RocketWindow = true, MoonLava = true, Flame = true, FlameCore = true,
-	Disc = true, DiscHot = true, DiscOut = true, Star = true }
+	Disc = true, DiscHot = true, DiscOut = true, Star = true, GlowCyan = true, GlowGold = true }
 local GLASS = { Diamond = true }
 local SHINY = { Gold = 0.18, Chrome = 0.15, Pearl = 0.12, GemRed = 0.3, GemBlue = 0.3 }
 local NO_STUDS = { Seed = true, SprinkleY = true, SprinkleB = true, SprinkleG = true, SprinkleW = true, Void = true }
@@ -78,13 +80,8 @@ for _, t in ipairs(workspace.BaseAnimals.Corgi:FindFirstChildWhichIsA("MeshPart"
 end
 
 -- per tier: bar height, distance of each weight from the middle, height of the weight's centre, its size
-local T = {
-	{ h = 1.2, hx = 3.85, hz = 1.2, size = 2.3 }, { h = 1.4, hx = 3.6, hz = 1.4, size = 2.8 },
-	{ h = 1.4, hx = 3.6, hz = 1.4, size = 2.8 }, { h = 1.4, hx = 4.0, hz = 1.5, size = 2.8 },
-	{ h = 1.8, hx = 4.2, hz = 1.5, size = 2.8 }, { h = 2.0, hx = 4.2, hz = 2.1, size = 2.8 },
-	{ h = 2.5, hx = 4.4, hz = 3.0, size = 2.4 }, { h = 1.5, hx = 4.0, hz = 1.5, size = 2.8 },
-	{ h = 1.4, hx = 5.2, hz = 1.4, size = 2.6 }, { h = 1.4, hx = 5.2, hz = 1.4, size = 2.0 },
-}
+-- (written by the generator, so it can't drift from the model; k = how much bigger than the design)
+local T = DATA.tiers
 
 local old = workspace:FindFirstChild("WeightTiers"); if old then old:Destroy() end
 local folder = Instance.new("Folder"); folder.Name = "WeightTiers"; folder.Parent = workspace
@@ -188,7 +185,7 @@ for _, p in ipairs(heads(5)) do                                                 
 end
 for _, p in ipairs(heads(6)) do                                                                               -- Trophy: confetti
 	sparkle(p, 2, 0.7); light(p, C3(255, 205, 90), 8, 0.8)
-	local top = point(p, Vector3.new(0, 0.8, 0))
+	local top = point(p, Vector3.new(0, 0.8 * T[6].k, 0))
 	local n = 0
 	for _, src in ipairs(V.TraitAuras.CONFETTI:GetDescendants()) do
 		if src:IsA("ParticleEmitter") and src.Name == "3D Debris Rotation" then
@@ -200,7 +197,7 @@ for _, p in ipairs(heads(6)) do                                                 
 	end
 end
 for _, p in ipairs(heads(7)) do                                                                               -- Rocket: the flame is a model
-	local a = point(p, Vector3.new(0, -2.75, 0))      -- where the flame meets the ground
+	local a = point(p, Vector3.new(0, 0.3 - T[7].hz, 0))      -- where the flame meets the ground
 	specks(a, { Rate = 14, Lifetime = NumberRange.new(0.35, 0.6), Speed = NumberRange.new(5, 9), SpreadAngle = Vector2.new(80, 80),
 		Acceleration = Vector3.new(0, -14, 0), Color = CS(C3(255, 200, 80), C3(255, 110, 30)), EmissionDirection = Enum.NormalId.Top,
 		LockedToPart = false, Size = 0.3 })
@@ -210,15 +207,52 @@ for _, p in ipairs(heads(8)) do                                                 
 	sparkle(p, 5, 0.7)
 	light(p, C3(255, 200, 90), 10, 1.1)
 end
-for i, p in ipairs(heads(9)) do                                                                               -- Planets (orbits)
-	sparkle(p, 2, 0.6); light(p, i == 1 and C3(170, 130, 255) or C3(110, 180, 255), 10, 1.0)
+-- a circle of points around a weight: centre c, plane normal n (the ring / disc tilt), radius r
+local function ringPoints(part, n, r, count)
+	local e1 = Vector3.new(0, 0, 1)
+	local e2 = n:Cross(e1).Unit
+	local pts = {}
+	for i = 1, count do
+		local a = (i - 1) / count * math.pi * 2
+		pts[i] = point(part, (e1 * math.cos(a) + e2 * math.sin(a)) * r)
+	end
+	return pts
 end
-for _, p in ipairs(heads(10)) do                                                                              -- Black Hole: dust falls IN
-	p.Size = Vector3.one * 5
-	specks(p, { Rate = 22, Lifetime = NumberRange.new(0.7, 1.0), Speed = NumberRange.new(2.2, 2.8), Color = CS(C3(255, 190, 110), C3(200, 90, 255)),
+for i, p in ipairs(heads(9)) do                                                                               -- Planets (orbits)
+	local k = T[9].k
+	sparkle(p, 2, 0.6); light(p, i == 1 and C3(170, 130, 255) or C3(110, 180, 255), 10, 1.0)
+	if i == 1 then                                    -- the gas giant: its ring glitters
+		local tilt = math.rad(25)
+		for _, a in ipairs(ringPoints(p, Vector3.new(math.sin(tilt), math.cos(tilt), 0), 1.78 * k, 10)) do
+			local e = V.Mutations.Gold.Sparkles:Clone()
+			e.Name = "VFX_ringGlitter"; e.Rate = 0.9; e.Lifetime = NumberRange.new(0.5, 0.8); e.Color = CS(C3(255, 225, 245))
+			e.Size = seq({ { 0, 0 }, { 0.5, 0.75 }, { 1, 0 } }); e.ZOffset = 0.4; e.LockedToPart = true; e.Speed = NumberRange.new(0)
+			e.Enabled = true; e.Parent = a
+		end
+	end
+end
+-- Black Hole (pigeon: "the other planet one should have cool vfx"): dust falls IN, and two
+-- glowing jets shoot out of the poles. (Light arcs that swirl with the disc are added further down,
+-- once the disc parts know they spin.)
+for i, p in ipairs(heads(10)) do
+	local k = T[10].k
+	p.Size = Vector3.one * 3.4 * k
+	specks(p, { Rate = 26, Lifetime = NumberRange.new(0.7, 1.0), Speed = NumberRange.new(2.6, 3.4), Color = CS(C3(255, 190, 110), C3(200, 90, 255)),
 		Shape = Enum.ParticleEmitterShape.Sphere, ShapeStyle = Enum.ParticleEmitterShapeStyle.Surface, ShapeInOut = Enum.ParticleEmitterShapeInOut.Inward,
-		LockedToPart = true, Size = 0.3 })
-	light(p, C3(200, 110, 255), 11, 1.2)
+		LockedToPart = true, Size = 0.34 })
+	light(p, C3(200, 110, 255), 12, 1.4)
+	local s = i == 1 and 1 or -1
+	local tilt = math.rad(20)
+	local n = Vector3.new(s * math.sin(tilt), math.cos(tilt), 0)
+	local src = V.Events.VolcanoVFX:FindFirstChild("BeamDrawn waves", true)
+	for _, dir in ipairs({ 1, -1 }) do
+		local a0, a1 = point(p, n * dir * 0.8 * k), point(p, n * dir * (dir == 1 and 3.6 or 1.25) * k)
+		local b = src and src:Clone() or Instance.new("Beam")
+		b.Name = "VFX_jet"; b.Attachment0 = a0; b.Attachment1 = a1; b.FaceCamera = true; b.Segments = 1; b.CurveSize0 = 0; b.CurveSize1 = 0
+		b.Width0 = 0.9 * k; b.Width1 = 0.15 * k; b.LightEmission = 1; b.LightInfluence = 0; b.Brightness = 3
+		b.Color = CS(C3(255, 235, 200), C3(190, 90, 255)); b.Transparency = seq({ { 0, 0.15 }, { 0.7, 0.5 }, { 1, 1 } })
+		b.TextureSpeed = 1.2; b.TextureLength = 2 * k; b.TextureMode = Enum.TextureMode.Wrap; b.Enabled = true; b.Parent = p
+	end
 end
 
 -- ------------------------------------------------------------------ orbits
@@ -274,6 +308,37 @@ for n, groups in pairs(ORBITS) do
 	end
 	local sc = Instance.new("Script")
 	sc.Name = "OrbitParts"; sc.RunContext = Enum.RunContext.Client; sc.Source = ORBIT_SRC; sc.Parent = m
+end
+
+-- Black Hole: three light arcs ride on each spinning disc, so in Play the disc drags glowing streaks
+-- round with it. (Trails only draw while the part moves, so they're invisible in edit mode.)
+do
+	local hd, m = heads(10)
+	local k = T[10].k
+	for i, group in ipairs({ "DiscP", "DiscN" }) do
+		local host
+		for _, o in ipairs(m:GetChildren()) do
+			if o:IsA("BasePart") and o:GetAttribute("Group") == group and not host then host = o end
+		end
+		if host then
+			local s = i == 1 and 1 or -1
+			local tilt = math.rad(20)
+			local n = Vector3.new(s * math.sin(tilt), math.cos(tilt), 0)
+			local e1 = Vector3.new(0, 0, 1); local e2 = n:Cross(e1).Unit
+			local c = hd[i].Position
+			for arm = 0, 2 do
+				local a = arm / 3 * math.pi * 2
+				local dir = e1 * math.cos(a) + e2 * math.sin(a)
+				local a0, a1 = Instance.new("Attachment"), Instance.new("Attachment")
+				a0.Parent = host; a1.Parent = host
+				a0.WorldPosition = c + dir * 1.55 * k; a1.WorldPosition = c + dir * 2.2 * k
+				local tr = Instance.new("Trail")
+				tr.Name = "VFX_swirl"; tr.Attachment0 = a0; tr.Attachment1 = a1; tr.Lifetime = 0.9; tr.LightEmission = 1; tr.LightInfluence = 0
+				tr.Color = CS(C3(255, 240, 200), C3(200, 90, 255)); tr.Transparency = seq({ { 0, 0.35 }, { 1, 1 } })
+				tr.WidthScale = seq({ { 0, 1 }, { 1, 0.2 } }); tr.Parent = host
+			end
+		end
+	end
 end
 
 local miss = {}
