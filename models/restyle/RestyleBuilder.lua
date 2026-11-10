@@ -74,16 +74,15 @@ local function buildPart(p, ctr: Vector3, eyeLook: SurfaceAppearance?): MeshPart
 		mp.Color = Color3.new(1, 1, 1)
 	else
 		mp.Color = Color3.new(toSRGB(p.color[1]), toSRGB(p.color[2]), toSRGB(p.color[3]))
-		if string.find(p.name, "_Eyes") then
+		if p.look and eyeLook then
+			-- the game's real texture: borrow the original model's SurfaceAppearance
+			-- (this part kept its original UVs, so it lands exactly where it did before)
+			eyeLook:Clone().Parent = mp
+			mp.Color = Color3.new(1, 1, 1)
+			mp.Material = Enum.Material.Plastic
+		elseif string.find(p.name, "_Eyes") then
 			mp.Color = Color3.fromRGB(18, 18, 22)
 			mp.Material = Enum.Material.SmoothPlastic
-			-- the game's real eye texture: borrow the original model's SurfaceAppearance
-			-- (the eyes kept their original UVs, so it lands exactly where it did before)
-			if eyeLook then
-				eyeLook:Clone().Parent = mp
-				mp.Color = Color3.new(1, 1, 1)
-				mp.Material = Enum.Material.Plastic
-			end
 		elseif string.find(p.name, "_Shine") then
 			mp.Material = Enum.Material.Neon
 		end

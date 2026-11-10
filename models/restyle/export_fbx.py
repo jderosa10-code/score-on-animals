@@ -10,27 +10,36 @@ from mathutils import Vector
 
 argv = sys.argv[sys.argv.index("--") + 1:]
 out_dir, names = argv[0], argv[1].split(",")
+REAL_TEX = "baked" not in argv[2:]
 os.makedirs(out_dir, exist_ok=True)
 
 for name in names:
     body = bpy.data.objects[name + "_SOA"]
     kids = [c for c in body.children if c.type == 'MESH']
-    # body: only the baked UVs, so the importer can't pick the wrong channel
+    # body: keep ONE UV channel so the importer can't pick the wrong one.
+    #   realtex (default): the game's original UVs, plain material -> in Studio it wears the
+    #   original SurfaceAppearance (pigeon chose the real textures over the baked recolour)
+    #   baked: the BakeUV channel + the baked PNG
     me = body.data.copy()
+    keep_baked = not REAL_TEX
     for uv in list(me.uv_layers):
-        if uv.name != "BakeUV":
+        if (uv.name == "BakeUV") != keep_baked:
             me.uv_layers.remove(uv)
     tmp = bpy.data.objects.new(name + "_NEW", me)
     bpy.context.scene.collection.objects.link(tmp)
     tmp.matrix_world = body.matrix_world.copy()
-    # save the baked texture as a PNG next to the FBX
-    for slot in tmp.material_slots:
-        for n in slot.material.node_tree.nodes:
-            if n.type == 'TEX_IMAGE' and n.image and n.image.name.endswith("_tex"):
-                png = os.path.join(out_dir, name + "_NEW_tex.png")
-                n.image.filepath_raw = png
-                n.image.file_format = 'PNG'
-                n.image.save()
+    if REAL_TEX:
+        me.materials.clear()
+        plain = bpy.data.materials.get("SOA_Plain") or bpy.data.materials.new("SOA_Plain")
+        me.materials.append(plain)
+    else:
+        for slot in tmp.material_slots:
+            for n in slot.material.node_tree.nodes:
+                if n.type == 'TEX_IMAGE' and n.image and n.image.name.endswith("_tex"):
+                    png = os.path.join(out_dir, name + "_NEW_tex.png")
+                    n.image.filepath_raw = png
+                    n.image.file_format = 'PNG'
+                    n.image.save()
     # bottom centre of the whole animal -> origin
     pts = [tmp.matrix_world @ v.co for v in me.vertices]
     for k in kids:

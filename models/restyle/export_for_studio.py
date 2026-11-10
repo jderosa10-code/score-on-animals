@@ -7,6 +7,9 @@ from mathutils import Vector
 argv = sys.argv[sys.argv.index("--") + 1:]
 out_dir, names = argv[0], argv[1].split(",")
 COMPACT = len(argv) > 2 and argv[2] == "compact"   # NEW parts only, texture as base64 (for in-place storage)
+# pigeon chose the game's real textures over the baked recolour/gradient: the body keeps its
+# original UVs and wears the original SurfaceAppearance in Studio
+REAL_TEX = "realtex" in argv[2:]
 import base64
 os.makedirs(out_dir, exist_ok=True)
 MAX_TEX = 256
@@ -37,7 +40,7 @@ def tex_and_color(ob):
     return dict(w=w, h=h, px=rows), col
 
 
-def mesh_data(ob):
+def mesh_data(ob, original_uv=False):
     dg = bpy.context.evaluated_depsgraph_get()
     me = ob.evaluated_get(dg).to_mesh()
     bm = bmesh.new(); bm.from_mesh(me)
@@ -45,6 +48,8 @@ def mesh_data(ob):
     bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
     bmesh.ops.triangulate(bm, faces=bm.faces)
     uv_layer = bm.loops.layers.uv.active
+    if original_uv:   # the game's own UV layout (not the bake), so the real SurfaceAppearance fits
+        uv_layer = next((l for k, l in bm.loops.layers.uv.items() if k != "BakeUV"), uv_layer)
     verts = []
     for v in bm.verts:
         verts += [round(v.co.x, 4), round(v.co.z, 4), round(-v.co.y, 4)]
@@ -75,15 +80,20 @@ for name in names:
         kind = "NEW" if "_SOA" in ob.name else "OLD"
         if COMPACT and kind == "OLD":
             continue
-        verts, uvs, tris = mesh_data(ob)
+        is_body = ob.name == name + "_SOA"
+        real = REAL_TEX and is_body
+        verts, uvs, tris = mesh_data(ob, original_uv=real)
         tex, col = tex_and_color(ob)
+        if real:
+            tex, col = None, [1.0, 1.0, 1.0]   # Studio puts the game's SurfaceAppearance on it
         if COMPACT:
             verts = [round(a, 3) for a in verts]
             uvs = [round(a, 4) for a in uvs]
             if tex:
                 tex = dict(w=tex["w"], h=tex["h"], b64=base64.b64encode(bytes(tex["px"])).decode())
             col = [round(a, 4) for a in col]
-        parts.append(dict(name=ob.name, kind=kind, verts=verts, uvs=uvs, tris=tris, tex=tex, color=col))
+        parts.append(dict(name=ob.name, kind=kind, verts=verts, uvs=uvs, tris=tris, tex=tex, color=col,
+                          look=bool(real) or ob.name.endswith("_Eyes")))
     fname = name + ("_new.json" if COMPACT else ".json")
     with open(os.path.join(out_dir, fname), "w") as fh:
         json.dump(dict(name=name, parts=parts), fh, separators=(",", ":"))

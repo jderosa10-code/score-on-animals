@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 20:20 CT · pigeon-claude
+**Done:** Pigeon chose the game's real textures: NEW animals now keep the restyled shape (bigger head + eyes, shorter legs, wider, blush) but the body AND eyes wear the original `SurfaceAppearance` from the matching `BaseAnimals` model (smile and patterns are back, crisp). The baked recolour/gradient is dropped. Updated preview in `Workspace.RestyleShowcase`; FBX in `models/restyle/fbx/` now use the original UVs (plain material, SurfaceAppearance goes on after Import 3D).
+**Next:** pigeon imports the 5 FBX with Import 3D; then they become real assets everyone can see.
+**Blockers / questions:** none.
+
 ## 2026-11-09 20:12 CT · pigeon-claude
 **Done:** Pigeon: the game's original eyes look much better, so the NEW animals now keep their original eye pieces (bigger, seated in the head) and wear the real `SurfaceAppearance` from the matching `BaseAnimals` model. Bead eyes and shine dots removed. FBX of the 5 NEW animals for Import 3D: `models/restyle/fbx/` (body + baked texture, eyes on original UVs, blush).
 **Next:** import the FBX in Studio so the NEW animals are real assets (the runtime-built ones show as blue boxes for anyone else in Team Create).
