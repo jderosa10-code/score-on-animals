@@ -6,6 +6,8 @@ from mathutils import Vector
 
 argv = sys.argv[sys.argv.index("--") + 1:]
 out_dir, names = argv[0], argv[1].split(",")
+COMPACT = len(argv) > 2 and argv[2] == "compact"   # NEW parts only, texture as base64 (for in-place storage)
+import base64
 os.makedirs(out_dir, exist_ok=True)
 MAX_TEX = 256
 
@@ -70,10 +72,19 @@ for name in names:
         if ob.type != 'MESH': continue
         base = ob.name.split("_")[0]
         if base != name: continue
+        kind = "NEW" if "_SOA" in ob.name else "OLD"
+        if COMPACT and kind == "OLD":
+            continue
         verts, uvs, tris = mesh_data(ob)
         tex, col = tex_and_color(ob)
-        kind = "NEW" if "_SOA" in ob.name else "OLD"
+        if COMPACT:
+            verts = [round(a, 3) for a in verts]
+            uvs = [round(a, 4) for a in uvs]
+            if tex:
+                tex = dict(w=tex["w"], h=tex["h"], b64=base64.b64encode(bytes(tex["px"])).decode())
+            col = [round(a, 4) for a in col]
         parts.append(dict(name=ob.name, kind=kind, verts=verts, uvs=uvs, tris=tris, tex=tex, color=col))
-    with open(os.path.join(out_dir, name + ".json"), "w") as fh:
+    fname = name + ("_new.json" if COMPACT else ".json")
+    with open(os.path.join(out_dir, fname), "w") as fh:
         json.dump(dict(name=name, parts=parts), fh, separators=(",", ":"))
     print("EXPORTED", name, [(p["name"], len(p["tris"]), p["tex"] and (p["tex"]["w"], p["tex"]["h"])) for p in parts])

@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 20:08 CT · pigeon-claude
+**Done:** Restyle showcase in pigeon's place, in front of the spawn: `Workspace.RestyleShowcase` = clones of the real `BaseAnimals` (Corgi, Toad, Hedgehog, Giraffe2, PolarBear2) as OLD + slots where NEW is built. NEW is rebuilt on Play by `StarterPlayerScripts.RestyleShowcaseClient` from `ReplicatedStorage.RestyleData` via `ReplicatedStorage.RestyleBuilder` (Editable meshes, since CreateAssetAsync is `not available yet`). Sent #13: restyle is not on hold (pigeon).
+**Next:** pigeon checks it in Play. Not verified in Play yet (the test session ended before it built).
+**Blockers / questions:** the restyle came from the low-detail OBJ texture, so NEW lost face details (e.g. Corgi's smile) that the real SurfaceAppearance has. The Studio-script route on the real models would keep them.
+
 ## 2026-11-09 19:57 CT · pigeon-claude
 **Done:** Restyle v2 after pigeon's feedback (eyes looked like they were floating, dog's blush/eyes weird): eyes are now re-seated into the head, every animal gets the same black bead eyes + shine, blush sits on the cheek front, toad's front legs fixed (head-finder picked a leg). New check: every piece must touch the body; all 5 pass. Shown in pigeon's Studio at `Workspace.RestyleTest` (preview only). Scripts + renders: `models/restyle/`.
 **Next:** pigeon approves the look, then the rest of the animals.
