@@ -32,6 +32,14 @@ ADD_SHINE = False
 FALLBACK_NO_EYES = True   # pigeon: "do all" -> animals without modelled eyes get the chunky-body version    # the game's own eye texture already has a shine (pigeon: old eyes look much better)
 LEG_SCALE = 0.72
 WIDTH_SCALE = 1.08
+LENGTH_SCALE = 1.0   # nose-to-tail; 1 = unchanged
+# ROUND 2 (pigeon, 2026-11-10: "the animals a lil more to seem a bit different, not too much").
+# Same recipe pushed one small notch, plus a slightly shorter body. Off unless SOA_ROUND2=1, so
+# the round-1 results can always be rebuilt.
+if os.environ.get("SOA_ROUND2") == "1":
+    HEAD_SCALE, LEG_SCALE, WIDTH_SCALE, LENGTH_SCALE = 1.38, 0.66, 1.13, 0.93
+    OVERRIDES = {"Corgi1": dict(HEAD_SCALE=1.16, EYE_SCALE=1.12, EYE_MAX_FRAC=0.10, LEG_SCALE=0.86, WIDTH_SCALE=1.03)}
+    BLOCKY = dict(HEAD_SCALE=1.24, EYE_SCALE=1.2, LEG_SCALE=0.8, WIDTH_SCALE=1.08)
 SAT_BOOST = 1.25
 VAL_BOOST = 1.06
 
@@ -278,8 +286,10 @@ def restyle(ob):
 
     # --- a little wider overall ---
     cx = (mn_all.x + mx_all.x) / 2
+    cy = (mn_all.y + mx_all.y) / 2
     for v in bm.verts:
         v.co.x = cx + (v.co.x - cx) * WIDTH_SCALE
+        v.co.y = cy + (v.co.y - cy) * LENGTH_SCALE      # round 2: a touch shorter nose-to-tail
     # put it back on the ground
     lowest = min(v.co.z for v in bm.verts)
     for v in bm.verts:
@@ -289,9 +299,9 @@ def restyle(ob):
     dz = (-drop if legs else 0.0) + (ground - lowest)
     for d in eye_data:
         c = d["c"]
-        d["c"] = Vector((cx + (c.x - cx) * WIDTH_SCALE, c.y, c.z + dz))
+        d["c"] = Vector((cx + (c.x - cx) * WIDTH_SCALE, cy + (c.y - cy) * LENGTH_SCALE, c.z + dz))
         n = d["n"]
-        d["n"] = Vector((n.x / WIDTH_SCALE, n.y, n.z)).normalized()
+        d["n"] = Vector((n.x / WIDTH_SCALE, n.y / LENGTH_SCALE, n.z)).normalized()
 
     info["gaps_closed"] = close_gaps(bm)
     # a BVH of the HEAD piece only (the body for one-piece animals like the toad), so the blush
