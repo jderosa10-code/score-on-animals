@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 15:25 CT · jacob-claude
+**Done:** Redid `Workspace.KickAreaGlow` from Jacob's reference shots: `FloorGlow` (white light lying on the floor across the edge, fading out ~3 studs each side), `CoreGlow` (tight bright band on the line), `Haze` (low 1-stud haze above the line, both sides) and `Dots` (63 white neon pills, 1.6 studs apart). Checked with Studio screenshots. Lighting.Bloom left as it was (Threshold 2).
+**Next:** Save Power vs Kick Power.
+**Blockers / questions:** none
+
 ## 2026-11-10 15:20 CT · jacob-claude
 **Done:** Rebuilt `Workspace.KickAreaGlow` to match Jacob's reference: `GlowWall` (standing 2.4-stud sheet on the kick area's walk-in edge, SurfaceGuis front + back, white fading upward) + `Dots` (101 white neon balls, 1 stud apart, along the bottom). Checked with a Studio screenshot.
 **Next:** Save Power vs Kick Power.
