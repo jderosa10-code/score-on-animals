@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 00:55 CT · jacob-claude
+**Done:** Rebuilt `StarterGui.EggRollVS` from the real UI kit pieces (a copy of the kit's ItemShopMenu with its TextScaler + ShineEffect): kit TopBar "EGG ROLL", kit window, kit item cards for you and the opponent (reel where the picture was), slots use the kit card face. `ReplicatedStorage.DevDemo.EggRoll` paths updated. Jacob's pasted kit menus moved to `ServerStorage.UIKit.Menus` (library, not loaded in game).
+**Next:** Jacob's feedback on the look.
+**Blockers / questions:** none
+
 ## 2026-11-10 00:35 CT · jacob-claude
 **Done:** Restyled `StarterGui.EggRollVS` to match Jacob's UI kit: sharp corners, a dark window with the blue glare TopBar ("EGG ROLL"), item-card layout (name, rarity line, picture, stat box), banded 49-degree rarity gradients, and the opponent card turns the rolled rarity's colors. `ReplicatedStorage.DevDemo.EggRoll` updated to match.
 **Next:** Jacob's feedback; real Save Power vs Kick Power.
