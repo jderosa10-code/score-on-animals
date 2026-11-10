@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 19:45 CT · jacob-claude
+**Done:** Jacob resized `Workspace.Lobby` to 220 x 91 (z -147..-56). Moved only the walls to fit (4 `LobbyWall` parts + `LobbyArt.SouthWall`) and rebuilt grass caps (no overlaps), outer ground (20 studs) and drips. `Workspace.Plots` untouched; deepest pen back is 11 studs from the back wall. One undo step.
+**Next:** Plot ownership (spawn at your own plot); Save Power vs Kick Power.
+**Blockers / questions:** none
+
 ## 2026-11-10 19:35 CT · jacob-claude
 **Done:** Fixed the flickering pattern on the lobby's grass corners: the side `GrassCap`s overlapped the back and front caps (two textured tops in the same spot). Side caps now run z -157..-57 only; checked: no overlapping grass tops left. One undo step.
 **Next:** Plot ownership (spawn at your own plot); Save Power vs Kick Power.
