@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 09:25 CT · jacob-claude
+**Done:** Mystery egg swaps now punch the camera FOV in and out a little (bigger on the reveal) and show the egg's odds ("1/28") at the bottom of the screen in the TimingResult style (copy of `StarterGui.TimingResult` as `EggOdds`), colored by rarity, rainbow for Secret/Admin; the final odds pop bigger and fade. `EggRoll.chance` / `EggRoll.oddsText` added (Luck-aware). Code in `PenaltyDemoRunner`.
+**Next:** Save Power vs Kick Power.
+**Blockers / questions:** none
+
 ## 2026-11-10 09:05 CT · jacob-claude
 **Done:** Fixed the mystery egg sometimes vanishing between swaps (`PenaltyDemoRunner` mysteryEnter): the new egg is placed before it appears, the old one stays a frame longer, and it only squeezes down to 22% instead of 5%. Tested: 0 empty frames over a full walk-out.
 **Next:** Save Power vs Kick Power.
