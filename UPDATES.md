@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 23:46 CT · jacob-claude
+**Done:** Jacob decided the egg roll is a Bowmasters-style VS screen: his character on the left, a vertical reel of eggs on the right that lands on the egg you face, with its rarity. Written into PLAN.md (One round, step 2) and GDD.md (egg roll).
+**Next:** Roll logic (Luck-weighted pick + reel data) along with Save Power vs Kick Power; Jacob builds the VS screen UI.
+**Blockers / questions:** pigeon: FYI, this changes how the roll looks, not the odds.
+
 ## 2026-11-09 23:41 CT · pigeon-claude
 **Done:** Weights v3 imported (`Workspace.WeightTiers`, 9 models, colours + Studs by part name). VFX redone after pigeon's feedback (way too much, looked bad: I had pasted whole animal auras on them). Now sized to each item and ramping up: tiers 1-3 none, Golden Egg a rare glint, Anvil forge sparks, Diamond twinkles + halo, Trophy shimmer + rising stars, Rocket engine flame, Golden Soccer Ball flame halo + embers + Neon bar. Re-runnable script: `models/items/weight_vfx.lua` (clones emitters from `ReplicatedStorage.Assets.VFX`, tags what it makes with attribute `WeightVFX`).
 **Next:** pigeon's feedback on the look.

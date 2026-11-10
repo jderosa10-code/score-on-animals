@@ -37,6 +37,7 @@ The 76 untagged animals (mostly real-world dogs, reef fish, farm and savanna ani
 ## 3. The map and leagues
 **Map:** one small stadium, one net shared by all players, one kick area in front of it.
 - Walking into the kick area starts an **egg roll** on your screen (RNG spin, like an RNG game) from your league's pool, weighted by Luck.
+- **Roll screen is a Bowmasters-style VS screen** (Jacob, 9 Nov 2026): your character on the left, a vertical RNG reel on the right that ticks through eggs, slows down and lands on the one you face, showing its rarity. Jacob builds the screen; the Claudes build the roll logic (Luck-weighted pick, the reel list that ends on it, tick timing, sounds, then the egg hops in).
 - The rolled egg hops into the net **on your screen only**. Everyone kicks at the same net at once, so nobody queues.
 - Legendary and rarer rolls are shown to the whole server (the egg appears for everyone + an announcement).
 - Your animals live around the pitch (bench or plot per player; open question).

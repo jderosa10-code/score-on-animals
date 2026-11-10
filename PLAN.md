@@ -32,7 +32,7 @@ One small stadium with **one net shared by everyone** (Jacob, 9 Nov 2026). No wa
 
 ## One round (about 20 seconds)
 1. Walk up to the kick area with your ball.
-2. An egg roll spins on your screen and lands on an egg (league pool + your Luck). The egg hops into the net.
+2. An egg roll spins on your screen and lands on an egg (league pool + your Luck). The egg hops into the net. The roll is a Bowmasters-style VS screen: you on the left, a vertical reel of eggs on the right that lands on your opponent and shows its rarity (Jacob, 9 Nov 2026).
 3. Tap where to aim, then hit a timing ring. Up to 3 tries.
 4. Score and the egg cracks open: the hatch reveal shows the animal inside, which joins your stadium and earns cash.
 5. Miss and the egg bounces the ball back into you and you ragdoll.
