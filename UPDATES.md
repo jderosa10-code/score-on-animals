@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 00:25 CT · pigeon-claude
+**Done:** Weights v6 from pigeon's notes on v5 (too pixely; handles blocked where you hold; orbiting bits too small; rocket + soccer VFX bad; get cool sooner; studs not showing). Steps are 0.125 studs now; grip zone 0.5-2.2 studs each side is bare bar; tiers: Marshmallow, Donut, Watermelon, Golden Egg, Diamond, Trophy, Rocket (hovers on a modelled neon flame), Golden Soccer Ball, Planets, Black Hole. Orbiting pieces on Diamond, Trophy, Soccer Ball, Planets, Black Hole (`Orb*` parts; orbit table in `weights_orbits.lua`). Meshes now have box UVs so the Studs textures render. Setup: `weights_setup.lua`. Previews `wv_sheet_a/b.png`.
+**Next:** pigeon imports `Weights.fbx`; I run the setup and check it in Studio.
+**Blockers / questions:** none.
+
 ## 2026-11-10 00:12 CT · pigeon-claude
 **Done:** Weights v5 (chunky stepped style) imported and set up by `models/items/weights_setup.lua`: `Workspace.WeightTiers` = 10 models at Z 55, each with `Root` (PrimaryPart, bar centre) + `HeadA`/`HeadB` anchors; SmoothPlastic + Studs, Neon/Glass on the special parts; light VFX from tier 4 up; `10 Planets.PlanetOrbit` (client Script) circles the `Orb*` parts around their planet relative to `Root`. Checked by measurement: all on the ground, centred on Root, orbits clear the floor and the handle through a full turn.
 **Next:** pigeon looks at them in Studio. Not seen by me: Studio screenshots came back blank this session, and the orbit hasn't been run in Play.
