@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 20:55 CT · jacob-claude
+**Done:** You only see your own penalty. Egg, ball, VFX, sounds and crowd reactions were already client-only; now other players are hidden too. New `ReplicatedStorage.DevDemo.PenaltyState` (RemoteEvent): `PenaltyDemoRunner` fires true/false at round start/end, `ServerScriptService.PenaltyDemo` sets Player attribute `InPenalty`. New `StarterPlayerScripts.HideOtherPenalties` hides (LocalTransparencyModifier + no name tag) any other player in a penalty, and anyone in the stadium while you are in yours. Tested with one player: attribute flips on the server and back; own character stays visible.
+**Next:** Test with 2 players (Test > Clients and Servers); plot ownership; Save Power vs Kick Power.
+**Blockers / questions:** none
+
 ## 2026-11-10 20:45 CT · jacob-claude
 **Done:** Crowd cosmetics removed (345 parts) and all 232 fans in `Workspace.Crowd` recoloured as the classic noob (Bright yellow head/arms, Bright blue torso, Br. yellowish green legs). Animations and reactions unchanged. One undo step.
 **Next:** Plot ownership; Save Power vs Kick Power.
