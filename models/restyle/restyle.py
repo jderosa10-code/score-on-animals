@@ -20,7 +20,12 @@ EYE_DEPTH = 0.75     # eye flattened to 75% along the face normal (set-in look)
 EYE_OUT = 0.35       # eye centre sits this many half-depths outside the head surface
 EYE_MAX_FRAC = 0.13  # eye radius never more than 13% of the head's height
 BLUSH_SIZE = 0.5     # blush dome radius as a fraction of the eye radius
-ADD_BLUSH = False    # pigeon, 2026-11-09: "just remove the blush" (it never looked right on these models)
+ADD_BLUSH = False
+# per-animal tweaks on top of the defaults (pigeon: corgi "body shape weird and eyes too big")
+OVERRIDES = {
+    "Corgi1": dict(HEAD_SCALE=1.12, EYE_SCALE=1.12, EYE_MAX_FRAC=0.10, LEG_SCALE=0.9, WIDTH_SCALE=1.0),
+}
+DEFAULTS = None    # pigeon, 2026-11-09: "just remove the blush" (it never looked right on these models)
 ADD_SHINE = False    # the game's own eye texture already has a shine (pigeon: old eyes look much better)
 LEG_SCALE = 0.72
 WIDTH_SCALE = 1.08
@@ -533,6 +538,10 @@ GAP = 2.5
 report = {}
 pairs = []
 for name in names:
+    if DEFAULTS is None:
+        DEFAULTS = {k: globals()[k] for k in ("HEAD_SCALE", "EYE_SCALE", "EYE_MAX_FRAC", "LEG_SCALE", "WIDTH_SCALE")}
+    globals().update(DEFAULTS)
+    globals().update(OVERRIDES.get(name, {}))
     src = bpy.data.objects[name]
     co = [src.matrix_world @ v.co for v in src.data.vertices]
     mn = Vector((min(c.x for c in co), min(c.y for c in co), min(c.z for c in co)))
