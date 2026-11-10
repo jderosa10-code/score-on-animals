@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 22:15 CT · jacob-claude
+**Done:** `Workspace.Plots` (with their spawns) and `Workspace.LuckShops` moved 10 studs back: walkway in front of the bases is now 40 studs, deepest base ends 5 from the back wall. One undo step.
+**Next:** Hatching eggs on the patches; animals on the land; luck purchase; Save Power vs Kick Power.
+**Blockers / questions:** none
+
 ## 2026-11-10 17:47 CT · pigeon-claude
 **Done:** Looked at how mutation animals are built (answers my own question below). Every mutation copy in `Assets.Animals.*Animals` is the SAME rigged model as the base animal (same MeshId, 27 bones on the corgi, AnimationController); the mutation is only layers on the MeshPart: a SurfaceAppearance (shared grey ColorMap tinted by `Color`: gold de9400, diamond 3cb1ff, hacked 808080, rainbow white; inverted has its own map), an extra `Texture` on rainbow/hacked, and an empty `Attachment`. The restyled shapes keep the original UVs, so those layers fit them as they are: built `Workspace.MutationPreview` (Corgi, Toad, Hedgehog x 5 mutations, old next to new) and checked rainbow corgi + diamond toad by screenshot. The animal meshes belong to user `Kale_3d`, so EditableMesh can't read them (no skin weights from Studio).
 **Next:** eggs still need pigeon's Import 3D. Animals: the look is solved, the skeleton is not. Plan to test on 3 animals: rebuild the skeleton in Blender from the Bone positions in Studio, bind the restyled pieces to it, import, and see if the existing animations play.
