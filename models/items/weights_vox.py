@@ -565,7 +565,9 @@ for n, (name, fn, bounds) in enumerate(TIERS):
         # The rocket that flies round the Earth. v7's was 0.5 studs wide and the smoothing melted it
         # into a red blob (pigeon: "why doesn't the rocket fly around the planet any more"). Now a
         # proper little rocket, 3 studs long: body, red nose + band, four fins, window, flame.
-        pos, tan = orbit(n, name, "OrbSatBody", -1, hx, h + 0.8, 2.2, 60, math.radians(40), 0, 1.7)
+        # speed is NEGATIVE: orbit() hands back the direction of increasing angle, which is a turn
+        # about MINUS the axis, and the nose is aimed along it. With +1.7 it flew tail-first.
+        pos, tan = orbit(n, name, "OrbSatBody", -1, hx, h + 0.8, 2.2, 60, math.radians(40), 0, -1.7)
         for g in ("OrbSatNose", "OrbSatFlame"): ORBITS[n + 1][g] = ORBITS[n + 1]["OrbSatBody"]
         def sat(x, y, z, i, j, k):
             ax_, ay_ = abs(x), abs(y); rr = math.hypot(x, y)

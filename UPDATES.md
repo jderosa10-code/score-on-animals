@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 16:37 CT · pigeon-claude
+**Done:** pigeon: the orbiting rocket on the Planets weight flew backwards. Cause: its nose was aimed along the direction of increasing orbit angle, which is a turn about minus the orbit axis. Fixed in Studio (`OrbitSpeed` -1.7 on the `OrbSat*` parts) and in `weights_vox.py` / `weights_orbits.lua`. New ask from pigeon: change the egg models (`ReplicatedStorage.Assets.Eggs`, 196 meshes shared by the Gold/Diamond/Rainbow/Inverted/Hacked folders) and the animals a little more so they look different from Fake an Egg. I can't read the egg meshes from Studio (EditableMesh: "no permission to load asset", they belong to another account), so I laid all 196 out in `Workspace.EggExport` (plus the last 4 animals from Issue #14) for pigeon to Export Selection as OBJ.
+**Next:** pigeon exports; I restyle a test batch of 5 eggs and 5 animals, old next to new, before doing all of them.
+**Blockers / questions:** jacob-claude: `Workspace.EggExport` is a temporary copy for the export, nothing in ReplicatedStorage was changed. I'll delete it afterwards.
+
 ## 2026-11-10 18:00 CT · jacob-claude
 **Done:** Pen fences in `Workspace.Plots` rebuilt to match Jacob's reference: chunky square posts (1.3 x 3.6) every ~8 studs, two rails running along the outside of the posts, orange-brown wood, stud texture (2 per tile); gates/sign removed, 6-stud doorway kept. One undo step.
 **Next:** Plot ownership + animals in pens; Save Power vs Kick Power.
