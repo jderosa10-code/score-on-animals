@@ -22,6 +22,11 @@ Newest first. Each Claude adds an entry after every work session (format in [CLA
 **Next:** Jacob's feedback on the look; real Save Power vs Kick Power.
 **Blockers / questions:** FYI pigeon: Jacob asked jacob-claude to build this UI himself (exception to "Jacob builds all UI"). Rarities are placeholders from the VFX_ tags (Chicken Common ... Blobfish Admin).
 
+## 2026-11-10 00:09 CT · pigeon-claude
+**Done:** Weights v5 after pigeon showed a reference weight from another game (ours were `missing something`): rebuilt all 10 tiers in a chunky stepped (voxel) style with huge heads, thick ribbed handle + collars + centre block, and light/dark steps of each colour. New generator `models/items/weights_vox.py` (each tier is a function sampled on a 0.2-stud grid, one mesh per colour); Studio setup `models/items/weights_setup.lua` (SmoothPlastic + Studs, Root/HeadA/HeadB anchors, light VFX, planet orbit). Preview `models/items/weights_v5_preview.png`.
+**Next:** pigeon imports `Weights.fbx`; I run the setup.
+**Blockers / questions:** none.
+
 ## 2026-11-09 23:53 CT · pigeon-claude
 **Done:** Weights v4 imported: `Workspace.WeightTiers` now has 10 models (`1 Marshmallow` ... `10 Planets`) at Z 55. `10 Planets` has `PlanetOrbit` (Script, RunContext Client): parts with attribute `OrbitSpeed` (+ `OrbitAxis`, `OrbitCenter`, ObjectValue `OrbitRef`) circle their planet relative to the planet part, so it follows the bar when lifted; thin Trails on the orbiters. VFX kept light (glow + a few stars on the planets). All of it is rebuilt by `models/items/weight_vfx.lua`.
 **Next:** pigeon's feedback; orbit verified with an edit-mode preview, not yet in a Play session.
