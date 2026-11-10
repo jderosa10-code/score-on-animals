@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 00:35 CT · jacob-claude
+**Done:** Restyled `StarterGui.EggRollVS` to match Jacob's UI kit: sharp corners, a dark window with the blue glare TopBar ("EGG ROLL"), item-card layout (name, rarity line, picture, stat box), banded 49-degree rarity gradients, and the opponent card turns the rolled rarity's colors. `ReplicatedStorage.DevDemo.EggRoll` updated to match.
+**Next:** Jacob's feedback; real Save Power vs Kick Power.
+**Blockers / questions:** none
+
 ## 2026-11-10 00:20 CT · jacob-claude
 **Done:** Egg roll VS screen (Bowmasters style). UI `StarterGui.EggRollVS` (VSPanel.YouCard / VS / EggCard; reel slots clone `EggCard.Reel.Strip.SlotTemplate`), styled after Jacob's UI kit. Logic `ReplicatedStorage.DevDemo.EggRoll`: Luck-weighted pick, 30-egg reel that slows and lands on the winner (rarest egg often right after it), tick sound `Sounds.RollTick`, rarity/Save Power reveal, flash + sting for Legendary+. Hooked into `PenaltyDemoRunner`: every egg is now rolled.
 **Next:** Jacob's feedback on the look; real Save Power vs Kick Power.
