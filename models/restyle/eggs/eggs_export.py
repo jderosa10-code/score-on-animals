@@ -8,7 +8,7 @@ into the existing parts with ApplyMesh and those parts must not be turned.
 
 blender -b eggs_all.blend -P eggs_export.py -- <studio_eggs.txt> <out.fbx> <manifest.lua>
 """
-import bpy, sys, re
+import bpy, sys, re, math
 from mathutils import Vector, Matrix
 
 lst, fbx_out, manifest = sys.argv[sys.argv.index("--") + 1:][:3]
@@ -35,10 +35,20 @@ for i, o in enumerate(news):
     mn = Vector((min(p.x for p in cs), min(p.y for p in cs), min(p.z for p in cs)))
     mx = Vector((max(p.x for p in cs), max(p.y for p in cs), max(p.z for p in cs)))
     me.transform(Matrix.Translation(-(mn + mx) / 2))             # origin = box centre, like a MeshPart
-    c.matrix_world = Matrix.Translation(((i % 14) * 30.0, (i // 14) * 30.0, 10.0))
     size = mx - mn
+    # which way the egg leans: average corner position, as a fraction of its size, in ROBLOX mesh
+    # axes (x, up, -y). Studio reads the imported mesh back and compares, so a turned mesh is caught.
+    lc = [me.vertices[l.vertex_index].co for l in me.loops]
+    av = sum(lc, Vector()) / len(lc)
+    lean = (av.x / size.x, av.z / size.z, -av.y / size.y)
+    # The first export came into Studio with every mesh turned half a turn about the vertical axis
+    # (measured: mesh x = -Blender x, mesh z = +Blender y; the eggs' own meshes have x = +x, z = -y).
+    # So the mesh data is pre-turned half a turn here, which lands it the right way round.
+    me.transform(Matrix.Rotation(math.pi, 4, 'Z'))
+    c.matrix_world = Matrix.Translation(((i % 14) * 30.0, (i // 14) * 30.0, 10.0))
     lines.append(f'\t["{s["id"]}"] = {{ name = "{s["name"]}", size = Vector3.new({size.x:.4f}, {size.z:.4f}, {size.y:.4f}), '
-                 f'old = Vector3.new({s["size"][0]}, {s["size"][1]}, {s["size"][2]}) }},')
+                 f'old = Vector3.new({s["size"][0]}, {s["size"][1]}, {s["size"][2]}), '
+                 f'lean = Vector3.new({lean[0]:.4f}, {lean[1]:.4f}, {lean[2]:.4f}) }},')
     out.append(c)
 missing = [s["name"] + "=" + s["id"] for s in studio if not s["used"]]
 print("MATCHED", len(out), "UNMATCHED_OBJ", unmatched, "MISSING_FROM_EXPORT", missing)

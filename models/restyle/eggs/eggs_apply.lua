@@ -41,8 +41,13 @@ if imp:FindFirstChild("SOA_AxisO") then
 	for _, mk in ipairs({ O, Up, Fw }) do mk:Destroy() end
 end
 
--- 2. check every imported part: known id, not turned, right size
-local new, problems, turned = {}, {}, 0
+-- 2. check every imported part: known id, right size. And check the MESH DATA faces the right way:
+--    ApplyMesh copies the mesh as it is stored, whatever way the imported part is turned in the
+--    world, so the part's own rotation says nothing. Instead the mesh is read back (these meshes
+--    are ours, so EditableMesh may load them) and "which way it leans" is compared with the
+--    manifest: the average corner position as a fraction of the size, per axis.
+local new, problems, turned, tested = {}, {}, 0, 0
+local AS = game:GetService("AssetService")
 for _, p in ipairs(imp:GetChildren()) do
 	local id = p:IsA("MeshPart") and p.Name:match("^EGG_(%d+)")
 	if id then
@@ -50,20 +55,33 @@ for _, p in ipairs(imp:GetChildren()) do
 		if not m then
 			problems[#problems + 1] = p.Name .. ": not in the manifest"
 		else
-			local r = p.CFrame.Rotation
-			local off = (r.XVector - Vector3.xAxis).Magnitude + (r.YVector - Vector3.yAxis).Magnitude + (r.ZVector - Vector3.zAxis).Magnitude
-			if off > 0.02 then turned += 1 end
 			local ds = (p.Size - m.size).Magnitude
 			if ds > 0.05 then problems[#problems + 1] = string.format("%s (%s): size %s, expected %s", p.Name, m.name, tostring(p.Size), tostring(m.size)) end
 			new[id] = p
+			if m.lean and tested < 24 and math.max(math.abs(m.lean.X), math.abs(m.lean.Z)) > 0.04 then
+				tested += 1
+				local em = AS:CreateEditableMeshAsync(Content.fromUri(p.MeshId))
+				local mn, mx, sum, n = Vector3.one * math.huge, Vector3.one * -math.huge, Vector3.zero, 0
+				for _, v in ipairs(em:GetVertices()) do
+					local q = em:GetPosition(v)
+					mn = mn:Min(q); mx = mx:Max(q); sum += q; n += 1
+				end
+				local s, c = mx - mn, sum / n - (mn + mx) / 2
+				local got = Vector3.new(c.X / s.X, c.Y / s.Y, c.Z / s.Z)
+				if (got - m.lean).Magnitude > 0.03 then
+					turned += 1
+					problems[#problems + 1] = string.format("%s (%s): mesh leans %s, expected %s", p.Name, m.name, tostring(got), tostring(m.lean))
+				end
+				em:Destroy()
+			end
 		end
 	end
 end
 local count = 0
 for _ in pairs(new) do count += 1 end
-local head = string.format("imported eggs %d | turned parts %d | size problems %d", count, turned, #problems)
-if turned > 0 then
-	return head .. "\nSTOPPED: imported parts are still turned after the marker fix, so their meshes would sit sideways on the eggs. Nothing was changed.\n" .. table.concat(problems, "\n", 1, math.min(#problems, 8))
+local head = string.format("imported eggs %d | meshes read back %d, facing wrong %d | problems %d", count, tested, turned, #problems)
+if turned > 0 or tested == 0 then
+	return head .. "\nSTOPPED: the mesh data does not face the way the game's eggs do (or could not be read back), so the eggs would come out turned. Nothing was changed.\n" .. table.concat(problems, "\n", 1, math.min(#problems, 8))
 end
 
 local function swap(egg, src, m)

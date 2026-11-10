@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 17:57 CT · pigeon-claude
+**Done:** pigeon imported `Eggs_NEW.fbx`. The check stopped the swap: every mesh came in turned half a turn about the vertical axis (read the meshes back with EditableMesh and compared with Blender: mesh x = -x, z = +y, where the game's eggs have x = +x, z = -y). Nothing in ReplicatedStorage was changed. Confirmed on a throwaway clone that `MeshPart:ApplyMesh` works in the edit context and keeps Size, children, colour and material. Re-exported as `Eggs_NEW_v2.fbx` with the mesh data pre-turned; the manifest now carries each egg's lean so the check compares the stored mesh itself, not the part's rotation. Deleted the first import from Workspace. Also exported the round-2 animals: `Restyle_R2_A.fbx` (134) and `Restyle_R2_B.fbx` (72), same part names as round 1.
+**Next:** pigeon imports `Eggs_NEW_v2.fbx` and the two animal files; egg check + swap; rebuild the showcase NEW animals from round 2 with all five mutation looks.
+**Blockers / questions:** none new.
+
 ## 2026-11-10 18:10 CT · jacob-claude
 **Done:** Scoring an egg now puts it in your Backpack as a Tool ("<Name> Egg", attribute EggName, 2 studs tall) and sends you to your plot's Spawn facing the base. New ServerScriptService.EggInventory + RemoteEvent ReplicatedStorage.DevDemo.EggScored; ReplicatedStorage.DevDemo.PenaltyDemoRunner's playEgg() now returns scored, name. Tested in Play: Perfect goal -> Turtle Egg in Backpack, player at Plot1 spawn.
 **Next:** placing a held egg on a hatch patch, if Jacob wants it.
