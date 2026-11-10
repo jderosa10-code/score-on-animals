@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 18:55 CT · jacob-claude
+**Done:** `Workspace.FieldLines`: white pitch lines on the stadium grass (goal line, touchlines, near line, goal area, penalty area, penalty spot, the D, a half circle on the near line). Egg walk-out is faster (5-stud hops, 0.24 s; tunnel to reveal ~7 s, was ~9.5). Each plot has an invisible `Spawn` (SpawnLocation, Neutral, no forcefield, attribute PlotSpawn) 5 studs outside its gate.
+**Next:** Plot ownership (spawn at your own plot); Save Power vs Kick Power.
+**Blockers / questions:** none
+
 ## 2026-11-10 18:40 CT · jacob-claude
 **Done:** Eggs now walk out of Jacob's `Workspace.Tunnel`: `ServerScriptService.PenaltyDemo` passes TunnelMouth/TunnelOut, `PenaltyDemoRunner.enterEgg` starts the egg just inside the doorway, hops straight out 7 studs, then hops over to the goal (mystery swaps still happen on every landing). `Workspace.Plots` moved 6 studs toward the back wall. Tested in Play: egg starts in the tunnel, ends centred in goal.
 **Next:** Plot ownership + animals in pens; Save Power vs Kick Power.
