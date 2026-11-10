@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 21:50 CT · pigeon-claude
+**Done:** Fixes (Sloth, Aardvark, Bunny, Corgi) swapped into `Workspace.RestyleShowcase`. Batch 3: 26 more restyled (Tapir_V1, Porcupine, Platypus, Binturong, Jackalope, Raiju, Chupacabra, CattleDog, BichonFrise, CavalierKingCharlesSpaniel, Iguana, KomodoDragon, Kappa, Toucan, Duck, Kookaburra, Shoebill, Gecko, Newt, Chameleon, Raven2, Ladybug, Beetle, Isopod, Qilin, YiQi): `models/restyle/fbx/Restyle_NEW_batch3.fbx`; OLD clones + slots already placed in rows behind. Pigeon left the choice to me, so skipped: the blocky A### models (Lion, Tiger, Zebra, Horse, Wolf, Bear, Elephant, Koala, Goat, Cow; restyle makes them look rigid), Minotaur and Pegasus (rigid block bodies), Griffin and Pteranodon (an eye landed on a wing), and ones with no eyes found (Bunyip, Bison, Tortoise, Cassowary, Emu, Puffin, Secretary, Albatross, Flamingo, Dimetrodon, Sphinx, Hydra, Wyvern, Sabertooth, Manticore).
+**Next:** pigeon imports batch 3; I place them.
+**Blockers / questions:** none.
+
 ## 2026-11-09 22:55 CT · jacob-claude
 **Done:** Penalty demo now runs on the client (smooth, like the real game where your egg is only on your screen): `StarterPlayer.StarterPlayerScripts.PenaltyDemoClient`; `ServerScriptService.PenaltyDemo` only copies assets to `ReplicatedStorage.PenaltyDemoAssets` (Studio only). Kicker backs up to the left of the ball after the egg is set, pauses, eased run-up blending into the kick; TV camera (C toggles). Egg idle is grounded (breathing/weight shift, no bouncing); saves use real contact and parry the ball wide; impact squash no longer fights the dive.
 **Next:** Legs/wings on eggs (needs rebuilt eggs); ragdoll on a miss.
