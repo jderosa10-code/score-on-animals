@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 23:13 CT · pigeon-claude
+**Done:** Teeth fix imported: 19 NEW animals swapped in `Workspace.RestyleShowcase` at their original size (teeth/jaws now line up with the head).
+**Next:** the last 4 animals (#14); rigging the NEW models so they animate.
+**Blockers / questions:** #14.
+
 ## 2026-11-10 03:35 CT · jacob-claude
 **Done:** Sound pass in `ReplicatedStorage.DevDemo.Sounds`: new Kick (punchy hit), EggHop (cartoon boing, replaces the thud on egg hops), BarPop (pop when you stop the timing bar, pitch higher for better zones, double pop on PERFECT). Removed EggLand/Perfect/Good. `MASTER_VOLUME = 0.45` in the runner turns everything down.
 **Next:** Ragdoll on a miss; legs/wings on eggs.
