@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 19:05 CT · jacob-claude
+**Done:** Egg no longer walks through the net: `PenaltyDemoRunner.enterEgg` hops out of the tunnel, round the outside of the post on the tunnel side (3 studs in front of the goal line), then along to the middle. Tested: 0 frames inside the net. Plot `Spawn`s are invisible (no pad/decal, no collision) and sit 5 studs outside each gate.
+**Next:** Plot ownership (spawn at your own plot); Save Power vs Kick Power.
+**Blockers / questions:** none
+
 ## 2026-11-10 18:55 CT · jacob-claude
 **Done:** `Workspace.FieldLines`: white pitch lines on the stadium grass (goal line, touchlines, near line, goal area, penalty area, penalty spot, the D, a half circle on the near line). Egg walk-out is faster (5-stud hops, 0.24 s; tunnel to reveal ~7 s, was ~9.5). Each plot has an invisible `Spawn` (SpawnLocation, Neutral, no forcefield, attribute PlotSpawn) 5 studs outside its gate.
 **Next:** Plot ownership (spawn at your own plot); Save Power vs Kick Power.
