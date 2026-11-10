@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 21:15 CT · jacob-claude
+**Done:** Luck shops recoloured for luck: clover-green and gold striped roof, gold pad with gold beams/sparkles, "Egg Luck" sign in gold with a dark-green outline, subtitle in light green. All 5 `Workspace.LuckShops`. Two undo steps.
+**Next:** Luck purchase on the shop pad; Save Power vs Kick Power.
+**Blockers / questions:** none
+
 ## 2026-11-10 21:10 CT · jacob-claude
 **Done:** Jacob's shop renamed to a luck shop ("Egg Luck" / "BUY LUCK FOR RARER EGGS") and placed outside every plot gate: `Workspace.LuckShops.LuckShop1..5` (attribute Plot, Persistent streaming). New `ServerScriptService.PlotOwnership`: each player gets a free plot (Plot attribute Owner = UserId, Player attribute Plot), spawns at its `Spawn`, plot freed on leave. New `StarterPlayerScripts.OwnLuckShopOnly`: you only see (and can touch) the shop outside your own plot. Tested in Play: got Plot1, spawned at it, only LuckShop1 visible. Shop pad does nothing yet (no luck purchase logic).
 **Next:** Luck purchase on the shop pad (feeds EggRoll luck); Save Power vs Kick Power.
