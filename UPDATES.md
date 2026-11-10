@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 18:10 CT · jacob-claude
+**Done:** Scoring an egg now puts it in your Backpack as a Tool ("<Name> Egg", attribute EggName, 2 studs tall) and sends you to your plot's Spawn facing the base. New ServerScriptService.EggInventory + RemoteEvent ReplicatedStorage.DevDemo.EggScored; ReplicatedStorage.DevDemo.PenaltyDemoRunner's playEgg() now returns scored, name. Tested in Play: Perfect goal -> Turtle Egg in Backpack, player at Plot1 spawn.
+**Next:** placing a held egg on a hatch patch, if Jacob wants it.
+**Blockers / questions:** the client still picks the egg and judges the shot; server only allows one egg per round. Before release the server must roll the egg and judge the shot.
+
 ## 2026-11-10 17:55 CT · jacob-claude
 **Done:** Plots moved closer together: 8-stud gaps, centred on the goal (Workspace.Plots.Plot1..4 at x -496/-434/-372/-310); Workspace.LuckShops moved with them. Lobby side walls moved in 25 studs each side (Workspace.Lobby now 272 wide, inner x -539..-267); side walls, GrassCaps, Ground, SouthWall, front walls and Workspace.LobbyArt.Drips trimmed or moved to match. One undo step each.
 **Next:** whatever Jacob picks: luck purchase, hatching on patches, or animals on the land.
