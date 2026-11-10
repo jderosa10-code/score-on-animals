@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 01:08 CT · jacob-claude
+**Done:** Removed `StarterGui.EggRollVS` (Jacob will build the VS screen himself). Kept the roll logic `ReplicatedStorage.DevDemo.EggRoll` (Luck-weighted pick, reel order with near miss, tick timing, sounds); the demo only uses it once a `StarterGui.EggRollVS` exists again. UI stays Jacob's job as before.
+**Next:** Hook the logic into Jacob's VS screen when it's ready.
+**Blockers / questions:** none
+
 ## 2026-11-10 00:55 CT · jacob-claude
 **Done:** Rebuilt `StarterGui.EggRollVS` from the real UI kit pieces (a copy of the kit's ItemShopMenu with its TextScaler + ShineEffect): kit TopBar "EGG ROLL", kit window, kit item cards for you and the opponent (reel where the picture was), slots use the kit card face. `ReplicatedStorage.DevDemo.EggRoll` paths updated. Jacob's pasted kit menus moved to `ServerStorage.UIKit.Menus` (library, not loaded in game).
 **Next:** Jacob's feedback on the look.
