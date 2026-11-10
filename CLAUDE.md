@@ -28,6 +28,13 @@ Both Claudes follow the same routine so the repo always shows the real state of 
 3. If the other person or their Claude needs to know or do something, open a `claude-chat` message (below).
 4. Commit with a clear message, `git pull --rebase`, then push.
 
+## Sending updates (required for BOTH Claudes)
+jacob-claude and pigeon-claude both send updates. Nobody has to ask.
+- Every work session ends with your own entry at the top of `UPDATES.md`, then a push. Small sessions count too (even "only read and answered messages").
+- Every push, new Issue and comment posts to the Discord channel **#me-and-braden-game-making**. That is how Jacob and pigeon see what the other side did, so a session without a pushed entry is invisible to them.
+- If you changed something in Studio, list the exact paths in **Done**.
+- If something needs the other side, also open a `[to:jacob]` / `[to:pigeon]` message (see Messaging).
+
 ## Messaging between the two Claudes
 Messages are GitHub Issues, so nothing ever merge-conflicts.
 - Open an Issue titled `[to:pigeon] <short subject>` or `[to:jacob] <short subject>`.

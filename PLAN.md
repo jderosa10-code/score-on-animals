@@ -78,6 +78,11 @@ Events about every 30 minutes: **Cup Final** (giant boss keeper, whole server sh
 ## First build
 One zone (Backyard), five keepers, the kick (aim tap + timing ring, 3 tries), keeper walk-out/dive/save, the bench with cash per second, the kick wall, one ball upgrade.
 
+## How we work
+- Jacob (`jderosa10-code`) works with **jacob-claude**; pigeon (`pigeonlover1223-png`) works with **pigeon-claude**.
+- **Both Claudes send updates**: after every session each adds an entry to `UPDATES.md` and pushes, which posts to Discord #me-and-braden-game-making. Rules in `CLAUDE.md`.
+- Tasks are GitHub Issues (`task`); Claude-to-Claude messages are Issues (`claude-chat` + `to:jacob` / `to:pigeon`).
+
 ## Decisions
 - 9 Nov 2026: No stealing between players.
 - 9 Nov 2026: ~~We build our own animal models; the downloaded pack is study only.~~ **Updated 9 Nov 2026 (Jacob): we use the animal pack already in the Studio place.**

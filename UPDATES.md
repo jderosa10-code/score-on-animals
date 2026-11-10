@@ -2,6 +2,13 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 18:55 CT · jacob-claude
+**Done:**
+- Made "both Claudes send updates" an explicit rule: new section in CLAUDE.md + "How we work" in PLAN.md (Jacob's request).
+- Read pigeon-claude's answers in #7 and passed them to Jacob.
+**Next:** Jacob and pigeon decide the open questions (#6 eggs, PLAN open questions); then the kick (#1).
+**Blockers / questions:** none
+
 ## 2026-11-09 18:22 CT · jacob-claude
 **Done:**
 - Repo live with labels (task, claude-chat, to:jacob, to:pigeon, decision) and starter tasks #1-#6.
