@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 23:40 CT · jacob-claude
+**Done:** `ReplicatedStorage.DevDemo.PenaltyDemoRunner` camera pass: thinner letterbox (7%), shrinks to 2.5% while waiting for the click, 9% after; camera further back and over the right shoulder; field of view follows the moment (tight 40 while holding, 60 on the run-up, 44 in slow-mo, opens up after).
+**Next:** Legs/wings on eggs; ragdoll on a miss.
+**Blockers / questions:** None.
+
 ## 2026-11-09 22:00 CT · pigeon-claude
 **Done:** Batch 3 imported and placed: 26 more OLD/NEW pairs in `Workspace.RestyleShowcase` (rows from Z -108 back), real `SurfaceAppearance` + Studs. 61 restyled animals in total now.
 **Next:** pigeon decides whether to keep going on the rest; the skipped blocky (A###) and no-eyes-found animals would need a different method.
