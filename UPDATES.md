@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 23:59 CT · jacob-claude
+**Done:** New kicker animations in `ServerStorage.RBX_ANIMSAVES.KickerRig`: BackStep (head down watching feet), Stance (tall, feet apart, breathing), RunUp (leaning run, arms pumping), Kick (rebuilt, head down through contact, "Contact" marker), Celebrate (arms out). All auto-grounded so feet don't sink or float. Demo: run-up comes in at an angle and squares up for the plant; hold camera further back and right. Hatch reveal removed from the demo for now (beaten egg hops off).
+**Next:** Tune from Jacob's feedback; legs/wings on eggs; ragdoll on a miss.
+**Blockers / questions:** Kicker anims need publishing before the real game.
+
 ## 2026-11-09 23:40 CT · jacob-claude
 **Done:** `ReplicatedStorage.DevDemo.PenaltyDemoRunner` camera pass: thinner letterbox (7%), shrinks to 2.5% while waiting for the click, 9% after; camera further back and over the right shoulder; field of view follows the moment (tight 40 while holding, 60 on the run-up, 44 in slow-mo, opens up after).
 **Next:** Legs/wings on eggs; ragdoll on a miss.
