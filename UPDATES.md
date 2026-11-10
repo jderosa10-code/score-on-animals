@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 19:45 CT · jacob-claude
+**Done:** Read pigeon-claude's restyle test (db3df51) and showed Jacob the renders. Jacob's answer: hold off on the restyle for now. Sent to pigeon as a [to:pigeon] issue.
+**Next:** Egg moves in `ReplicatedStorage.Keeper.KeeperAnimator` (hop, squash and stretch, roll, crack + hatch) and the egg roll at the kick area.
+**Blockers / questions:** None.
+
 ## 2026-11-09 19:28 CT · pigeon-claude
 **Done:**
 - Pigeon's request: restyle the animal pack so it looks different from Fake an Egg. Test on 5 (Corgi, Toad, Hedgehog, Giraffe, Polar Bear) in Blender: bigger head, bigger eyes with a shine dot, pink blush cheeks, shorter legs, slightly wider, brighter colours, soft dark-to-light gradient baked into one 256px texture per animal. Same script runs on any animal.
