@@ -1,13 +1,17 @@
-"""Joke weight tiers for Score on Animals. Normal Roblox quality: simple, low-poly, plain colours
-(pigeon: "not too high quality, just a normal weight, maybe with marshmallows as a joke, then it
-gets different"). One barbell per tier, same plain bar, the plates change:
-  1 Marshmallow  2 Donut  3 Watermelon  4 Golden Egg  5 Anvil
+"""Weight tiers for Score on Animals (v3).
+
+pigeon's notes: Roblox quality (not too detailed, but higher than v1 is fine), funny progression,
+SAME LOOK AS THE ANIMALS (flat facets; Studs texture added in Studio), real ITEMS not ideas, and VFX
+on the good ones (added in Studio from Jacob's VFX library).
+  1 Marshmallow  2 Donut (sprinkles)  3 Watermelon (cut halves, red + seeds)  4 Golden Egg  5 Anvil
+  6 Diamond  7 Trophy  8 Rocket  9 Flaming Golden Soccer Ball
+Every object is split so it has ONE material, and named  Weight<N>_<Tier>_<Part>__<Material>
+(Roblox gives a MeshPart one colour; Studio colours each part from the material name).
 1 unit = 1 stud. Each tier lies on the ground, bar along X, bar centre above its own origin.
-Objects are named Weight<N>_<Tier>_<Part> so Studio can split them into one model per tier.
 
 blender -b --factory-startup -P weights.py -- <out.blend> <out.fbx> <render.png>
 """
-import bpy, sys, math, bmesh
+import bpy, sys, math, bmesh, random
 from mathutils import Matrix, Vector
 
 argv = sys.argv[sys.argv.index("--") + 1:]
@@ -16,202 +20,249 @@ ns = {}
 exec(open(r"C:\Users\ortho\HomeRunToTheMoon\models\item_kit.py").read(), ns)
 lathe, torus, mat, collection, _obj = ns["lathe"], ns["torus"], ns["mat"], ns["collection"], ns["_obj"]
 bpy.ops.wm.read_factory_settings(use_empty=True)
+random.seed(11)
 
-M = {
-    "bar": mat("Bar", "#8C8F99", rough=0.4, metal=0.3),
-    "marsh": mat("Marshmallow", "#FFF4EA", rough=0.6),
-    "dough": mat("Dough", "#E3A35A", rough=0.5),
-    "icing": mat("Icing", "#FF7EB6", rough=0.35),
-    "melon": mat("Melon", "#4CC046", rough=0.4),
-    "melon_dk": mat("MelonStripe", "#1E6B22", rough=0.4),
-    "gold": mat("Gold", "#F7C440", rough=0.25, metal=0.5),
-    "anvil": mat("Anvil", "#3A3D46", rough=0.45, metal=0.3),
-    "bar_gold": mat("BarGold", "#F7C440", rough=0.25, metal=0.5),
-    "bar_dark": mat("BarDark", "#2A2A30", rough=0.4, metal=0.3),
-    "crystal": mat("Crystal", "#5BE7FF", rough=0.1),
-    "rock": mat("Rock", "#2B201C", rough=0.7),
-    "lava": mat("Lava", "#FF6A1A", rough=0.4),
-    "planet": mat("Planet", "#7B4DFF", rough=0.35),
-    "ring": mat("Ring", "#FF5FD8", rough=0.3),
-    "sun": mat("Sun", "#FFD23A", rough=0.3),
-    "flare": mat("Flare", "#FF8A00", rough=0.3),
+# material name -> preview colour (Studio has the same table)
+COL = {
+    "Bar": "#8C8F99", "Chrome": "#D7DCE6", "BarGold": "#F7C440",
+    "Marshmallow": "#FFF4EA", "Dough": "#E3A35A", "Icing": "#FF7EB6",
+    "SprinkleY": "#FFE14D", "SprinkleB": "#4DB8FF", "SprinkleG": "#6BE36B", "SprinkleW": "#FFFFFF",
+    "Rind": "#2E9B35", "RindStripe": "#1D6A23", "RindIn": "#E4F7C8", "Flesh": "#FF4D5E", "Seed": "#1A1A1A",
+    "Gold": "#F7C440", "Anvil": "#3A3D46",
+    "Diamond": "#8DF4FF",
+    "TrophyGold": "#FFC93D", "TrophyBase": "#2A2A30",
+    "RocketBody": "#F2F2F2", "RocketRed": "#E8262B", "RocketWindow": "#4DB8FF", "Nozzle": "#5A5F6B",
+    "BallGold": "#F7C440", "BallBlack": "#1E1E24",
 }
-# glowing parts render bright in the preview (in Studio they get Neon material)
-for k in ("lava", "ring", "sun", "flare"):
-    bs = M[k].node_tree.nodes["Principled BSDF"]
-    bs.inputs["Emission Color"].default_value = bs.inputs["Base Color"].default_value
-    bs.inputs["Emission Strength"].default_value = 2.0
-SIDES = 14   # low-poly on purpose
+M = {k: mat(k, v, rough=0.3) for k, v in COL.items()}
+SIDES = 20
 
 
-def box(name, size, center, m, coll):
+def box(name, size, center, m, coll, rot=None):
     bm = bmesh.new()
     bmesh.ops.create_cube(bm, size=1.0)
     bmesh.ops.scale(bm, vec=Vector(size), verts=bm.verts[:])
+    if rot is not None:
+        bmesh.ops.transform(bm, matrix=rot, verts=bm.verts[:])
     return _obj(name, bm, m, coll, center, smooth=False)
 
 
-def bar(coll, prefix, h, m=None):
-    m = m or M["bar"]
-    lathe(prefix + "Bar", [(-4.2, 0.16), (4.2, 0.16)], 10, m, coll, axis='Y', center=(0, 0, h))
+def bar(coll, p, h, m):
+    lathe(p + "Bar", [(-4.2, 0.17), (4.2, 0.17)], 12, m, coll, axis='Y', center=(0, 0, h))
     for s in (1, -1):
-        a, b = sorted((s * 4.2, s * 4.5))
-        lathe(prefix + f"End{s}", [(a, 0.26), (b, 0.26)], 10, m, coll, axis='Y', center=(0, 0, h))
+        a, b = sorted((s * 4.2, s * 4.55))
+        lathe(p + f"End{s}", [(a, 0.28), (b, 0.28)], 12, m, coll, axis='Y', center=(0, 0, h))
 
 
-def tier_marshmallow(coll, p):
+# ---------------- tiers ----------------
+def t_marshmallow(c, p):
     R, t, h = 1.05, 0.95, 1.05
-    bar(coll, p, h)
+    bar(c, p, h, M["Bar"])
     for s in (1, -1):
         for i in range(2):
             y0 = 2.3 + i * (t + 0.08)
             prof = [(0, R - 0.25), (0.15, R - 0.03), (0.3, R), (t - 0.3, R), (t - 0.15, R - 0.03), (t, R - 0.25)]
             prof = [(s * (y0 + a), r) for a, r in prof]
-            lathe(p + f"Marsh{i}_{s}", prof if s > 0 else prof[::-1], SIDES, M["marsh"], coll, axis='Y', center=(0, 0, h))
+            lathe(p + f"Marsh{i}_{s}", prof if s > 0 else prof[::-1], SIDES, M["Marshmallow"], c, axis='Y', center=(0, 0, h))
 
 
-def tier_donut(coll, p):
-    h = 1.2
-    bar(coll, p, h)
+def t_donut(c, p):
+    h, R, r = 1.2, 0.78, 0.42
+    bar(c, p, h, M["Bar"])
+    cols = ["SprinkleY", "SprinkleB", "SprinkleG", "SprinkleW"]
     for s in (1, -1):
         for i in range(2):
             y = s * (2.6 + i * 0.85)
-            torus(p + f"Dough{i}_{s}", 0.78, 0.42, M["dough"], coll, axis='Y', center=(0, y, h), seg=14, ring=8)
-            torus(p + f"Icing{i}_{s}", 0.78, 0.4, M["icing"], coll, axis='Y', center=(0, y + s * 0.12, h),
-                  seg=14, ring=8, squash=0.75)
+            torus(p + f"Dough{i}_{s}", R, r, M["Dough"], c, axis='Y', center=(0, y, h), seg=20, ring=10)
+            yi = y + s * 0.12
+            torus(p + f"Icing{i}_{s}", R, 0.4, M["Icing"], c, axis='Y', center=(0, yi, h), seg=20, ring=10, squash=0.75)
+            # sprinkles on the outer (visible) icing face, one object per colour
+            bms = {k: bmesh.new() for k in cols}
+            for _ in range(46):
+                a = random.uniform(0, 2 * math.pi)
+                b = random.uniform(0.25, 1.35)
+                rr = R + 0.4 * math.cos(b)
+                n = Vector((math.cos(b) * math.cos(a), s * math.sin(b), math.cos(b) * math.sin(a))).normalized()
+                pos = Vector((rr * math.cos(a), yi + s * 0.4 * 0.75 * math.sin(b), h + rr * math.sin(a))) + n * 0.03
+                t1 = n.cross(Vector((0, 0, 1)) if abs(n.z) < 0.9 else Vector((1, 0, 0))).normalized()
+                ang = random.uniform(0, math.pi)
+                tang = (t1 * math.cos(ang) + n.cross(t1) * math.sin(ang)).normalized()
+                bt = n.cross(tang)
+                mtx = Matrix((tang, bt, n)).transposed().to_4x4()
+                bm = bms[random.choice(cols)]
+                g = bmesh.ops.create_cube(bm, size=1.0)
+                bmesh.ops.scale(bm, vec=(0.22, 0.06, 0.06), verts=g["verts"])
+                bmesh.ops.transform(bm, matrix=Matrix.Translation(pos) @ mtx, verts=g["verts"])
+            for k, bm in bms.items():
+                _obj(p + f"Sprinkles{i}{k}_{s}", bm, M[k], c, (0, 0, 0), smooth=False)
 
 
-def tier_watermelon(coll, p):
-    h, R, L = 1.3, 1.3, 1.9
-    bar(coll, p, h)
+def t_watermelon(c, p):
+    h, R, L, y0 = 1.35, 1.35, 1.25, 2.25
+    bar(c, p, h, M["Bar"])
     for s in (1, -1):
-        prof = [(0, 0.15)] + [(L / 2 - L / 2 * math.cos(math.pi * k / 6), R * math.sin(math.pi * k / 6) + 0.05)
-                              for k in range(1, 6)] + [(L, 0.15)]
-        prof = [(s * (2.3 + a), r) for a, r in prof]
-        o = lathe(p + f"Melon_{s}", prof if s > 0 else prof[::-1], SIDES, M["melon"], coll, axis='Y', center=(0, 0, h))
-        # dark stripes: every other column of faces around the melon
-        o.data.materials.append(M["melon_dk"])
+        prof = [(y0 + L * (1 - math.cos(t)), R * math.sin(t) + 0.02)
+                for t in (math.pi / 2 * k / 8 for k in range(9))]
+        prof = [(s * yy, rr) for yy, rr in prof]
+        o = lathe(p + f"Rind_{s}", prof if s > 0 else prof[::-1], SIDES, M["Rind"], c, axis='Y', center=(0, 0, h))
+        o.data.materials.append(M["RindStripe"])
         for f in o.data.polygons:
-            c = f.center
-            ang = math.atan2(c.z - h, c.x)
-            f.material_index = int(((ang + math.pi) / (2 * math.pi)) * SIDES + 0.5) % 2
+            ang = math.atan2(f.center.z - h, f.center.x)
+            if abs(f.center.y) < y0 + L - 0.02:
+                f.material_index = int(((ang + math.pi) / (2 * math.pi)) * SIDES) % 2
+        face = y0 + L
+        for nm, rad, d0, d1, m in (("RindIn", R * 0.97, 0.0, 0.03, "RindIn"), ("Flesh", R * 0.86, 0.0, 0.06, "Flesh")):
+            pr = [(s * (face + d0), rad), (s * (face + d1), rad)]
+            lathe(p + f"{nm}_{s}", pr if s > 0 else pr[::-1], SIDES, M[m], c, axis='Y', center=(0, 0, h))
+        bm = bmesh.new()
+        for k in range(12):
+            a = 2 * math.pi * k / 12 + random.uniform(-0.15, 0.15)
+            rr = R * random.uniform(0.4, 0.66)
+            g = bmesh.ops.create_icosphere(bm, subdivisions=1, radius=0.09)
+            bmesh.ops.scale(bm, vec=(1.0, 0.35, 1.6), verts=g["verts"])
+            bmesh.ops.rotate(bm, verts=g["verts"], cent=Vector(), matrix=Matrix.Rotation(-a + math.pi / 2, 3, 'Y'))
+            bmesh.ops.translate(bm, verts=g["verts"], vec=(rr * math.cos(a), s * (face + 0.07), h + rr * math.sin(a)))
+        _obj(p + f"Seeds_{s}", bm, M["Seed"], c, (0, 0, 0), smooth=False)
 
 
-def tier_egg(coll, p):
-    H, W = 2.9, 1.05      # standing eggs, the bar goes through their widest part
-    h = H * 0.42
-    bar(coll, p, h)
+def t_egg(c, p):
+    H, W = 2.9, 1.05
+    bar(c, p, H * 0.42, M["Bar"])
     for s in (1, -1):
-        # egg = ellipse that gets a bit narrower toward the top (blunt, not pointy)
         prof = [(0, 0.02)] + [(H * u, W * 2 * math.sqrt(u * (1 - u)) * (1.1 - 0.3 * u))
-                              for u in (k / 12 for k in range(1, 12))] + [(H, 0.02)]
-        lathe(p + f"Egg_{s}", prof, SIDES, M["gold"], coll, axis='Z', center=(0, s * 3.0, 0))
+                              for u in (k / 14 for k in range(1, 14))] + [(H, 0.02)]
+        lathe(p + f"Egg_{s}", prof, SIDES, M["Gold"], c, axis='Z', center=(0, s * 3.0, 0))
 
 
-def tier_anvil(coll, p):
-    h = 1.45
-    bar(coll, p, h)
+def t_anvil(c, p):
+    bar(c, p, 1.45, M["Bar"])
     for s in (1, -1):
         y = s * 2.9
-        box(p + f"Base_{s}", (1.7, 1.0, 0.45), (0, y, 0.225), M["anvil"], coll)
-        box(p + f"Waist_{s}", (0.9, 0.65, 0.6), (0, y, 0.75), M["anvil"], coll)
-        box(p + f"Top_{s}", (2.0, 1.0, 0.6), (0, y, 1.35), M["anvil"], coll)
-        # horn pointing forward
+        box(p + f"Base_{s}", (1.7, 1.0, 0.45), (0, y, 0.225), M["Anvil"], c)
+        box(p + f"Waist_{s}", (0.9, 0.65, 0.6), (0, y, 0.75), M["Anvil"], c)
+        box(p + f"Top_{s}", (2.0, 1.0, 0.6), (0, y, 1.35), M["Anvil"], c)
         bm = bmesh.new()
         bmesh.ops.create_cone(bm, cap_ends=True, segments=8, radius1=0.32, radius2=0.02, depth=1.1)
         bmesh.ops.rotate(bm, verts=bm.verts[:], cent=Vector(), matrix=Matrix.Rotation(math.radians(-90), 3, 'Y'))
-        _obj(p + f"Horn_{s}", bm, M["anvil"], coll, (1.55, y, 1.45), smooth=False)
+        _obj(p + f"Horn_{s}", bm, M["Anvil"], c, (1.55, y, 1.45), smooth=False)
 
 
-import random
-random.seed(7)
-
-
-def ico(name, radius, center, m, coll, subdiv=1, scale=(1, 1, 1), jitter=0.0):
-    bm = bmesh.new()
-    bmesh.ops.create_icosphere(bm, subdivisions=subdiv, radius=radius)
-    if jitter:
-        for v in bm.verts:
-            v.co *= 1 + random.uniform(-jitter, jitter)
-    bmesh.ops.scale(bm, vec=Vector(scale), verts=bm.verts[:])
-    return _obj(name, bm, m, coll, center, smooth=False)
-
-
-def tier_crystal(coll, p):
-    h = 1.6
-    bar(coll, p, h, M["bar_gold"])
+def t_diamond(c, p):
+    # classic cut gem standing on its point, bar through the girdle
+    bar(c, p, 1.25, M["Chrome"])
     for s in (1, -1):
-        ico(p + f"Gem_Glass_{s}", 1.15, (0, s * 3.0, h), M["crystal"], coll, subdiv=0, scale=(1.05, 1.05, 1.4))
-        for k, (dx, dz) in enumerate([(0.85, -1.0), (-0.85, -1.0)]):
-            ico(p + f"Shard{k}_Glass_{s}", 0.42, (dx, s * 3.0, h + dz + 0.05), M["crystal"], coll, subdiv=0,
-                scale=(1, 1, 1.7))
+        prof = [(0.0, 0.0), (1.15, 1.25), (1.32, 1.25), (1.7, 0.92), (1.85, 0.62)]
+        lathe(p + f"Gem_{s}", prof, 8, M["Diamond"], c, axis='Z', center=(0, s * 3.0, 0))
 
 
-def tier_lava(coll, p):
-    h = 1.35
-    bar(coll, p, h, M["bar_dark"])
+def t_trophy(c, p):
+    h = 2.05
+    bar(c, p, h, M["BarGold"])
     for s in (1, -1):
-        ico(p + f"Core_Neon_{s}", 1.1, (0, s * 3.0, h), M["lava"], coll, subdiv=1)   # pokes out as cracks
-        ico(p + f"Rock_{s}", 1.32, (0, s * 3.0, h), M["rock"], coll, subdiv=1, jitter=0.22)
+        y = s * 3.1
+        box(p + f"Base_{s}", (1.5, 1.5, 0.4), (0, y, 0.2), M["TrophyBase"], c)
+        lathe(p + f"Stem_{s}", [(0.4, 0.55), (0.6, 0.45), (0.75, 0.2), (1.1, 0.16), (1.2, 0.3), (1.3, 0.2)],
+              SIDES, M["TrophyGold"], c, axis='Z', center=(0, y, 0))
+        lathe(p + f"Cup_{s}", [(1.3, 0.25), (1.55, 0.72), (1.95, 0.98), (2.5, 1.1), (2.62, 1.18), (2.7, 1.1)],
+              SIDES, M["TrophyGold"], c, axis='Z', center=(0, y, 0))
+        for sx in (1, -1):
+            o = torus(p + f"Handle{sx}_{s}", 0.38, 0.1, M["TrophyGold"], c, axis='Y', center=(0, 0, 0), seg=14, ring=6)
+            o.data.transform(Matrix.Translation((sx * 1.15, y, 2.15)))
 
 
-def tier_planet(coll, p):
-    h = 1.6
-    bar(coll, p, h, M["bar_gold"])
-    for s in (1, -1):
-        bm = bmesh.new()
-        bmesh.ops.create_uvsphere(bm, u_segments=14, v_segments=9, radius=1.25)
-        _obj(p + f"Planet_{s}", bm, M["planet"], coll, (0, s * 3.0, h), smooth=False)
-        o = torus(p + f"Ring_Neon_{s}", 1.85, 0.13, M["ring"], coll, axis='Z', center=(0, 0, 0),
-                  seg=24, ring=4, squash=0.35)
-        o.data.transform(Matrix.Rotation(math.radians(28 * s), 4, 'X'))
-        o.data.transform(Matrix.Translation((0, s * 3.0, h)))
-        for f in o.data.polygons: f.use_smooth = False
-
-
-def tier_sun(coll, p):
+def t_rocket(c, p):
     h = 1.7
-    bar(coll, p, h, M["bar_gold"])
+    bar(c, p, h, M["BarGold"])
     for s in (1, -1):
-        c = Vector((0, s * 3.1, h))
-        ico(p + f"Sun_Neon_{s}", 1.1, c, M["sun"], coll, subdiv=1)
+        y = s * 3.1
+        lathe(p + f"Nozzle_{s}", [(0.3, 0.42), (0.6, 0.3)], 12, M["Nozzle"], c, axis='Z', center=(0, y, 0))
+        lathe(p + f"Body_{s}", [(0.6, 0.6), (2.7, 0.62)], SIDES, M["RocketBody"], c, axis='Z', center=(0, y, 0))
+        lathe(p + f"Band_{s}", [(2.0, 0.65), (2.25, 0.65)], SIDES, M["RocketRed"], c, axis='Z', center=(0, y, 0))
+        lathe(p + f"Nose_{s}", [(2.7, 0.62), (3.3, 0.45), (3.75, 0.15), (3.85, 0.0)], SIDES, M["RocketRed"], c,
+              axis='Z', center=(0, y, 0))
+        for k in range(4):
+            a = math.pi / 4 + k * math.pi / 2
+            rot = Matrix.Rotation(a, 4, 'Z')
+            bm = bmesh.new()
+            vs = [bm.verts.new(v) for v in [(0.45, -0.05, 0.0), (1.25, -0.05, 0.0), (0.45, -0.05, 1.5),
+                                            (0.45, 0.05, 0.0), (1.25, 0.05, 0.0), (0.45, 0.05, 1.5)]]
+            bm.faces.new((vs[0], vs[1], vs[2])); bm.faces.new((vs[5], vs[4], vs[3]))
+            bm.faces.new((vs[0], vs[3], vs[4], vs[1])); bm.faces.new((vs[1], vs[4], vs[5], vs[2]))
+            bm.faces.new((vs[2], vs[5], vs[3], vs[0]))
+            bmesh.ops.transform(bm, matrix=rot, verts=bm.verts[:])
+            _obj(p + f"Fin{k}_{s}", bm, M["RocketRed"], c, (0, y, 0), smooth=False)
+        for sx in (1, -1):   # round window front and back
+            bm = bmesh.new()
+            bmesh.ops.create_circle(bm, cap_ends=True, segments=12, radius=0.24)
+            g = bmesh.ops.extrude_face_region(bm, geom=bm.faces[:])
+            bmesh.ops.translate(bm, vec=(0, 0, 0.06), verts=[e for e in g["geom"] if isinstance(e, bmesh.types.BMVert)])
+            bmesh.ops.rotate(bm, verts=bm.verts[:], cent=Vector(), matrix=Matrix.Rotation(math.radians(90 * sx), 3, 'Y'))
+            _obj(p + f"Window{sx}_{s}", bm, M["RocketWindow"], c, (sx * 0.6, y, 2.45), smooth=False)
+
+
+def t_soccer(c, p):
+    Rb, h = 1.45, 1.45
+    bar(c, p, h, M["BarGold"])
+    for s in (1, -1):
         bm = bmesh.new()
-        tmp = bmesh.new()
-        dirs = [v.co.normalized() for v in bmesh.ops.create_icosphere(tmp, subdivisions=0, radius=1)["verts"]]
-        tmp.free()
-        for d in dirs:
-            cone = bmesh.ops.create_cone(bm, cap_ends=True, segments=5, radius1=0.28, radius2=0.0, depth=0.8)
-            vs = cone["verts"]
-            rot = Vector((0, 0, 1)).rotation_difference(d).to_matrix().to_4x4()
-            bmesh.ops.transform(bm, matrix=Matrix.Translation(d * 1.3) @ rot, verts=vs)
-        _obj(p + f"Flares_Neon_{s}", bm, M["flare"], coll, tuple(c), smooth=False)
+        bmesh.ops.create_icosphere(bm, subdivisions=0, radius=1.0)
+        res = bmesh.ops.bevel(bm, geom=bm.verts[:], offset=33.3, offset_type='PERCENT', affect='VERTICES')
+        pent = set(res["faces"])
+        for v in bm.verts:
+            v.co = v.co.normalized() * Rb
+        me = bpy.data.meshes.new(p + f"Ball_{s}")
+        for f in bm.faces:
+            f.material_index = 1 if f in pent else 0
+        bmesh.ops.translate(bm, vec=(0, s * 3.2, h), verts=bm.verts[:])
+        bm.to_mesh(me); bm.free()
+        me.materials.append(M["BallGold"]); me.materials.append(M["BallBlack"])
+        o = bpy.data.objects.new(p + f"Ball_{s}", me); c.objects.link(o)
 
 
-TIERS = [("Marshmallow", tier_marshmallow), ("Donut", tier_donut), ("Watermelon", tier_watermelon),
-         ("GoldenEgg", tier_egg), ("Anvil", tier_anvil), ("Crystal", tier_crystal), ("Lava", tier_lava),
-         ("Planet", tier_planet), ("Sun", tier_sun)]
+TIERS = [("Marshmallow", t_marshmallow), ("Donut", t_donut), ("Watermelon", t_watermelon), ("GoldenEgg", t_egg),
+         ("Anvil", t_anvil), ("Diamond", t_diamond), ("Trophy", t_trophy), ("Rocket", t_rocket),
+         ("SoccerBall", t_soccer)]
+
+
+def split_by_material(o):
+    """One object per material, named <name>__<Material> (Roblox: one colour per MeshPart)."""
+    me = o.data
+    used = sorted(set(f.material_index for f in me.polygons))
+    out = []
+    for mi in used:
+        bm = bmesh.new(); bm.from_mesh(me)
+        bmesh.ops.delete(bm, geom=[f for f in bm.faces if f.material_index != mi], context='FACES')
+        bmesh.ops.delete(bm, geom=[v for v in bm.verts if not v.link_faces], context='VERTS')
+        m2 = bpy.data.meshes.new(o.name)
+        bm.to_mesh(m2); bm.free()
+        m2.materials.append(me.materials[mi])
+        o2 = bpy.data.objects.new(f"{o.name}__{me.materials[mi].name}", m2)
+        for cc in o.users_collection: cc.objects.link(o2)
+        out.append(o2)
+    bpy.data.objects.remove(o, do_unlink=True)
+    return out
+
+
 rot = Matrix.Rotation(math.radians(-90), 4, 'Z')     # bar along X
 GAP = 7.0
 allobjs = []
 for i, (name, fn) in enumerate(TIERS):
     c = collection(f"Weight{i + 1}_{name}")
     fn(c, f"Weight{i + 1}_{name}_")
-    for o in c.objects:
+    for o in list(c.objects):
         o.data.transform(rot)
         o.data.transform(Matrix.Translation((0, -i * GAP, 0)))
-        for f in o.data.polygons:      # flat facets, same look as the animals
+        for f in o.data.polygons:
             f.use_smooth = False
-        o.data.update()
-        allobjs.append(o)
+        allobjs += split_by_material(o)
     tris = sum(sum(len(pp.vertices) - 2 for pp in o.data.polygons) for o in c.objects)
     print("TIER", i + 1, name, "parts", len(c.objects), "tris", tris)
 
-# --- preview lineup with a 5-stud dummy ---
+# ---------------- preview ----------------
 sc = bpy.context.scene
 dm = mat("Dummy", "#9AA3B5", rough=0.6)
-for nm, size, loc in [("Torso", (2, 1, 2), (0, 0, 3)), ("Head", (1.1, 1.1, 1.1), (0, 0, 4.55)),
-                      ("LegL", (0.95, 1, 2), (-0.5, 0, 1)), ("LegR", (0.95, 1, 2), (0.5, 0, 1)),
-                      ("ArmL", (0.95, 1, 2), (-1.5, 0, 3)), ("ArmR", (0.95, 1, 2), (1.5, 0, 3))]:
+for size, loc in [((2, 1, 2), (0, 0, 3)), ((1.1, 1.1, 1.1), (0, 0, 4.55)), ((0.95, 1, 2), (-0.5, 0, 1)),
+                  ((0.95, 1, 2), (0.5, 0, 1)), ((0.95, 1, 2), (-1.5, 0, 3)), ((0.95, 1, 2), (1.5, 0, 3))]:
     bpy.ops.mesh.primitive_cube_add(size=1, location=(loc[0] - 7.5, loc[1] + 2, loc[2]))
     o = bpy.context.active_object; o.scale = size; o.data.materials.append(dm)
 bpy.ops.mesh.primitive_plane_add(size=200, location=(0, -28, 0))
@@ -221,30 +272,28 @@ sun.rotation_euler = (math.radians(50), 0, math.radians(-30)); sc.collection.obj
 sc.world = bpy.data.worlds.new("W"); sc.world.use_nodes = True
 sc.world.node_tree.nodes["Background"].inputs["Color"].default_value = (0.75, 0.82, 0.92, 1)
 cam = bpy.data.objects.new("Cam", bpy.data.cameras.new("Cam")); sc.collection.objects.link(cam)
-cam.data.lens = 32
-tgt = Vector((-1, -27, 0.8))
-cam.location = tgt + Vector((34, 26, 24))
-cam.rotation_euler = (tgt - cam.location).to_track_quat('-Z', 'Y').to_euler()
 sc.camera = cam
 sc.render.engine = 'CYCLES'; sc.cycles.device = 'CPU'; sc.cycles.samples = 32; sc.cycles.use_denoising = True
 sc.render.resolution_x = 1600; sc.render.resolution_y = 1000
-sc.render.filepath = png_out
 bpy.ops.wm.save_as_mainfile(filepath=blend_out)
-bpy.ops.render.render(write_still=True)
 
-# close-up of the top tiers
-cam.data.lens = 50
-tgt = Vector((0, -49, 1.5)); cam.location = tgt + Vector((15, 11, 9))
-cam.rotation_euler = (tgt - cam.location).to_track_quat('-Z', 'Y').to_euler()
-sc.render.filepath = png_out.replace(".png", "_top.png")
-bpy.ops.render.render(write_still=True)
 
-# axis markers so Studio can undo the importer's rotation exactly
+def shot(path, tgt, off, lens):
+    cam.data.lens = lens
+    cam.location = Vector(tgt) + Vector(off)
+    cam.rotation_euler = (Vector(tgt) - cam.location).to_track_quat('-Z', 'Y').to_euler()
+    sc.render.filepath = path
+    bpy.ops.render.render(write_still=True)
+
+
+shot(png_out, (-1, -27, 0.8), (34, 26, 24), 32)
+shot(png_out.replace(".png", "_low.png"), (0, -7, 1.2), (14, 10, 8), 40)     # donut + watermelon
+shot(png_out.replace(".png", "_top.png"), (0, -49, 1.6), (17, 12, 9), 42)    # diamond..soccer
+
 mk = mat("Marker", "#FF00FF")
 for nm, loc in (("SOA_AxisO", (0, 0, 0)), ("SOA_AxisUp", (0, 0, 3)), ("SOA_AxisFwd", (0, 3, 0))):
     bpy.ops.mesh.primitive_cube_add(size=0.2, location=loc)
     o = bpy.context.active_object; o.name = nm; o.data.materials.append(mk); allobjs.append(o)
-
 bpy.ops.object.select_all(action='DESELECT')
 for o in allobjs: o.select_set(True)
 bpy.context.view_layer.objects.active = allobjs[0]

@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 23:35 CT · pigeon-claude
+**Done:** Weights v3 from pigeon's notes (real items, not ideas; watermelon needs red; more sprinkles; VFX; higher quality OK): 1 Marshmallow, 2 Donut (sprinkles), 3 Watermelon (cut halves, red + seeds), 4 Golden Egg, 5 Anvil, 6 Diamond, 7 Trophy, 8 Rocket, 9 Golden Soccer Ball. Every part has one material and is named `..__<Material>` so Studio can colour it. `models/items/Weights.fbx`.
+**Next:** pigeon imports; I colour it, add Studs, and VFX from `ReplicatedStorage.Assets.VFX` on the higher tiers.
+**Blockers / questions:** none.
+
 ## 2026-11-09 23:31 CT · pigeon-claude
 **Done:** Weights imported into pigeon's place: `Workspace.WeightTiers` = 9 models (`1 Marshmallow` ... `9 Sun`) in a row at Z 55, bar along X, pivot at the bar. Colours set by part name, Neon on the glowing parts, Glass on the crystals, the animals' `Studs` textures on everything else.
 **Next:** pigeon's feedback. Watermelon stripes were lost on import (one colour per MeshPart); can add them as a separate part if wanted.
