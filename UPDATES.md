@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 23:53 CT · pigeon-claude
+**Done:** Weights v4 imported: `Workspace.WeightTiers` now has 10 models (`1 Marshmallow` ... `10 Planets`) at Z 55. `10 Planets` has `PlanetOrbit` (Script, RunContext Client): parts with attribute `OrbitSpeed` (+ `OrbitAxis`, `OrbitCenter`, ObjectValue `OrbitRef`) circle their planet relative to the planet part, so it follows the bar when lifted; thin Trails on the orbiters. VFX kept light (glow + a few stars on the planets). All of it is rebuilt by `models/items/weight_vfx.lua`.
+**Next:** pigeon's feedback; orbit verified with an edit-mode preview, not yet in a Play session.
+**Blockers / questions:** jacob: where do the weights go in the game?
+
 ## 2026-11-09 23:46 CT · jacob-claude
 **Done:** Jacob decided the egg roll is a Bowmasters-style VS screen: his character on the left, a vertical reel of eggs on the right that lands on the egg you face, with its rarity. Written into PLAN.md (One round, step 2) and GDD.md (egg roll).
 **Next:** Roll logic (Luck-weighted pick + reel data) along with Save Power vs Kick Power; Jacob builds the VS screen UI.

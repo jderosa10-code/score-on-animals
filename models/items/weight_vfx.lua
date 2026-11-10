@@ -135,7 +135,105 @@ for _, p in ipairs(parts(top9, "^Ball.*BallGold$")) do
 	onSurface(emit("twinkle", p, {Size = 0.65, Rate = 5, Lifetime = NumberRange.new(0.7), Color = CS(C3(255, 250, 215)), ZOffset = 0.3, LockedToPart = true}))
 	light(p, C3(255, 170, 60), 12, 1.6)
 end
-for _, p in ipairs(parts(top9, "BarGold$")) do   -- glowing bar on the top tier
+for _, p in ipairs(parts(top9, "BarGold$")) do   -- glowing bar
 	p.Material = Enum.Material.Neon; p.Color = C3(255, 190, 60)
 	for _, t in ipairs(p:GetChildren()) do if t:IsA("Texture") then t:Destroy() end end
 end
+
+-- 10 Planets: the cool part is the MODEL (ringed giant, Earth, moons + a tiny rocket that orbit).
+-- Effects stay light: a soft atmosphere glow, a few stars, thin trails behind the orbiters.
+local P = F["10 Planets"]
+local barX = P.PrimaryPart.Position.X
+local function side(p) return p.Position.X > barX and 1 or -1 end
+for _, s in ipairs({1, -1}) do
+	local globes, orbs = {}, {}
+	for _, p in ipairs(P:GetChildren()) do
+		if p:IsA("BasePart") and side(p) == s then
+			if p.Name:find("^Globe") then globes[#globes + 1] = p elseif p.Name:find("^Orb") then orbs[#orbs + 1] = p end
+		end
+	end
+	-- planet centre = middle of all its pieces; reference part = its biggest piece
+	local mn, mx = Vector3.new(math.huge, math.huge, math.huge), Vector3.new(-math.huge, -math.huge, -math.huge)
+	local ref
+	for _, g in ipairs(globes) do
+		local a, b = extents(g); mn = mn:Min(a); mx = mx:Max(b)
+		if not ref or g.Size.Magnitude > ref.Size.Magnitude then ref = g end
+	end
+	local centre = (mn + mx) / 2
+	local isGas = ref.Name:find("Gas") ~= nil
+	local tint = isGas and C3(170, 130, 255) or C3(110, 180, 255)
+	emit("glow", point(ref, centre), {Size = 4.2, Rate = 2, Lifetime = NumberRange.new(1.5), Color = CS(tint), Transparency = SOFT, ZOffset = -1.6, LockedToPart = true})
+	onSurface(emit("twinkle", ref, {Size = 0.5, Rate = 2.5, Lifetime = NumberRange.new(0.8), Color = CS(C3(255, 255, 255)), ZOffset = 0.4, LockedToPart = true}))
+	light(ref, tint, 9, 0.9)
+	-- orbit data: axis = perpendicular to the orbiter's offset, in the plane of (up, bar direction)
+	local axisOf = {}
+	for _, o in ipairs(orbs) do
+		local key = o.Name:find("^OrbSat") and "OrbSat" or o.Name   -- the rocket's body + nose share one orbit
+		if not axisOf[key] then
+			local body = o
+			if key == "OrbSat" then
+				for _, q in ipairs(orbs) do if q.Name:find("^OrbSatBody") then body = q end end
+			end
+			local r0 = body.Position - centre
+			local n = r0:Cross(Vector3.new(0, 0, 1)).Unit
+			if n.Y < 0 then n = -n end
+			axisOf[key] = n
+		end
+		local speed = (o.Name:find("^OrbIce") and 1.1) or (o.Name:find("^OrbLava") and -0.8) or (o.Name:find("^OrbMoon") and 0.9) or 1.7
+		local cf = ref.CFrame
+		o:SetAttribute("OrbitSpeed", speed)
+		o:SetAttribute("OrbitCenter", cf:PointToObjectSpace(centre))
+		o:SetAttribute("OrbitAxis", cf:VectorToObjectSpace(axisOf[key]))
+		local ov = o:FindFirstChild("OrbitRef") or Instance.new("ObjectValue")
+		ov.Name = "OrbitRef"; ov.Value = ref; ov.Parent = o
+		if not o.Name:find("Nose") then   -- thin fading trail (shows while it moves)
+			local w = math.min(o.Size.X, o.Size.Y, o.Size.Z) * 0.35
+			local a0, a1 = Instance.new("Attachment"), Instance.new("Attachment")
+			a0.Name, a1.Name = "VFX_T0", "VFX_T1"
+			a0.Position, a1.Position = Vector3.new(0, w, 0), Vector3.new(0, -w, 0)
+			local tr = Instance.new("Trail")
+			tr.Name = "VFX_Trail"; tr.Attachment0 = a0; tr.Attachment1 = a1; tr.FaceCamera = true
+			tr.Lifetime = 0.55; tr.LightEmission = 0.8
+			tr.Color = CS(o.Name:find("Sat") and C3(255, 170, 70) or o.Color)
+			tr.Transparency = NS(0.35, 1); tr.WidthScale = NS(1, 0)
+			for _, x in ipairs({a0, a1, tr}) do x:SetAttribute("WeightVFX", true); x.Parent = o end
+		end
+	end
+end
+
+-- the script that makes the Orb* parts circle their planet (runs on each player's client)
+local old = P:FindFirstChild("PlanetOrbit"); if old then old:Destroy() end
+local sc = Instance.new("Script")
+sc.Name = "PlanetOrbit"
+sc.RunContext = Enum.RunContext.Client
+sc.Source = [[
+-- Moves every part that has an OrbitSpeed attribute around its planet.
+-- OrbitRef = the planet part, OrbitCenter / OrbitAxis are in that part's local space,
+-- so the orbits follow the barbell when it is lifted or carried.
+local RunService = game:GetService("RunService")
+local model = script.Parent
+task.wait(1)
+local orbs = {}
+for _, p in ipairs(model:GetDescendants()) do
+	if p:IsA("BasePart") and p:GetAttribute("OrbitSpeed") then
+		local ov = p:FindFirstChild("OrbitRef")
+		local ref = ov and ov.Value
+		if ref then
+			local c = p:GetAttribute("OrbitCenter")
+			local frame = ref.CFrame * CFrame.new(c)
+			table.insert(orbs, {part = p, ref = ref, c = c, axis = p:GetAttribute("OrbitAxis"),
+				speed = p:GetAttribute("OrbitSpeed"), rel = frame:ToObjectSpace(p.CFrame)})
+		end
+	end
+end
+local t0 = os.clock()
+RunService.RenderStepped:Connect(function()
+	local t = os.clock() - t0
+	for _, o in ipairs(orbs) do
+		if o.part.Parent and o.ref.Parent then
+			o.part.CFrame = o.ref.CFrame * CFrame.new(o.c) * CFrame.fromAxisAngle(o.axis, o.speed * t) * o.rel
+		end
+	end
+end)
+]]
+sc.Parent = P
