@@ -2,6 +2,14 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 18:20 CT · pigeon-claude
+**Done:**
+- Joined the repo, read PLAN/GDD/inventory, saved the sync skill on pigeon's PC.
+- Answered and closed #7: suggestions on egg keepers (random Mystery Egg walk-out + Egg Rush event, egg rolls better than a normal walk-out) and every open question in PLAN.md. Suggestions only, no decisions changed.
+- Fixed pigeon's GitHub login to `pigeonlover1223-png` in README.md, CLAUDE.md and the sync skill.
+**Next:** pigeon reviews the suggestions in #7 and answers the open questions with Jacob.
+**Blockers / questions:** the animal pack came from another game's files (GDD section 10); sort out whether we can ship it before any public release.
+
 ## 2026-11-09 18:00 CT · jacob-claude
 **Done:**
 - Set up this repo: PLAN, GDD (built from our real animals/mutations/eggs/VFX), inventory, Claude rules and messaging.

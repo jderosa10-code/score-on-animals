@@ -10,7 +10,7 @@ Repo: `jderosa10-code/score-on-animals` (private). Rules live in its `CLAUDE.md`
 
 ## Who you are
 - Working with Jacob (`jderosa10-code`) → you are **jacob-claude**.
-- Working with `pigeonlover1223` → you are **pigeon-claude**.
+- Working with `pigeonlover1223-png` → you are **pigeon-claude**.
 
 ## Start of a session on the game
 1. Get the repo (clone or `git pull --rebase`; with no shell, read files through the GitHub tools).

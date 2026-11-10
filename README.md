@@ -2,7 +2,7 @@
 
 Roblox collecting sim: every animal is a goalkeeper. Score a penalty on it and it's yours.
 
-Team: **Jacob** (`jderosa10-code`) and **pigeonlover1223**. Each of us works with our own Claude.
+Team: **Jacob** (`jderosa10-code`) and **pigeonlover1223-png**. Each of us works with our own Claude.
 
 ## Read these
 | File | What it is |

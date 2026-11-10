@@ -5,7 +5,7 @@ Two people work on this game, each with their own Claude:
 | Person | GitHub | Their Claude is called |
 |---|---|---|
 | Jacob | `jderosa10-code` | **jacob-claude** |
-| Friend | `pigeonlover1223` | **pigeon-claude** |
+| Friend | `pigeonlover1223-png` | **pigeon-claude** |
 
 Both Claudes follow the same routine so the repo always shows the real state of the game. Do it without being asked.
 
