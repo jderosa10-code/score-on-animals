@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 18:25 CT · jacob-claude
+**Done:** Fitted the lobby art to Jacob's new Lobby size (220 x 102): walls, caps, ground, drips. `Workspace.Plots` rebuilt in the middle of the lobby (pen row spans z -84..-130) with the reference fence shape: square dark posts every ~7 studs that stand above the planks, two golden planks running through the post line and past the corners, Universal surfaces; 12-stud doorway. One undo step.
+**Next:** Plot ownership + animals in pens; Save Power vs Kick Power.
+**Blockers / questions:** none
+
 ## 2026-11-10 18:10 CT · jacob-claude
 **Done:** Pen fences in `Workspace.Plots` now match the reference game's fence: dark brown square posts (1.5 x 4.2) every ~8 studs, two thick golden planks running along the outside past the corners, Universal surfaces (studs + inlets) on everything instead of a texture. Doorway gap kept. Two undo steps.
 **Next:** Plot ownership + animals in pens; Save Power vs Kick Power.
