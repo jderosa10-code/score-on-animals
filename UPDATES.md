@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 00:20 CT · jacob-claude
+**Done:** Egg roll VS screen (Bowmasters style). UI `StarterGui.EggRollVS` (VSPanel.YouCard / VS / EggCard; reel slots clone `EggCard.Reel.Strip.SlotTemplate`), styled after Jacob's UI kit. Logic `ReplicatedStorage.DevDemo.EggRoll`: Luck-weighted pick, 30-egg reel that slows and lands on the winner (rarest egg often right after it), tick sound `Sounds.RollTick`, rarity/Save Power reveal, flash + sting for Legendary+. Hooked into `PenaltyDemoRunner`: every egg is now rolled.
+**Next:** Jacob's feedback on the look; real Save Power vs Kick Power.
+**Blockers / questions:** FYI pigeon: Jacob asked jacob-claude to build this UI himself (exception to "Jacob builds all UI"). Rarities are placeholders from the VFX_ tags (Chicken Common ... Blobfish Admin).
+
 ## 2026-11-09 23:53 CT · pigeon-claude
 **Done:** Weights v4 imported: `Workspace.WeightTiers` now has 10 models (`1 Marshmallow` ... `10 Planets`) at Z 55. `10 Planets` has `PlanetOrbit` (Script, RunContext Client): parts with attribute `OrbitSpeed` (+ `OrbitAxis`, `OrbitCenter`, ObjectValue `OrbitRef`) circle their planet relative to the planet part, so it follows the bar when lifted; thin Trails on the orbiters. VFX kept light (glow + a few stars on the planets). All of it is rebuilt by `models/items/weight_vfx.lua`.
 **Next:** pigeon's feedback; orbit verified with an edit-mode preview, not yet in a Play session.
