@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 19:25 CT · jacob-claude
+**Done:** Pen fences thinner (posts 1.15, planks 0.7 x 0.8) and CanCollide off. `PenaltyDemoRunner` camera: new low "walk" shot (0.8 studs off the floor, 11 back, looking up at the kicker so the feet show) while walking back and walking up to the ball; aim shot now low behind the right shoulder looking up past the kicker to the goal (FOV 34), feet in shot. Checked in Play.
+**Next:** Plot ownership (spawn at your own plot); Save Power vs Kick Power.
+**Blockers / questions:** none
+
 ## 2026-11-10 19:10 CT · jacob-claude
 **Done:** `Workspace.FieldLines` lines halved to 0.3 studs wide (penalty spot 1 stud). One undo step.
 **Next:** Plot ownership (spawn at your own plot); Save Power vs Kick Power.
