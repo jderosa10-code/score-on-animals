@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 00:40 CT · jacob-claude
+**Done:** Kicker is now R6 (Jacob's call). `ServerStorage.KickerRigR6` + anims in `ServerStorage.RBX_ANIMSAVES.KickerRigR6`: BackStep, Stance, RunUp (from RigDirectors) and Kick (made by jacob-claude, "Contact" marker). RigDirectors' pasted Luau uses character-space angles, so poses were converted into R6 joint space and feet grounded. Demo: spot moved to 17.5 studs out, kicker backs up ~10 studs, 1.4 s run-up. Uses your character if it's R6, otherwise an R6 stand-in.
+**Next:** Ragdoll on a miss; legs/wings on eggs.
+**Blockers / questions:** Studio Game Settings > Avatar must be set to R6 for players to be the kicker.
+
 ## 2026-11-09 22:17 CT · pigeon-claude
 **Done:** Pigeon: do ALL the animals. Improved `restyle.py` (eye size relative to the animal, flat/blocky eyes + pupils, no eyes on wings, blocky leg+paw shortening, gentler settings for blocky A### models, chunky-body fallback for painted-eye fish/snakes). Restyled the remaining 145 and reviewed every one (`models/restyle/sheets_all/`). Two files: `models/restyle/fbx/Restyle_NEW_all_A.fbx` (73 + faceted Giraffe2/PolarBear2) and `Restyle_NEW_all_B.fbx` (72). OLD clones + slots for all of them placed in `Workspace.RestyleShowcase`. HoneyBadger and Tapir_V2 reuse the Badger/Tapir_V1 NEW meshes with their own texture. Thunderbird will reuse Roc.
 **Next:** pigeon imports A and B; I place them (210 animals total).
