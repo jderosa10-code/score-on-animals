@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 15:40 CT · jacob-claude
+**Done:** Deleted `Workspace.KickAreaGlow` at Jacob's request; he is building the kick-area glow himself.
+**Next:** Save Power vs Kick Power.
+**Blockers / questions:** none
+
 ## 2026-11-10 15:35 CT · jacob-claude
 **Done:** `Workspace.KickAreaGlow` glow now rises: `Rise` (203 camera-facing white Beams, 2.4 studs tall, fading upward, so it reads as vertical from any angle), round neon `Dots` every 2 studs, plus the softer `FloorGlow`/`CoreGlow`. Checked from the front and the side with Studio screenshots.
 **Next:** Save Power vs Kick Power.
