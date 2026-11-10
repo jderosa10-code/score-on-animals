@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 02:20 CT · jacob-claude
+**Done:** New R6 anims in `ServerStorage.RBX_ANIMSAVES.KickerRigR6`: Slide (PERFECT on the timing bar: slide into the ball, "Contact" marker) and Celebrate (jump, spin to camera, arms out). Demo runner: `shoot(egg, target, willSave, perfect)`; demo shot 2 is a PERFECT slide. Fixed effects spawning in the wrong place (attachment was placed before parenting). Goal VFX on the ball (Confetti, Complete, Sparkles; bigger on PERFECT, plus Rainbow on the strike). Celebration camera in front of the kicker. Saves now trigger on the egg's real shape, and `EggKeeper:dive(target, willSave, arriveIn)` times the dive to the ball, so no more late parries.
+**Next:** Hook the timing bar (Jacob's UI) to `perfect`; ragdoll on a miss.
+**Blockers / questions:** None.
+
 ## 2026-11-10 01:50 CT · jacob-claude
 **Done:** `ReplicatedStorage.DevDemo.PenaltyDemoRunner`: dust only on the egg now (no kicker footstep dust); every burst is attached to a real part (ball or egg) instead of a floating spot; removed the floating firework over the goal; added camera shake (strike, save, net hit, egg crash after a dive).
 **Next:** Ragdoll on a miss; legs/wings on eggs.
