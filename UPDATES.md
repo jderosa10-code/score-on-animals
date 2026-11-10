@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 18:40 CT · jacob-claude
+**Done:** Eggs now walk out of Jacob's `Workspace.Tunnel`: `ServerScriptService.PenaltyDemo` passes TunnelMouth/TunnelOut, `PenaltyDemoRunner.enterEgg` starts the egg just inside the doorway, hops straight out 7 studs, then hops over to the goal (mystery swaps still happen on every landing). `Workspace.Plots` moved 6 studs toward the back wall. Tested in Play: egg starts in the tunnel, ends centred in goal.
+**Next:** Plot ownership + animals in pens; Save Power vs Kick Power.
+**Blockers / questions:** none
+
 ## 2026-11-10 18:25 CT · jacob-claude
 **Done:** Fitted the lobby art to Jacob's new Lobby size (220 x 102): walls, caps, ground, drips. `Workspace.Plots` rebuilt in the middle of the lobby (pen row spans z -84..-130) with the reference fence shape: square dark posts every ~7 studs that stand above the planks, two golden planks running through the post line and past the corners, Universal surfaces; 12-stud doorway. One undo step.
 **Next:** Plot ownership + animals in pens; Save Power vs Kick Power.
