@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 03:20 CT · jacob-claude
+**Done:** Sounds from the Toolbox (free, mostly ProSoundEffects) in `ReplicatedStorage.DevDemo.Sounds`: Kick, Whoosh, WhooshBig, Whistle, CrowdGoal, CrowdAww, Bounce, NetHit, EggLand, Perfect, Good. Wired into the demo: whistle when the egg is set, timing result chime (low for Bad/Miss), kick + whoosh, save bounce + crowd aww, net + crowd goal, slide and celebration whooshes, egg landing thumps.
+**Next:** Ragdoll on a miss; legs/wings on eggs.
+**Blockers / questions:** R6 anims only play on R6 characters, so Game Settings > Avatar must be R6.
+
 ## 2026-11-10 03:05 CT · jacob-claude
 **Done:** `StarterGui.TimingBar` restyled to match Figma (black dividers, see-through white inner edge, square corners) and the marker now sweeps the full bar. New `StarterGui.TimingResult.Result`: chunky outlined word that pops when you stop the bar: PERFECT! (scrolling rainbow), GREAT!, GOOD, BAD, MISS. Zone `Quality` attributes renamed to match.
 **Next:** Ragdoll on a miss; legs/wings on eggs.
