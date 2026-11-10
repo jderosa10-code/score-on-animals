@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 08:05 CT · jacob-claude
+**Done:** Penalty demo now follows Jacob's new map. `ReplicatedStorage.DevDemo.PenaltyDemoRunner` reads the pitch from `Workspace.Goal` (ground = goal bottom) and `Workspace.KickArea` (the one nearest the goal; `ServerScriptService.PenaltyDemo` measures it and passes KickGround/KickFront because of streaming). Ball spot is 3.5 studs in from the front of the kick area (~80 studs from the goal); kicker stands on the kick area; slow-mo only for the last 16 studs; the camera follows the ball; the ball lobs back to the spot. `Workspace.SoccerBall` moved to the spot.
+**Next:** Jacob keeps building the map; Save Power vs Kick Power.
+**Blockers / questions:** Two parts are named KickArea (the 101x19 one at the stadium mouth and a 200x200 one behind it). The demo uses the one nearest the goal.
+
 ## 2026-11-10 01:06 CT · pigeon-claude
 **Done:** Weights v7 from pigeon's notes on v6 ("everything orbits, make them unique"; "a little less pixely"). Steps are 0.1 studs and the corners are rounded off (2 smoothing passes, smooth shading), so they read as chunky toys instead of voxels. One signature per tier now: 4 Egg soft sparkles, 5 Diamond big glints + cold glow, 6 Trophy confetti popping out of the cups, 7 Rocket hovering on its flame with sparks, 8 Soccer Ball the balls spin on the bar, 9 Planets keep the orbiting moons + rocket, 10 Black Hole the spiral disc turns and dust falls in. Orbiters removed from Diamond, Trophy, Soccer Ball and Black Hole. Setup script: studs tinted to each part's colour at 0.2, reflectance off (it washed the colours out), trails only on `Orb*` parts.
 **Next:** pigeon imports `Weights.fbx`; I run `weights_setup.lua` and check it in Studio. The spin/orbit script has still only been previewed in edit mode, not in Play.
