@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 20:40 CT · pigeon-claude
+**Done:** Blush fix (pigeon: it worked on one side only and missed the cheeks, e.g. hedgehog's landed on its spines). Blush now only goes on the HEAD piece, under and slightly in front of the eye, then mirrored so both cheeks match; it sits on the skin, not half-sunk. FBX in `models/restyle/fbx/` updated.
+**Next:** import the 5 FBX with Import 3D so the NEW animals are real assets (script-built ones show as boxes for anyone else).
+**Blockers / questions:** none.
+
 ## 2026-11-09 20:20 CT · pigeon-claude
 **Done:** Pigeon chose the game's real textures: NEW animals now keep the restyled shape (bigger head + eyes, shorter legs, wider, blush) but the body AND eyes wear the original `SurfaceAppearance` from the matching `BaseAnimals` model (smile and patterns are back, crisp). The baked recolour/gradient is dropped. Updated preview in `Workspace.RestyleShowcase`; FBX in `models/restyle/fbx/` now use the original UVs (plain material, SurfaceAppearance goes on after Import 3D).
 **Next:** pigeon imports the 5 FBX with Import 3D; then they become real assets everyone can see.

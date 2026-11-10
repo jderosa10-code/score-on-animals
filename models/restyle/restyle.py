@@ -180,6 +180,16 @@ def restyle(ob):
         d["n"] = Vector((n.x / WIDTH_SCALE, n.y, n.z)).normalized()
 
     info["gaps_closed"] = close_gaps(bm)
+    # a BVH of the HEAD piece only (the body for one-piece animals like the toad), so the blush
+    # can only ever land on the face, never on spines, shoulders or legs
+    bm.verts.ensure_lookup_table(); bm.faces.ensure_lookup_table()
+    head_idx = set(v.index for v in (head or body)["verts"])
+    hco = [v.co.copy() for v in bm.verts]
+    hpolys = [[v.index for v in f.verts] for f in bm.faces if all(v.index in head_idx for v in f.verts)]
+    head_bvh = BVHTree.FromPolygons(hco, hpolys) if hpolys else None
+    head_ctr = sum((hco[i] for i in head_idx), Vector()) / max(1, len(head_idx))
+    for d in eye_data:
+        d["head_bvh"], d["head_ctr"] = head_bvh, head_ctr
     bm.to_mesh(me)
     bvh = BVHTree.FromBMesh(bm)
     eye_vidx = sorted(v.index for e in eyes for v in e["verts"]) if eyes else []
@@ -404,6 +414,7 @@ def add_face_bits(ob, eye_data, bvh, cx, eye_obj):
     # built from the raw mesh so it's in the same local space as everything else here
     eye_bvh = (BVHTree.FromPolygons([v.co.copy() for v in eye_obj.data.vertices],
                                     [list(p.vertices) for p in eye_obj.data.polygons]) if eye_obj else None)
+    blush_spots = []
     for ed in eye_data:
         c, r, h, n = ed["c"], ed["r"], ed["h"], ed["n"]
         side = 1 if c.x > cx else -1
@@ -417,43 +428,43 @@ def add_face_bits(ob, eye_data, bvh, cx, eye_obj):
                 if sn.dot(s) < 0: sn.negate()
                 add_sphere(ob.name + "_Shine", hit[0], (r * 0.2, r * 0.2, r * 0.06),
                            sn.to_track_quat('Z', 'Y').to_euler(), shine, ob, 8, 5)
-        # blush: below and outside the eye, stuck onto the face by casting a ray from the front
-        # try a few spots under the eye; keep the first hit that's near the eye (on the face,
-        # not a leg or the chest further down/back)
-        # aim at the cheek mostly from the front (the snout often sticks out in front of the eyes).
-        # Prefer a cheek spot that faces forward; on flat-sided heads take the most forward one.
+        # cheek = on the HEAD piece, a bit below and slightly in front of the eye, on this side
+        hb, hc = ed.get("head_bvh"), ed.get("head_ctr")
         best = None
-        for dz, dx, back in ((1.3, 0.5, 0.5), (1.1, 0.7, 0.6), (1.6, 0.4, 0.4), (0.9, 0.9, 0.7), (1.9, 0.3, 0.3)):
-            target = Vector((c.x + side * r * dx, c.y - r * back, c.z - r * dz))
-            d = Vector((side * 0.35, 1.0, 0.1)).normalized()
-            hit = bvh.ray_cast(target + d * 4, -d, 8)
-            if hit[0] is None:
-                continue
-            loc, nrm = hit[0], hit[1].copy()
-            if nrm.dot(d) < 0: nrm.negate()   # imported faces can wind inward; face the ray
-            dist = (loc - c).length
-            if dist > r * 4.2 or dist < r * 1.1 or nrm.y < 0.05:   # too far, the eye itself, or facing back
-                continue
-            if nrm.y >= 0.3:
-                best = (loc, nrm); break
-            if best is None or nrm.y > best[1].y:
-                best = (loc, nrm)
-        if best is None:
-            # fallback: straight from the front, a bit further from the eye allowed
-            for dz, dx in ((1.4, 0.6), (1.0, 0.9), (1.8, 0.4)):
-                target = Vector((c.x + side * r * dx, c.y, c.z - r * dz))
-                hit = bvh.ray_cast(target + Vector((0, 4, 0)), Vector((0, -1, 0)), 8)
-                if hit[0] is None: continue
-                loc, nrm = hit[0], hit[1].copy()
-                if nrm.y < 0: nrm.negate()
-                if r * 1.1 < (loc - c).length < r * 5.5 and nrm.y > 0.3:
-                    best = (loc, nrm); break
+        if hb:
+            for down, fwd, out in ((1.25, 0.2, 0.3), (1.0, 0.35, 0.2), (1.5, 0.1, 0.35), (0.8, 0.5, 0.1)):
+                want = c + Vector((side * r * out, r * fwd, -r * down))
+                loc, nrm, _, _ = hb.find_nearest(want)
+                if loc is None: continue
+                n = nrm.normalized()
+                if n.dot(loc - hc) < 0: n = -n           # point out of the head
+                ok = (loc.z < c.z - r * 0.4                  # below the eye
+                      and (loc - c).length < r * 3.0          # close to the eye
+                      and n.y > -0.2                          # not on the back of the head
+                      and (loc.x - cx) * side > 0)            # on this eye's side
+                if ok:
+                    best = (loc, n); break
         if best:
-            loc, nrm = best
-            # thin disc, half pressed into the cheek so it reads as painted on, not stuck on
-            add_sphere(ob.name + "_Blush", loc, (r * 0.62, r * 0.42, r * 0.08),
-                       nrm.to_track_quat('Z', 'Y').to_euler(), blush, ob)
+            blush_spots.append((best[0], best[1], r))
         print("BLUSH", ob.name, side, bool(best))
+
+    # Both cheeks from ONE spot: take the most front-facing hit and mirror it across the animal's
+    # midline, so the two sides always match (pigeon: "works on one side, other it doesn't").
+    # The disc sits fully ON the skin (offset by its own thickness), never half-sunk.
+    if blush_spots:
+        loc, nrm, r = max(blush_spots, key=lambda s: s[1].y)
+        thick = r * 0.05
+        hb = eye_data[0].get("head_bvh")
+        for sx in (1, -1):
+            l = loc if sx == 1 else Vector((2 * cx - loc.x, loc.y, loc.z))
+            n = nrm if sx == 1 else Vector((-nrm.x, nrm.y, nrm.z))
+            # re-snap the mirrored spot onto the head's real surface on this side
+            if hb:
+                near = hb.find_nearest(l)
+                if near[0] is not None and (near[0] - l).length < r:
+                    l = near[0]
+            add_sphere(ob.name + "_Blush", l + n * (thick + 0.015), (r * 0.6, r * 0.4, thick),
+                       n.to_track_quat('Z', 'Y').to_euler(), blush, ob, 12, 6)
 
 
 def check_floating(ob, tol=0.03):
