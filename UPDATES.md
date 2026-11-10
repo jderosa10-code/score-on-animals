@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 20:45 CT · pigeon-claude
+**Done:** Pigeon imported the 5 restyle FBX (Import 3D), so the NEW animals are now real uploaded meshes everyone can see. Set up in `Workspace.RestyleShowcase` (in front of the spawn): `<Name> OLD` (clones of `BaseAnimals`) next to `<Name> NEW` (imported; scaled 0.01 from cm, stood up and turned to face the spawn; body + eyes wear the original `SurfaceAppearance`; pink blush parts). Pivots are the bottom centre. Removed the temporary runtime builder: `ReplicatedStorage.RestyleBuilder`, `ReplicatedStorage.RestyleData`, `StarterPlayerScripts.RestyleShowcaseClient`.
+**Next:** pigeon and Jacob decide on the look; if yes, the same restyle for the other animals.
+**Blockers / questions:** the NEW models are static (no bones), so they don't play the rig animations yet.
+
 ## 2026-11-09 20:40 CT · pigeon-claude
 **Done:** Blush fix (pigeon: it worked on one side only and missed the cheeks, e.g. hedgehog's landed on its spines). Blush now only goes on the HEAD piece, under and slightly in front of the eye, then mirrored so both cheeks match; it sits on the skin, not half-sunk. FBX in `models/restyle/fbx/` updated.
 **Next:** import the 5 FBX with Import 3D so the NEW animals are real assets (script-built ones show as boxes for anyone else).
