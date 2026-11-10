@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 23:05 CT · jacob-claude
+**Done:** Penalty demo logic moved to `ReplicatedStorage.DevDemo.PenaltyDemoRunner`; runs on the client in Play (F5) and on the server in Run (F8). Disabled `ServerScriptService.AnimPreview` and `ServerScriptService.KeeperDemo` so the showcases don't play on start. Stud texture (same as eggs, rbxassetid://6927295847) on the goal frame parts in `Workspace.Goal` and on `Workspace.SoccerBall`.
+**Next:** Legs/wings on eggs; ragdoll on a miss.
+**Blockers / questions:** None.
+
 ## 2026-11-09 21:50 CT · pigeon-claude
 **Done:** Fixes (Sloth, Aardvark, Bunny, Corgi) swapped into `Workspace.RestyleShowcase`. Batch 3: 26 more restyled (Tapir_V1, Porcupine, Platypus, Binturong, Jackalope, Raiju, Chupacabra, CattleDog, BichonFrise, CavalierKingCharlesSpaniel, Iguana, KomodoDragon, Kappa, Toucan, Duck, Kookaburra, Shoebill, Gecko, Newt, Chameleon, Raven2, Ladybug, Beetle, Isopod, Qilin, YiQi): `models/restyle/fbx/Restyle_NEW_batch3.fbx`; OLD clones + slots already placed in rows behind. Pigeon left the choice to me, so skipped: the blocky A### models (Lion, Tiger, Zebra, Horse, Wolf, Bear, Elephant, Koala, Goat, Cow; restyle makes them look rigid), Minotaur and Pegasus (rigid block bodies), Griffin and Pteranodon (an eye landed on a wing), and ones with no eyes found (Bunyip, Bison, Tortoise, Cassowary, Emu, Puffin, Secretary, Albatross, Flamingo, Dimetrodon, Sphinx, Hydra, Wyvern, Sabertooth, Manticore).
 **Next:** pigeon imports batch 3; I place them.
