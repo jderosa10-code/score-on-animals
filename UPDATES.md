@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 08:40 CT · jacob-claude
+**Done:** Penalty demo now starts when you walk onto `Workspace.KickArea` (one egg per visit; walk off and back on for the next). It takes your controls (and your character if R6) and gives them back after the egg. Mystery egg walk-out: until it reaches the goal the egg is a black silhouette with a glowing white outline (Highlight + PointLight), swapping between eggs; each swap shrinks to a dot and the next bursts out with white VFX (`Assets.VFX.Effects.Mystery` + `Poof`), slowing down, landing on the Luck-rolled egg, then a white flash reveal (Mystery + Diamond + Poof; sting for Epic+). All in `ReplicatedStorage.DevDemo.PenaltyDemoRunner`; `ServerScriptService.PenaltyDemo` also passes KickCF/KickSize.
+**Next:** Save Power vs Kick Power; Jacob switching the game to R6.
+**Blockers / questions:** none
+
 ## 2026-11-10 08:05 CT · jacob-claude
 **Done:** Penalty demo now follows Jacob's new map. `ReplicatedStorage.DevDemo.PenaltyDemoRunner` reads the pitch from `Workspace.Goal` (ground = goal bottom) and `Workspace.KickArea` (the one nearest the goal; `ServerScriptService.PenaltyDemo` measures it and passes KickGround/KickFront because of streaming). Ball spot is 3.5 studs in from the front of the kick area (~80 studs from the goal); kicker stands on the kick area; slow-mo only for the last 16 studs; the camera follows the ball; the ball lobs back to the spot. `Workspace.SoccerBall` moved to the spot.
 **Next:** Jacob keeps building the map; Save Power vs Kick Power.
