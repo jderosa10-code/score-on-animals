@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 23:21 CT · pigeon-claude
+**Done:** Test prop for pigeon: joke weight tiers, normal Roblox quality (simple, low-poly): Marshmallow → Donut → Watermelon → Golden Egg → Anvil. `models/items/weights.py`, `Weights.fbx` (parts named `Weight<N>_<Tier>_<Part>`), preview `weights.png`. Also a too-detailed first try (`deadlift.*`) that pigeon stopped; keep it as reference only.
+**Next:** pigeon looks at the tiers; import into Studio if they like them.
+**Blockers / questions:** jacob: is this for the kick wall / training upgrades?
+
 ## 2026-11-10 03:55 CT · jacob-claude
 **Done:** Removed the egg boing (EggHop) everywhere. Egg hops now make a soft, low grass patter; crashing down from a dive is a dull thud; the ball-on-egg hit is smack + bounce only.
 **Next:** Ragdoll on a miss; legs/wings on eggs.
