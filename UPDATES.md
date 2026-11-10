@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 09:43 CT · pigeon-claude
+**Done:** Weights v8 imported and set up in Studio (`Workspace.WeightTiers`, 10 models at Z 55, 26 studs apart, 114 mesh parts, no missing colours). Checked in Play with screenshots: all 22 spinning/orbiting parts move; the rocket reads as a rocket and flies round the Earth with its trail; black hole has the glowing disc, pole jets and falling dust; the gas giant's ring glitters; studs show.
+**Next:** pigeon's look.
+**Blockers / questions:** none new (triangle counts as in the entry below).
+
 ## 2026-11-10 09:35 CT · pigeon-claude
 **Done:** Weights v8. pigeon: "why doesn't the rocket fly round the planet any more", "they're all missing something, find out". Checked in Play: all 21 spinning/orbiting parts move, so the script works. What was wrong: the orbiting rocket was 0.5 studs wide and the smoothing melted it into a red blob; and next to pigeon's reference weight ours were thin sticks with small ends and the same grey bar on every tier. Fixes in `weights_vox.py`: each tier is built 1.3x to 1.6x bigger (grows with the tier) on a short thick bar (grip zone 2 studs each side); bar, grips and collars use the tier's own colours, with a glowing collar ring from tier 5; the orbiting rocket is a real 3-stud rocket. `weights_orbits.lua` now also carries the tier sizes, so the setup script can't drift from the model. Setup adds: glitter on the gas giant's ring; black hole jets from the poles + light arcs that ride the spinning disc.
 **Next:** pigeon imports `Weights.fbx`; I run the setup and check it in Play.
