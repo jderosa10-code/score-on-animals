@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 17:35 CT · jacob-claude
+**Done:** Jacob set the lobby size himself (`Workspace.Lobby` 220 x 111, z -167..-56). Fitted everything to it: walls, `LobbyArt` south wall/caps/ground/drips, and moved `Workspace.Plots` back against the new back wall (pen fronts at z -113). One undo step.
+**Next:** Plot ownership + animals in pens; Save Power vs Kick Power.
+**Blockers / questions:** none
+
 ## 2026-11-10 17:25 CT · jacob-claude
 **Done:** Lobby scaled down to the reference (measured against a 5-stud player): floor 220 x 130 (x -513..-293, z -186..-56), walls 24 studs above the floor (top y 30), caps/ground/drips rebuilt; `Workspace.Plots` pens 30 wide (depth 30/38/46 by level), fences 3.6 tall, 12.5-stud gaps. Jacob's 4 dirt walls now carry a `LobbyWall` attribute. One undo step.
 **Next:** Plot ownership + animals in pens; Save Power vs Kick Power.
