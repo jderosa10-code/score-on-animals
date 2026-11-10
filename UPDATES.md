@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 20:20 CT · jacob-claude
+**Done:** Crowd spread out so fans don't overlap: 5 studs apart (an R6 is 4 wide), every other row staggered half a seat, ~70% filled: 232 fans in `Workspace.Crowd` (was 433). One undo step.
+**Next:** Crowd cheer on goals; plot ownership; Save Power vs Kick Power.
+**Blockers / questions:** none
+
 ## 2026-11-10 20:15 CT · jacob-claude
 **Done:** Crowd rebuilt: 433 fans in `Workspace.Crowd`, three rows on each of levels 1 and 2 on the west, east and back stands, 3.2 studs apart, ~82% filled, each standing square to its stand (west faces +X, east -X, back -Z). Feet now on the stand (placed by the root part: 3 studs above the soles). `CrowdClient` unchanged. One undo step.
 **Next:** Crowd cheer on goals; plot ownership; Save Power vs Kick Power.
