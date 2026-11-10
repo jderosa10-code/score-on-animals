@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 22:10 CT · jacob-claude
+**Done:** Lobby made deeper (322 x 135, z -191..-56) and bases cut to 4 (`Workspace.Plots.Plot1..4`, levels 0,1,0,2, 26 studs apart). Land behind the patches is deeper and grows more with upgrades: 42 / 58 / 74. Walls, caps, ground, drips refitted; `LuckShop5` removed; `PlotOwnership` now loops over however many plots exist. One undo step.
+**Next:** Hatching eggs on the patches; animals on the land; luck purchase; Save Power vs Kick Power.
+**Blockers / questions:** none
+
 ## 2026-11-10 22:00 CT · jacob-claude
 **Done:** Bases laid out like the reference: each `Workspace.Plots.PlotN` is 54 wide with a 10-stud gate in the middle of the front fence, 12 hatch patches (Jacob's EggHatch, not resized) in two rows across the front, three each side of the gate, and an orange `Land` part behind them for animals (26 / 34 / 42 deep by Level). Lobby widened to 322 x 100 (x -564..-242, z -156..-56) to fit; walls, caps, ground and drips refitted. Spawns 5 studs outside each gate; `LuckShops` moved to the same spot by each new gate. Template EggHatch moved to `ServerStorage.EggHatch`. One undo step.
 **Next:** Hatching eggs on the patches; animals on the land; luck purchase; Save Power vs Kick Power.
