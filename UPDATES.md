@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 21:07 CT · pigeon-claude
+**Done:** Pigeon: remove the blush. Deleted all blush parts from `Workspace.RestyleShowcase`; `restyle.py` now has `ADD_BLUSH = False`. NEW = bigger head + seated game eyes, shorter legs, wider, crisp edges, original textures.
+**Next:** pigeon and Jacob judge the look.
+**Blockers / questions:** none.
+
 ## 2026-11-09 21:03 CT · pigeon-claude
 **Done:** Blush v5 imported and swapped into `Workspace.RestyleShowcase`: below each eye with a gap, on the front of the cheek, half-sunk, same Plastic material and the original `Studs` textures as the body. Checked all 5 up close in Studio.
 **Next:** pigeon and Jacob judge the look; if approved, run the restyle on the other animals.

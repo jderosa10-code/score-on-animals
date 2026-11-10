@@ -20,6 +20,7 @@ EYE_DEPTH = 0.75     # eye flattened to 75% along the face normal (set-in look)
 EYE_OUT = 0.35       # eye centre sits this many half-depths outside the head surface
 EYE_MAX_FRAC = 0.13  # eye radius never more than 13% of the head's height
 BLUSH_SIZE = 0.5     # blush dome radius as a fraction of the eye radius
+ADD_BLUSH = False    # pigeon, 2026-11-09: "just remove the blush" (it never looked right on these models)
 ADD_SHINE = False    # the game's own eye texture already has a shine (pigeon: old eyes look much better)
 LEG_SCALE = 0.72
 WIDTH_SCALE = 1.08
@@ -462,7 +463,7 @@ def add_face_bits(ob, eye_data, bvh, cx, eye_obj):
     # Both cheeks from ONE spot: take the most front-facing hit and mirror it across the animal's
     # midline, so the two sides always match (pigeon: "works on one side, other it doesn't").
     # The disc sits fully ON the skin (offset by its own thickness), never half-sunk.
-    if blush_spots:
+    if blush_spots and ADD_BLUSH:
         loc, nrm, r = max(blush_spots, key=lambda s: s[1].y)
         # a rounded dome set into the cheek the same way the eyes are (pigeon: "make the blush look
         # kinda like the eyes"): smooth, puffy, partly sunk, never a flat sticker
