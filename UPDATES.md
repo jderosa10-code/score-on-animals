@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 00:12 CT · pigeon-claude
+**Done:** Weights v5 (chunky stepped style) imported and set up by `models/items/weights_setup.lua`: `Workspace.WeightTiers` = 10 models at Z 55, each with `Root` (PrimaryPart, bar centre) + `HeadA`/`HeadB` anchors; SmoothPlastic + Studs, Neon/Glass on the special parts; light VFX from tier 4 up; `10 Planets.PlanetOrbit` (client Script) circles the `Orb*` parts around their planet relative to `Root`. Checked by measurement: all on the ground, centred on Root, orbits clear the floor and the handle through a full turn.
+**Next:** pigeon looks at them in Studio. Not seen by me: Studio screenshots came back blank this session, and the orbit hasn't been run in Play.
+**Blockers / questions:** none.
+
 ## 2026-11-10 01:08 CT · jacob-claude
 **Done:** Removed `StarterGui.EggRollVS` (Jacob will build the VS screen himself). Kept the roll logic `ReplicatedStorage.DevDemo.EggRoll` (Luck-weighted pick, reel order with near miss, tick timing, sounds); the demo only uses it once a `StarterGui.EggRollVS` exists again. UI stays Jacob's job as before.
 **Next:** Hook the logic into Jacob's VS screen when it's ready.

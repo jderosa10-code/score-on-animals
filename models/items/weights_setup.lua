@@ -114,7 +114,9 @@ for n = 1, 10 do
 		hidden("HeadB", o + Vector3.new(-P.hx, P.hz, 0), P.size, Enum.PartType.Ball).Parent = m
 		m:SetAttribute("HeadOffset", P.hx)
 		m.Parent = folder
-		m:PivotTo(CFrame.new((n - 5.5) * SPACING, P.h, ROW_Z))
+		-- the diamond's point and the planets start 0.2 above the model's floor: sit them on the ground
+		local drop = (n == 6 or n == 10) and 0.2 or 0
+		m:PivotTo(CFrame.new((n - 5.5) * SPACING, P.h - drop, ROW_Z))
 	end
 end
 if #imp:GetChildren() == 0 then imp:Destroy() end
@@ -220,6 +222,9 @@ for i, p in ipairs(hs) do
 	light(p, tint, 9, 0.9)
 end
 local SPEED = { OrbIce = 1.1, OrbLava = -0.8, OrbMoon = 0.9, OrbSat = 1.7 }
+-- orbits sit a little above the planet's centre, so the low side clears the floor when the
+-- barbell is lying down and the high side clears the handle
+local LIFT = { OrbIce = 0.65, OrbLava = 0.65, OrbMoon = 0.65, OrbSat = 0.25 }
 local axisOf = {}
 for _, o in ipairs(P:GetChildren()) do
 	if o:IsA("BasePart") and o.Name:find("^Orb") then
@@ -232,6 +237,9 @@ for _, o in ipairs(P:GetChildren()) do
 			if nrm.Y < 0 then nrm = -nrm end
 			axisOf[key] = nrm
 		end
+		local up = Vector3.new(0, LIFT[key] or 0, 0)
+		o.Position += up
+		centre += up
 		o:SetAttribute("OrbitSpeed", SPEED[key] or 1)
 		o:SetAttribute("OrbitCenter", root.CFrame:PointToObjectSpace(centre))
 		o:SetAttribute("OrbitAxis", root.CFrame:VectorToObjectSpace(axisOf[key]))
