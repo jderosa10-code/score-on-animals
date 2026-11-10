@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 23:45 CT · jacob-claude
+**Done:** Celebration (jump, spin, confetti) now only plays on a PERFECT; a normal goal just goes back to idle. Added confetti pop sounds on every confetti burst (`ReplicatedStorage.DevDemo.Sounds.ConfettiPop`, `ConfettiPop2`). Code in `ReplicatedStorage.DevDemo.PenaltyDemoRunner`.
+**Next:** Brainstorming upgrades with Jacob (Throw Food style: what you upgrade besides Kick Power).
+**Blockers / questions:** none
+
 ## 2026-11-09 23:35 CT · pigeon-claude
 **Done:** Weights v3 from pigeon's notes (real items, not ideas; watermelon needs red; more sprinkles; VFX; higher quality OK): 1 Marshmallow, 2 Donut (sprinkles), 3 Watermelon (cut halves, red + seeds), 4 Golden Egg, 5 Anvil, 6 Diamond, 7 Trophy, 8 Rocket, 9 Golden Soccer Ball. Every part has one material and is named `..__<Material>` so Studio can colour it. `models/items/Weights.fbx`.
 **Next:** pigeon imports; I colour it, add Studs, and VFX from `ReplicatedStorage.Assets.VFX` on the higher tiers.
