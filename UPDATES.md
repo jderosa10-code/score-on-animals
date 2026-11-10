@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 21:20 CT · jacob-claude
+**Done:** Luck shops are now purple: purple and lilac roof stripes, purple pad with light-purple beams and lilac sparkles, "Egg Luck" sign lilac-to-purple with a dark-purple outline, subtitle light purple. All 5 `Workspace.LuckShops`. One undo step.
+**Next:** Luck purchase on the shop pad; Save Power vs Kick Power.
+**Blockers / questions:** none
+
 ## 2026-11-10 21:15 CT · jacob-claude
 **Done:** Luck shops recoloured for luck: clover-green and gold striped roof, gold pad with gold beams/sparkles, "Egg Luck" sign in gold with a dark-green outline, subtitle in light green. All 5 `Workspace.LuckShops`. Two undo steps.
 **Next:** Luck purchase on the shop pad; Save Power vs Kick Power.
