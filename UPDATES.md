@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 23:25 CT · jacob-claude
+**Done:** `ReplicatedStorage.DevDemo.PenaltyDemoRunner`: in Play your own character is the kicker (no second kicker), black letterbox bars before the back-up, hold at the top of the run-up until click/tap, over-the-shoulder camera that follows you then the ball. Other avatar animations are blocked while kicking. Run (F8) still auto-kicks with a stand-in. Studs on `Workspace.Goal` frame and `Workspace.SoccerBall` made bigger and easier to see.
+**Next:** Legs/wings on eggs; ragdoll on a miss.
+**Blockers / questions:** Letterbox bars are a temporary demo ScreenGui (`PenaltyBars`); Jacob builds the real UI.
+
 ## 2026-11-09 23:05 CT · jacob-claude
 **Done:** Penalty demo logic moved to `ReplicatedStorage.DevDemo.PenaltyDemoRunner`; runs on the client in Play (F5) and on the server in Run (F8). Disabled `ServerScriptService.AnimPreview` and `ServerScriptService.KeeperDemo` so the showcases don't play on start. Stud texture (same as eggs, rbxassetid://6927295847) on the goal frame parts in `Workspace.Goal` and on `Workspace.SoccerBall`.
 **Next:** Legs/wings on eggs; ragdoll on a miss.
