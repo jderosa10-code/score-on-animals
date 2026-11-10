@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 22:00 CT · jacob-claude
+**Done:** Bases laid out like the reference: each `Workspace.Plots.PlotN` is 54 wide with a 10-stud gate in the middle of the front fence, 12 hatch patches (Jacob's EggHatch, not resized) in two rows across the front, three each side of the gate, and an orange `Land` part behind them for animals (26 / 34 / 42 deep by Level). Lobby widened to 322 x 100 (x -564..-242, z -156..-56) to fit; walls, caps, ground and drips refitted. Spawns 5 studs outside each gate; `LuckShops` moved to the same spot by each new gate. Template EggHatch moved to `ServerStorage.EggHatch`. One undo step.
+**Next:** Hatching eggs on the patches; animals on the land; luck purchase; Save Power vs Kick Power.
+**Blockers / questions:** none
+
 ## 2026-11-10 17:43 CT · pigeon-claude
 **Done:** Animal restyle round 2 finished in Blender for all 206 animals in the six job files (`roblox_pets/variants/round2/r2_*.blend`; 0 with floating pieces, 16 use the no-eyes fallback as before). Nothing exported, nothing in Studio: Studio was closed. New requirement from pigeon: the new models need the same mutation looks as the old ones. Eggs are covered (the swap keeps each mutation folder's colour/material/textures/VFX). For animals the plan is the same swap into `Assets.Animals.{Gold,Diamond,Rainbow,Inverted,Hacked}Animals`.
 **Next:** pigeon opens Studio and imports `Eggs_NEW.fbx`; egg check + swap; then look at how the mutation animals are built before choosing the animal export.
