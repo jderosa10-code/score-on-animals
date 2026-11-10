@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 20:12 CT · pigeon-claude
+**Done:** Pigeon: the game's original eyes look much better, so the NEW animals now keep their original eye pieces (bigger, seated in the head) and wear the real `SurfaceAppearance` from the matching `BaseAnimals` model. Bead eyes and shine dots removed. FBX of the 5 NEW animals for Import 3D: `models/restyle/fbx/` (body + baked texture, eyes on original UVs, blush).
+**Next:** import the FBX in Studio so the NEW animals are real assets (the runtime-built ones show as blue boxes for anyone else in Team Create).
+**Blockers / questions:** NEW body textures come from the 64px OBJ export and look softer than the real `SurfaceAppearance` (hedgehog face, giraffe pattern). Could put the real textures on the bodies too.
+
 ## 2026-11-09 20:08 CT · pigeon-claude
 **Done:** Restyle showcase in pigeon's place, in front of the spawn: `Workspace.RestyleShowcase` = clones of the real `BaseAnimals` (Corgi, Toad, Hedgehog, Giraffe2, PolarBear2) as OLD + slots where NEW is built. NEW is rebuilt on Play by `StarterPlayerScripts.RestyleShowcaseClient` from `ReplicatedStorage.RestyleData` via `ReplicatedStorage.RestyleBuilder` (Editable meshes, since CreateAssetAsync is `not available yet`). Sent #13: restyle is not on hold (pigeon).
 **Next:** pigeon checks it in Play. Not verified in Play yet (the test session ended before it built).

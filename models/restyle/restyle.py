@@ -19,6 +19,7 @@ EYE_SCALE = 1.4
 EYE_DEPTH = 0.75     # eye flattened to 75% along the face normal (set-in look)
 EYE_OUT = 0.35       # eye centre sits this many half-depths outside the head surface
 EYE_MAX_FRAC = 0.13  # eye radius never more than 13% of the head's height
+ADD_SHINE = False    # the game's own eye texture already has a shine (pigeon: old eyes look much better)
 LEG_SCALE = 0.72
 WIDTH_SCALE = 1.08
 SAT_BOOST = 1.25
@@ -338,7 +339,7 @@ def gradient_and_bake(ob):
     # re-fetch: edit-mode toggles reallocate the UV layers, so the old Python reference is stale
     me.uv_layers["BakeUV"].active_render = True
     me.uv_layers.active = me.uv_layers["BakeUV"]
-    me.uv_layers.remove(me.uv_layers[src_uv])
+    # keep the original UVs too: the eyes use them so the game's real eye texture can go back on
     ob.select_set(False)
 
 
@@ -381,7 +382,12 @@ def split_eyes(ob, eye_vidx):
     bm.to_mesh(eme); bm.free()
     eme.materials.clear(); eme.materials.append(flat_mat("SOA_EyeBlack", (0.02, 0.02, 0.025)))
     eme.materials[0].node_tree.nodes["Principled BSDF"].inputs["Roughness"].default_value = 0.2
-    for uv in list(eme.uv_layers): eme.uv_layers.remove(uv)
+    # eyes keep the ORIGINAL UVs (not the bake), so in Studio they can wear the real
+    # SurfaceAppearance from Jacob's model: the in-game eyes look much better than the OBJ export
+    if "BakeUV" in eme.uv_layers:
+        eme.uv_layers.remove(eme.uv_layers["BakeUV"])
+    if len(eme.uv_layers):
+        eme.uv_layers.active = eme.uv_layers[0]
     bm = bmesh.new(); bm.from_mesh(src)
     bm.verts.ensure_lookup_table()
     bmesh.ops.delete(bm, geom=[v for v in bm.verts if v.index in keep], context='VERTS')
@@ -404,7 +410,7 @@ def add_face_bits(ob, eye_data, bvh, cx, eye_obj):
         # shine: a small flat dot stuck ON the eye's real surface (ray-cast onto the eye mesh),
         # up and toward the front from the way the eye faces
         s = (n + Vector((0.1 * side, 0.5, 0.7))).normalized()
-        if eye_bvh:
+        if eye_bvh and ADD_SHINE:
             hit = eye_bvh.ray_cast(c + s * r * 4, -s, r * 8)
             if hit[0] is not None:
                 sn = hit[1].copy()

@@ -36,7 +36,7 @@ local function toSRGB(c: number): number
 	return math.clamp(c, 0, 1) ^ (1 / 2.2)
 end
 
-local function buildPart(p, ctr: Vector3): MeshPart
+local function buildPart(p, ctr: Vector3, eyeLook: SurfaceAppearance?): MeshPart
 	local v = p.verts
 	local em = AssetService:CreateEditableMesh()
 	local vid = {}
@@ -77,6 +77,13 @@ local function buildPart(p, ctr: Vector3): MeshPart
 		if string.find(p.name, "_Eyes") then
 			mp.Color = Color3.fromRGB(18, 18, 22)
 			mp.Material = Enum.Material.SmoothPlastic
+			-- the game's real eye texture: borrow the original model's SurfaceAppearance
+			-- (the eyes kept their original UVs, so it lands exactly where it did before)
+			if eyeLook then
+				eyeLook:Clone().Parent = mp
+				mp.Color = Color3.new(1, 1, 1)
+				mp.Material = Enum.Material.Plastic
+			end
 		elseif string.find(p.name, "_Shine") then
 			mp.Material = Enum.Material.Neon
 		end
@@ -105,6 +112,9 @@ function Builder.buildAt(name: string, slot: CFrame, parent: Instance): Model
 		end
 	end
 	local bottom = Vector3.new((mn.X + mx.X) / 2, mn.Y, (mn.Z + mx.Z) / 2)
+	-- the original animal standing next to this slot ("<Name> OLD") lends its eye texture
+	local oldModel = parent.Parent and parent.Parent:FindFirstChild(name .. " OLD")
+	local eyeLook = oldModel and oldModel:FindFirstChildWhichIsA("SurfaceAppearance", true)
 	local model = Instance.new("Model")
 	model.Name = name .. " NEW"
 	for _, p in ipairs(data.parts) do
@@ -117,7 +127,7 @@ function Builder.buildAt(name: string, slot: CFrame, parent: Instance): Model
 			pmx = pmx:Max(q)
 		end
 		local ctr = (pmn + pmx) / 2
-		local mp = buildPart(p, ctr)
+		local mp = buildPart(p, ctr, eyeLook)
 		mp.CFrame = slot * CFrame.new(ctr - bottom)
 		mp.Parent = model
 		task.wait()
