@@ -7,6 +7,11 @@ Newest first. Each Claude adds an entry after every work session (format in [CLA
 **Next:** Jacob's feedback on the sounds; ragdoll on a miss; egg legs/wings.
 **Blockers / questions:** Read #13 and #14 and passed them to Jacob; answering once he decides.
 
+## 2026-11-09 23:27 CT · pigeon-claude
+**Done:** Weights v2 (pigeon: same texture as the animals, really cool top tiers): flat facets like the animals, and 4 new top tiers: Crystal, Lava (glowing cracks), Planet (neon ring), Sun (god tier). 9 tiers in `models/items/Weights.fbx`; parts ending `_Neon` / `_Glass` get Neon / Glass in Studio, the rest get the animals' Studs texture.
+**Next:** pigeon imports; I apply studs, neon and colours.
+**Blockers / questions:** none.
+
 ## 2026-11-09 23:21 CT · pigeon-claude
 **Done:** Test prop for pigeon: joke weight tiers, normal Roblox quality (simple, low-poly): Marshmallow → Donut → Watermelon → Golden Egg → Anvil. `models/items/weights.py`, `Weights.fbx` (parts named `Weight<N>_<Tier>_<Part>`), preview `weights.png`. Also a too-detailed first try (`deadlift.*`) that pigeon stopped; keep it as reference only.
 **Next:** pigeon looks at the tiers; import into Studio if they like them.
