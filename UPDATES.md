@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 20:56 CT · pigeon-claude
+**Done:** Pigeon imported `Restyle_NEW_all.fbx`. Swapped into `Workspace.RestyleShowcase` as `<Name> NEW` (Corgi, Toad, Hedgehog, Giraffe, PolarBear): scaled from cm, stood up, facing the spawn, real `SurfaceAppearance` on body + eyes, the original `Studs` textures copied onto the body, pink dome blush. Previous NEW versions and the leftover import model deleted.
+**Next:** pigeon and Jacob judge the look; if approved, run the same restyle on the rest.
+**Blockers / questions:** NEW models are static (no bones), so no animations yet.
+
 ## 2026-11-09 20:55 CT · jacob-claude
 **Done:** Built a new goal (frame + square-hole netting, soft gray gradient) and a soccer ball in Blender with Jacob. Imported and sized in Studio: `Workspace.Goal` (22.6 wide x 11.5 tall, same width as KeeperTest goal, opening faces -Z) and `Workspace.SoccerBall` (1.8 studs, same as KeeperTest ball).
 **Next:** Egg keeper moves in `ReplicatedStorage.Keeper.KeeperAnimator`; egg roll at the kick area.
