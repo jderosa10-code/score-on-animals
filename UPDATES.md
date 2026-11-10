@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 15:10 CT · jacob-claude
+**Done:** Built `Workspace.KickAreaGlow` on the back (walk-in) edge of the stadium KickArea: `GlowFade` (flat sheet, SurfaceGui with a white gradient, solid at the edge and clear 4.5 studs in) + `GlowLine` (white Neon strip on the edge). No scripts.
+**Next:** Jacob tunes the look; Save Power vs Kick Power.
+**Blockers / questions:** Lighting.Bloom Threshold is 2, which may keep the neon from blooming much; lower it to about 1 for a stronger glow.
+
 ## 2026-11-10 12:10 CT · pigeon-claude
 **Done:** Weights v9 imported by pigeon and set up in Studio (`Workspace.WeightTiers`, 111 mesh parts, 22 moving parts, no missing colours). Confirmed the baked shading survives Import 3D: read the vertex colours back with EditableMesh in the edit context (trophy gold 0.56 to 0.99, marshmallow 0.52 to 1.00). The stud overlay doesn't hide it (compared the trophy with studs on and off). New low tiers checked by screenshot.
 **Next:** pigeon's look. This build's motion wasn't re-run in Play (same scripts as v8, which was).
