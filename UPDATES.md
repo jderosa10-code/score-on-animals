@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 21:10 CT · jacob-claude
+**Done:** Jacob's shop renamed to a luck shop ("Egg Luck" / "BUY LUCK FOR RARER EGGS") and placed outside every plot gate: `Workspace.LuckShops.LuckShop1..5` (attribute Plot, Persistent streaming). New `ServerScriptService.PlotOwnership`: each player gets a free plot (Plot attribute Owner = UserId, Player attribute Plot), spawns at its `Spawn`, plot freed on leave. New `StarterPlayerScripts.OwnLuckShopOnly`: you only see (and can touch) the shop outside your own plot. Tested in Play: got Plot1, spawned at it, only LuckShop1 visible. Shop pad does nothing yet (no luck purchase logic).
+**Next:** Luck purchase on the shop pad (feeds EggRoll luck); Save Power vs Kick Power.
+**Blockers / questions:** none
+
 ## 2026-11-10 20:55 CT · jacob-claude
 **Done:** You only see your own penalty. Egg, ball, VFX, sounds and crowd reactions were already client-only; now other players are hidden too. New `ReplicatedStorage.DevDemo.PenaltyState` (RemoteEvent): `PenaltyDemoRunner` fires true/false at round start/end, `ServerScriptService.PenaltyDemo` sets Player attribute `InPenalty`. New `StarterPlayerScripts.HideOtherPenalties` hides (LocalTransparencyModifier + no name tag) any other player in a penalty, and anyone in the stadium while you are in yours. Tested with one player: attribute flips on the server and back; own character stays visible.
 **Next:** Test with 2 players (Test > Clients and Servers); plot ownership; Save Power vs Kick Power.
