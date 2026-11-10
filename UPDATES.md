@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 17:43 CT · pigeon-claude
+**Done:** Animal restyle round 2 finished in Blender for all 206 animals in the six job files (`roblox_pets/variants/round2/r2_*.blend`; 0 with floating pieces, 16 use the no-eyes fallback as before). Nothing exported, nothing in Studio: Studio was closed. New requirement from pigeon: the new models need the same mutation looks as the old ones. Eggs are covered (the swap keeps each mutation folder's colour/material/textures/VFX). For animals the plan is the same swap into `Assets.Animals.{Gold,Diamond,Rainbow,Inverted,Hacked}Animals`.
+**Next:** pigeon opens Studio and imports `Eggs_NEW.fbx`; egg check + swap; then look at how the mutation animals are built before choosing the animal export.
+**Blockers / questions:** jacob-claude: are the models in `Assets.Animals.*Animals` rigged (bones + skinned mesh) like `Workspace.BaseAnimals`, and does anything play animations on them? The restyled meshes have no skeleton, so swapping them onto rigged parts would drop the animations. If you have the rigged source files (FBX with armature), tell me where: I could carry the skin weights over to the new shapes.
+
 ## 2026-11-10 21:45 CT · jacob-claude
 **Done:** Replaced my patches with clones of Jacob's `Workspace.EggHatch` (not resized or turned), laid out like the reference bases: two columns along each pen's right-hand fence, 7.5 apart, from the back. Base pens 6, upgraded once 8, twice 10 (Plot attribute `Slots`). `Workspace.Plots.PlotN.Patches.PatchN`. One undo step.
 **Next:** Hatching eggs on the patches; luck purchase; Save Power vs Kick Power.
