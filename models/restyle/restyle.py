@@ -25,8 +25,11 @@ ADD_BLUSH = False
 OVERRIDES = {
     "Corgi1": dict(HEAD_SCALE=1.12, EYE_SCALE=1.12, EYE_MAX_FRAC=0.10, LEG_SCALE=0.9, WIDTH_SCALE=1.0),
 }
+# blocky "A###" models get a gentler version (pigeon: some bodies looked too rigid)
+BLOCKY = dict(HEAD_SCALE=1.18, EYE_SCALE=1.2, LEG_SCALE=0.85, WIDTH_SCALE=1.04)
 DEFAULTS = None    # pigeon, 2026-11-09: "just remove the blush" (it never looked right on these models)
-ADD_SHINE = False    # the game's own eye texture already has a shine (pigeon: old eyes look much better)
+ADD_SHINE = False
+FALLBACK_NO_EYES = True   # pigeon: "do all" -> animals without modelled eyes get the chunky-body version    # the game's own eye texture already has a shine (pigeon: old eyes look much better)
 LEG_SCALE = 0.72
 WIDTH_SCALE = 1.08
 SAT_BOOST = 1.25
@@ -56,18 +59,43 @@ def islands(bm):
 def find_eyes(parts, mx_all):
     # a mirrored pair (same y/z, x mirrored about the midline) of small, round parts; the
     # highest + most forward pair wins
-    midx = sum(p["c"].x for p in parts) / len(parts)
+    # Size limits are RELATIVE to the animal (dragons have big eyes), flat eyes are allowed
+    # (blocky + fish eyes are thin slabs), and the pair must sit near the middle, on the upper
+    # front of the animal (so a dot on a wing never counts as an eye).
+    allc = [p["mn"] for p in parts] + [p["mx"] for p in parts]
+    mn = Vector((min(c.x for c in allc), min(c.y for c in allc), min(c.z for c in allc)))
+    mx = Vector((max(c.x for c in allc), max(c.y for c in allc), max(c.z for c in allc)))
+    size = mx - mn
+    midx = (mn.x + mx.x) / 2
+    tol = max(0.05, max(size) * 0.01)
+    max_eye = max(1.2, max(size) * 0.12)
     best = None
     for i, a in enumerate(parts):
         for b in parts[i + 1:]:
-            if abs(a["c"].y - b["c"].y) > 0.05 or abs(a["c"].z - b["c"].z) > 0.05: continue
-            if abs((a["c"].x + b["c"].x) / 2 - midx) > 0.15: continue
-            s = a["s"]
-            if max(s) > 1.2 or min(s) < 0.6 * max(s): continue      # small and roundish
+            if abs(a["c"].y - b["c"].y) > tol or abs(a["c"].z - b["c"].z) > tol: continue
+            if abs((a["c"].x + b["c"].x) / 2 - midx) > max(0.15, size.x * 0.03): continue
+            if abs(a["s"].x - b["s"].x) > tol * 2 or abs(a["s"].z - b["s"].z) > tol * 2: continue
+            s = sorted(a["s"])
+            if s[2] > max_eye or s[1] < 0.55 * s[2]: continue           # small; round or flat-round
+            sep = abs(a["c"].x - b["c"].x)
+            if sep > max(size.x * 0.6, 0.5) or sep > max(size.y, size.z) * 0.6: continue   # not on wings
+            if a["c"].z < mn.z + size.z * 0.3: continue                  # upper part
+            if a["c"].y < mn.y + size.y * 0.4: continue                  # front part
             score = a["c"].z + a["c"].y * 0.5
             if best is None or score > best[0]:
                 best = (score, a, b)
     return (best[1], best[2]) if best else (None, None)
+
+
+def eye_cluster(eye, parts):
+    """The eye plus anything sitting inside/on it (a blocky eye's pupil inside its white frame)."""
+    pad = eye["s"] * 0.15 + Vector((0.02, 0.02, 0.02))
+    out = [eye]
+    for p in parts:
+        if p is eye or p["vol"] > eye["vol"] * 1.01: continue
+        if all(eye["mn"][k] - pad[k] <= p["c"][k] <= eye["mx"][k] + pad[k] for k in range(3)):
+            out.append(p)
+    return out
 
 
 def restyle(ob):
@@ -82,6 +110,24 @@ def restyle(ob):
     body = max(parts, key=lambda p: p["vol"])
     eyeL, eyeR = find_eyes(parts, mx_all)
     info = dict(eyes=bool(eyeL))
+    if not eyeL and FALLBACK_NO_EYES:
+        # painted-on eyes (fish, snakes): no head to grow, so make the whole body chunkier and
+        # rounder instead: shorter, wider, a touch taller, standing on the same ground
+        ctr = (mn_all + mx_all) / 2
+        for v in bm.verts:
+            v.co.x = ctr.x + (v.co.x - ctr.x) * 1.1
+            v.co.y = ctr.y + (v.co.y - ctr.y) * 0.86
+            v.co.z = ground + (v.co.z - ground) * 1.05
+        info["fallback"] = True
+        bm.to_mesh(me)
+        bvh = BVHTree.FromBMesh(bm)
+        bm.free()
+        return info, [], bvh, ctr.x, []
+    clusters = {}
+    if eyeL:
+        for e in (eyeL, eyeR):
+            clusters[id(e)] = eye_cluster(e, parts)
+        info["eye_bits"] = len(clusters[id(eyeL)])
 
     # --- head group ---
     head = None
@@ -123,7 +169,7 @@ def restyle(ob):
     eye_data = []
     eyes = [e for e in (eyeL, eyeR) if e]
     if eyes:
-        eye_idx = set(v.index for e in eyes for v in e["verts"])
+        eye_idx = set(v.index for e in eyes for p in clusters[id(e)] for v in p["verts"])
         bm.verts.ensure_lookup_table(); bm.faces.ensure_lookup_table()
         co = [v.co.copy() for v in bm.verts]
         polys = [[v.index for v in f.verts] for f in bm.faces if not any(v.index in eye_idx for v in f.verts)]
@@ -148,11 +194,20 @@ def restyle(ob):
             r_new = r * k
             h = r_new * EYE_DEPTH                 # half-depth along the normal
             newc = loc + n * (h * EYE_OUT)        # most of the eye sits outside, the rest sunk in
-            for v, q in zip(e["verts"], cs):
-                d = q - c
-                along = d.dot(n)
-                perp = d - n * along
-                v.co = newc + perp * k + n * along * k * EYE_DEPTH
+            # move the whole eye cluster (frame + pupil on blocky eyes) with the same transform
+            for p in clusters[id(e)]:
+                for v in p["verts"]:
+                    d = v.co - c
+                    along = d.dot(n)
+                    perp = d - n * along
+                    v.co = newc + perp * k + n * along * k * EYE_DEPTH
+            # flat/blocky eyes: if any gap is left between the eye and the face, push it in until it touches
+            ev = [v for p in clusters[id(e)] for v in p["verts"]]
+            gap = min(surf.find_nearest(v.co)[3] for v in ev)
+            if gap > 0.01:
+                for v in ev:
+                    v.co -= n * (gap + 0.01)
+                newc = newc - n * (gap + 0.01)
             eye_data.append(dict(c=newc, r=r_new, h=h, n=n))
         info["eye_seat"] = [round((d["c"] - surf.find_nearest(d["c"])[0]).length / d["h"], 2) for d in eye_data]
 
@@ -165,6 +220,22 @@ def restyle(ob):
                  and p not in head_group]
     legs = [p for p in on_ground if p["s"].z > animal_h * 0.18]
     feet = [p for p in on_ground if p not in legs]
+    # blocky animals: the leg box sits ON a paw block, so it never touches the ground itself.
+    # Then the leg is the piece standing right on top of each paw.
+    if not legs and feet:
+        eye_ids = set(id(p) for cl in clusters.values() for p in cl)
+        for f in feet:
+            above = [p for p in parts if p is not body and p not in head_group and id(p) not in eye_ids
+                     and p not in feet and p not in legs
+                     and abs(p["mn"].z - f["mx"].z) < max(0.12, animal_h * 0.04)
+                     and p["mn"].x < f["mx"].x and p["mx"].x > f["mn"].x
+                     and p["mn"].y < f["mx"].y and p["mx"].y > f["mn"].y
+                     and p["s"].z > animal_h * 0.08]
+            if above:
+                leg = min(above, key=lambda p: abs(p["mn"].z - f["mx"].z))
+                if not any(l is leg for l in legs):
+                    legs.append(leg)
+        info["blocky_legs"] = len(legs)
     shrink = {}
     for p in legs:
         top = p["mx"].z
@@ -214,7 +285,7 @@ def restyle(ob):
         d["head_bvh"], d["head_ctr"] = head_bvh, head_ctr
     bm.to_mesh(me)
     bvh = BVHTree.FromBMesh(bm)
-    eye_vidx = sorted(v.index for e in eyes for v in e["verts"]) if eyes else []
+    eye_vidx = sorted(set(v.index for e in eyes for p in clusters[id(e)] for v in p["verts"])) if eyes else []
     bm.free()
     return info, eye_data, bvh, cx, eye_vidx
 
@@ -556,6 +627,8 @@ for name in names:
     if DEFAULTS is None:
         DEFAULTS = {k: globals()[k] for k in ("HEAD_SCALE", "EYE_SCALE", "EYE_MAX_FRAC", "LEG_SCALE", "WIDTH_SCALE")}
     globals().update(DEFAULTS)
+    if len(name) == 4 and name[0] == "A" and name[1:].isdigit():
+        globals().update(BLOCKY)
     globals().update(OVERRIDES.get(name, {}))
     src = bpy.data.objects[name]
     co = [src.matrix_world @ v.co for v in src.data.vertices]

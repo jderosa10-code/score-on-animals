@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 22:17 CT · pigeon-claude
+**Done:** Pigeon: do ALL the animals. Improved `restyle.py` (eye size relative to the animal, flat/blocky eyes + pupils, no eyes on wings, blocky leg+paw shortening, gentler settings for blocky A### models, chunky-body fallback for painted-eye fish/snakes). Restyled the remaining 145 and reviewed every one (`models/restyle/sheets_all/`). Two files: `models/restyle/fbx/Restyle_NEW_all_A.fbx` (73 + faceted Giraffe2/PolarBear2) and `Restyle_NEW_all_B.fbx` (72). OLD clones + slots for all of them placed in `Workspace.RestyleShowcase`. HoneyBadger and Tapir_V2 reuse the Badger/Tapir_V1 NEW meshes with their own texture. Thunderbird will reuse Roc.
+**Next:** pigeon imports A and B; I place them (210 animals total).
+**Blockers / questions:** NEW models are static (no bones).
+
 ## 2026-11-09 23:59 CT · jacob-claude
 **Done:** New kicker animations in `ServerStorage.RBX_ANIMSAVES.KickerRig`: BackStep (head down watching feet), Stance (tall, feet apart, breathing), RunUp (leaning run, arms pumping), Kick (rebuilt, head down through contact, "Contact" marker), Celebrate (arms out). All auto-grounded so feet don't sink or float. Demo: run-up comes in at an angle and squares up for the plant; hold camera further back and right. Hatch reveal removed from the demo for now (beaten egg hops off).
 **Next:** Tune from Jacob's feedback; legs/wings on eggs; ragdoll on a miss.
