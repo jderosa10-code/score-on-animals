@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 03:50 CT · jacob-claude
+**Done:** More sounds in `ReplicatedStorage.DevDemo.Sounds`: Step1/Step2 (grass footsteps, played whenever a kicker's foot touches down, louder when running), EggHit (smack when the ball hits the egg, layered with Bounce + a low boing), BallLand (thud on every ground bounce). Parried balls and balls dropping out of the net now bounce twice before settling.
+**Next:** Ragdoll on a miss; legs/wings on eggs.
+**Blockers / questions:** None.
+
 ## 2026-11-09 23:13 CT · pigeon-claude
 **Done:** Teeth fix imported: 19 NEW animals swapped in `Workspace.RestyleShowcase` at their original size (teeth/jaws now line up with the head).
 **Next:** the last 4 animals (#14); rigging the NEW models so they animate.
