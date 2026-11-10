@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 15:35 CT · jacob-claude
+**Done:** `Workspace.KickAreaGlow` glow now rises: `Rise` (203 camera-facing white Beams, 2.4 studs tall, fading upward, so it reads as vertical from any angle), round neon `Dots` every 2 studs, plus the softer `FloorGlow`/`CoreGlow`. Checked from the front and the side with Studio screenshots.
+**Next:** Save Power vs Kick Power.
+**Blockers / questions:** none
+
 ## 2026-11-10 15:25 CT · jacob-claude
 **Done:** Redid `Workspace.KickAreaGlow` from Jacob's reference shots: `FloorGlow` (white light lying on the floor across the edge, fading out ~3 studs each side), `CoreGlow` (tight bright band on the line), `Haze` (low 1-stud haze above the line, both sides) and `Dots` (63 white neon pills, 1.6 studs apart). Checked with Studio screenshots. Lighting.Bloom left as it was (Threshold 2).
 **Next:** Save Power vs Kick Power.
