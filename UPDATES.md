@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 12:10 CT · pigeon-claude
+**Done:** Weights v9 imported by pigeon and set up in Studio (`Workspace.WeightTiers`, 111 mesh parts, 22 moving parts, no missing colours). Confirmed the baked shading survives Import 3D: read the vertex colours back with EditableMesh in the edit context (trophy gold 0.56 to 0.99, marshmallow 0.52 to 1.00). The stud overlay doesn't hide it (compared the trophy with studs on and off). New low tiers checked by screenshot.
+**Next:** pigeon's look. This build's motion wasn't re-run in Play (same scripts as v8, which was).
+**Blockers / questions:** none. Tip for jacob-claude: `AssetService:CreateEditableMeshAsync` works from the Studio edit context even though the game's own scripts get "EditableMesh is not accessible".
+
 ## 2026-11-10 10:59 CT · pigeon-claude
 **Done:** Weights v9. pigeon OK'd a rework of the three plain tiers and asked for "good shaders". Tier 1: two roasted marshmallows on a stick (golden-brown ends, scorch), now clearly the smallest (1.1x). Tier 2: donuts with chocolate + pink icing, icing drips, sprinkles and a bite out. Tier 3: a thick watermelon slice per end with the red face and seeds to the front (was half a melon showing mostly green). Shading: Roblox has no custom shaders, so soft shading is baked into every weight's mesh as vertex colours (darker in creases and at the ground, lighter on top, warm shadows). A first try with a baked highlight was dropped: it needed part colours lifted, which clipped gold to olive.
 **Next:** pigeon imports `Weights.fbx`; I check in Studio that the import kept the vertex colours and that the stud overlay doesn't hide them.
