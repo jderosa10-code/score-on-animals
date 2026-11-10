@@ -1,0 +1,378 @@
+# "Score on Animals" restyle: the same small changes applied to every animal by code,
+# so the whole pack looks different from Fake an Egg without remodelling by hand.
+#   1. Bigger head (head + eyes + ears + nose scale up together)
+#   2. Bigger eyes, plus a white shine dot on each
+#   3. Shorter, chunkier legs (animal dropped back onto the ground)
+#   4. A little wider body
+#   5. Pink blush cheeks
+#   6. Brighter, more saturated colours (copy of the texture, original untouched)
+# blender -b five_originals.blend -P restyle.py -- <out.blend> <out.png> Name1,Name2,...
+import bpy, bmesh, sys, math, colorsys
+from mathutils import Vector, Matrix
+from mathutils.bvhtree import BVHTree
+
+argv = sys.argv[sys.argv.index("--") + 1:]
+blend_out, png_out, names = argv[0], argv[1], argv[2].split(",")
+
+HEAD_SCALE = 1.3
+EYE_SCALE = 1.4
+LEG_SCALE = 0.72
+WIDTH_SCALE = 1.08
+SAT_BOOST = 1.25
+VAL_BOOST = 1.06
+
+
+def islands(bm):
+    bm.verts.ensure_lookup_table()
+    seen = set(); out = []
+    for v in bm.verts:
+        if v.index in seen: continue
+        stack = [v]; isl = []; seen.add(v.index)
+        while stack:
+            x = stack.pop(); isl.append(x)
+            for e in x.link_edges:
+                o = e.other_vert(x)
+                if o.index not in seen:
+                    seen.add(o.index); stack.append(o)
+        cs = [q.co for q in isl]
+        mn = Vector((min(c.x for c in cs), min(c.y for c in cs), min(c.z for c in cs)))
+        mx = Vector((max(c.x for c in cs), max(c.y for c in cs), max(c.z for c in cs)))
+        out.append(dict(verts=isl, mn=mn, mx=mx, c=(mn + mx) / 2, s=mx - mn,
+                        vol=(mx - mn).x * (mx - mn).y * (mx - mn).z))
+    return out
+
+
+def find_eyes(parts, mx_all):
+    # a mirrored pair (same y/z, x mirrored about the midline) of small, round parts; the
+    # highest + most forward pair wins
+    midx = sum(p["c"].x for p in parts) / len(parts)
+    best = None
+    for i, a in enumerate(parts):
+        for b in parts[i + 1:]:
+            if abs(a["c"].y - b["c"].y) > 0.05 or abs(a["c"].z - b["c"].z) > 0.05: continue
+            if abs((a["c"].x + b["c"].x) / 2 - midx) > 0.15: continue
+            s = a["s"]
+            if max(s) > 1.2 or min(s) < 0.6 * max(s): continue      # small and roundish
+            score = a["c"].z + a["c"].y * 0.5
+            if best is None or score > best[0]:
+                best = (score, a, b)
+    return (best[1], best[2]) if best else (None, None)
+
+
+def restyle(ob):
+    me = ob.data
+    bm = bmesh.new(); bm.from_mesh(me)
+    bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=0.0005)
+    parts = islands(bm)
+    all_co = [v.co for v in bm.verts]
+    mn_all = Vector((min(c.x for c in all_co), min(c.y for c in all_co), min(c.z for c in all_co)))
+    mx_all = Vector((max(c.x for c in all_co), max(c.y for c in all_co), max(c.z for c in all_co)))
+    ground = mn_all.z
+    body = max(parts, key=lambda p: p["vol"])
+    eyeL, eyeR = find_eyes(parts, mx_all)
+    info = dict(eyes=bool(eyeL))
+
+    # --- head group ---
+    head = None
+    if eyeL:
+        em = (eyeL["c"] + eyeR["c"]) / 2
+        cands = [p for p in parts if p is not eyeL and p is not eyeR and p["vol"] > eyeL["vol"] * 2
+                 and all(p["mn"][k] - 0.3 <= em[k] <= p["mx"][k] + 0.3 for k in range(3))]
+        if cands:
+            head = min(cands, key=lambda p: p["vol"])
+        if head is body:
+            head = None   # head and body are one piece (toad): skip the head scale
+    head_group = []
+    if head:
+        hmn, hmx = head["mn"], head["mx"]
+        pad = (hmx - hmn) * 0.45
+        for p in parts:
+            if p is body: continue
+            inside = all(hmn[k] - pad[k] <= p["c"][k] <= hmx[k] + pad[k] for k in range(3))
+            if inside and p["c"].z >= hmn.z - pad.z * 0.5 and p["vol"] < body["vol"]:
+                head_group.append(p)
+        # pivot = back-bottom of the head, where it meets the neck/body, so it grows up and forward
+        pivot = Vector((head["c"].x, hmn.y + (hmx.y - hmn.y) * 0.25, hmn.z + (hmx.z - hmn.z) * 0.3))
+        S = Matrix.Translation(pivot) @ Matrix.Scale(HEAD_SCALE, 4) @ Matrix.Translation(-pivot)
+        for p in head_group:
+            for v in p["verts"]:
+                v.co = S @ v.co
+        info["head_parts"] = len(head_group)
+
+    # --- eyes: bigger, nudged forward so they don't sink into the bigger head ---
+    eye_data = []
+    for e in (eyeL, eyeR):
+        if not e: continue
+        cs = [v.co for v in e["verts"]]
+        c = sum(cs, Vector()) / len(cs)
+        for v in e["verts"]:
+            v.co = c + (v.co - c) * EYE_SCALE + Vector((0, 0.04, 0))
+        r = max((v.co - (c + Vector((0, 0.04, 0)))).length for v in e["verts"])
+        eye_data.append((c + Vector((0, 0.04, 0)), r))
+
+    # --- legs: parts that sit on the ground below the body's middle, shortened from the top ---
+    body_mid = body["c"].z
+    legs = [p for p in parts if p["mn"].z < ground + 0.15 and p["c"].z < body_mid and p is not body
+            and p not in head_group]
+    for p in legs:
+        top = p["mx"].z
+        for v in p["verts"]:
+            v.co.z = top - (top - v.co.z) * LEG_SCALE
+    if legs:
+        drop = (max(p["mx"].z for p in legs) - min(p["mn"].z for p in legs)) * (1 - LEG_SCALE)
+        for v in bm.verts:
+            v.co.z -= drop
+    info["legs"] = len(legs)
+
+    # --- a little wider overall ---
+    cx = (mn_all.x + mx_all.x) / 2
+    for v in bm.verts:
+        v.co.x = cx + (v.co.x - cx) * WIDTH_SCALE
+    if legs:
+        eye_data = [(Vector((cx + (c.x - cx) * WIDTH_SCALE, c.y, c.z - drop)), r) for c, r in eye_data]
+    else:
+        eye_data = [(Vector((cx + (c.x - cx) * WIDTH_SCALE, c.y, c.z)), r) for c, r in eye_data]
+
+    # put it back on the ground
+    lowest = min(v.co.z for v in bm.verts)
+    for v in bm.verts:
+        v.co.z += ground - lowest
+
+    bm.to_mesh(me)
+    bvh = BVHTree.FromBMesh(bm)
+    bm.free()
+    if legs:
+        eye_data = [(c + Vector((0, 0, ground - lowest)), r) for c, r in eye_data]
+    else:
+        eye_data = [(c + Vector((0, 0, ground - lowest)), r) for c, r in eye_data]
+    return info, eye_data, bvh, cx
+
+
+def recolor(ob):
+    for slot in ob.material_slots:
+        mat = slot.material
+        if not mat or not mat.use_nodes: continue
+        new = mat.copy(); new.name = mat.name + "_SOA"
+        slot.material = new
+        for n in new.node_tree.nodes:
+            if n.type == 'TEX_IMAGE' and n.image:
+                img = n.image.copy(); img.name = n.image.name.replace(".png", "") + "_SOA"
+                px = list(img.pixels)
+                for i in range(0, len(px), 4):
+                    h, s, v = colorsys.rgb_to_hsv(px[i], px[i + 1], px[i + 2])
+                    s = min(1.0, s * SAT_BOOST); v = min(1.0, v * VAL_BOOST)
+                    px[i], px[i + 1], px[i + 2] = colorsys.hsv_to_rgb(h, s, v)
+                img.pixels = px
+                img.pack()
+                n.image = img
+                n.interpolation = 'Closest'
+
+
+GRAD_BOTTOM = 0.78   # colour multiplier at the feet
+GRAD_TOP = 1.06      # ... and at the top of the head
+BAKE_RES = 256
+
+
+def mix_socket(node, kind, name):
+    return next(s for s in getattr(node, kind) if s.name == name and s.type == 'RGBA')
+
+
+def gradient_and_bake(ob):
+    """Soft vertical gradient (darker feet, lighter top) on top of the recoloured texture,
+    baked into one new texture on a fresh UV map, so it exports to Roblox as a plain texture."""
+    me = ob.data
+    src_uv = me.uv_layers[0].name
+    zs = [v.co.z for v in me.vertices]
+    zmin, zmax = min(zs), max(zs)
+    img = bpy.data.images.new(ob.name + "_tex", BAKE_RES, BAKE_RES)
+    for slot in ob.material_slots:
+        mat = slot.material
+        nt = mat.node_tree; N = nt.nodes; L = nt.links
+        tex = next(n for n in N if n.type == 'TEX_IMAGE')
+        bsdf = next(n for n in N if n.type == 'BSDF_PRINCIPLED')
+        uvn = N.new("ShaderNodeUVMap"); uvn.uv_map = src_uv
+        L.new(uvn.outputs["UV"], tex.inputs["Vector"])
+        tc = N.new("ShaderNodeTexCoord"); sep = N.new("ShaderNodeSeparateXYZ")
+        L.new(tc.outputs["Object"], sep.inputs[0])
+        mr = N.new("ShaderNodeMapRange")
+        mr.inputs["From Min"].default_value = zmin; mr.inputs["From Max"].default_value = zmax
+        mr.inputs["To Min"].default_value = GRAD_BOTTOM; mr.inputs["To Max"].default_value = GRAD_TOP
+        mr.interpolation_type = 'SMOOTHSTEP'
+        L.new(sep.outputs["Z"], mr.inputs["Value"])
+        mix = N.new("ShaderNodeMix"); mix.data_type = 'RGBA'; mix.blend_type = 'MULTIPLY'
+        mix.inputs["Factor"].default_value = 1.0
+        L.new(tex.outputs["Color"], mix_socket(mix, "inputs", "A"))
+        L.new(mr.outputs["Result"], mix_socket(mix, "inputs", "B"))
+        L.new(mix_socket(mix, "outputs", "Result"), bsdf.inputs["Base Color"])
+        bake_node = N.new("ShaderNodeTexImage"); bake_node.image = img
+        N.active = bake_node
+    # fresh, non-overlapping UVs to bake into
+    me.uv_layers.new(name="BakeUV")
+    me.uv_layers.active = me.uv_layers["BakeUV"]
+    bpy.ops.object.select_all(action='DESELECT')
+    ob.select_set(True); bpy.context.view_layer.objects.active = ob
+    bpy.ops.object.mode_set(mode='EDIT')
+    bpy.ops.mesh.select_all(action='SELECT')
+    bpy.ops.uv.smart_project(angle_limit=math.radians(66), island_margin=0.01)
+    bpy.ops.object.mode_set(mode='OBJECT')
+    sc = bpy.context.scene
+    sc.render.engine = 'CYCLES'; sc.cycles.device = 'CPU'; sc.cycles.samples = 4
+    bpy.ops.object.bake(type='DIFFUSE', pass_filter={'COLOR'}, use_clear=True, margin=4)
+    img.pack()
+    # swap to the baked texture only (what Roblox would get)
+    for slot in ob.material_slots:
+        nt = slot.material.node_tree; N = nt.nodes; L = nt.links
+        bsdf = next(n for n in N if n.type == 'BSDF_PRINCIPLED')
+        bake_node = next(n for n in N if n.type == 'TEX_IMAGE' and n.image == img)
+        uvb = N.new("ShaderNodeUVMap"); uvb.uv_map = "BakeUV"
+        L.new(uvb.outputs["UV"], bake_node.inputs["Vector"])
+        L.new(bake_node.outputs["Color"], bsdf.inputs["Base Color"])
+    # re-fetch: edit-mode toggles reallocate the UV layers, so the old Python reference is stale
+    me.uv_layers["BakeUV"].active_render = True
+    me.uv_layers.active = me.uv_layers["BakeUV"]
+    me.uv_layers.remove(me.uv_layers[src_uv])
+    ob.select_set(False)
+
+
+def flat_mat(name, rgb, emit=0.0):
+    m = bpy.data.materials.get(name)
+    if m: return m
+    m = bpy.data.materials.new(name); m.use_nodes = True
+    b = m.node_tree.nodes["Principled BSDF"]
+    b.inputs["Base Color"].default_value = (*rgb, 1)
+    b.inputs["Roughness"].default_value = 0.5
+    if emit:
+        b.inputs["Emission Color"].default_value = (*rgb, 1)
+        b.inputs["Emission Strength"].default_value = emit
+    return m
+
+
+def add_sphere(name, loc, scale, rot, mat, parent, segs=10, rings=6):
+    me = bpy.data.meshes.new(name)
+    bm = bmesh.new()
+    bmesh.ops.create_uvsphere(bm, u_segments=segs, v_segments=rings, radius=1.0)
+    bm.to_mesh(me); bm.free()
+    o = bpy.data.objects.new(name, me)
+    bpy.context.scene.collection.objects.link(o)
+    o.location = loc; o.scale = scale; o.rotation_euler = rot
+    o.data.materials.append(mat)
+    o.parent = parent   # loc is in the parent's local space
+    return o
+
+
+def add_face_bits(ob, eye_data, bvh, cx):
+    blush = flat_mat("SOA_Blush", (1.0, 0.42, 0.55))
+    shine = flat_mat("SOA_Shine", (1.0, 1.0, 1.0), emit=0.6)
+    for c, r in eye_data:
+        side = 1 if c.x > cx else -1
+        # shine dot: upper-front-outer on the eye ball
+        d = Vector((0.35 * side, 0.8, 0.5)).normalized()
+        add_sphere(ob.name + "_Shine", c + d * r * 0.92, (r * 0.3,) * 3, (0, 0, 0), shine, ob, 8, 5)
+        # blush: below and outside the eye, stuck onto the face by casting a ray from the front
+        # try a few spots under the eye; keep the first hit that's near the eye (on the face,
+        # not a leg or the chest further down/back)
+        placed = False
+        # aim at the cheek from the front-outer side (the snout often sticks out in front of the eyes)
+        for dz, dx, back in ((1.5, 0.9, 0.6), (1.2, 1.1, 0.8), (1.9, 0.8, 0.5), (1.0, 1.4, 1.0), (2.3, 0.7, 0.4)):
+            target = Vector((c.x + side * r * dx, c.y - r * back, c.z - r * dz))
+            d = Vector((side * 0.7, 1.0, 0.15)).normalized()
+            hit = bvh.ray_cast(target + d * 4, -d, 8)
+            if hit[0] is None:
+                continue
+            loc, nrm = hit[0], hit[1].copy()
+            if nrm.dot(d) < 0: nrm.negate()   # imported faces can wind inward; face the ray
+            if (loc - c).length > r * 4.0 or nrm.dot(d) < 0.3:
+                continue
+            rot = nrm.to_track_quat('Z', 'Y').to_euler()
+            add_sphere(ob.name + "_Blush", loc + nrm * 0.03, (r * 0.8, r * 0.55, r * 0.15), rot, blush, ob)
+            placed = True
+            break
+        print("BLUSH", ob.name, side, placed)
+
+
+# ---- build the side-by-side ----
+sc = bpy.context.scene
+row_x = 0.0
+GAP = 2.5
+report = {}
+pairs = []
+for name in names:
+    src = bpy.data.objects[name]
+    co = [src.matrix_world @ v.co for v in src.data.vertices]
+    mn = Vector((min(c.x for c in co), min(c.y for c in co), min(c.z for c in co)))
+    mx = Vector((max(c.x for c in co), max(c.y for c in co), max(c.z for c in co)))
+    w = mx.x - mn.x
+    # the camera looks from +Y, so lower X shows on the RIGHT: NEW goes first (right), OLD second (left)
+    new = src.copy(); new.data = src.data.copy(); new.name = name + "_SOA"
+    sc.collection.objects.link(new)
+    new.location = Vector((row_x - mn.x, -(mn.y + mx.y) / 2, -mn.z))
+    # move the original into the row (as a whole object, mesh untouched)
+    src.location = new.location + Vector((w * WIDTH_SCALE + 1.2, 0, 0))
+    for slot in src.material_slots:   # pixel-sharp textures on the original too, for a fair compare
+        if slot.material and slot.material.use_nodes:
+            for n in slot.material.node_tree.nodes:
+                if n.type == 'TEX_IMAGE': n.interpolation = 'Closest'
+    info, eye_data, bvh, cx = restyle(new)
+    recolor(new)
+    gradient_and_bake(new)
+    add_face_bits(new, eye_data, bvh, cx)
+    report[name] = info
+    pairs.append((name, new.location.x + mn.x, src.location.x + mx.x, mx.z - mn.z))
+    for label, o in (("OLD", src), ("NEW", new)):
+        cu = bpy.data.curves.new(label, 'FONT'); cu.body = label; cu.align_x = 'CENTER'
+        cu.size = 0.6
+        t = bpy.data.objects.new(name + "_" + label, cu); sc.collection.objects.link(t)
+        # standing up in front of the animal, readable from the camera side (+Y)
+        t.location = Vector((o.location.x + (mn.x + mx.x) / 2, (mx.y - mn.y) / 2 + 1.2, 0.05))
+        t.rotation_euler = (math.radians(90), 0, math.radians(180))
+        t.data.materials.append(flat_mat("SOA_Label_" + label, (0.1, 0.1, 0.1) if label == "OLD" else (0.05, 0.45, 0.15)))
+    row_x += 2.1 * w + 1.2 + GAP
+
+print("RESTYLE", report)
+
+# ---- ground, light, camera ----
+bpy.ops.mesh.primitive_plane_add(size=400, location=(row_x / 2, 0, 0))
+g = bpy.context.active_object; g.name = "Ground"
+g.data.materials.append(flat_mat("SOA_Ground", (0.82, 0.86, 0.80)))
+sun = bpy.data.objects.new("Sun", bpy.data.lights.new("Sun", 'SUN'))
+sun.data.energy = 3.5; sun.rotation_euler = (math.radians(50), 0, math.radians(-30))
+sc.collection.objects.link(sun)
+sc.world = sc.world or bpy.data.worlds.new("World")
+sc.world.use_nodes = True
+sc.world.node_tree.nodes["Background"].inputs["Color"].default_value = (0.75, 0.82, 0.92, 1)
+sc.world.node_tree.nodes["Background"].inputs["Strength"].default_value = 0.9
+
+cam = bpy.data.objects.new("Cam", bpy.data.cameras.new("Cam")); sc.collection.objects.link(cam)
+cam.data.type = 'ORTHO'
+width = row_x - GAP
+cam.data.ortho_scale = width * 1.06
+ctr = Vector((width / 2, 0, 3.0))
+az = math.radians(25)
+r = 60
+cam.location = ctr + Vector((math.sin(az) * r * 0.35, r * math.cos(az), r * 0.42))
+cam.rotation_euler = (ctr - cam.location).to_track_quat('-Z', 'Y').to_euler()
+sc.camera = cam
+
+sc.render.engine = 'CYCLES'
+sc.cycles.device = 'CPU'
+sc.cycles.samples = 48
+sc.cycles.use_denoising = True
+sc.render.resolution_x = 2400
+sc.render.resolution_y = 900
+sc.render.filepath = png_out
+bpy.ops.wm.save_as_mainfile(filepath=blend_out)
+bpy.ops.render.render(write_still=True)
+
+# close-up of each OLD | NEW pair
+sc.render.resolution_x = 1200
+sc.render.resolution_y = 800
+for name, x0, x1, h in pairs:
+    w = x1 - x0
+    c = Vector(((x0 + x1) / 2, 0, h * 0.45))
+    cam.data.ortho_scale = max(w * 1.25, h * 1.25 * 1.5)
+    az = math.radians(20)
+    cam.location = c + Vector((math.sin(az) * 30 * 0.3, 30 * math.cos(az), 30 * 0.38))
+    cam.rotation_euler = (c - cam.location).to_track_quat('-Z', 'Y').to_euler()
+    sc.render.filepath = png_out.replace(".png", "_" + name + ".png")
+    bpy.ops.render.render(write_still=True)
+print("DONE")

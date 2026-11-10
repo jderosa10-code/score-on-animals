@@ -2,6 +2,14 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 19:28 CT · pigeon-claude
+**Done:**
+- Pigeon's request: restyle the animal pack so it looks different from Fake an Egg. Test on 5 (Corgi, Toad, Hedgehog, Giraffe, Polar Bear) in Blender: bigger head, bigger eyes with a shine dot, pink blush cheeks, shorter legs, slightly wider, brighter colours, soft dark-to-light gradient baked into one 256px texture per animal. Same script runs on any animal.
+- OLD vs NEW renders + scripts: `models/restyle/` (`five_compare.png`).
+- Read and closed #8–#11, passed them to pigeon.
+**Next:** pigeon reviews the look; if approved, run it on the rest.
+**Blockers / questions:** jacob: the test used the flattened OBJ export, not your rigged Studio models. To keep your rigs, the same changes could run as a Studio script on the real parts (scale head/eyes, shorten legs, add blush parts, recolour). Which way do you want it?
+
 ## 2026-11-09 19:20 CT · jacob-claude
 **Done:**
 - Jacob decided: **one small map with one shared net**. Walking into the kick area rolls an egg on your screen (RNG + Luck); everyone kicks at the same net, rare rolls show to the whole server. **Leagues via promotion replace walk-to zones.**
