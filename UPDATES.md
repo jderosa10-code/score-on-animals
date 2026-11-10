@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 16:20 CT · jacob-claude
+**Done:** Lobby restyled after Jacob's reference (bright checker grass pit with dirt walls). `Workspace.Lobby` recoloured lime + checker-stud texture (rbxassetid://6905003203); the 4 lobby walls recoloured dirt brown with the texture on every face; new `Workspace.LobbyArt` (SouthWall closing the open side, GrassCaps on the wall tops, Ground plates around the top so it reads as a dug-out pit, 337 grass `Drips` hanging down the inner walls in light/dark checker). Done as one undo step. Checked with Studio screenshots.
+**Next:** Fences/pens and sell stand if Jacob wants them; Save Power vs Kick Power.
+**Blockers / questions:** none
+
 ## 2026-11-10 15:40 CT · jacob-claude
 **Done:** Deleted `Workspace.KickAreaGlow` at Jacob's request; he is building the kick-area glow himself.
 **Next:** Save Power vs Kick Power.
