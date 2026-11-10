@@ -434,22 +434,25 @@ def add_face_bits(ob, eye_data, bvh, cx, eye_obj):
         # Try a small grid of spots under the eye and keep the most FRONT-facing one, so on long
         # heads (polar bear) it sits on the cheek toward the snout, not on the side edge of the head.
         best = None
+        rb = r * BLUSH_SIZE
         if hb:
-            for down in (0.9, 1.2, 1.5):
-                for fwd in (0.2, 0.5, 0.8):
-                    for out in (0.0, 0.25):
+            for down in (1.0, 1.3, 1.6, 1.9):
+                for fwd in (0.2, 0.5, 0.8, 1.1):
+                    for out in (-0.3, 0.0, 0.25):
                         want = c + Vector((side * r * out, r * fwd, -r * down))
                         loc, nrm, _, _ = hb.find_nearest(want)
                         if loc is None: continue
                         n = nrm.normalized()
                         if n.dot(loc - hc) < 0: n = -n       # point out of the head
-                        ok = (loc.z < c.z - r * 0.5              # below the eye
-                              and (loc - c).length < r * 2.6      # close to the eye
-                              and n.y > 0.0                       # facing forward-ish
+                        # the blush's top edge must clear the eye's bottom edge, with a gap
+                        gap = (c.z - r) - (loc.z + rb * 0.85)
+                        ok = (gap > r * 0.12
+                              and (loc - c).length < r * 2.8      # still near the eye
+                              and n.y > 0.35                      # faces FORWARD (not the side edge)
                               and n.x * side > -0.15              # not facing the other side
                               and (loc.x - cx) * side > r * 0.3)  # on this eye's side of the face
                         if ok:
-                            score = n.y - abs(fwd - 0.5) * 0.2
+                            score = n.y - abs(fwd - 0.5) * 0.15 - (loc - c).length / r * 0.1
                             if best is None or score > best[2]:
                                 best = (loc, n, score)
         if best:
@@ -464,7 +467,7 @@ def add_face_bits(ob, eye_data, bvh, cx, eye_obj):
         # a rounded dome set into the cheek the same way the eyes are (pigeon: "make the blush look
         # kinda like the eyes"): smooth, puffy, partly sunk, never a flat sticker
         rb = r * BLUSH_SIZE                 # radius across the cheek
-        hb_depth = rb * 0.45                # half-depth along the cheek normal
+        hb_depth = rb * 0.35                # half-depth along the cheek normal (a low raised patch)
         hb = eye_data[0].get("head_bvh")
         for sx in (1, -1):
             l = loc if sx == 1 else Vector((2 * cx - loc.x, loc.y, loc.z))
@@ -474,7 +477,8 @@ def add_face_bits(ob, eye_data, bvh, cx, eye_obj):
                 near = hb.find_nearest(l)
                 if near[0] is not None and (near[0] - l).length < r:
                     l = near[0]
-            o = add_sphere(ob.name + "_Blush", l + n * (hb_depth * EYE_OUT), (rb * 1.2, rb * 0.85, hb_depth),
+            # centre ON the skin: half the patch is sunk in, so its edge meets the face (no floating rim)
+            o = add_sphere(ob.name + "_Blush", l, (rb * 1.2, rb * 0.85, hb_depth),
                            n.to_track_quat('Z', 'Y').to_euler(), blush, ob, 16, 8)
             for p in o.data.polygons:
                 p.use_smooth = True

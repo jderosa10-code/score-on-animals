@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 21:01 CT · pigeon-claude
+**Done:** Blush v5 (pigeon: it overlapped the corgi's eye and floated off the frog's head). Now: always a gap below the eye, only on front-facing cheek spots (never the side edge), a low patch half-sunk into the skin. New `models/restyle/fbx/Restyle_NEW_all.fbx`.
+**Next:** pigeon re-imports it; I swap it into `Workspace.RestyleShowcase` and give the blush the same Studs texture + material as the body.
+**Blockers / questions:** none.
+
 ## 2026-11-09 20:56 CT · pigeon-claude
 **Done:** Pigeon imported `Restyle_NEW_all.fbx`. Swapped into `Workspace.RestyleShowcase` as `<Name> NEW` (Corgi, Toad, Hedgehog, Giraffe, PolarBear): scaled from cm, stood up, facing the spawn, real `SurfaceAppearance` on body + eyes, the original `Studs` textures copied onto the body, pink dome blush. Previous NEW versions and the leftover import model deleted.
 **Next:** pigeon and Jacob judge the look; if approved, run the same restyle on the rest.
