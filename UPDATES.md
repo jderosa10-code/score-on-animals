@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 21:40 CT · pigeon-claude
+**Done:** Leg fix (pigeon: sloth's legs broken). Cause: front legs right next to the head were scaled up with the head (sloth, aardvark). Now ground-touching pieces never count as head, and small claws/feet ride up with their leg instead of being squashed. Re-ran all 35: only sloth and aardvark changed. One file with the fixes (Sloth, Aardvark, Bunny, Corgi redo): `models/restyle/fbx/Restyle_NEW_fixes.fbx` (replaces `Restyle_NEW_corgi.fbx`).
+**Next:** pigeon imports it; I swap the 4 in.
+**Blockers / questions:** none.
+
 ## 2026-11-09 21:36 CT · pigeon-claude
 **Done:** Restyle batch 2: 30 more animals (GuineaPig, Cat, Bunny, Aardvark, Akita, Armadillo, Badger, Beaver, BostonTerrier, Caracal, ChowChow, Dingo, EnglishBulldog, FennecFox, Fossa, GreatDane, Hippopotamus, Hyena, Jackal, Lemur, Meerkat, Okapi, Papillon, Quokka, Serval, ShibaInu, Sloth, Tanuki, WhiteRhino, Yak) imported and placed as OLD/NEW pairs in `Workspace.RestyleShowcase` (3 rows behind the first 5), real `SurfaceAppearance` + Studs. Skipped for now: Chicken, Dog, RedPanda, Moose, WoollyMammoth, Anteater (eyes not detected), Capybara, Hamster. Corgi redo with gentler settings (pigeon: body shape weird, eyes too big): `models/restyle/fbx/Restyle_NEW_corgi.fbx`.
 **Next:** pigeon imports the corgi file; I swap it in.

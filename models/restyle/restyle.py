@@ -105,7 +105,8 @@ def restyle(ob):
         for p in parts:
             if p is body: continue
             inside = all(hmn[k] - pad[k] <= p["c"][k] <= hmx[k] + pad[k] for k in range(3))
-            if inside and p["c"].z >= hmn.z - pad.z * 0.5 and p["vol"] < body["vol"]:
+            touches_ground = p["mn"].z < ground + 0.15     # a front leg next to the head is still a leg
+            if inside and not touches_ground and p["c"].z >= hmn.z - pad.z * 0.5 and p["vol"] < body["vol"]:
                 head_group.append(p)
         # pivot = back-bottom of the head, where it meets the neck/body, so it grows up and forward
         pivot = Vector((head["c"].x, hmn.y + (hmx.y - hmn.y) * 0.25, hmn.z + (hmx.z - hmn.z) * 0.3))
@@ -156,18 +157,32 @@ def restyle(ob):
         info["eye_seat"] = [round((d["c"] - surf.find_nearest(d["c"])[0]).length / d["h"], 2) for d in eye_data]
 
     # --- legs: parts that sit on the ground below the body's middle, shortened from the top ---
+    # Only TALL ground pieces are legs. Small ground pieces (claws, toes, separate feet) are feet:
+    # they ride up with the leg above them instead of being squashed (pigeon: sloth/aardvark legs broke).
     body_mid = body["c"].z
-    legs = [p for p in parts if p["mn"].z < ground + 0.15 and p["c"].z < body_mid and p is not body
-            and p not in head_group]
+    animal_h = mx_all.z - ground
+    on_ground = [p for p in parts if p["mn"].z < ground + 0.15 and p["c"].z < body_mid and p is not body
+                 and p not in head_group]
+    legs = [p for p in on_ground if p["s"].z > animal_h * 0.18]
+    feet = [p for p in on_ground if p not in legs]
+    shrink = {}
     for p in legs:
         top = p["mx"].z
         for v in p["verts"]:
             v.co.z = top - (top - v.co.z) * LEG_SCALE
+        shrink[id(p)] = (p["mx"].z - p["mn"].z) * (1 - LEG_SCALE)
+    for f in feet:   # follow the nearest leg (by position on the ground)
+        if not legs: break
+        near = min(legs, key=lambda l: (l["c"].x - f["c"].x) ** 2 + (l["c"].y - f["c"].y) ** 2)
+        if ((near["c"].x - f["c"].x) ** 2 + (near["c"].y - f["c"].y) ** 2) ** 0.5 < max(near["s"].x, near["s"].y) * 1.5:
+            for v in f["verts"]:
+                v.co.z += shrink[id(near)]
     if legs:
-        drop = (max(p["mx"].z for p in legs) - min(p["mn"].z for p in legs)) * (1 - LEG_SCALE)
+        drop = max(shrink.values())
         for v in bm.verts:
             v.co.z -= drop
     info["legs"] = len(legs)
+    info["feet"] = len(feet)
 
     # --- a little wider overall ---
     cx = (mn_all.x + mx_all.x) / 2
