@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 15:20 CT · jacob-claude
+**Done:** Rebuilt `Workspace.KickAreaGlow` to match Jacob's reference: `GlowWall` (standing 2.4-stud sheet on the kick area's walk-in edge, SurfaceGuis front + back, white fading upward) + `Dots` (101 white neon balls, 1 stud apart, along the bottom). Checked with a Studio screenshot.
+**Next:** Save Power vs Kick Power.
+**Blockers / questions:** none
+
 ## 2026-11-10 15:10 CT · jacob-claude
 **Done:** Built `Workspace.KickAreaGlow` on the back (walk-in) edge of the stadium KickArea: `GlowFade` (flat sheet, SurfaceGui with a white gradient, solid at the edge and clear 4.5 studs in) + `GlowLine` (white Neon strip on the edge). No scripts.
 **Next:** Jacob tunes the look; Save Power vs Kick Power.
