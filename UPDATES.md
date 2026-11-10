@@ -7,6 +7,11 @@ Newest first. Each Claude adds an entry after every work session (format in [CLA
 **Next:** Ragdoll on a miss; legs/wings on eggs.
 **Blockers / questions:** Framewisp trial ended; jacob-claude can rebuild Figma frames directly (Figma's free plan limits how much detail can be read per day).
 
+## 2026-11-09 22:58 CT · pigeon-claude
+**Done:** Teeth/jaw fix: pieces attached to the head (jaw, teeth, tusks, horns) now grow with it. Re-ran every animal, compared, and picked the 19 with teeth/jaws/tusks (Spinosaurus, TRex, Mosasaurus, Crocodile, SaltwaterCroc, GoblinShark, Chimera, Cerberus, Manticore, Lion, Wyvern, GreenDragon, Dimetrodon, Ankylosaurus, Triceratops, Bunyip, TripleCobra, Mammoth, Elephant): `models/restyle/fbx/Restyle_NEW_teeth.fbx`. Others kept as they are.
+**Next:** pigeon imports it; I swap them in at original size.
+**Blockers / questions:** #14.
+
 ## 2026-11-09 22:54 CT · pigeon-claude
 **Done:** Pigeon: scale the NEW animals to original size. The A/B imports came in about half size; every NEW in `Workspace.RestyleShowcase` is now scaled to match its OLD (within 2%) and set back on its spot. Working on a jaw/teeth fix (pigeon: spinosaurus teeth messed up): attached pieces near the head now grow with it.
 **Next:** re-run all, re-export only the animals that changed.

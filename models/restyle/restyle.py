@@ -154,6 +154,27 @@ def restyle(ob):
             touches_ground = p["mn"].z < ground + 0.15     # a front leg next to the head is still a leg
             if inside and not touches_ground and p["c"].z >= hmn.z - pad.z * 0.5 and p["vol"] < body["vol"]:
                 head_group.append(p)
+        # Anything ATTACHED to the head (jaw, teeth, horns, frills) grows with it, even if it pokes
+        # outside the head's box (pigeon: spinosaurus teeth came out of the jaw). Flood through
+        # touching pieces; stop at the body and at anything standing on the ground (legs).
+        if not head_group or not any(p is head for p in head_group):
+            head_group.append(head)
+        bvhs_h = _part_bvhs(bm, parts)
+        idx = {id(p): i for i, p in enumerate(parts)}
+        grp = set(id(p) for p in head_group)
+        frontier = list(head_group)
+        while frontier:
+            q = frontier.pop()
+            for p in parts:
+                if id(p) in grp or p is body or p["mn"].z < ground + 0.15 or p["vol"] > head["vol"] * 3:
+                    continue
+                near = all(hmn[k] - (hmx[k] - hmn[k]) * 0.6 <= p["c"][k] <= hmx[k] + (hmx[k] - hmn[k]) * 0.6
+                           for k in range(3))
+                if not near:            # don't creep down the neck/back (crocodile ridge)
+                    continue
+                bq, bp = bvhs_h[idx[id(q)]], bvhs_h[idx[id(p)]]
+                if bq and bp and _pair_gap(q, p, bq, bp)[0] <= 0.03:
+                    grp.add(id(p)); head_group.append(p); frontier.append(p)
         # pivot = back-bottom of the head, where it meets the neck/body, so it grows up and forward
         pivot = Vector((head["c"].x, hmn.y + (hmx.y - hmn.y) * 0.25, hmn.z + (hmx.z - hmn.z) * 0.3))
         S = Matrix.Translation(pivot) @ Matrix.Scale(HEAD_SCALE, 4) @ Matrix.Translation(-pivot)
