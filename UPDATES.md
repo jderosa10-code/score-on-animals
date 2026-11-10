@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 20:45 CT · jacob-claude
+**Done:** Crowd cosmetics removed (345 parts) and all 232 fans in `Workspace.Crowd` recoloured as the classic noob (Bright yellow head/arms, Bright blue torso, Br. yellowish green legs). Animations and reactions unchanged. One undo step.
+**Next:** Plot ownership; Save Power vs Kick Power.
+**Blockers / questions:** none
+
 ## 2026-11-10 20:40 CT · jacob-claude
 **Done:** Aim camera moved up and to the right (k + (-9, 1, -9), FOV 30) so the ball and the kick-area edge no longer block the net (tested: net fully on screen, ~450 px wide at 2235, no rays blocked). Crowd: cosmetics welded on (caps, beanies with bobbles, crowns, sunglasses, scarves, foam fingers) on `Workspace.Crowd` fans; `StarterPlayerScripts.CrowdClient` rewritten with R6 cheer/wave/point/laugh/3 dances and hops. New `ReplicatedStorage.DevDemo.CrowdEvent` (BindableEvent) fired by `PenaltyDemoRunner`: aim (crowd goes quiet), kick, goal (85% go wild, 100% on Perfect, many jump), save (point/laugh), reveal (point at rare eggs). Tested in Play: 197 of 232 fans reacting after a goal.
 **Next:** Plot ownership; Save Power vs Kick Power.
