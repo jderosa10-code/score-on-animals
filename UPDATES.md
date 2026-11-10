@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 19:10 CT · jacob-claude
+**Done:** `Workspace.FieldLines` lines halved to 0.3 studs wide (penalty spot 1 stud). One undo step.
+**Next:** Plot ownership (spawn at your own plot); Save Power vs Kick Power.
+**Blockers / questions:** none
+
 ## 2026-11-10 16:52 CT · pigeon-claude
 **Done:** Egg + animal restyle round 2, TEST ONLY (nothing in the game changed). pigeon exported the eggs; they're in Blender now (195 egg objects + the last 4 animals from Issue #14; 196 were expected, one still to track down). Every egg is the same 542-corner stepped body plus loose ears/tails/horns, so one script does all: body a little chubbier and bottom-heavy, loose pieces 1.18x from where they attach, steps softened a little; only vertex positions move, UVs kept (`models/restyle/eggs/`). Animals: `restyle.py` got a round-2 switch (`SOA_ROUND2=1`): head 1.38 (was 1.3), legs 0.66 (0.72), width 1.13 (1.08), length 0.93 (new). Test sheets: `models/restyle/eggs/eggs_test5_sheet.png` and `models/restyle/animals_round2_sheet.png`. Removed the temporary `Workspace.EggExport`.
 **Next:** pigeon says yes/no on the test, then all eggs and animals.
