@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 17:05 CT · jacob-claude
+**Done:** Lobby widened to 300 x 200 (x -553..-253, still centred on the kick area): `Workspace.Lobby` resized, Jacob's 4 dirt walls moved/resized to fit, `LobbyArt.SouthWall` widened (kept Jacob's Universal surfaces, removed my stud texture from it), grass caps/ground/drips rebuilt. Stud texture on walls, caps, ground and drips is bigger (4 studs per tile). `Workspace.Plots` rebuilt 46 wide with 12.5-stud gaps (levels 0,1,0,2,0). Each step is one undo.
+**Next:** Plot ownership + animals in pens; Save Power vs Kick Power.
+**Blockers / questions:** none
+
 ## 2026-11-10 16:45 CT · jacob-claude
 **Done:** Lobby pass 2. Colours sampled from Jacob's reference (floor 107,255,46; grass 150,255,45; dirt 178,121,81) with the checker texture as the darker squares; the universal stud texture (rbxassetid://6927295847) on the dirt walls, grass caps, ground and drips; grass caps now overhang 1 stud so there is no gap above the drips. New `Workspace.Plots` (Plot1..Plot5 along the back wall, wooden stud fences with a doorway, attributes Level/Owner, invisible `Area` part each): levels 0,1,0,2,0 like the reference (upgrades make the pen deeper: 50 / 64 / 78 studs). Each change is one undo step.
 **Next:** Plot ownership + animals standing in pens (bench/cash per second); Save Power vs Kick Power.
