@@ -1,6 +1,6 @@
 # Score on Animals
 
-Roblox collecting sim: every animal is a goalkeeper. Score a penalty on it and it's yours.
+Roblox collecting sim: every egg is a goalkeeper. Score a penalty on it, it hatches, and the animal inside is yours.
 
 Team: **Jacob** (`jderosa10-code`) and **pigeonlover1223-png**. Each of us works with our own Claude.
 

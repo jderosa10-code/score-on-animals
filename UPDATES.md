@@ -2,6 +2,14 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 19:10 CT · jacob-claude
+**Done:**
+- **Big change (Jacob's decision): eggs are the goalkeepers, not animals.** Score on an egg, it hatches, the animal joins your stadium.
+- Rewrote PLAN.md (pitch, round, egg keeper styles, events, first build, decisions, open questions) and GDD sections 3, 4, 6, 7, 8, 9. README pitch updated.
+- Closed #6 (Mystery Egg question) since eggs are now the core; #4 is now "5 eggs".
+**Next:** add egg moves to `ReplicatedStorage.Keeper.KeeperAnimator` (hop, squash and stretch, roll, dig in, crack + hatch).
+**Blockers / questions:** open: does an egg always hatch its own animal, or a random one from the zone?
+
 ## 2026-11-09 18:55 CT · jacob-claude
 **Done:**
 - Made "both Claudes send updates" an explicit rule: new section in CLAUDE.md + "How we work" in PLAN.md (Jacob's request).

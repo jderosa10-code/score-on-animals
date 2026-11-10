@@ -1,19 +1,19 @@
 # Score on Animals: Game Plan
 
-Every animal is a goalkeeper: score a penalty on it and it's yours.
+Every egg is a goalkeeper: score a penalty on it, it hatches, and the animal inside is yours.
 
 ## How to play
-- Shoot a penalty at an animal goalkeeper
-- Score and the animal comes home with you
+- Shoot a penalty at an egg goalkeeper
+- Score and the egg cracks open: the animal inside joins your stadium
 - Animals earn cash in your stadium
 - Train on the kick wall for Kick Power
-- Buy better balls so rarer keepers walk out
-- Reach farther stadiums with bigger, rarer keepers
+- Buy better balls so rarer eggs hop out
+- Reach farther stadiums with bigger, rarer eggs
 
 Phone-first: one tap to aim, one tap to shoot. No stealing between players.
 
 ## Why now
-The egg-collecting loop still tops Roblox, but a new verb alone no longer carries a game. This adds soccer's audience to that loop.
+The egg-collecting loop still tops Roblox, but a new verb alone no longer carries a game. This adds soccer's audience to that loop, and the hatch reveal now happens inside every goal.
 
 Evidence (players online, 9 Nov 2026, approximate):
 | Signal | Games |
@@ -26,57 +26,58 @@ Evidence (players online, 9 Nov 2026, approximate):
 
 ## One round (about 20 seconds)
 1. Put your ball on a penalty spot in a stadium.
-2. A keeper walks out of the tunnel. Its rarity is rolled from the zone and your ball's Luck.
+2. An egg hops out of the tunnel and takes the goal. Its rarity is rolled from the zone and your ball's Luck.
 3. Tap where to aim, then hit a timing ring. Up to 3 tries.
-4. Score and you carry the animal home, where it sits on your bench and earns cash.
-5. Miss and the keeper boots the ball back into you and you ragdoll.
+4. Score and the egg cracks open: the hatch reveal shows the animal inside, which joins your stadium and earns cash.
+5. Miss and the egg bounces the ball back into you and you ragdoll.
 6. Spend cash on a better ball, train Kick Power, walk to the next stadium.
 
 ## Kick Power vs Save Power
-Every keeper shows a Save Power number.
+Every egg shows a Save Power number.
 | Your Kick Power | What happens |
 |---|---|
-| Far below Save Power | Keeper catches everything (locks later stadiums) |
-| Around Save Power | Aim matters: find the keeper's weak spot |
-| Far above Save Power | Ball blasts through, keeper ragdolls into the net |
+| Far below Save Power | The egg blocks everything (locks later stadiums) |
+| Around Save Power | Aim matters: find the egg's weak spot |
+| Far above Save Power | Ball blasts through, the egg tumbles into the net and cracks open |
 
-## Keeper styles (examples)
-| Animal | How it keeps goal | Where to shoot |
+## Egg keeper styles (examples)
+Each egg keeps goal like the animal inside it would.
+| Egg | How it keeps goal | Where to shoot |
 |---|---|---|
-| Chicken | Panics, runs around randomly | Anywhere, with luck |
-| Giraffe | Covers everything high | Low |
-| Penguin | Belly-slides along the ground | High |
-| Octopus | Eight arms on the corners | The middle |
-| Turtle | Hides in its shell | Raw power only |
-| Elephant | Fills the whole goal | Tiny top-corner gap, or blast through |
-| T-Rex | Tiny arms | The corners |
+| Chicken egg | Panics, bounces around at random | Anywhere, with luck |
+| Giraffe egg | Tall egg, bounces high | Low |
+| Fish egg | Rolls along the goal line | High |
+| Octopus egg | Wobbles and covers the corners | The middle |
+| Turtle egg | Digs in and won't move | Raw power only |
+| Elephant egg | Huge, fills the whole goal | Tiny top-corner gap, or blast through |
+| T-Rex egg | Fast hops, short reach up top | The corners |
 
-A style is a few numbers per animal: reach, react, dive speed, dive type (jump, slide, panic, shell).
+A style is a few numbers per egg: reach, react, dive speed, dive type (hop, roll, panic, dig in).
 
 ## Upgrades
 | Upgrade | How you get it | What it does |
 |---|---|---|
-| Kick Power | Train on the kick wall | Faster shots that beat bigger keepers |
+| Kick Power | Train on the kick wall | Faster shots that beat bigger eggs |
 | Kick wall | Cash | More Kick Power per kick (wall, rebound net, ball cannon) |
-| Ball | Cash | Luck: rarer keepers walk out |
+| Ball | Cash | Luck: rarer eggs hop out |
 | Boots | Cash | Walk speed, bigger "perfect" timing window |
 | Stadium | Cash | More bench slots, extra floors |
 | Rebirth ("promotion") | Reset Kick Power and cash | Permanent multipliers, a new league of zones |
 
 ## Collecting
-Each animal you own has one number that matters: cash per second.
+You collect the animals that hatch. Each has one number that matters: cash per second.
 - Rarity: Common, Rare, Epic, Legendary, Mythic, Secret
-- Mutation: Gold, Diamond, Rainbow, Fire
-- Size: normal, Big, Huge
+- Mutation: Gold, Diamond, Rainbow, Fire (a Gold egg hatches a Gold animal)
+- Size: normal, Big, Huge (bigger eggs cover more goal and hatch bigger animals)
 - Index: sticker album, reward per finished page
 
 ## Zones
 Backyard, School Field, Zoo Stadium, Safari Arena, Arctic Dome, Jungle, Ocean, Dino Coliseum, Mythic, Moon.
 
-Events about every 30 minutes: **Cup Final** (giant boss keeper, whole server shoots), **Golden Goal** (double mutation chance), **Rain** (keepers slip).
+Events about every 30 minutes: **Cup Final** (giant boss egg, whole server shoots, everyone who scores gets a hatch), **Golden Goal** (double mutation chance), **Rain** (eggs slip).
 
 ## First build
-One zone (Backyard), five keepers, the kick (aim tap + timing ring, 3 tries), keeper walk-out/dive/save, the bench with cash per second, the kick wall, one ball upgrade.
+One zone (Backyard), five eggs, the kick (aim tap + timing ring, 3 tries), egg hop-out/dive/save, the hatch reveal, the bench with cash per second, the kick wall, one ball upgrade.
 
 ## How we work
 - Jacob (`jderosa10-code`) works with **jacob-claude**; pigeon (`pigeonlover1223-png`) works with **pigeon-claude**.
@@ -88,14 +89,15 @@ One zone (Backyard), five keepers, the kick (aim tap + timing ring, 3 tries), ke
 - 9 Nov 2026: ~~We build our own animal models; the downloaded pack is study only.~~ **Updated 9 Nov 2026 (Jacob): we use the animal pack already in the Studio place.**
 - 9 Nov 2026: Score on Animals replaces Habitat RNG.
 - 9 Nov 2026: Halloween animals are parked in `ServerStorage.HalloweenArchive` until next October.
+- **9 Nov 2026 (Jacob): eggs are the goalkeepers, not animals. Scoring hatches the egg and the animal inside joins your stadium.**
 
 ## Open questions
 - [ ] Does this run alongside Home Run to the Moon, or replace it?
-- [ ] After a goal, carry the animal home, or straight to the bench?
-- [ ] After three misses, does the keeper leave, or a short wait?
+- [ ] After a hatch, does the animal run to your stadium, or go straight to the bench?
+- [ ] After three misses, does the egg leave, or a short wait?
 - [ ] Aim control: tap + timing ring, or swipe?
 - [ ] With stealing gone, what do players do together besides the Cup Final?
-- [ ] How many zones and animals at launch?
+- [ ] How many zones and eggs at launch?
 - [ ] Which Robux products to sell?
-- [ ] Is "Score on Animals" the final name?
-- [ ] Egg keepers: an extra mode, a zone, or a random "Mystery Egg" walk-out? (see GDD)
+- [ ] Is "Score on Animals" still the name now that eggs are the keepers?
+- [ ] What's inside an egg: always that egg's own animal (each egg is themed to one animal), or a random animal from the zone?

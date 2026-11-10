@@ -1,6 +1,8 @@
 # Score on Animals: GDD (built from what we have)
 
-This turns [PLAN.md](PLAN.md) into a buildable design using the animals, mutations, eggs and VFX already in the Studio place. Full lists: [docs/inventory.md](docs/inventory.md).
+This turns [PLAN.md](PLAN.md) into a buildable design using the animals, mutations, eggs and VFX already in the Studio place.
+
+**Eggs are the goalkeepers** (Jacob, 9 Nov 2026). You score on an egg, it hatches, and the animal inside joins your stadium. Full lists: [docs/inventory.md](docs/inventory.md).
 
 ## 1. What we have
 | Asset | Count | Where |
@@ -31,10 +33,10 @@ The pack uses 12 tiers. The plan uses 6. Mapping:
 
 The 76 untagged animals (mostly real-world dogs, reef fish, farm and savanna animals) still need a rarity. Default: by zone, Common or Rare.
 
-## 3. Zones and their keepers
-Each stadium draws from animals that fit its theme. Examples from what we have:
+## 3. Zones and their eggs
+Each stadium sends out the eggs of animals that fit its theme. Examples from what we have (each egg hatches the animal named):
 
-| # | Zone | Keepers (examples) |
+| # | Zone | Eggs of (examples) |
 |---|---|---|
 | 1 | Backyard | Chicken, Bunny, Cat, Dog, Hamster, Frog, Corgi, Guinea Pig |
 | 2 | School Field | Goat, Duck, Pigeon, Beaver, Hedgehog, Badger, Meerkat |
@@ -49,20 +51,19 @@ Each stadium draws from animals that fit its theme. Examples from what we have:
 
 No Penguin in the pack. It needs a model if we keep it as the belly-slide example.
 
-## 4. Keeper styles from numbers
-Every keeper is `{reach, react, diveSpeed, diveType}` (already working in `KeeperAnimator`). Defaults by body type, tuned per animal later:
+## 4. Egg keeper styles from numbers
+Every egg keeper is `{reach, react, diveSpeed, diveType}`, and it keeps goal like the animal inside it would. Eggs have no legs, so every move is whole-body code in `KeeperAnimator`: hop, squash and stretch, tilt, roll, bounce. Defaults by the animal inside, tuned per egg later:
 
-| Body type | Default dive | Feel |
+| Animal inside | Dive type | Feel |
 |---|---|---|
-| Small 4-legged (Backyard) | panic or jump, short reach | Easy, funny |
-| Big 4-legged (Elephant, Rhino, Mammoth) | jump, huge reach, slow react | Fills the goal, beat it with power |
-| Long-necked (Giraffe, Brachiosaurus) | jump, covers high | Shoot low |
-| Birds | jump with wing flaps, fast react | Shoot the far corner |
-| Shelled (Turtle, Tortoise, Sea Turtle) | shell | Raw power only |
-| Swimmers (Ocean zone) | slide (glide across the goal) | Shoot high |
-| Tentacled (Octopus, Kraken, Squid) | arms cover the corners | Shoot the middle |
-| Snakes | slide low | Shoot high |
-| Dinos (T-Rex, raptors) | jump, tiny reach up top | Corners |
+| Small animals (Backyard) | panic (random bounces) or hop, short reach | Easy, funny |
+| Big animals (Elephant, Rhino, Mammoth) | hop, huge egg, slow react | Fills the goal, beat it with power |
+| Long-necked (Giraffe, Brachiosaurus) | hop, tall egg, bounces high | Shoot low |
+| Birds | hop, fast react | Far corner |
+| Shelled (Turtle, Tortoise, Sea Turtle) | dig in (doesn't move) | Raw power only |
+| Swimmers, snakes (Ocean zone) | roll along the goal line | Shoot high |
+| Tentacled (Octopus, Kraken, Squid) | wobble, covers the corners | Shoot the middle |
+| Dinos (T-Rex, raptors) | fast hops, short reach up top | Corners |
 
 ## 5. Mutations and size
 | Mutation | How it shows | Source |
@@ -77,15 +78,17 @@ Every keeper is `{reach, react, diveSpeed, diveType}` (already working in `Keepe
 Size: normal, Big (x1.5), Huge (x2.2) using `Model:ScaleTo`. Animations scale with the model.
 Rarity auras (Legendary, Mythic, Divine, Secret, Celestial, Admin, Hacker) go on top of any mutation. Base models carry a `VFX_<Rarity>` tag so code knows which aura to add.
 
-## 6. Eggs as keepers (new idea)
-We have an egg for almost every animal, plus gold/diamond/rainbow/inverted/hacked egg sets. Eggs can block the goal instead of animals:
+## 6. Eggs as keepers (core loop)
+We have an egg for almost every animal (197 base eggs) plus Gold, Diamond, Rainbow, Inverted and Hacked egg sets (196 each).
 
-- **Mystery Egg walk-out**: sometimes an egg hops out of the tunnel instead of an animal. Score on it and it cracks, then a hatch roll reveals which animal you got (zone pool + Luck + mutation roll). This brings the egg-hatching reveal straight into the kick.
-- **Egg keeper style**: eggs squash, stretch and hop side to side. They can't dive far, but big eggs fill more of the goal. Mutation eggs (gold, rainbow) are rarer and give better hatch odds.
-- **Hatch moment**: `ScreenParticles.EggCrack`, then the rarity reveal (`Epic` / `Mythic` screen particles for high tiers).
-- Eggs have no bones, so their hop is code-driven (scale + tilt), the same way the plan's launch keeper moves are.
-
-Where it fits is an open question: a random walk-out in every zone, an egg-only zone, or an event ("Egg Rush").
+- **Walk-out:** the egg hops out of the tunnel to the goal line. Rarer eggs get their rarity aura on the way out.
+- **Saves:** the egg hops, rolls or wobbles toward the ball (section 4). Big and Huge eggs cover more goal.
+- **Goal:** the ball beats the egg, it cracks (`ScreenParticles.EggCrack`, `EggCrack2`), and the hatch reveal shows the animal (`Epic` / `Mythic` screen particles for high tiers). The animal stands up, does its Idle, then runs off toward your stadium.
+- **Blast:** Kick Power far above Save Power knocks the egg into the net, where it cracks open. That's still a goal.
+- **Miss:** the egg bounces the ball back into you and you ragdoll.
+- **Mutation eggs:** a Gold, Diamond or Rainbow egg hatches that mutation. They're rarer walk-outs and boost Golden Goal.
+- **What hatches (open):** our eggs are themed one per animal, so the simplest rule is "the egg hatches its own animal". The other option is a random animal from the zone pool. See PLAN open questions.
+- **Missing eggs:** a few animals have no exact egg match (see inventory). They need an egg made or a renamed match before they can appear.
 
 ## 7. Animation status
 | Group | Count | Animations |
@@ -97,15 +100,15 @@ Where it fits is an open question: a random walk-out in every zone, an egg-only 
 | Pure fliers | 2 | Idle (hover), Fly |
 | Kangaroo / crawlers | 4 | Idle + Hop / crawl |
 
-Keeper whole-body moves are code (`KeeperAnimator`): walk out, ready shuffle, dive (jump, slide, panic, shell), flop, get up, celebrate, punt, sulk, blasted into the net.
+Keeper whole-body moves are code (`KeeperAnimator`): walk out, ready shuffle, dive (jump, slide, panic, shell), flop, get up, celebrate, punt, sulk, blasted into the net. With eggs as keepers these moves move the egg; egg-specific moves (hop, squash and stretch, roll, dig in, crack) still need adding. The animals' Idle and Walk play after they hatch and on the bench. The animal keeper leg sets (Run, Ready, Dive, Kick...) are kept for later, e.g. a Cup Final animal boss.
 **Not published yet**: animations only play in Studio Run mode (F8) until they're published and given real IDs.
 
 ## 8. VFX use
 | Moment | VFX |
 |---|---|
-| Keeper walk-out reveal (rare+) | Rarity aura from `VFX.Mutations` |
+| Egg walk-out (rare+) | Rarity aura from `VFX.Mutations` |
 | Goal scored | `ScreenParticles.Confetti`, `Effects.Explosion` |
-| Keeper blasted into net | `Effects.Poof`, `ScreenParticles.Explosion` |
+| Egg blasted into the net | `Effects.Poof`, `ScreenParticles.Explosion`, then the hatch |
 | Cash from bench | `Effects.CashCollect` |
 | Buy upgrade / ball | `Effects.Buy` |
 | Promotion (rebirth) | `Effects.Rebirth` |
@@ -114,7 +117,7 @@ Keeper whole-body moves are code (`KeeperAnimator`): walk out, ready shuffle, di
 | Extra server events | `Events.Tornado`, `Meteor`, `Eclipse`, `DiscoBall` (keepers get the matching trait aura) |
 
 ## 9. MVP
-Unchanged from the plan's first build: Backyard, five keepers (Chicken, Bunny, Cat, Dog, Frog), the kick, keeper walk-out/dive/save, bench with cash per second, kick wall, one ball upgrade. Mystery Egg walk-out is the first add-on if the kick feels good.
+Backyard with five eggs (Chicken, Bunny, Cat, Dog and Frog eggs), the kick, egg hop-out/dive/save, the hatch reveal, bench with cash per second, kick wall, one ball upgrade.
 
 ## 10. Risks
 - ~~The animal pack, its eggs and VFX came from another game's files. Confirm we're allowed to ship it before launch.~~ **Resolved 9 Nov 2026 (pigeon):** the pack comes from Fake an Egg, which is our own game, so it's fine to ship.
