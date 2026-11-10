@@ -13,8 +13,12 @@
 --     model with orbiters gets the client script OrbitParts
 local ORBITS = ... or {}
 local GAP = 9
-local ROW_Z, SPACING = 55, 16
-local STUD_STRENGTH = 0.5        -- Texture.Transparency for the studs (the animals use 0.85: too faint here)
+local ROW_Z, SPACING = 55, 20
+-- Studs: the game's Studs texture is a pale overlay. At the animals' strength (0.85 see-through) it
+-- is invisible on these; stronger and untinted it washes the colour out. So each copy is tinted to
+-- its part's own colour and shown strongly. Reflectance stays 0: on SmoothPlastic it mirrors the
+-- sky and turned gold and gems pastel.
+local STUD_STRENGTH = 0.2
 local V = game.ReplicatedStorage.Assets.VFX
 
 local imp
@@ -75,11 +79,11 @@ end
 
 -- per tier: bar height, distance of each weight from the middle, height of the weight's centre, its size
 local T = {
-	{ h = 1.25, hx = 3.85, hz = 1.25, size = 2.3 }, { h = 1.375, hx = 3.6, hz = 1.375, size = 2.8 },
-	{ h = 1.375, hx = 3.6, hz = 1.375, size = 2.8 }, { h = 1.375, hx = 4.0, hz = 1.5, size = 2.8 },
-	{ h = 1.75, hx = 4.2, hz = 1.5, size = 2.8 }, { h = 2.0, hx = 4.2, hz = 2.1, size = 2.8 },
+	{ h = 1.2, hx = 3.85, hz = 1.2, size = 2.3 }, { h = 1.4, hx = 3.6, hz = 1.4, size = 2.8 },
+	{ h = 1.4, hx = 3.6, hz = 1.4, size = 2.8 }, { h = 1.4, hx = 4.0, hz = 1.5, size = 2.8 },
+	{ h = 1.8, hx = 4.2, hz = 1.5, size = 2.8 }, { h = 2.0, hx = 4.2, hz = 2.1, size = 2.8 },
 	{ h = 2.5, hx = 4.4, hz = 3.0, size = 2.4 }, { h = 1.5, hx = 4.0, hz = 1.5, size = 2.8 },
-	{ h = 1.375, hx = 5.2, hz = 1.375, size = 2.6 }, { h = 1.375, hx = 5.2, hz = 1.375, size = 2.0 },
+	{ h = 1.4, hx = 5.2, hz = 1.4, size = 2.6 }, { h = 1.4, hx = 5.2, hz = 1.4, size = 2.0 },
 }
 
 local old = workspace:FindFirstChild("WeightTiers"); if old then old:Destroy() end
@@ -95,13 +99,13 @@ for _, p in ipairs(imp:GetChildren()) do
 		p.Anchored = true; p.CanCollide = false
 		p.Color = col
 		p.Material = Enum.Material.SmoothPlastic
-		p.Reflectance = SHINY[base] or 0
+		p.Reflectance = 0
 		local plain = true
 		if NEON[base] then p.Material = Enum.Material.Neon; plain = false end
 		if GLASS[base] then p.Material = Enum.Material.Glass; p.Transparency = 0.15; p.Reflectance = 0.1; plain = false end
 		if plain and not NO_STUDS[base] and not group:find("^Orb") then
 			for _, s in ipairs(studs) do
-				local t = s:Clone(); t.Transparency = STUD_STRENGTH; t.Parent = p
+				local t = s:Clone(); t.Transparency = STUD_STRENGTH; t.Color3 = col; t.Parent = p
 			end
 		end
 		p:SetAttribute("Group", group)
@@ -169,10 +173,32 @@ local function point(part, offset)
 	return a
 end
 
--- 1-3 (Marshmallow, Donut, Watermelon): nothing, they're the plain ones.
-for _, p in ipairs(heads(4)) do sparkle(p, 3, 0.9); light(p, C3(255, 215, 110), 6, 0.5) end                    -- Golden Egg
-for _, p in ipairs(heads(5)) do sparkle(p, 5, 1.0); light(p, C3(120, 225, 255), 9, 1.0) end                    -- Diamond
-for _, p in ipairs(heads(6)) do sparkle(p, 5, 1.0); light(p, C3(255, 205, 90), 9, 1.0) end                     -- Trophy
+-- ONE signature effect per tier (pigeon: "you just made everything orbit... make them unique"):
+--   1-3 nothing | 4 Egg: soft sparkles | 5 Diamond: big star glints + cold glow | 6 Trophy: confetti
+--   pops out of the cups | 7 Rocket: hovers on its flame, sparks | 8 Soccer Ball: the balls spin
+--   | 9 Planets: moons + rocket orbit | 10 Black Hole: the spiral disc turns, dust falls in
+for _, p in ipairs(heads(4)) do sparkle(p, 3, 0.7); light(p, C3(255, 215, 110), 6, 0.5) end                    -- Golden Egg
+for _, p in ipairs(heads(5)) do                                                                               -- Diamond
+	sparkle(p, 3, 0.7)
+	local g = V.Mutations.Gold.Sparkles:Clone()                             -- slow, big four-point glints
+	g.Name = "VFX_glint"; g.Rate = 1.2; g.Lifetime = NumberRange.new(0.9, 1.2); g.Color = CS(C3(200, 245, 255))
+	g.Size = seq({ { 0, 0 }, { 0.5, 2.0 }, { 1, 0 } }); g.ZOffset = 0.8; g.LockedToPart = true; g.Speed = NumberRange.new(0)
+	g.Shape = Enum.ParticleEmitterShape.Sphere; g.ShapeStyle = Enum.ParticleEmitterShapeStyle.Surface; g.Enabled = true; g.Parent = p
+	light(p, C3(120, 225, 255), 10, 1.2)
+end
+for _, p in ipairs(heads(6)) do                                                                               -- Trophy: confetti
+	sparkle(p, 2, 0.7); light(p, C3(255, 205, 90), 8, 0.8)
+	local top = point(p, Vector3.new(0, 0.8, 0))
+	local n = 0
+	for _, src in ipairs(V.TraitAuras.CONFETTI:GetDescendants()) do
+		if src:IsA("ParticleEmitter") and src.Name == "3D Debris Rotation" then
+			local e = src:Clone(); n += 1
+			e.Name = "VFX_confetti"; e.Rate = 1.6; e.Lifetime = NumberRange.new(0.9, 1.3); e.Speed = NumberRange.new(7, 10)
+			e.SpreadAngle = Vector2.new(22, 22); e.EmissionDirection = Enum.NormalId.Top; e.Acceleration = Vector3.new(0, -16, 0)
+			e.Size = NS(0.34); e.LockedToPart = false; e.Enabled = true; e.Parent = top
+		end
+	end
+end
 for _, p in ipairs(heads(7)) do                                                                               -- Rocket: the flame is a model
 	local a = point(p, Vector3.new(0, -2.75, 0))      -- where the flame meets the ground
 	specks(a, { Rate = 14, Lifetime = NumberRange.new(0.35, 0.6), Speed = NumberRange.new(5, 9), SpreadAngle = Vector2.new(80, 80),
@@ -180,14 +206,12 @@ for _, p in ipairs(heads(7)) do                                                 
 		LockedToPart = false, Size = 0.3 })
 	local l = Instance.new("PointLight"); l.Name = "VFX_Light"; l.Color = C3(255, 150, 60); l.Range = 9; l.Brightness = 2; l.Shadows = false; l.Parent = a
 end
-for _, p in ipairs(heads(8)) do                                                                               -- Golden Soccer Ball
-	sparkle(p, 6, 1.0)
-	specks(p, { Rate = 7, Lifetime = NumberRange.new(0.9, 1.4), Speed = NumberRange.new(1.5, 3), SpreadAngle = Vector2.new(40, 40),
-		Color = CS(C3(255, 235, 150)), EmissionDirection = Enum.NormalId.Top, Shape = Enum.ParticleEmitterShape.Sphere, LockedToPart = false })
-	light(p, C3(255, 200, 90), 11, 1.3)
+for _, p in ipairs(heads(8)) do                                                                               -- Golden Soccer Ball (spins)
+	sparkle(p, 5, 0.7)
+	light(p, C3(255, 200, 90), 10, 1.1)
 end
-for i, p in ipairs(heads(9)) do                                                                               -- Planets
-	sparkle(p, 3, 0.8); light(p, i == 1 and C3(170, 130, 255) or C3(110, 180, 255), 10, 1.0)
+for i, p in ipairs(heads(9)) do                                                                               -- Planets (orbits)
+	sparkle(p, 2, 0.6); light(p, i == 1 and C3(170, 130, 255) or C3(110, 180, 255), 10, 1.0)
 end
 for _, p in ipairs(heads(10)) do                                                                              -- Black Hole: dust falls IN
 	p.Size = Vector3.one * 5
@@ -235,7 +259,7 @@ for n, groups in pairs(ORBITS) do
 			o:SetAttribute("OrbitSpeed", g[7])
 			orbitCount += 1
 			local key = o:GetAttribute("Group"):gsub("Nose$", ""):gsub("Flame$", ""):gsub("Body$", "")
-			if not trailed[key] then                                 -- one thin trail per orbiter
+			if key:find("^Orb") and not trailed[key] then            -- one thin trail per orbiter (not on spinning parts)
 				trailed[key] = true
 				local w = math.min(o.Size.X, o.Size.Y, o.Size.Z) * 0.4
 				local a0, a1 = Instance.new("Attachment"), Instance.new("Attachment")

@@ -24,7 +24,8 @@ argv = sys.argv[sys.argv.index("--") + 1:]
 blend_out, fbx_out, png_out = argv
 bpy.ops.wm.read_factory_settings(use_empty=True)
 
-C = 0.125          # step size in studs
+C = 0.1            # step size in studs
+SMOOTH, SMOOTH_ITERS = 0.5, 2     # how much the steps are rounded off (0 = hard blocks)
 GAP = 9.0          # spacing between tiers in the file (along -Y)
 HS = 2.6           # heads never come closer to the middle than this (hands need the bar)
 
@@ -100,19 +101,46 @@ def build(prefix, fn, bounds, coll, offset=(0, 0, 0), cell=C):
             for k in range(k0, k1):
                 v = fn(x, y, (k + 0.5) * cell, i, j, k)
                 if v: grid[(i, j, k)] = v
-    bms = {}
+    # outside faces, as quads of lattice corners
+    quads = {}
     for (i, j, k), key in grid.items():
         clear = key[1].startswith(SEE_THROUGH)
         for (dx, dy, dz), quad in DIRS:
             nb = grid.get((i + dx, j + dy, k + dz))
             if nb is None or (nb[1].startswith(SEE_THROUGH) and not clear):
-                bm = bms.get(key)
-                if bm is None: bm = bms[key] = bmesh.new()
-                bm.faces.new([bm.verts.new(((i + a) * cell, (j + b) * cell, (k + c) * cell)) for a, b, c in quad])
+                quads.setdefault(key, []).append([(i + a, j + b, k + c) for a, b, c in quad])
+    # SOFTEN THE STEPS (pigeon: "a little less pixely/blocky"): slide every surface corner part-way
+    # toward the average of its neighbours. Done on the shared lattice, so the separate colour
+    # meshes still meet exactly. Corners on the ground stay on the ground.
+    pos, nbr = {}, {}
+    for qs in quads.values():
+        for q in qs:
+            for a in range(4):
+                v, w = q[a], q[(a + 1) % 4]
+                pos[v] = Vector(v) * cell
+                nbr.setdefault(v, set()).add(w); nbr.setdefault(w, set()).add(v)
+    for _ in range(SMOOTH_ITERS):
+        new = {}
+        for v, p in pos.items():
+            avg = sum((pos[w] for w in nbr[v]), Vector()) / len(nbr[v])
+            p2 = p.lerp(avg, SMOOTH)
+            if v[2] == k0: p2.z = p.z
+            new[v] = p2
+        pos = new
     objs = []
-    for (group, mat), bm in sorted(bms.items()):
-        bmesh.ops.remove_doubles(bm, verts=bm.verts[:], dist=1e-5)
-        bmesh.ops.dissolve_limit(bm, angle_limit=0.001, verts=bm.verts[:], edges=bm.edges[:])
+    for (group, mat), qs in sorted(quads.items()):
+        bm = bmesh.new()
+        vmap = {}
+        for q in qs:
+            fv = []
+            for v in q:
+                bv = vmap.get(v)
+                if bv is None: bv = vmap[v] = bm.verts.new(pos[v])
+                fv.append(bv)
+            try: bm.faces.new(fv)
+            except ValueError: pass
+        bmesh.ops.dissolve_limit(bm, angle_limit=math.radians(2.5), verts=bm.verts[:], edges=bm.edges[:])
+        bm.normal_update()
         # box-mapped UVs, one tile = 3 studs (same as the animals' Studs textures), so studs show
         uv = bm.loops.layers.uv.new("UVMap")
         for f in bm.faces:
@@ -124,6 +152,8 @@ def build(prefix, fn, bounds, coll, offset=(0, 0, 0), cell=C):
         bmesh.ops.translate(bm, vec=Vector(offset), verts=bm.verts[:])
         me = bpy.data.meshes.new(f"{prefix}{group}__{mat}")
         bm.to_mesh(me); bm.free()
+        for p in me.polygons: p.use_smooth = True            # soft shading, hard edges only at real corners
+        me.set_sharp_from_angle(angle=math.radians(40))
         me.materials.append(material(mat))
         o = bpy.data.objects.new(f"{prefix}{group}__{mat}", me)
         coll.objects.link(o)
@@ -145,7 +175,7 @@ def handle(ax, y, z, h, end, metal="Bar", grip="Grip", collars=True):
     if ax < 0.5:
         return ("Vox", metal + "Hi") if r < 0.3 else None
     if ax < 2.2:
-        if r < 0.3: return ("Vox", grip if int(ax / 0.25) % 2 else grip + "Hi")
+        if r < 0.3: return ("Vox", grip if int(ax / 0.2 + 0.001) % 2 else grip + "Hi")
         return None
     if collars and ax < HS:
         if ax < 2.35: return ("Vox", metal + "Hi") if r < 0.48 else None
@@ -171,7 +201,7 @@ for a in range(12):
 
 # ---------------------------------------------------------------- the 10 tiers
 def t_marshmallow(x, y, z, i, j, k):
-    h, hx, R = 1.25, HS + 1.25, 1.15
+    h, hx, R = 1.2, HS + 1.25, 1.15
     ax = abs(x); u = ax - hx; dz = z - h; r = math.hypot(y, dz)
     if -1.25 <= u < 1.25:
         outer = u >= 0
@@ -189,7 +219,7 @@ def t_marshmallow(x, y, z, i, j, k):
 
 
 def t_donut(x, y, z, i, j, k):
-    h, hx, Rt, a = 1.375, HS + 1.0, 0.9, 0.48
+    h, hx, Rt, a = 1.4, HS + 1.0, 0.9, 0.48
     ax = abs(x); u = ax - hx; dz = z - h; r = math.hypot(y, dz)
     if abs(u) < 1.0:
         for uc in (-0.5, 0.5):
@@ -205,7 +235,7 @@ def t_donut(x, y, z, i, j, k):
 
 
 def t_watermelon(x, y, z, i, j, k):
-    h, hx, R, face = 1.375, HS + 1.0, 1.375, 0.4
+    h, hx, R, face = 1.4, HS + 1.0, 1.375, 0.4
     ax = abs(x); u = ax - hx; dz = z - h; r = math.hypot(y, dz)
     rho = math.hypot(u - face, r)
     if u < face and rho < R:
@@ -222,7 +252,7 @@ def t_watermelon(x, y, z, i, j, k):
 
 
 def t_egg(x, y, z, i, j, k):
-    h, hx, H, W = 1.375, HS + 1.4, 3.0, 1.2
+    h, hx, H, W = 1.4, HS + 1.4, 3.0, 1.2
     ax = abs(x); u = ax - hx
     q = math.hypot(u, y)
     t = z / H
@@ -241,7 +271,7 @@ def t_egg(x, y, z, i, j, k):
 
 
 def t_diamond(x, y, z, i, j, k):
-    h, hx = 1.75, HS + 1.6
+    h, hx = 1.8, HS + 1.6
     ax = abs(x); u = ax - hx
     au, ay = abs(u), abs(y)
     if au < 1.6 and 0 < z < 2.625:
@@ -315,18 +345,19 @@ def t_soccer(x, y, z, i, j, k):
     if abs(u) < 1.45:
         d = math.sqrt(u * u + y * y + dz * dz)
         if d < R:
-            if d < R - 0.3: return ("Vox", "Gold")                 # inside, never seen
+            if d < R - 0.3: return ("BallP" if x > 0 else "BallN", "Gold")     # inside, never seen
             n = Vector((u, y, dz)) / d
             ap = min(math.acos(min(1.0, n.dot(v))) for v in ICO) / _pent_r
             hs = sorted(math.acos(min(1.0, n.dot(v))) for v in HEXC)
             ah, ah2 = hs[0] / _hex_r, hs[1] / _hex_r
-            if ap < ah: return ("Vox", "BallBlack")
-            if ah2 - ah < 0.17: return ("Vox", "GoldLo")           # seam between two gold panels
-            return ("Vox", "GoldHi" if dz > 0.75 else "Gold")
+            g = "BallP" if x > 0 else "BallN"                      # its own group: the balls SPIN on the bar
+            if ap < ah: return (g, "BallBlack")
+            if ah2 - ah < 0.17: return (g, "GoldLo")               # seam between two gold panels
+            return (g, "Gold")
     return handle(ax, y, z, h, hx + 1.4, metal="BallBlack", grip="Gold")
 
 
-PL = dict(h=1.375, hx=HS + 2.6, R=1.3, tilt=math.radians(25))
+PL = dict(h=1.4, hx=HS + 2.6, R=1.3, tilt=math.radians(25))
 
 
 def t_planets(x, y, z, i, j, k):
@@ -356,7 +387,7 @@ def t_planets(x, y, z, i, j, k):
     return handle(ax, y, z, h, hx + 1.3, metal="SpaceBar", grip="GasA")
 
 
-BH = dict(h=1.375, hx=HS + 2.6, R=1.0, tilt=math.radians(20))
+BH = dict(h=1.4, hx=HS + 2.6, R=1.0, tilt=math.radians(20))
 
 
 def t_blackhole(x, y, z, i, j, k):
@@ -370,12 +401,17 @@ def t_blackhole(x, y, z, i, j, k):
         if ql < R: return ("Globe", "Void")
         n = Vector((s * math.sin(tau), 0, math.cos(tau)))
         dn = q.dot(n)
-        if abs(dn) < 0.1:
-            rho = (q - dn * n).length
-            if 1.2 <= rho < 1.5: return ("Ring", "DiscHot")
-            if 1.5 <= rho < 1.9: return ("Ring", "Disc")
-            if 1.9 <= rho < 2.3: return ("Ring", "DiscOut")
-        if abs(q.y) < 0.09 and 1.06 <= math.hypot(q.x, q.z) < 1.24: return ("Ring", "DiscHot")
+        if abs(dn) < 0.1:                                          # the disc: spiral arms, so its SPIN shows
+            qp = q - dn * n
+            rho = qp.length
+            if 1.2 <= rho < 2.3:
+                g = "DiscP" if s > 0 else "DiscN"
+                th = math.atan2(qp.x * math.cos(tau) - s * qp.z * math.sin(tau), qp.y)
+                arm = math.sin(3 * th + rho * 3.0) > 0.25
+                if rho < 1.5: return (g, "DiscHot")
+                if rho < 1.9: return (g, "DiscHot" if arm else "Disc")
+                return (g, "Disc" if arm else "DiscOut")
+        if abs(q.y) < 0.1 and 1.06 <= math.hypot(q.x, q.z) < 1.26: return ("Halo", "DiscHot")
     return handle(ax, y, z, h, hx + 1.0, metal="Void", grip="VoidGrip")
 
 
@@ -393,7 +429,7 @@ TIERS = [
 ]
 
 
-BAR_H = {"Marshmallow": 1.25, "Donut": 1.375, "Watermelon": 1.375, "GoldenEgg": 1.375, "Diamond": 1.75, "Trophy": 2.0,
+BAR_H = {"Marshmallow": 1.2, "Donut": 1.4, "Watermelon": 1.4, "GoldenEgg": 1.4, "Diamond": 1.8, "Trophy": 2.0,
          "Rocket": 2.5, "SoccerBall": 1.5, "Planets": PL["h"], "BlackHole": BH["h"]}
 ORBITS = {}        # tier number -> {group: (centre, axis, speed)} in Blender tier space; written out for Studio
 
@@ -426,21 +462,15 @@ for n, (name, fn, bounds) in enumerate(TIERS):
         f = lambda x, y, z, i, j, k: (group, mat) if (abs(x) + abs(y)) / rx + abs(z) / rz < 1 else None
         return build(prefix, f, ((-0.625, 0.625),) * 3, coll, offset=tuple(pos + off))
 
-    if name == "Diamond":                      # two shards circle each gem
-        for s in (1, -1):
-            for m in range(2):
-                g = f"OrbShard{'P' if s > 0 else 'N'}{m}"
-                objs += gem(g, "Diamond", orbit(n, name, g, s, HS + 1.6, 1.9, 2.0, m * 180 + (0 if s > 0 else 90), math.radians(15), 0.6, 0.8)[0], 0.3, 0.5)
-    if name == "Trophy":                       # three stars circle each cup at the rim
-        for s in (1, -1):
-            for m in range(3):
-                g = f"OrbStar{'P' if s > 0 else 'N'}{m}"
-                objs += gem(g, "Star", orbit(n, name, g, s, HS + 1.6, 3.0, 1.9, m * 120 + (0 if s > 0 else 60), math.radians(10), 0.5, 1.2)[0], 0.4, 0.4)
-    if name == "SoccerBall":                   # three stars circle each ball
-        for s in (1, -1):
-            for m in range(3):
-                g = f"OrbStar{'P' if s > 0 else 'N'}{m}"
-                objs += gem(g, "Star", orbit(n, name, g, s, HS + 1.4, 1.95, 2.05, m * 120 + (0 if s > 0 else 60), math.radians(20), 0.6, -1.4)[0], 0.4, 0.4)
+    # ONE signature thing per tier (pigeon: orbiting belongs to the planets, the others must be unique):
+    #   Soccer Ball: the balls spin on the bar.   Planets: moons + a rocket orbit.
+    #   Black Hole: the spiral disc turns.        (Trophy confetti, rocket flame etc. are Studio effects.)
+    if name == "SoccerBall":
+        for s, g in ((1, "BallP"), (-1, "BallN")):
+            ORBITS.setdefault(n + 1, {})[g] = (Vector((s * (HS + 1.4), 0, 0)), Vector((1, 0, 0)), 1.6)
+    if name == "BlackHole":
+        for s, g in ((1, "DiscP"), (-1, "DiscN")):
+            ORBITS.setdefault(n + 1, {})[g] = (Vector((s * BH["hx"], 0, 0)), Vector((s * math.sin(BH["tilt"]), 0, math.cos(BH["tilt"]))), 0.9)
     if name == "Planets":
         h, hx, tau = PL["h"], PL["hx"], PL["tilt"]
         objs += ball("Ice", "MoonIce", orbit(n, name, "OrbIce", 1, hx, h + 0.6, 2.6, 70, tau, 0, 1.1)[0], 0.5)
@@ -459,12 +489,6 @@ for n, (name, fn, bounds) in enumerate(TIERS):
         aim = Matrix.Translation(pos + off) @ Vector((0, 0, 1)).rotation_difference(tan).to_matrix().to_4x4()
         for o in so: o.data.transform(aim)
         objs += so
-    if name == "BlackHole":                    # three stars being pulled round each black hole
-        h, hx, tau = BH["h"], BH["hx"], BH["tilt"]
-        for s in (1, -1):
-            for m in range(3):
-                g = f"OrbStar{'P' if s > 0 else 'N'}{m}"
-                objs += gem(g, "Star", orbit(n, name, g, s, hx, h + 0.5, 2.75, m * 120 + (40 if s > 0 else 100), tau, 0.3, 2.0)[0], 0.42, 0.42)
     tris = sum(sum(len(p.vertices) - 2 for p in o.data.polygons) for o in objs)
     print("TIER", n + 1, name, "parts", len(objs), "tris", tris, "max", max(sum(len(p.vertices) - 2 for p in o.data.polygons) for o in objs))
     allobjs += objs
@@ -517,5 +541,5 @@ bpy.ops.object.select_all(action='DESELECT')
 for o in allobjs: o.select_set(True)
 bpy.context.view_layer.objects.active = allobjs[0]
 bpy.ops.export_scene.fbx(filepath=fbx_out, use_selection=True, object_types={'MESH'},
-                         apply_unit_scale=True, mesh_smooth_type='FACE', axis_forward='-Z', axis_up='Y')
+                         apply_unit_scale=True, mesh_smooth_type='OFF', axis_forward='-Z', axis_up='Y')
 print("DONE")
