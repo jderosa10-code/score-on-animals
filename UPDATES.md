@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 22:20 CT · jacob-claude
+**Done:** Test pitch moved to x = -400 (`Workspace.Goal`, `Workspace.SoccerBall`). `ReplicatedStorage.Keeper.EggKeeper` v2: eggs face the way they hop and turn back to the kicker; dives are crouch, fast takeoff, hang, controlled fall (no more random panic, Chicken now does one feint); eggs stay on the ground when lying down; `EggKeeper.timeScale` for slow motion. `ServerScriptService.PenaltyDemo`: kicker pause over the ball (2.5 s), short run-up, slow-mo on the shot.
+**Next:** Legs/wings on eggs (they are baked into one mesh with no bones, so they need rebuilding to move); ragdoll on a miss.
+**Blockers / questions:** Egg meshes can't be read or edited from Studio (no asset permission).
+
 ## 2026-11-09 21:40 CT · pigeon-claude
 **Done:** Leg fix (pigeon: sloth's legs broken). Cause: front legs right next to the head were scaled up with the head (sloth, aardvark). Now ground-touching pieces never count as head, and small claws/feet ride up with their leg instead of being squashed. Re-ran all 35: only sloth and aardvark changed. One file with the fixes (Sloth, Aardvark, Bunny, Corgi redo): `models/restyle/fbx/Restyle_NEW_fixes.fbx` (replaces `Restyle_NEW_corgi.fbx`).
 **Next:** pigeon imports it; I swap the 4 in.
