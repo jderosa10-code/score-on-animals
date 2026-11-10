@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 10:50 CT · jacob-claude
+**Done:** Aiming. After you stop the timing bar the whole game drops to 12% speed (kicker, animations, egg) and the camera zooms down the pitch onto the goal. Hovering the goal shows a faded target (Jacob's icon rbxassetid://132576202596882, a BillboardGui on `PenaltyDemo.AimTarget`); clicking/tapping locks it solid, the game speeds back up, and the shot goes to that spot (saves still decided by the bar zone). Target stays until the shot is over. `PenaltyDemoRunner`: gameSpeed in step(), aimShot/clearAim, "aim" camera shot; test hook: folder attribute AutoAim (Vector2, goal space).
+**Next:** Save Power vs Kick Power.
+**Blockers / questions:** none
+
 ## 2026-11-10 10:20 CT · jacob-claude
 **Done:** Timing bar marker moves at a constant speed (no easing at the ends) and faster: 1.1 s for a full bottom-top-bottom sweep (was 1.6 s eased). `PenaltyDemoRunner` waitForClick.
 **Next:** Save Power vs Kick Power.
