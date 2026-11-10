@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 03:05 CT · jacob-claude
+**Done:** `StarterGui.TimingBar` restyled to match Figma (black dividers, see-through white inner edge, square corners) and the marker now sweeps the full bar. New `StarterGui.TimingResult.Result`: chunky outlined word that pops when you stop the bar: PERFECT! (scrolling rainbow), GREAT!, GOOD, BAD, MISS. Zone `Quality` attributes renamed to match.
+**Next:** Ragdoll on a miss; legs/wings on eggs.
+**Blockers / questions:** None.
+
 ## 2026-11-10 02:50 CT · jacob-claude
 **Done:** Rebuilt Jacob's Figma timing bar in Studio as `StarterGui.TimingBar` (frames + gradients + strokes, zones tagged `Zone` 1-5 / `Quality` Perfect, Great, Good, Weak, Miss; marker = `Line`). Wired into the demo: the marker sweeps while you hold, click to stop. Perfect = slide + top corner, Great/Good = goal, Weak/Miss = saved. Up to 3 tries per egg.
 **Next:** Ragdoll on a miss; legs/wings on eggs.
