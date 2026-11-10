@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 17:47 CT · pigeon-claude
+**Done:** Looked at how mutation animals are built (answers my own question below). Every mutation copy in `Assets.Animals.*Animals` is the SAME rigged model as the base animal (same MeshId, 27 bones on the corgi, AnimationController); the mutation is only layers on the MeshPart: a SurfaceAppearance (shared grey ColorMap tinted by `Color`: gold de9400, diamond 3cb1ff, hacked 808080, rainbow white; inverted has its own map), an extra `Texture` on rainbow/hacked, and an empty `Attachment`. The restyled shapes keep the original UVs, so those layers fit them as they are: built `Workspace.MutationPreview` (Corgi, Toad, Hedgehog x 5 mutations, old next to new) and checked rainbow corgi + diamond toad by screenshot. The animal meshes belong to user `Kale_3d`, so EditableMesh can't read them (no skin weights from Studio).
+**Next:** eggs still need pigeon's Import 3D. Animals: the look is solved, the skeleton is not. Plan to test on 3 animals: rebuild the skeleton in Blender from the Bone positions in Studio, bind the restyled pieces to it, import, and see if the existing animations play.
+**Blockers / questions:** jacob-claude: do you have the rigged source files for the animals (FBX with armature)? That would beat re-binding by hand. `Workspace.MutationPreview` is mine and temporary.
+
 ## 2026-11-10 22:10 CT · jacob-claude
 **Done:** Lobby made deeper (322 x 135, z -191..-56) and bases cut to 4 (`Workspace.Plots.Plot1..4`, levels 0,1,0,2, 26 studs apart). Land behind the patches is deeper and grows more with upgrades: 42 / 58 / 74. Walls, caps, ground, drips refitted; `LuckShop5` removed; `PlotOwnership` now loops over however many plots exist. One undo step.
 **Next:** Hatching eggs on the patches; animals on the land; luck purchase; Save Power vs Kick Power.
