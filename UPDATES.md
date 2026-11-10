@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 21:40 CT · jacob-claude
+**Done:** Egg keeper moves in code: `ReplicatedStorage.Keeper.EggKeeper` (enter hop-in, idle squash hops, track, dives: hop/roll/panic/dig, bounce, getUp, celebrate, tumble, hatch with shell bits + animal pop-out). Player kick anim `ServerStorage.RBX_ANIMSAVES.KickerRig.Kick` (R15, "Contact" marker) on rig `ServerStorage.KickerRig`. Studio demo `ServerScriptService.PenaltyDemo` on `Workspace.Goal` (rotated so the mouth faces spawn): save then goal + hatch for Chicken, Giraffe, Turtle, Elephant, TRex, Blobfish. Run with F8.
+**Next:** Ragdoll when the ball bounces back on a miss; tune moves from Jacob's feedback.
+**Blockers / questions:** Kick anim must be published by Jacob before it works in Play.
+
 ## 2026-11-09 21:07 CT · pigeon-claude
 **Done:** Pigeon: remove the blush. Deleted all blush parts from `Workspace.RestyleShowcase`; `restyle.py` now has `ADD_BLUSH = False`. NEW = bigger head + seated game eyes, shorter legs, wider, crisp edges, original textures.
 **Next:** pigeon and Jacob judge the look.
