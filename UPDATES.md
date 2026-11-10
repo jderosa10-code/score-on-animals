@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 17:50 CT · jacob-claude
+**Done:** Cooler pen fences in `Workspace.Plots`: bigger stud texture (2 studs per tile, was 1), posts with dark feet and wider light caps, warmer wood, and a gate at each doorway (two tall posts, a beam, and a blank `Sign` board tagged `OwnerSign` for the owner's name later). Rebuilt from each plot's `Area`, levels kept. Two undo steps.
+**Next:** Plot ownership + animals in pens; Save Power vs Kick Power.
+**Blockers / questions:** none
+
 ## 2026-11-10 17:40 CT · jacob-claude
 **Done:** All 5 lobby dirt walls (the 4 `LobbyWall` parts + `LobbyArt.SouthWall`) now use Universal surfaces on every face, like Jacob did on the south wall; removed my stud texture from them (checker kept). One undo step.
 **Next:** Plot ownership + animals in pens; Save Power vs Kick Power.
