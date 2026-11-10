@@ -15,6 +15,7 @@ argv = sys.argv[sys.argv.index("--") + 1:]
 out_dir, names = argv[0], argv[1].split(",")
 REAL_TEX = "baked" not in argv[2:]
 SEPARATE = "separate" in argv[2:]
+OUT_NAME = next((a for a in argv[2:] if a.endswith(".fbx")), "Restyle_NEW_all.fbx")
 os.makedirs(out_dir, exist_ok=True)
 plain = bpy.data.materials.get("SOA_Plain") or bpy.data.materials.new("SOA_Plain")
 
@@ -71,6 +72,12 @@ for i, name in enumerate(names):
     else:
         everything += objs
 if not SEPARATE:
-    path = os.path.join(out_dir, "Restyle_NEW_all.fbx")
+    # axis markers so Studio can undo the importer's rotation exactly (no blush to guess from now):
+    # SOA_AxisO at the origin, SOA_AxisUp 3 studs up (+Z), SOA_AxisFwd 3 studs forward (+Y = faces)
+    for mname, loc in (("SOA_AxisO", (0, 0, 0)), ("SOA_AxisUp", (0, 0, 3)), ("SOA_AxisFwd", (0, 3, 0))):
+        bpy.ops.mesh.primitive_cube_add(size=0.2, location=loc)
+        mk = bpy.context.active_object; mk.name = mname
+        everything.append(mk)
+    path = os.path.join(out_dir, OUT_NAME)
     export(everything, path)
     print("FBX", path, len(everything), "objects")

@@ -7,7 +7,7 @@
 #   5. Pink blush cheeks
 #   6. Brighter, more saturated colours (copy of the texture, original untouched)
 # blender -b five_originals.blend -P restyle.py -- <out.blend> <out.png> Name1,Name2,...
-import bpy, bmesh, sys, math, colorsys
+import bpy, bmesh, sys, math, colorsys, os
 from mathutils import Vector, Matrix
 from mathutils.bvhtree import BVHTree
 
@@ -605,11 +605,15 @@ sc.render.resolution_x = 2400
 sc.render.resolution_y = 900
 sc.render.filepath = png_out
 bpy.ops.wm.save_as_mainfile(filepath=blend_out)
-bpy.ops.render.render(write_still=True)
+FAST = os.environ.get("SOA_FAST") == "1"     # big batches: skip the row render, small quick close-ups
+if not FAST:
+    bpy.ops.render.render(write_still=True)
 
 # close-up of each OLD | NEW pair
-sc.render.resolution_x = 1200
-sc.render.resolution_y = 800
+sc.render.resolution_x = 600 if FAST else 1200
+sc.render.resolution_y = 400 if FAST else 800
+if FAST:
+    sc.cycles.samples = 12
 for name, x0, x1, h in pairs:
     w = x1 - x0
     c = Vector(((x0 + x1) / 2, 0, h * 0.45))
