@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 22:55 CT · jacob-claude
+**Done:** Penalty demo now runs on the client (smooth, like the real game where your egg is only on your screen): `StarterPlayer.StarterPlayerScripts.PenaltyDemoClient`; `ServerScriptService.PenaltyDemo` only copies assets to `ReplicatedStorage.PenaltyDemoAssets` (Studio only). Kicker backs up to the left of the ball after the egg is set, pauses, eased run-up blending into the kick; TV camera (C toggles). Egg idle is grounded (breathing/weight shift, no bouncing); saves use real contact and parry the ball wide; impact squash no longer fights the dive.
+**Next:** Legs/wings on eggs (needs rebuilt eggs); ragdoll on a miss.
+**Blockers / questions:** Test with Play (F5) now, not Run.
+
 ## 2026-11-09 22:20 CT · jacob-claude
 **Done:** Test pitch moved to x = -400 (`Workspace.Goal`, `Workspace.SoccerBall`). `ReplicatedStorage.Keeper.EggKeeper` v2: eggs face the way they hop and turn back to the kicker; dives are crouch, fast takeoff, hang, controlled fall (no more random panic, Chicken now does one feint); eggs stay on the ground when lying down; `EggKeeper.timeScale` for slow motion. `ServerScriptService.PenaltyDemo`: kicker pause over the ball (2.5 s), short run-up, slow-mo on the shot.
 **Next:** Legs/wings on eggs (they are baked into one mesh with no bones, so they need rebuilding to move); ragdoll on a miss.
