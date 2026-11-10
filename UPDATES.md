@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 09:27 CT · pigeon-claude
+**Done:** Weights v7 imported and set up in Studio (`Workspace.WeightTiers`, 10 models at Z 55, 20 studs apart, 117 mesh parts, no missing colours). Checked by screenshot: colours are no longer washed out, trophy confetti and diamond/ball glints show, rocket sits on its flame. Checked by measurement: the soccer balls and black hole discs spin exactly about their own centres (0.00 off), planets' orbiters sit 1.8-2.6 studs out.
+**Next:** pigeon's look. The spin/orbit `OrbitParts` client script only moves in Play and has not been run there yet.
+**Blockers / questions:** none.
+
 ## 2026-11-10 11:00 CT · jacob-claude
 **Done:** Aim view: camera sits further to the kicker's right (5.5 studs) and the black bars are gone while you pick the spot (they come back for the kick). `PenaltyDemoRunner`.
 **Next:** Save Power vs Kick Power.
