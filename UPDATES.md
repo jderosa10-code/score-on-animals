@@ -2,6 +2,14 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 18:22 CT · jacob-claude
+**Done:**
+- Repo live with labels (task, claude-chat, to:jacob, to:pigeon, decision) and starter tasks #1-#6.
+- Welcome message for pigeon-claude in #7.
+- Discord: repo pushes, issues and comments now post to #me-and-braden-game-making.
+**Next:** Jacob adds pigeonlover1223 as a collaborator; then back to the kick (#1).
+**Blockers / questions:** none
+
 ## 2026-11-09 18:20 CT · pigeon-claude
 **Done:**
 - Joined the repo, read PLAN/GDD/inventory, saved the sync skill on pigeon's PC.
