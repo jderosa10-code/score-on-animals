@@ -33,6 +33,11 @@ COL = {
     "TrophyGold": "#FFC93D", "TrophyBase": "#2A2A30",
     "RocketBody": "#F2F2F2", "RocketRed": "#E8262B", "RocketWindow": "#4DB8FF", "Nozzle": "#5A5F6B",
     "BallGold": "#F7C440", "BallBlack": "#1E1E24",
+    "Grip": "#2E2E36", "Wood": "#B5793C", "MarshPink": "#FFB7D5", "Toast": "#C98A3E", "ToastDark": "#8A5522",
+    "Pearl": "#FFF6E0", "GemRed": "#E8262B", "GemBlue": "#2F7BFF", "HotMetal": "#FF7A1A",
+    "SpaceBar": "#1B1F4B", "GasA": "#7B4DFF", "GasB": "#B79BFF", "GasC": "#FF7EC8",
+    "RingA": "#FFD27E", "RingB": "#FF9BD6", "MoonIce": "#8DF4FF", "MoonLava": "#FF8A3D",
+    "Ocean": "#2F7BFF", "Land": "#3FCF5A", "Ice": "#F4FBFF", "Moon": "#C9CCD6",
 }
 M = {k: mat(k, v, rough=0.3) for k, v in COL.items()}
 SIDES = 20
@@ -47,23 +52,55 @@ def box(name, size, center, m, coll, rot=None):
     return _obj(name, bm, m, coll, center, smooth=False)
 
 
-def bar(coll, p, h, m):
-    lathe(p + "Bar", [(-4.2, 0.17), (4.2, 0.17)], 12, m, coll, axis='Y', center=(0, 0, h))
+def bar(coll, p, h, m, L=4.2):
+    """A proper barbell bar: shaft, end caps, collars inside the weights and dark hand grips."""
+    lathe(p + "Bar", [(-L, 0.17), (L, 0.17)], 12, m, coll, axis='Y', center=(0, 0, h))
     for s in (1, -1):
-        a, b = sorted((s * 4.2, s * 4.55))
+        a, b = sorted((s * L, s * (L + 0.35)))
         lathe(p + f"End{s}", [(a, 0.28), (b, 0.28)], 12, m, coll, axis='Y', center=(0, 0, h))
+        a, b = sorted((s * 1.42, s * 1.68))
+        lathe(p + f"Collar{s}", [(a, 0.31), (b, 0.31)], 12, m, coll, axis='Y', center=(0, 0, h))
+        a, b = sorted((s * 0.3, s * 1.2))
+        lathe(p + f"Grip{s}", [(a, 0.205), (b, 0.205)], 12, M["Grip"], coll, axis='Y', center=(0, 0, h))
+
+
+def annulus(name, r0, r1, t, sides, m, coll, mtx):
+    """Flat ring (washer shape), placed with a matrix."""
+    bm = bmesh.new()
+    def ring(r, z):
+        return [bm.verts.new((r * math.cos(2 * math.pi * i / sides), r * math.sin(2 * math.pi * i / sides), z))
+                for i in range(sides)]
+    a, b, c2, d = ring(r0, -t / 2), ring(r1, -t / 2), ring(r1, t / 2), ring(r0, t / 2)
+    for i in range(sides):
+        j = (i + 1) % sides
+        for q0, q1 in ((a, b), (b, c2), (c2, d), (d, a)):
+            bm.faces.new((q0[i], q0[j], q1[j], q1[i]))
+    bmesh.ops.transform(bm, matrix=mtx, verts=bm.verts[:])
+    return _obj(name, bm, m, coll, (0, 0, 0), smooth=False)
 
 
 # ---------------- tiers ----------------
 def t_marshmallow(c, p):
-    R, t, h = 1.05, 0.95, 1.05
-    bar(c, p, h, M["Bar"])
+    """Marshmallows on a wooden roasting stick: puffy white + pink, toasted ends."""
+    R, Lm, h, y0 = 1.0, 1.2, 1.03, 1.7
+    lathe(p + "Stick", [(-4.75, 0.13), (4.35, 0.13), (4.9, 0.02)], 8, M["Wood"], c, axis='Y', center=(0, 0, h))
+
+    def mirrored(prof, s):
+        prof = [(s * a, r) for a, r in prof]
+        return prof if s > 0 else prof[::-1]
+
     for s in (1, -1):
-        for i in range(2):
-            y0 = 2.3 + i * (t + 0.08)
-            prof = [(0, R - 0.25), (0.15, R - 0.03), (0.3, R), (t - 0.3, R), (t - 0.15, R - 0.03), (t, R - 0.25)]
-            prof = [(s * (y0 + a), r) for a, r in prof]
-            lathe(p + f"Marsh{i}_{s}", prof if s > 0 else prof[::-1], SIDES, M["Marshmallow"], c, axis='Y', center=(0, 0, h))
+        for i, m in enumerate(("Marshmallow", "MarshPink")):
+            y = y0 + i * (Lm + 0.1)
+            puff = [(0, 0.45), (0.06, 0.78), (0.2, 0.95), (0.45, 1.0), (Lm / 2, 1.03),
+                    (Lm - 0.45, 1.0), (Lm - 0.2, 0.95), (Lm - 0.06, 0.78), (Lm, 0.45)]
+            lathe(p + f"Marsh{i}_{s}", mirrored([(y + a, r * R) for a, r in puff], s), 14, M[m], c,
+                  axis='Y', center=(0, 0, h))
+        ye = y0 + 2 * Lm + 0.1      # outer end: toasted cap with a darker centre
+        lathe(p + f"Toast_{s}", mirrored([(ye - 0.2, 0.975 * R), (ye - 0.06, 0.805 * R), (ye + 0.025, 0.47 * R),
+                                          (ye + 0.03, 0.0)], s), 14, M["Toast"], c, axis='Y', center=(0, 0, h))
+        lathe(p + f"ToastSpot_{s}", mirrored([(ye + 0.03, 0.3 * R), (ye + 0.05, 0.22 * R), (ye + 0.055, 0.0)], s), 14,
+              M["ToastDark"], c, axis='Y', center=(0, 0, h))
 
 
 def t_donut(c, p):
@@ -132,6 +169,25 @@ def t_egg(c, p):
         prof = [(0, 0.02)] + [(H * u, W * 2 * math.sqrt(u * (1 - u)) * (1.1 - 0.3 * u))
                               for u in (k / 14 for k in range(1, 14))] + [(H, 0.02)]
         lathe(p + f"Egg_{s}", prof, SIDES, M["Gold"], c, axis='Z', center=(0, s * 3.0, 0))
+        # jewelled egg: two pearl bands, a ring of red + blue gems, a pearl on top
+        r_at = lambda u: W * 2 * math.sqrt(u * (1 - u)) * (1.1 - 0.3 * u)
+        for bi, u in enumerate((0.26, 0.64)):
+            z = H * u
+            lathe(p + f"Band{bi}_{s}", [(z - 0.07, r_at(u - 0.024) + 0.035), (z + 0.07, r_at(u + 0.024) + 0.035)],
+                  SIDES, M["Pearl"], c, axis='Z', center=(0, s * 3.0, 0))
+        gems = {"GemRed": bmesh.new(), "GemBlue": bmesh.new()}
+        for k in range(8):
+            a = 2 * math.pi * k / 8 + math.pi / 8
+            rr = r_at(0.64) + 0.06
+            bm = gems["GemRed" if k % 2 else "GemBlue"]
+            g = bmesh.ops.create_icosphere(bm, subdivisions=1, radius=0.17)
+            bmesh.ops.scale(bm, vec=(1, 1, 1.25), verts=g["verts"])
+            bmesh.ops.translate(bm, verts=g["verts"], vec=(rr * math.cos(a), s * 3.0 + rr * math.sin(a), H * 0.64))
+        for k, bm in gems.items():
+            _obj(p + f"Gems{k}_{s}", bm, M[k], c, (0, 0, 0), smooth=False)
+        bm = bmesh.new()
+        bmesh.ops.create_icosphere(bm, subdivisions=1, radius=0.17)
+        _obj(p + f"Tip_{s}", bm, M["Pearl"], c, (0, s * 3.0, H + 0.06), smooth=False)
 
 
 def t_anvil(c, p):
@@ -145,6 +201,7 @@ def t_anvil(c, p):
         bmesh.ops.create_cone(bm, cap_ends=True, segments=8, radius1=0.32, radius2=0.02, depth=1.1)
         bmesh.ops.rotate(bm, verts=bm.verts[:], cent=Vector(), matrix=Matrix.Rotation(math.radians(-90), 3, 'Y'))
         _obj(p + f"Horn_{s}", bm, M["Anvil"], c, (1.55, y, 1.45), smooth=False)
+        box(p + f"Ingot_{s}", (1.25, 0.34, 0.22), (-0.15, y, 1.76), M["HotMetal"], c)   # red-hot bar being forged
 
 
 def t_diamond(c, p):
@@ -219,9 +276,76 @@ def t_soccer(c, p):
         o = bpy.data.objects.new(p + f"Ball_{s}", me); c.objects.link(o)
 
 
+def t_planets(c, p):
+    """Top tier. A ringed gas giant on one end, an Earth on the other. Parts named Orb* are moons /
+    a tiny rocket placed ON their orbit; a Studio script makes them circle the planet."""
+    h, Y, Rp = 1.3, 3.6, 1.25
+    bar(c, p, h, M["SpaceBar"], L=4.9)
+
+    def on_orbit(center, R, tau, phi):
+        # orbit plane tilted about X (the axis across the bar), so orbits never cut through the bar
+        n = Vector((0, math.sin(tau), math.cos(tau)))
+        e1 = Vector((1, 0, 0)); e2 = n.cross(e1)
+        return center + R * (math.cos(phi) * e1 + math.sin(phi) * e2), (-math.sin(phi) * e1 + math.cos(phi) * e2)
+
+    def ball(name, pos, r, m, sub=1):
+        bm = bmesh.new()
+        bmesh.ops.create_icosphere(bm, subdivisions=sub, radius=r)
+        return _obj(name, bm, m, c, tuple(pos), smooth=False)
+
+    # --- gas giant with two-tone ring and two moons ---
+    s = 1
+    C1 = Vector((0, s * Y, h))
+    bm = bmesh.new()
+    bmesh.ops.create_uvsphere(bm, u_segments=16, v_segments=9, radius=Rp)
+    o = _obj(p + f"Globe_{s}", bm, M["GasA"], c, tuple(C1), smooth=False)
+    o.data.materials.append(M["GasB"]); o.data.materials.append(M["GasC"])
+    pattern = [0, 0, 1, 0, 2, 0, 1, 0, 0]
+    for f in o.data.polygons:
+        band = min(8, max(0, int(((f.center.z - h) / Rp + 1) / 2 * 9)))
+        f.material_index = pattern[band]
+    tilt = Matrix.Translation(C1) @ Matrix.Rotation(-math.radians(25), 4, 'X')
+    annulus(p + f"RingIn_{s}", 1.58, 1.84, 0.07, 24, M["RingA"], c, tilt)
+    annulus(p + f"RingOut_{s}", 1.92, 2.15, 0.07, 24, M["RingB"], c, tilt)
+    pos, _ = on_orbit(C1, 2.55, math.radians(-18), math.radians(70))
+    ball(p + f"OrbIce_{s}", pos, 0.36, M["MoonIce"])
+    pos, _ = on_orbit(C1, 2.9, math.radians(-18), math.radians(215))
+    ball(p + f"OrbLava_{s}", pos, 0.28, M["MoonLava"])
+
+    # --- Earth with a moon and a tiny rocket in orbit ---
+    s = -1
+    C2 = Vector((0, s * Y, h))
+    bm = bmesh.new()
+    bmesh.ops.create_icosphere(bm, subdivisions=3, radius=Rp)
+    o = _obj(p + f"Globe_{s}", bm, M["Ocean"], c, tuple(C2), smooth=False)
+    o.data.materials.append(M["Land"]); o.data.materials.append(M["Ice"])
+    for f in o.data.polygons:
+        d = (Vector(f.center) - C2).normalized()
+        land = (math.sin(d.x * 4.3 + 0.7) * math.cos(d.z * 3.1 + 0.4) + math.sin(d.y * 3.7 + 2.0) * math.cos(d.x * 2.9)
+                + 0.6 * math.sin((d.y + d.z) * 6.0))
+        f.material_index = 2 if abs(d.z) > 0.88 else (1 if land > 0.55 else 0)
+    pos, _ = on_orbit(C2, 2.3, math.radians(20), math.radians(250))
+    ball(p + f"OrbMoon_{s}", pos, 0.38, M["Moon"])
+    pos, tan = on_orbit(C2, 1.85, math.radians(-30), math.radians(60))
+    aim = Matrix.Translation(pos) @ Vector((0, 0, 1)).rotation_difference(tan).to_matrix().to_4x4()
+    bm = bmesh.new()
+    bmesh.ops.create_cone(bm, cap_ends=True, segments=8, radius1=0.19, radius2=0.19, depth=0.6)
+    bmesh.ops.transform(bm, matrix=aim, verts=bm.verts[:])
+    _obj(p + f"OrbSatBody_{s}", bm, M["RocketBody"], c, (0, 0, 0), smooth=False)
+    bm = bmesh.new()
+    bmesh.ops.create_cone(bm, cap_ends=True, segments=8, radius1=0.19, radius2=0.0, depth=0.36)
+    bmesh.ops.transform(bm, matrix=aim @ Matrix.Translation((0, 0, 0.48)), verts=bm.verts[:])
+    for k in range(3):     # three little fins at the tail
+        fin = bmesh.ops.create_cube(bm, size=1.0)
+        bmesh.ops.scale(bm, vec=(0.3, 0.05, 0.26), verts=fin["verts"])
+        bmesh.ops.transform(bm, verts=fin["verts"],
+                            matrix=aim @ Matrix.Rotation(2 * math.pi * k / 3, 4, 'Z') @ Matrix.Translation((0.22, 0, -0.22)))
+    _obj(p + f"OrbSatNose_{s}", bm, M["RocketRed"], c, (0, 0, 0), smooth=False)
+
+
 TIERS = [("Marshmallow", t_marshmallow), ("Donut", t_donut), ("Watermelon", t_watermelon), ("GoldenEgg", t_egg),
          ("Anvil", t_anvil), ("Diamond", t_diamond), ("Trophy", t_trophy), ("Rocket", t_rocket),
-         ("SoccerBall", t_soccer)]
+         ("SoccerBall", t_soccer), ("Planets", t_planets)]
 
 
 def split_by_material(o):
@@ -265,7 +389,7 @@ for size, loc in [((2, 1, 2), (0, 0, 3)), ((1.1, 1.1, 1.1), (0, 0, 4.55)), ((0.9
                   ((0.95, 1, 2), (0.5, 0, 1)), ((0.95, 1, 2), (-1.5, 0, 3)), ((0.95, 1, 2), (1.5, 0, 3))]:
     bpy.ops.mesh.primitive_cube_add(size=1, location=(loc[0] - 7.5, loc[1] + 2, loc[2]))
     o = bpy.context.active_object; o.scale = size; o.data.materials.append(dm)
-bpy.ops.mesh.primitive_plane_add(size=200, location=(0, -28, 0))
+bpy.ops.mesh.primitive_plane_add(size=260, location=(0, -32, 0))
 bpy.context.active_object.data.materials.append(mat("Ground", "#D9DEE6", rough=0.8))
 sun = bpy.data.objects.new("Sun", bpy.data.lights.new("Sun", 'SUN')); sun.data.energy = 3.5
 sun.rotation_euler = (math.radians(50), 0, math.radians(-30)); sc.collection.objects.link(sun)
@@ -286,9 +410,10 @@ def shot(path, tgt, off, lens):
     bpy.ops.render.render(write_still=True)
 
 
-shot(png_out, (-1, -27, 0.8), (34, 26, 24), 32)
-shot(png_out.replace(".png", "_low.png"), (0, -7, 1.2), (14, 10, 8), 40)     # donut + watermelon
-shot(png_out.replace(".png", "_top.png"), (0, -49, 1.6), (17, 12, 9), 42)    # diamond..soccer
+shot(png_out, (-1, -31, 0.8), (38, 29, 27), 32)
+shot(png_out.replace(".png", "_low.png"), (0, -1.5, 1.2), (11, 9, 7), 40)     # marshmallow
+shot(png_out.replace(".png", "_mid.png"), (0, -24.5, 1.4), (12, 9, 7), 40)    # egg + anvil
+shot(png_out.replace(".png", "_top.png"), (0, -62, 1.5), (12, 10, 7), 40)     # planets
 
 mk = mat("Marker", "#FF00FF")
 for nm, loc in (("SOA_AxisO", (0, 0, 0)), ("SOA_AxisUp", (0, 0, 3)), ("SOA_AxisFwd", (0, 3, 0))):
