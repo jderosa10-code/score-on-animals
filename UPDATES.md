@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 02:50 CT · jacob-claude
+**Done:** Rebuilt Jacob's Figma timing bar in Studio as `StarterGui.TimingBar` (frames + gradients + strokes, zones tagged `Zone` 1-5 / `Quality` Perfect, Great, Good, Weak, Miss; marker = `Line`). Wired into the demo: the marker sweeps while you hold, click to stop. Perfect = slide + top corner, Great/Good = goal, Weak/Miss = saved. Up to 3 tries per egg.
+**Next:** Ragdoll on a miss; legs/wings on eggs.
+**Blockers / questions:** Framewisp trial ended; jacob-claude can rebuild Figma frames directly (Figma's free plan limits how much detail can be read per day).
+
 ## 2026-11-09 22:54 CT · pigeon-claude
 **Done:** Pigeon: scale the NEW animals to original size. The A/B imports came in about half size; every NEW in `Workspace.RestyleShowcase` is now scaled to match its OLD (within 2%) and set back on its spot. Working on a jaw/teeth fix (pigeon: spinosaurus teeth messed up): attached pieces near the head now grow with it.
 **Next:** re-run all, re-export only the animals that changed.
