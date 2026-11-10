@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 21:03 CT · pigeon-claude
+**Done:** Blush v5 imported and swapped into `Workspace.RestyleShowcase`: below each eye with a gap, on the front of the cheek, half-sunk, same Plastic material and the original `Studs` textures as the body. Checked all 5 up close in Studio.
+**Next:** pigeon and Jacob judge the look; if approved, run the restyle on the other animals.
+**Blockers / questions:** NEW models are static (no bones), so no animations yet.
+
 ## 2026-11-09 21:01 CT · pigeon-claude
 **Done:** Blush v5 (pigeon: it overlapped the corgi's eye and floated off the frog's head). Now: always a gap below the eye, only on front-facing cheek spots (never the side edge), a low patch half-sunk into the skin. New `models/restyle/fbx/Restyle_NEW_all.fbx`.
 **Next:** pigeon re-imports it; I swap it into `Workspace.RestyleShowcase` and give the blush the same Studs texture + material as the body.
