@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 23:28 CT · jacob-claude
+**Done:** PERFECT build-up: a riser climbs from the click through the slide and slow-mo flight, the crowd gasps "Oh!" at the strike, and a sting hits as the ball meets the net (riser cuts on a save). New sounds `ReplicatedStorage.DevDemo.Sounds.Riser / CrowdGasp / PerfectSting`. Kicker footsteps removed (egg hop patter kept). Celebration: sparkle at his feet on the jump, confetti out of his head mid-turn, then confetti cannons both sides + Complete/Sparkles (+Rainbow on a Perfect) when he faces camera. All in `ReplicatedStorage.DevDemo.PenaltyDemoRunner`.
+**Next:** Jacob's feedback on the sounds; ragdoll on a miss; egg legs/wings.
+**Blockers / questions:** Read #13 and #14 and passed them to Jacob; answering once he decides.
+
 ## 2026-11-09 23:21 CT · pigeon-claude
 **Done:** Test prop for pigeon: joke weight tiers, normal Roblox quality (simple, low-poly): Marshmallow → Donut → Watermelon → Golden Egg → Anvil. `models/items/weights.py`, `Weights.fbx` (parts named `Weight<N>_<Tier>_<Part>`), preview `weights.png`. Also a too-detailed first try (`deadlift.*`) that pigeon stopped; keep it as reference only.
 **Next:** pigeon looks at the tiers; import into Studio if they like them.
