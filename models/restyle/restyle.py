@@ -16,6 +16,9 @@ blend_out, png_out, names = argv[0], argv[1], argv[2].split(",")
 
 HEAD_SCALE = 1.3
 EYE_SCALE = 1.4
+EYE_DEPTH = 0.75     # eye flattened to 75% along the face normal (set-in look)
+EYE_OUT = 0.35       # eye centre sits this many half-depths outside the head surface
+EYE_MAX_FRAC = 0.13  # eye radius never more than 13% of the head's height
 LEG_SCALE = 0.72
 WIDTH_SCALE = 1.08
 SAT_BOOST = 1.25
@@ -76,8 +79,13 @@ def restyle(ob):
     head = None
     if eyeL:
         em = (eyeL["c"] + eyeR["c"]) / 2
+        # the head straddles the midline between the eyes and reaches up to eye height
+        # (a front leg can sit right under an eye, so loose padding picks the wrong part)
         cands = [p for p in parts if p is not eyeL and p is not eyeR and p["vol"] > eyeL["vol"] * 2
-                 and all(p["mn"][k] - 0.3 <= em[k] <= p["mx"][k] + 0.3 for k in range(3))]
+                 and p["mn"].x - 0.05 <= em.x <= p["mx"].x + 0.05
+                 and p["mn"].y - 0.3 <= em.y <= p["mx"].y + 0.3
+                 and p["mn"].z - 0.1 <= em.z <= p["mx"].z + 0.3
+                 and p["mx"].z >= em.z - 0.1]
         if cands:
             head = min(cands, key=lambda p: p["vol"])
         if head is body:
@@ -99,16 +107,45 @@ def restyle(ob):
                 v.co = S @ v.co
         info["head_parts"] = len(head_group)
 
-    # --- eyes: bigger, nudged forward so they don't sink into the bigger head ---
+    # --- eyes: bigger, then RE-SEATED into the head so they never float ---
+    # Find the head surface right under each eye (nearest point on everything except the eyes),
+    # then put the bigger eye there with part of it sunk in, flattened a little along the
+    # surface normal so it reads as set into the face instead of a ball stuck on.
     eye_data = []
-    for e in (eyeL, eyeR):
-        if not e: continue
-        cs = [v.co for v in e["verts"]]
-        c = sum(cs, Vector()) / len(cs)
-        for v in e["verts"]:
-            v.co = c + (v.co - c) * EYE_SCALE + Vector((0, 0.04, 0))
-        r = max((v.co - (c + Vector((0, 0.04, 0)))).length for v in e["verts"])
-        eye_data.append((c + Vector((0, 0.04, 0)), r))
+    eyes = [e for e in (eyeL, eyeR) if e]
+    if eyes:
+        eye_idx = set(v.index for e in eyes for v in e["verts"])
+        bm.verts.ensure_lookup_table(); bm.faces.ensure_lookup_table()
+        co = [v.co.copy() for v in bm.verts]
+        polys = [[v.index for v in f.verts] for f in bm.faces if not any(v.index in eye_idx for v in f.verts)]
+        surf = BVHTree.FromPolygons(co, polys)
+        hc = (S @ head["c"]) if head else body["c"]
+        head_h = (head["s"].z * HEAD_SCALE) if head else body["s"].z
+        r_cap = head_h * EYE_MAX_FRAC          # big eyes, but never bigger than this
+        for e in eyes:
+            cs = [v.co.copy() for v in e["verts"]]
+            c = sum(cs, Vector()) / len(cs)
+            r = max((q - c).length for q in cs)
+            loc, nrm, _, _ = surf.find_nearest(c)
+            if loc is None:
+                continue
+            n = nrm.normalized()
+            if n.dot(loc - hc) < 0:               # face normals can wind inward: point it out of the head
+                n = -n
+            out = c - loc
+            if out.length > r * 0.15 and out.dot(n) > 0:
+                n = out.normalized()              # eye centre is outside: straight line back to the surface
+            k = min(EYE_SCALE, max(1.0, r_cap / r))
+            r_new = r * k
+            h = r_new * EYE_DEPTH                 # half-depth along the normal
+            newc = loc + n * (h * EYE_OUT)        # most of the eye sits outside, the rest sunk in
+            for v, q in zip(e["verts"], cs):
+                d = q - c
+                along = d.dot(n)
+                perp = d - n * along
+                v.co = newc + perp * k + n * along * k * EYE_DEPTH
+            eye_data.append(dict(c=newc, r=r_new, h=h, n=n))
+        info["eye_seat"] = [round((d["c"] - surf.find_nearest(d["c"])[0]).length / d["h"], 2) for d in eye_data]
 
     # --- legs: parts that sit on the ground below the body's middle, shortened from the top ---
     body_mid = body["c"].z
@@ -128,24 +165,95 @@ def restyle(ob):
     cx = (mn_all.x + mx_all.x) / 2
     for v in bm.verts:
         v.co.x = cx + (v.co.x - cx) * WIDTH_SCALE
-    if legs:
-        eye_data = [(Vector((cx + (c.x - cx) * WIDTH_SCALE, c.y, c.z - drop)), r) for c, r in eye_data]
-    else:
-        eye_data = [(Vector((cx + (c.x - cx) * WIDTH_SCALE, c.y, c.z)), r) for c, r in eye_data]
-
     # put it back on the ground
     lowest = min(v.co.z for v in bm.verts)
     for v in bm.verts:
         v.co.z += ground - lowest
 
+    # carry the eye data through the same moves (width scale, leg drop, re-grounding)
+    dz = (-drop if legs else 0.0) + (ground - lowest)
+    for d in eye_data:
+        c = d["c"]
+        d["c"] = Vector((cx + (c.x - cx) * WIDTH_SCALE, c.y, c.z + dz))
+        n = d["n"]
+        d["n"] = Vector((n.x / WIDTH_SCALE, n.y, n.z)).normalized()
+
+    info["gaps_closed"] = close_gaps(bm)
     bm.to_mesh(me)
     bvh = BVHTree.FromBMesh(bm)
+    eye_vidx = sorted(v.index for e in eyes for v in e["verts"]) if eyes else []
     bm.free()
-    if legs:
-        eye_data = [(c + Vector((0, 0, ground - lowest)), r) for c, r in eye_data]
-    else:
-        eye_data = [(c + Vector((0, 0, ground - lowest)), r) for c, r in eye_data]
-    return info, eye_data, bvh, cx
+    return info, eye_data, bvh, cx, eye_vidx
+
+
+def _part_bvhs(bm, parts):
+    """One BVH per loose piece, with outward-facing normals (so we can tell inside from outside)."""
+    bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+    bm.faces.ensure_lookup_table()
+    owner = {v.index: i for i, p in enumerate(parts) for v in p["verts"]}
+    co = [v.co.copy() for v in bm.verts]
+    polys = [[] for _ in parts]
+    for f in bm.faces:
+        polys[owner[f.verts[0].index]].append([v.index for v in f.verts])
+    return [BVHTree.FromPolygons(co, pl) if pl else None for pl in polys]
+
+
+def _gap(points, bvh):
+    """Smallest distance from any point to a piece's surface; 0 if any point is INSIDE it."""
+    best = (math.inf, None, None)
+    for q in points:
+        loc, nrm, _, dist = bvh.find_nearest(q)
+        if loc is None: continue
+        if (q - loc).dot(nrm) < 0:
+            return (0.0, q, loc)
+        if dist < best[0]:
+            best = (dist, q, loc)
+    return best
+
+
+def _pair_gap(pa, pb, ba, bb):
+    g1 = _gap([v.co for v in pa["verts"]], bb)
+    g2 = _gap([v.co for v in pb["verts"]], ba)
+    return g1 if g1[0] <= g2[0] else (g2[0], g2[2], g2[1])   # always (dist, point on a, point on b)
+
+
+def _attached(parts, bvhs, tol):
+    """Which pieces connect back to the biggest one (the body) through touching/overlapping pieces."""
+    n = len(parts)
+    gaps = {}
+    for i in range(n):
+        for j in range(i + 1, n):
+            if bvhs[i] and bvhs[j]:
+                gaps[(i, j)] = gaps[(j, i)] = _pair_gap(parts[i], parts[j], bvhs[i], bvhs[j])
+    body = max(range(n), key=lambda i: parts[i]["vol"])
+    seen = {body}; stack = [body]
+    while stack:
+        i = stack.pop()
+        for j in range(n):
+            if j not in seen and (i, j) in gaps and gaps[(i, j)][0] <= tol:
+                seen.add(j); stack.append(j)
+    return seen, gaps
+
+
+def close_gaps(bm, tol=0.02, overlap=0.03):
+    """Slide every piece that isn't connected to the body onto the nearest connected piece."""
+    moved = 0
+    for _ in range(4):
+        parts = islands(bm)
+        bvhs = _part_bvhs(bm, parts)
+        seen, gaps = _attached(parts, bvhs, tol)
+        loose = [i for i in range(len(parts)) if i not in seen]
+        if not loose:
+            break
+        # move the loose piece that's closest to the connected group, then re-check
+        i, j = min(((i, j) for i in loose for j in seen if (i, j) in gaps), key=lambda ij: gaps[ij][0])
+        d, pa, pb = gaps[(i, j)]
+        shift = (pb - pa).normalized() * (d + overlap)
+        print("   gap-close part", i, len(parts[i]["verts"]), "v ->", j, "gap", round(d, 3))
+        for v in parts[i]["verts"]:
+            v.co += shift
+        moved += 1
+    return moved
 
 
 def recolor(ob):
@@ -260,34 +368,116 @@ def add_sphere(name, loc, scale, rot, mat, parent, segs=10, rings=6):
     return o
 
 
-def add_face_bits(ob, eye_data, bvh, cx):
-    blush = flat_mat("SOA_Blush", (1.0, 0.42, 0.55))
+def split_eyes(ob, eye_vidx):
+    """Move the eye geometry into its own child object with one glossy dark material, so every
+    animal gets the same bead eyes (some originals have blank white eyes)."""
+    if not eye_vidx: return None
+    keep = set(eye_vidx)
+    src = ob.data
+    eme = src.copy(); eme.name = ob.name + "_Eyes"
+    bm = bmesh.new(); bm.from_mesh(eme)
+    bm.verts.ensure_lookup_table()
+    bmesh.ops.delete(bm, geom=[v for v in bm.verts if v.index not in keep], context='VERTS')
+    bm.to_mesh(eme); bm.free()
+    eme.materials.clear(); eme.materials.append(flat_mat("SOA_EyeBlack", (0.02, 0.02, 0.025)))
+    eme.materials[0].node_tree.nodes["Principled BSDF"].inputs["Roughness"].default_value = 0.2
+    for uv in list(eme.uv_layers): eme.uv_layers.remove(uv)
+    bm = bmesh.new(); bm.from_mesh(src)
+    bm.verts.ensure_lookup_table()
+    bmesh.ops.delete(bm, geom=[v for v in bm.verts if v.index in keep], context='VERTS')
+    bm.to_mesh(src); bm.free()
+    eo = bpy.data.objects.new(ob.name + "_Eyes", eme)
+    bpy.context.scene.collection.objects.link(eo)
+    eo.parent = ob
+    return eo
+
+
+def add_face_bits(ob, eye_data, bvh, cx, eye_obj):
+    blush = flat_mat("SOA_Blush", (1.0, 0.33, 0.45))
     shine = flat_mat("SOA_Shine", (1.0, 1.0, 1.0), emit=0.6)
-    for c, r in eye_data:
+    # built from the raw mesh so it's in the same local space as everything else here
+    eye_bvh = (BVHTree.FromPolygons([v.co.copy() for v in eye_obj.data.vertices],
+                                    [list(p.vertices) for p in eye_obj.data.polygons]) if eye_obj else None)
+    for ed in eye_data:
+        c, r, h, n = ed["c"], ed["r"], ed["h"], ed["n"]
         side = 1 if c.x > cx else -1
-        # shine dot: upper-front-outer on the eye ball
-        d = Vector((0.35 * side, 0.8, 0.5)).normalized()
-        add_sphere(ob.name + "_Shine", c + d * r * 0.92, (r * 0.3,) * 3, (0, 0, 0), shine, ob, 8, 5)
+        # shine: a small flat dot stuck ON the eye's real surface (ray-cast onto the eye mesh),
+        # up and toward the front from the way the eye faces
+        s = (n + Vector((0.1 * side, 0.5, 0.7))).normalized()
+        if eye_bvh:
+            hit = eye_bvh.ray_cast(c + s * r * 4, -s, r * 8)
+            if hit[0] is not None:
+                sn = hit[1].copy()
+                if sn.dot(s) < 0: sn.negate()
+                add_sphere(ob.name + "_Shine", hit[0], (r * 0.2, r * 0.2, r * 0.06),
+                           sn.to_track_quat('Z', 'Y').to_euler(), shine, ob, 8, 5)
         # blush: below and outside the eye, stuck onto the face by casting a ray from the front
         # try a few spots under the eye; keep the first hit that's near the eye (on the face,
         # not a leg or the chest further down/back)
-        placed = False
-        # aim at the cheek from the front-outer side (the snout often sticks out in front of the eyes)
-        for dz, dx, back in ((1.5, 0.9, 0.6), (1.2, 1.1, 0.8), (1.9, 0.8, 0.5), (1.0, 1.4, 1.0), (2.3, 0.7, 0.4)):
+        # aim at the cheek mostly from the front (the snout often sticks out in front of the eyes).
+        # Prefer a cheek spot that faces forward; on flat-sided heads take the most forward one.
+        best = None
+        for dz, dx, back in ((1.3, 0.5, 0.5), (1.1, 0.7, 0.6), (1.6, 0.4, 0.4), (0.9, 0.9, 0.7), (1.9, 0.3, 0.3)):
             target = Vector((c.x + side * r * dx, c.y - r * back, c.z - r * dz))
-            d = Vector((side * 0.7, 1.0, 0.15)).normalized()
+            d = Vector((side * 0.35, 1.0, 0.1)).normalized()
             hit = bvh.ray_cast(target + d * 4, -d, 8)
             if hit[0] is None:
                 continue
             loc, nrm = hit[0], hit[1].copy()
             if nrm.dot(d) < 0: nrm.negate()   # imported faces can wind inward; face the ray
-            if (loc - c).length > r * 4.0 or nrm.dot(d) < 0.3:
+            dist = (loc - c).length
+            if dist > r * 4.2 or dist < r * 1.1 or nrm.y < 0.05:   # too far, the eye itself, or facing back
                 continue
-            rot = nrm.to_track_quat('Z', 'Y').to_euler()
-            add_sphere(ob.name + "_Blush", loc + nrm * 0.03, (r * 0.8, r * 0.55, r * 0.15), rot, blush, ob)
-            placed = True
-            break
-        print("BLUSH", ob.name, side, placed)
+            if nrm.y >= 0.3:
+                best = (loc, nrm); break
+            if best is None or nrm.y > best[1].y:
+                best = (loc, nrm)
+        if best is None:
+            # fallback: straight from the front, a bit further from the eye allowed
+            for dz, dx in ((1.4, 0.6), (1.0, 0.9), (1.8, 0.4)):
+                target = Vector((c.x + side * r * dx, c.y, c.z - r * dz))
+                hit = bvh.ray_cast(target + Vector((0, 4, 0)), Vector((0, -1, 0)), 8)
+                if hit[0] is None: continue
+                loc, nrm = hit[0], hit[1].copy()
+                if nrm.y < 0: nrm.negate()
+                if r * 1.1 < (loc - c).length < r * 5.5 and nrm.y > 0.3:
+                    best = (loc, nrm); break
+        if best:
+            loc, nrm = best
+            # thin disc, half pressed into the cheek so it reads as painted on, not stuck on
+            add_sphere(ob.name + "_Blush", loc, (r * 0.62, r * 0.42, r * 0.08),
+                       nrm.to_track_quat('Z', 'Y').to_euler(), blush, ob)
+        print("BLUSH", ob.name, side, bool(best))
+
+
+def check_floating(ob, tol=0.03):
+    """Every loose piece must touch or overlap another piece; face bits must sit on the surface.
+    Returns a list of problems (empty = clean)."""
+    bm = bmesh.new(); bm.from_mesh(ob.data)
+    bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=0.0005)
+    parts = islands(bm)
+    bvhs = _part_bvhs(bm, parts)
+    seen, gaps = _attached(parts, bvhs, tol)
+    probs = []
+    for i, p in enumerate(parts):
+        if i not in seen:
+            g = min((gaps[(i, j)][0] for j in seen if (i, j) in gaps), default=-1)
+            probs.append(f"part {i} ({len(p['verts'])}v at {tuple(round(a, 1) for a in p['c'])}) floats {g:.2f}")
+    whole = BVHTree.FromBMesh(bm)
+    bm.free()
+    eyes = next((c for c in ob.children if c.name.endswith("_Eyes")), None)
+    eye_bvh = None
+    if eyes:
+        eb = bmesh.new(); eb.from_mesh(eyes.data); bmesh.ops.recalc_face_normals(eb, faces=eb.faces)
+        eye_bvh = BVHTree.FromBMesh(eb); eb.free()
+    for ch in ob.children:
+        if ch.type != 'MESH': continue
+        # matrix_basis = the child's own loc/rot/scale in the parent's space (parent inverse is identity)
+        ref = eye_bvh if ("_Shine" in ch.name and eye_bvh) else whole   # shine sits on the eye
+        g = _gap([ch.matrix_basis @ v.co for v in ch.data.vertices], ref)[0]
+        if g > tol:
+            probs.append(f"{ch.name} floats {g:.2f}")
+    return probs
 
 
 # ---- build the side-by-side ----
@@ -312,10 +502,13 @@ for name in names:
         if slot.material and slot.material.use_nodes:
             for n in slot.material.node_tree.nodes:
                 if n.type == 'TEX_IMAGE': n.interpolation = 'Closest'
-    info, eye_data, bvh, cx = restyle(new)
+    info, eye_data, bvh, cx, eye_vidx = restyle(new)
     recolor(new)
     gradient_and_bake(new)
-    add_face_bits(new, eye_data, bvh, cx)
+    eye_obj = split_eyes(new, eye_vidx)
+    add_face_bits(new, eye_data, bvh, cx, eye_obj)
+    info["float_NEW"] = check_floating(new)
+    info["float_OLD"] = check_floating(src)
     report[name] = info
     pairs.append((name, new.location.x + mn.x, src.location.x + mx.x, mx.z - mn.z))
     for label, o in (("OLD", src), ("NEW", new)):
@@ -328,7 +521,8 @@ for name in names:
         t.data.materials.append(flat_mat("SOA_Label_" + label, (0.1, 0.1, 0.1) if label == "OLD" else (0.05, 0.45, 0.15)))
     row_x += 2.1 * w + 1.2 + GAP
 
-print("RESTYLE", report)
+for k, v in report.items():
+    print("RESTYLE", k, v)
 
 # ---- ground, light, camera ----
 bpy.ops.mesh.primitive_plane_add(size=400, location=(row_x / 2, 0, 0))

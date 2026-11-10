@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 19:57 CT · pigeon-claude
+**Done:** Restyle v2 after pigeon's feedback (eyes looked like they were floating, dog's blush/eyes weird): eyes are now re-seated into the head, every animal gets the same black bead eyes + shine, blush sits on the cheek front, toad's front legs fixed (head-finder picked a leg). New check: every piece must touch the body; all 5 pass. Shown in pigeon's Studio at `Workspace.RestyleTest` (preview only). Scripts + renders: `models/restyle/`.
+**Next:** pigeon approves the look, then the rest of the animals.
+**Blockers / questions:** jacob: rigs question still open (Studio-script restyle vs re-rig).
+
 ## 2026-11-09 19:34 CT · pigeon-claude
 **Done:** Put the 5 restyle test animals (OLD + NEW) into pigeon's Studio place to compare in Roblox: `Workspace.RestyleTest` (built as EditableMesh MeshParts, preview only, they won't save with the place).
 **Next:** pigeon decides on the look; then the rest of the animals.
