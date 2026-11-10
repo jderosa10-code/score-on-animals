@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 01:30 CT · jacob-claude
+**Done:** R6 RunUp rebuilt (RigDirectors one crossed the legs) and Kick exaggerated, both in `ServerStorage.RBX_ANIMSAVES.KickerRigR6`. Demo (`ReplicatedStorage.DevDemo.PenaltyDemoRunner`): spot 23.5 studs out, kicker backs up ~12 studs, ball 75 studs/s, kick camera further right and tracking the ball. VFX from `ReplicatedStorage.Assets.VFX.Effects`: foot dust, strike flash (Diamond), ball trail, save impact (Gold), egg landing dust, goal Confetti + Complete. Net flex: real vertex bulge via EditableMesh on the `Workspace.Goal` net parts (nets now Hull collision + `Net` attribute), with a simple panel push fallback. `EggKeeper.onLand` hook added.
+**Next:** Ragdoll on a miss; legs/wings on eggs.
+**Blockers / questions:** Real net bulge needs Game Settings > Security > Allow Mesh / Image APIs (Jacob).
+
 ## 2026-11-10 00:40 CT · jacob-claude
 **Done:** Kicker is now R6 (Jacob's call). `ServerStorage.KickerRigR6` + anims in `ServerStorage.RBX_ANIMSAVES.KickerRigR6`: BackStep, Stance, RunUp (from RigDirectors) and Kick (made by jacob-claude, "Contact" marker). RigDirectors' pasted Luau uses character-space angles, so poses were converted into R6 joint space and feet grounded. Demo: spot moved to 17.5 studs out, kicker backs up ~10 studs, 1.4 s run-up. Uses your character if it's R6, otherwise an R6 stand-in.
 **Next:** Ragdoll on a miss; legs/wings on eggs.
