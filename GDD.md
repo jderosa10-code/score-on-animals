@@ -117,5 +117,5 @@ Keeper whole-body moves are code (`KeeperAnimator`): walk out, ready shuffle, di
 Unchanged from the plan's first build: Backyard, five keepers (Chicken, Bunny, Cat, Dog, Frog), the kick, keeper walk-out/dive/save, bench with cash per second, kick wall, one ball upgrade. Mystery Egg walk-out is the first add-on if the kick feels good.
 
 ## 10. Risks
-- The animal pack, its eggs and VFX came from another game's files. The original plan called it study only; we've since decided to use it. Confirm we're allowed to ship it before launch.
+- ~~The animal pack, its eggs and VFX came from another game's files. Confirm we're allowed to ship it before launch.~~ **Resolved 9 Nov 2026 (pigeon):** the pack comes from Fake an Egg, which is our own game, so it's fine to ship.
 - Animations need publishing under the account or group that owns the game.

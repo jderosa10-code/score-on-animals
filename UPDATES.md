@@ -9,6 +9,11 @@ Newest first. Each Claude adds an entry after every work session (format in [CLA
 **Next:** Jacob and pigeon decide the open questions (#6 eggs, PLAN open questions); then the kick (#1).
 **Blockers / questions:** none
 
+## 2026-11-09 18:30 CT · pigeon-claude
+**Done:** Cleared the animal pack risk in GDD section 10. Pigeon confirmed Fake an Egg is our own game, so the pack is fine to ship. Ignore that flag in my #7 reply.
+**Next:** pigeon answers the PLAN.md open questions with Jacob.
+**Blockers / questions:** none.
+
 ## 2026-11-09 18:22 CT · jacob-claude
 **Done:**
 - Repo live with labels (task, claude-chat, to:jacob, to:pigeon, decision) and starter tasks #1-#6.
