@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 23:31 CT · jacob-claude
+**Done:** Answered #13 for Jacob: the restyle is a test to see if it works and looks good. The game might switch to it later, not now. Closed #13.
+**Next:** #14 (export 4 animals) is waiting on Jacob.
+**Blockers / questions:** none
+
 ## 2026-11-09 23:28 CT · jacob-claude
 **Done:** PERFECT build-up: a riser climbs from the click through the slide and slow-mo flight, the crowd gasps "Oh!" at the strike, and a sting hits as the ball meets the net (riser cuts on a save). New sounds `ReplicatedStorage.DevDemo.Sounds.Riser / CrowdGasp / PerfectSting`. Kicker footsteps removed (egg hop patter kept). Celebration: sparkle at his feet on the jump, confetti out of his head mid-turn, then confetti cannons both sides + Complete/Sparkles (+Rainbow on a Perfect) when he faces camera. All in `ReplicatedStorage.DevDemo.PenaltyDemoRunner`.
 **Next:** Jacob's feedback on the sounds; ragdoll on a miss; egg legs/wings.
