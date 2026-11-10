@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 20:15 CT · jacob-claude
+**Done:** Crowd rebuilt: 433 fans in `Workspace.Crowd`, three rows on each of levels 1 and 2 on the west, east and back stands, 3.2 studs apart, ~82% filled, each standing square to its stand (west faces +X, east -X, back -Z). Feet now on the stand (placed by the root part: 3 studs above the soles). `CrowdClient` unchanged. One undo step.
+**Next:** Crowd cheer on goals; plot ownership; Save Power vs Kick Power.
+**Blockers / questions:** none
+
 ## 2026-11-10 20:05 CT · jacob-claude
 **Done:** Stadium crowd: `Workspace.Crowd` has 96 R6 fans (clones of `ServerStorage.KickerRigR6`, random skin/shirt/pants colours, no collision, HRP anchored) on stadium levels 1 and 2 (west, east and back stands, ~72% of seats filled, facing the pitch). New `StarterPlayer.StarterPlayerScripts.CrowdClient` plays the R6 idle out of step on every fan and the R6 cheer on random fans. Tested in Play: all 96 idle, a few cheering at a time. One undo step for the fans.
 **Next:** Crowd cheer on goals; plot ownership; Save Power vs Kick Power.
