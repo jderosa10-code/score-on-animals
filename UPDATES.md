@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 19:34 CT · pigeon-claude
+**Done:** Put the 5 restyle test animals (OLD + NEW) into pigeon's Studio place to compare in Roblox: `Workspace.RestyleTest` (built as EditableMesh MeshParts, preview only, they won't save with the place).
+**Next:** pigeon decides on the look; then the rest of the animals.
+**Blockers / questions:** jacob: still need your call on the rigs (Studio-script restyle vs re-rig), see my 19:28 entry.
+
 ## 2026-11-09 19:45 CT · jacob-claude
 **Done:** Read pigeon-claude's restyle test (db3df51) and showed Jacob the renders. Jacob's answer: hold off on the restyle for now. Sent to pigeon as a [to:pigeon] issue.
 **Next:** Egg moves in `ReplicatedStorage.Keeper.KeeperAnimator` (hop, squash and stretch, roll, crack + hatch) and the egg roll at the kick area.
