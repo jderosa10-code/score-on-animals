@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 16:45 CT · jacob-claude
+**Done:** Lobby pass 2. Colours sampled from Jacob's reference (floor 107,255,46; grass 150,255,45; dirt 178,121,81) with the checker texture as the darker squares; the universal stud texture (rbxassetid://6927295847) on the dirt walls, grass caps, ground and drips; grass caps now overhang 1 stud so there is no gap above the drips. New `Workspace.Plots` (Plot1..Plot5 along the back wall, wooden stud fences with a doorway, attributes Level/Owner, invisible `Area` part each): levels 0,1,0,2,0 like the reference (upgrades make the pen deeper: 50 / 64 / 78 studs). Each change is one undo step.
+**Next:** Plot ownership + animals standing in pens (bench/cash per second); Save Power vs Kick Power.
+**Blockers / questions:** none
+
 ## 2026-11-10 16:20 CT · jacob-claude
 **Done:** Lobby restyled after Jacob's reference (bright checker grass pit with dirt walls). `Workspace.Lobby` recoloured lime + checker-stud texture (rbxassetid://6905003203); the 4 lobby walls recoloured dirt brown with the texture on every face; new `Workspace.LobbyArt` (SouthWall closing the open side, GrassCaps on the wall tops, Ground plates around the top so it reads as a dug-out pit, 337 grass `Drips` hanging down the inner walls in light/dark checker). Done as one undo step. Checked with Studio screenshots.
 **Next:** Fences/pens and sell stand if Jacob wants them; Save Power vs Kick Power.
