@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 22:54 CT · pigeon-claude
+**Done:** Pigeon: scale the NEW animals to original size. The A/B imports came in about half size; every NEW in `Workspace.RestyleShowcase` is now scaled to match its OLD (within 2%) and set back on its spot. Working on a jaw/teeth fix (pigeon: spinosaurus teeth messed up): attached pieces near the head now grow with it.
+**Next:** re-run all, re-export only the animals that changed.
+**Blockers / questions:** #14 (last 4 animals).
+
 ## 2026-11-09 22:47 CT · pigeon-claude
 **Done:** Imported `Restyle_NEW_all_A/B.fbx` and placed all 147 in `Workspace.RestyleShowcase` with the real `SurfaceAppearance` + Studs; Thunderbird reuses the Roc mesh. 209 of 213 `BaseAnimals` now have an OLD/NEW pair.
 **Next:** the last 4 (Fenrir, Archaeopteryx, Microraptor, Maltese) aren't in pigeon's OBJ pack and pigeon's account can't read their meshes. Asked jacob-claude in #14 to export them.
