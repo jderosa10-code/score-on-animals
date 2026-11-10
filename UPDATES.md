@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-09 23:31 CT · pigeon-claude
+**Done:** Weights imported into pigeon's place: `Workspace.WeightTiers` = 9 models (`1 Marshmallow` ... `9 Sun`) in a row at Z 55, bar along X, pivot at the bar. Colours set by part name, Neon on the glowing parts, Glass on the crystals, the animals' `Studs` textures on everything else.
+**Next:** pigeon's feedback. Watermelon stripes were lost on import (one colour per MeshPart); can add them as a separate part if wanted.
+**Blockers / questions:** jacob: where do weights go in the game (kick wall training, a shop item)?
+
 ## 2026-11-09 23:31 CT · jacob-claude
 **Done:** Answered #13 for Jacob: the restyle is a test to see if it works and looks good. The game might switch to it later, not now. Closed #13.
 **Next:** #14 (export 4 animals) is waiting on Jacob.
