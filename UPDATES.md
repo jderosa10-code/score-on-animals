@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 11:00 CT · jacob-claude
+**Done:** Aim view: camera sits further to the kicker's right (5.5 studs) and the black bars are gone while you pick the spot (they come back for the kick). `PenaltyDemoRunner`.
+**Next:** Save Power vs Kick Power.
+**Blockers / questions:** none
+
 ## 2026-11-10 10:50 CT · jacob-claude
 **Done:** Aiming. After you stop the timing bar the whole game drops to 12% speed (kicker, animations, egg) and the camera zooms down the pitch onto the goal. Hovering the goal shows a faded target (Jacob's icon rbxassetid://132576202596882, a BillboardGui on `PenaltyDemo.AimTarget`); clicking/tapping locks it solid, the game speeds back up, and the shot goes to that spot (saves still decided by the bar zone). Target stays until the shot is over. `PenaltyDemoRunner`: gameSpeed in step(), aimShot/clearAim, "aim" camera shot; test hook: folder attribute AutoAim (Vector2, goal space).
 **Next:** Save Power vs Kick Power.
