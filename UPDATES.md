@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 13:05 CT · jacob-claude
+**Done:** Deleted Workspace.AnimalShowcase (Jacob asked).
+**Next:** -
+**Blockers / questions:** -
+
 ## 2026-11-11 13:00 CT · jacob-claude
 **Done:** Hatch sound: the Riser build-up now starts on the first wobble (x2.4 speed, ~1.7 s) and is cut when the egg breaks, instead of starting late and peaking after (StarterPlayerScripts.HatchClient). Inventory icons: StarterPlayerScripts.HUDClient puts an ItemIcon image in each hotbar (HUD.HotbarHUD.HotbarPanel.Slots.SlotN) and backpack (Menus.BackpackMenu.BackpackPanel.Slots.SlotN) slot from ReplicatedStorage.AnimalIcons (Eggs / Animals); the name text only shows when an item has no icon. Play test: won egg shows its icon in slot 1.
 **Next:** -
