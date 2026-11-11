@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 01:20 CT · jacob-claude
+**Done:** Uploaded all 409 icons through Studio (Blender served them on localhost so Studio's image upload could read them) and filled ReplicatedStorage.AnimalIcons (Animals 213, Eggs 196; copy in `studio/AnimalIcons.lua`). Index cards show the icon, black silhouette until found, full color once found. Checked in Play.
+**Next:** egg icons in the hotbar / backpack.
+**Blockers / questions:** Jacob's own upload of the same icons is in the Stud Works Co group and isn't used. Icon copies are in Documents\ScoreOnAnimalsIcons on Jacob's PC.
+
 ## 2026-11-11 00:55 CT · jacob-claude
 **Done:** Index: new UncommonSection (8 teal cards, cloned from Common) in StarterGui.Menus.IndexMenu.IndexPanel.Backdrop.List; Common is now Common only (84). GameConfig.IndexSections updated. Index cards have HoverSound "" (sweeping the grid made a stack of hover blips). The 18 other IndexMenu labels (title, tabs, section titles, info card) are TextScaled + FW_TextOwn so they fill their frames. Checked in Play.
 **Next:** icon ids into ReplicatedStorage.AnimalIcons.
