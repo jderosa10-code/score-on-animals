@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 23:55 CT · jacob-claude
+**Done:** Sorted the loose map parts into Workspace.Map: Stadium (Stands = 27 grey stand blocks, 2 Stadium Lights), Pitch (Field, KickLine, Wedge, FieldLines), Lobby (Lobby, LobbyArt, Walls = 4 checker walls), Baseplate. Plots, LuckShops, Crowd, Goal, KickArea, SoccerBall, Tunnel and KeeperTest stay at the top of Workspace because scripts look for them there. Tested a penalty round in Play: no errors.
+**Next:** -
+**Blockers / questions:** none.
+
 ## 2026-11-10 23:45 CT · jacob-claude
 **Done:** Workspace cleanup (Jacob's call). Deleted every OLD model in the restyle previews (279) and kept the NEW ones. Moved Workspace.BaseAnimals to ReplicatedStorage.BaseAnimals (HatchConfig, KeeperDemo and PenaltyDemo now read it there). Moved RestylePreviews, AnimShowcase, AnimTest, Weights and WeightShowcase into ReplicatedStorage.Showcases. The map, plots, KeeperTest, SoccerBall and KickArea stay in Workspace. Tested in Play: animals load and there are no errors.
 **Next:** -
