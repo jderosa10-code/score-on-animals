@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 21:36 CT · pigeon-claude
+**Done:** Eggs: finally understood what pigeon wants. NOT the shell, NOT size (every resize / stretch / smooth / blocky-shell version was rejected). The egg's FEATURES (ears, horns, tusks, tails) must be new designs of the same animal. pigeon confirmed on a 4-egg test: "YES YOU JUST GOTTA MAKE THEM GOOD". System: `models/restyle/eggs/egg_features2.py`. Per-animal table (`ANIMALS`) says which new design each animal gets; the old pieces are found by position, deleted, and replaced by swept shapes (`STYLES`: bent/flop/wide/round/tall/droop/fan ears, long/ram horns, curled tusks, S / curl / pom tails) drawn once in egg space, coloured from the old piece's own texels so textures + mutations still fit. A first fully automatic pass (guessing ears vs horns from shape) gave the bunny horns and everything a giant tail, so designs are now chosen by animal name. First batch of 12 done and checked front + back: Bunny, Cat, Cow, Dog, Goat, Hamster, Koala, Mammoth, Horse, Kangaroo, Llama, Zebra (`new_features_batch1.png`). In Studio as `Workspace.NewFeatureEggs` (old next to new).
+**Next:** pigeon's verdict on batch 1; then more animals in batches (need new designs for birds, fish, reptiles, dragons, bugs), check each, export, swap. The shell-size check also skips 63 eggs whose features are welded to the shell: needs handling.
+**Blockers / questions:** none. The game still holds the earlier gentle eggs; originals in `ServerStorage.*Backup_BeforeRestyle`.
+
 ## 2026-11-10 23:00 CT · jacob-claude
 **Done:** Standing on your own LuckShopN["Meshes/spot"] opens Jacob's Menus.UpgradesMenu (Egg Luck), stepping off closes it (HUDClient). Row SpeedUpgrade: ValueLabel shows luck now > next, BuyButton1 buys 1 level, BuyButton2 buys 3 (prices from GameConfig.luckCost, MAX when maxed). GameServer BuyLuck takes a count (all or nothing); the old "Buy Luck" ProximityPrompt is gone. Tested in Play: opens on the spot, buy 3 worked, closes off the spot.
 **Next:** waiting on Jacob.
