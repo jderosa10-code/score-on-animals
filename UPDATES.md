@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 23:15 CT · jacob-claude
+**Done:** Eggs on hatch patches at real size (EggHatching). Held animals back up at hand height in front of you, not on the ground (GameData). Index card NameLabels centred inside the card and shrink to fit (FW_TextOwn so the kit's TextScaler leaves them alone, UITextSizeConstraint max 34). Index reward shows one centred cash slot (RewardSlots Fill2/Pattern2/Icon2 hidden), since the reward is cash. A soft SpotLight "LampGlow" (brightness 1.5, range 24, no shadows) on all 36 lamps of both Workspace."Stadium Light" towers. Checked in Play.
+**Next:** waiting on Jacob.
+**Blockers / questions:** none.
+
 ## 2026-11-10 21:36 CT · pigeon-claude
 **Done:** Eggs: finally understood what pigeon wants. NOT the shell, NOT size (every resize / stretch / smooth / blocky-shell version was rejected). The egg's FEATURES (ears, horns, tusks, tails) must be new designs of the same animal. pigeon confirmed on a 4-egg test: "YES YOU JUST GOTTA MAKE THEM GOOD". System: `models/restyle/eggs/egg_features2.py`. Per-animal table (`ANIMALS`) says which new design each animal gets; the old pieces are found by position, deleted, and replaced by swept shapes (`STYLES`: bent/flop/wide/round/tall/droop/fan ears, long/ram horns, curled tusks, S / curl / pom tails) drawn once in egg space, coloured from the old piece's own texels so textures + mutations still fit. A first fully automatic pass (guessing ears vs horns from shape) gave the bunny horns and everything a giant tail, so designs are now chosen by animal name. First batch of 12 done and checked front + back: Bunny, Cat, Cow, Dog, Goat, Hamster, Koala, Mammoth, Horse, Kangaroo, Llama, Zebra (`new_features_batch1.png`). In Studio as `Workspace.NewFeatureEggs` (old next to new).
 **Next:** pigeon's verdict on batch 1; then more animals in batches (need new designs for birds, fish, reptiles, dragons, bugs), check each, export, swap. The shell-size check also skips 63 eggs whose features are welded to the shell: needs handling.
