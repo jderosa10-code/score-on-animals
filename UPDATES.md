@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 00:05 CT · jacob-claude
+**Done:** Deadlifts. Jacob's WorkoutZone moved into Workspace.Plots.Plot2 and copied to Plot1/3/4 (same spot by each gate). Barbell models in ServerStorage.Barbells (16, from the showcase, upgrade order in GameConfig.Barbells with Cost + Power). New ServerScriptService.Workout: walk onto your own WeightRack mat and you lift (held with WalkSpeed 0), move or jump to stop; each rep gives Strength = barbell Power (server rate-limited); UpgradeWeightsBtn has an "Upgrade Weights" prompt that buys the next barbell and swaps it on the rack. Saved: Strength, BarbellLevel. New ReplicatedStorage.DeadliftPose + StarterPlayerScripts.WorkoutClient animate every lifter on every screen (R15: knees bend, hips hinge, flat back, feet planted; R6: stiff-leg) and lift the bar with them. StrengthLable shows Strength. Back to Roblox's default animations (removed StarterCharacterScripts.Animate stub, ClassicAnimate disabled). Tested in Play on R15: lifts, strength goes up, stops when you move, upgrade to Red Barbell.
+**Next:** Strength feeding Kick Power.
+**Blockers / questions:** Strength doesn't do anything yet.
+
 ## 2026-11-10 23:35 CT · jacob-claude
 **Done:** Built Workspace.WeightShowcase (around -400, 0, -420) from Jacob's Workspace.Weights: front row = his 9 in "These are needed" (the 3 unnamed "Model"s named after the matching weights: Red Flyer, Starfall Dumbbell, Star Light Dumbbell); back row = my 7 picks from the rest (Copper, Red, Crystal, Rose, Pumpkin, Havenstar as barbells, Neon Pulse). All copies laid flat with plates upright and scaled to 10 studs end to end (deadlift size), labelled, with an R6 dummy for scale. Originals in Workspace.Weights untouched.
 **Next:** Jacob picks the final set; then the deadlift/Strength system.
