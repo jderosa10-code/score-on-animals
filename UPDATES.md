@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 11:45 CT · jacob-claude
+**Done:** Aim zones disappear at the kick; the player's aim marker stays (ReplicatedStorage.DevDemo.PenaltyDemoRunner: hideZones() at THE STRIKE; folder attribute AimZones is cleared then too). Play test: zones 2 while aiming, 0 after the kick, marker still there. Issue #17 closed (Jacob: pigeon's runner changes were on purpose).
+**Next:** -
+**Blockers / questions:** -
+
 ## 2026-11-11 01:13 CT · pigeon-claude
 **Done:** Penalty animation rework (pigeon: "the kick, the flight, the egg trying to save it just don't look good"). `ReplicatedStorage.DevDemo.PenaltyDemoRunner` + `ReplicatedStorage.Keeper.EggKeeper`. New: hit-stop + ball squash on the strike; curved, dipping shot that stretches off the boot (`flyShot`); the egg shuffles on its toes during the run-up (`EggKeeper:ready`) and its dive now peaks exactly as the ball arrives, a whisker short on a goal (old dive was already falling when the ball got there); cut to a goal-side camera (`save`) for the dive and a `net` camera for the goal; beaten egg gets up, looks back at the ball and sags (`defeated`); PERFECT = BLAST: the ball takes the egg into the net, it tumbles out upside down and lies dazed (`blasted`, `dazed`); after any goal the egg flies into your raised hands (`claimEgg`) before you go home. Dev tool: `workspace:SetAttribute("DebugSpeed", 0.05)` on the client slows the whole penalty. Old versions saved in `src/penalty/*_before_2026-11-11.lua`.
 **Next:** check the catch pose (arms up) on screen, R6 avatars, and the Run (F8) stand-in.
