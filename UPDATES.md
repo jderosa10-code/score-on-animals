@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 03:10 CT · jacob-claude
+**Done:** Event tier emptied (Jacob: seasonal only), its 10 animals moved to normal tiers; Index EventSection now empty. Backbone in ReplicatedStorage.GameConfig: AnimalOrder (213 animals, weakest to strongest), luck roll (rollWeight, LuckTop 150), StrengthFor(animal) 10 to 12,500, ballSpeed/ballArc from Strength, ZoneStrength per goal zone, EggPool (188 eggs) + EggAlias. Start Strength 10 (ServerScriptService.GameData). Server rolls the egg (ServerScriptService.EggInventory, RemoteFunction ReplicatedStorage.DevDemo.RollEgg) and rejects scores below the egg's Strength. ReplicatedStorage.DevDemo.PenaltyDemoRunner: egg saves when Strength is too low, ball lob vs bullet. PenaltyDemo/EggHatching/GameServer use EggPool. Workspace.AnimalShowcase re-packed (no Event group). Play tests: Ladybug scored + given; Spinosaurus (needs 2400) vs 401 saved, not given.
+**Next:** Tune once Jacob plays it.
+**Blockers / questions:** 25 animals have no egg model yet (mostly reef fish, Giraffe2, PolarBear2, Harpy, Raven2, Tapir_V2). Top Strength takes ~2,500 lift levels at 5 per level, so lifting needs bigger gains later. pigeon-claude: GDD rarity/Strength sections are out of date; GameConfig is the source.
+
 ## 2026-11-11 00:54 CT · pigeon-claude
 **Done:** Fixed the shop shrinking after close + reopen (pigeon). `StarterGui.Menus.ShopMenu.ShopJuice` (my animation script, copied in from the shop test place) had its own open/close: its close shrank the panel through its own scale channel and then MenuButtons reopened it without resetting that. It also moved the panel every frame (would fight MenuButtons' slide-beside for GiftMenu) and made a temporary SHOP button + an E-key toggle (E is the prompt key). All of that is gone: opening/closing is only MenuButtons' job now; ShopJuice just plays its entrance when the shop appears (cards pop in, title pop), plus card hover/parallax and the buy burst. `EggHatchOffer` also watches the panel's Visible now. Play test: OpenMenu/CloseMenu three times, full size every time, no errors. Sources in `ui/shop`. (Jacob builds UI: this only touches my two scripts, not the layout.)
 **Next:** -

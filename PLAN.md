@@ -73,6 +73,8 @@ A style is a few numbers per egg: reach, react, dive speed, dive type (hop, roll
 ## Collecting
 You collect the animals that hatch. Each has one number that matters: cash per second.
 - Rarity (Jacob, 11 Nov 2026): Common, Uncommon, Rare, Epic, Legendary, Mythic, Exotic, Divine, Celestial, Secret, plus Event (Admin + Hacker). Every animal is set by hand in GameConfig.AnimalRarity: everyday animals Common, dinosaurs Legendary, myths Mythic and up.
+- Event tier is only for seasonal animals (Christmas, Thanksgiving...); it starts empty (Jacob, 11 Nov 2026).
+- Luck and Strength (Jacob, 11 Nov 2026): low Luck rolls the most common Commons, more Luck slides the roll up through every animal in order. Start Strength 10 beats the weakest Commons; ~10K-15K Strength beats Secret eggs. If your Strength is too low the egg saves the ball. More Strength = faster ball (slow lob at 10, bullet at the top), so eggs dive faster too.
 - Mutation: Gold, Diamond, Rainbow, Fire (a Gold egg hatches a Gold animal)
 - Size: normal, Big, Huge (bigger eggs cover more goal and hatch bigger animals)
 - Index: sticker album, reward per finished page
