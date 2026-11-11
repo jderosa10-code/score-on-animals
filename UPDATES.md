@@ -3,7 +3,7 @@
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
 ## 2026-11-11 13:25 CT · jacob-claude
-**Done:** Workspace.SellShop.UI.BillboardGui no longer clips into the wall behind it: StudsOffsetWorldSpace 8.5 studs out over the stand's front (the wall was 2.4 studs behind a 14-stud-wide camera-facing sign), size 12x4 studs.
+**Done:** Workspace.SellShop.UI.BillboardGui no longer clips into the wall behind it: sits on top of the awning (3 studs forward, just over its front edge) and is 8x2.7 studs, so the camera-facing sign's half-width (4) never reaches the wall 5.4 studs behind it (8.5 forward looked detached from the stand).
 **Next:** -
 **Blockers / questions:** -
 
