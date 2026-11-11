@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 23:15 CT · jacob-claude
+**Done:** Lifting levels: each rep gives XP = barbell Power, each level up gives +5 Strength (ReplicatedStorage.GameConfig: LiftXP(level) = 10·level^1.25, StrengthPerLevel). Saved LiftLevel / LiftXP (ServerScriptService.GameData, ServerScriptService.Workout). While lifting, StarterGui.HUD.EnergyBarHUD replaces HotbarHUD and shows "LEVEL N" + xp/need with the fill (StarterPlayerScripts.WorkoutClient; its boost buttons and + are hidden until they sell something). New tag above each Workspace.Plots.PlotN.WorkoutZone.UpgradeWeightsBtn (Part.TagAtt.UpgradeTag): next barbell price, "+N XP / rep", arrow. Upgrade Base sign redone (UpgradeSign SurfaceGui UpgradeLabelBack: "UPGRADE BASE", "LV 1 → 2", green price pill; text set in ServerScriptService.EggHatching updateSign). Tested in Play.
+**Next:** Strength feeding Kick Power; product ids for the bar's boost buttons.
+**Blockers / questions:** none.
+
 ## 2026-11-10 22:41 CT · pigeon-claude
 **Done:** Egg batch 4: 24 more eggs redesigned and swapped in (144 parts, 0 failed), so **140 of 197** eggs now have a new model in `ServerStorage.BaseEggs` and in all five mutation folders of `ReplicatedStorage.Assets.Eggs`. New in this batch: ears / tusks the finder had missed on the x1.1 eggs (hippo, white rhino, gorilla, second polar bear, woolly mammoth, second giraffe, minotaur); big wings re-posed, raised about where they join the egg (amphiptere, bat, gargoyle, imp, manticore, pegasus, dragonfly, moths; green dragon lowered) because rebuilding them would lose detail; curled feelers with a ball tip on the bugs and snail. `eggs_apply.lua` has a new mode `add` for later batches: no restore, no tint, matches eggs that still carry their original mesh.
 **Next:** pigeon wants to try something next. 57 eggs still on the old model: the six odd-shell eggs (chimera, cobra, triple cobra, hydra, emu, crystal candy), tentacles / legs / shells, features that are part of the shell, and Hacker / Inverted on purpose.
