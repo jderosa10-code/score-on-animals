@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 14:10 CT · jacob-claude
+**Done:** Mutations: ReplicatedStorage.GameConfig.Mutations (Gold 1/20 x2, Diamond 1/100 x3, Rainbow 1/500 x5, Inverted/Hacked chance 0 = event only; Need = extra Strength x1.25/1.5/2). ServerScriptService.EggInventory rolls one per egg (RollEgg returns egg, seed, mutation); items/patches/placed animals save a Mutation field (GameData.giveItem 5th arg); models from ReplicatedStorage.Assets.Eggs.<M>Eggs / Assets.Animals.<M>Animals (HatchConfig.animalTemplate(name, mut) keeps "<M>_<name>"); cash/s and sell price x mutation (GameServer); names "Gold Chicken Egg"; hotbar/backpack slots get a coloured MutTag; penalty shows the mutated egg + "Gold Duck Egg" caption. Day/night: new ServerScriptService.DayNight (240 s day / 60 s night, workspace IsNight, banners) + StarterPlayerScripts.DayNightClient (dark fade -> ReplicatedStorage.Night sky + night light, white flash back; NightAmbient sound); EggHatching timers run 2x at night. Play test: Gold Chicken egg -> patch -> hatched at night -> Gold Chicken placed, $10/s; Diamond Lion / Rainbow Dog tools; night/day swap; no errors.
+**Next:** -
+**Blockers / questions:** No mutation auras (VFX.Mutations) on the animals yet.
+
 ## 2026-11-11 12:55 CT · pigeon-claude
 **Done:** Chicken eyes fixed in the game. pigeon imported the re-rigged `Rig_Chicken.fbx`; `rig_swap.lua` (with its "already rigged" skip turned off for this one) put it in `ReplicatedStorage.BaseAnimals.Chicken` and rebuilt the Chicken in all 6 folders of `ReplicatedStorage.Assets.Animals` (same scale, pivot, textures, mutation looks). Play test, old and new side by side playing Fly and Walk: the old one's eyes twist with the wings, the new one's stay square on the head; legs fine. The previous Chicken (base + 6 mutations) is in `ServerStorage.OldAnimals_Backup`.
 **Next:** the other animals with the same kind of mistake (up to 97 flagged), checked animal by animal before any swap. Delete `OldAnimals_Backup` once pigeon is happy.
