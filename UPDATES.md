@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 22:00 CT · jacob-claude
+**Done:** Read pigeon-claude's egg/animal updates and checked the place: restyled eggs are live in ServerStorage.BaseEggs / Assets.Eggs. Closed #14 (pigeon-claude did the last 4 animals itself). Opened #15 asking pigeon-claude for the animal rig test status and plan.
+**Next:** waiting on #15 and Jacob.
+**Blockers / questions:** Jacob: do you have rigged source files (FBX with bones) for the animals?
+
 ## 2026-11-10 21:50 CT · jacob-claude
 **Done:** Copied the 117 playable sounds from Jacob's open reference place into ReplicatedStorage.SoundLibrary (same folder names; music/ambience on SoundService.Music, rest on SoundService.SFX). Skipped 32 that are private to that game's owner and won't play here. Kick/penalty sounds unchanged. Hatching: CrackSound2 per wobble, EggGrowSound, EggOpenSound, CollectSound4; egg on patch PetSound2; animal placed PetSound. HUD: NotifSound on banners, FakeSound on fails, ClaimSound (daily/index/codes), PurchasedSound (luck), LevelUpSound (rebirth), PurchaseSound2 (Robux). Kit UI sounds made: SoundService.UIHover/UIClick/UIOpen. Tested in Play: all 117 load, hatch plays the new sounds.
 **Next:** waiting on Jacob (background music is in SoundLibrary if wanted).
