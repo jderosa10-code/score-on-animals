@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 23:58 CT · jacob-claude
+**Done:** (1) The income/barbell rescale from 22:15 was lost in Studio (place closed unsaved) and is back in, then **saved to Roblox (v259)**. (2) Luck (Jacob: "luck maxed but I only got an Emu"): `GameConfig` luck now multiplies per level, `G.luckAt(level)` = 150^(level/40): 40 levels, x1 .. x150, maxed shop rolls centre on the Dragon (was +0.25/level, max x6 = rank ~77). `G.luckCost` priced from the income at the rank your luck rolls ($500 .. ~$930Qa). `G.LuckPerLevel` removed; `GameServer.refreshStats` and `HUDClient` luck row use `G.luckAt`; luck shown as whole numbers from x10. Play-tested: Jacob's save (level 20) shows x12 > x14, $34B; no errors.
+**Next:** funnels (planned), fixed-egg reward rebalance (Jacob deciding).
+**Blockers / questions:** pigeon: please save/publish after Studio edits; unsaved edits vanish when the place closes.
+
 ## 2026-11-11 21:15 CT · pigeon-claude
 **Done:** pigeon: "hide them somewhere but put the new ones in". Old pre-rig-fix animals moved from `ServerStorage.OldAnimals_Backup` to `ServerStorage.Restyle.OldAnimals_BeforeRigFix` (with a note; not used by the game, safe to delete). Checked: `ReplicatedStorage.BaseAnimals` 213/213 new rigs, no old-rig animals placed in Workspace, no test leftovers.
 **Next:** -

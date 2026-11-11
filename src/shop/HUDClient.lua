@@ -674,9 +674,9 @@ do
 	local BUYS = {{button = row:WaitForChild("BuyButton1"), count = 1}, {button = row:WaitForChild("BuyButton2"), count = 3}}
 	local function luckAt(level)
 		local r = player:GetAttribute("Rebirths") or 0
-		return (1 + level * G.LuckPerLevel + r * G.RebirthLuck) * (player:GetAttribute("Pass_Luck2x") and 2 or 1)
+		return (G.luckAt(level) + r * G.RebirthLuck) * (player:GetAttribute("Pass_Luck2x") and 2 or 1)
 	end
-	local function fmt(x) return (string.format("%.2f", x):gsub("0$", ""):gsub("%.0$", "")) end
+	local function fmt(x) return x >= 10 and tostring(math.floor(x + 0.5)) or (string.format("%.2f", x):gsub("0$", ""):gsub("%.0$", "")) end
 	local function render()
 		local level = player:GetAttribute("LuckLevel") or 0
 		local maxed = level >= G.LuckMaxLevel

@@ -8,12 +8,22 @@ G.Income = {Common = 5, Uncommon = 12, Rare = 30, Epic = 75, Legendary = 200, My
 G.Income.Exotic, G.Income.Divine, G.Income.Celestial = 900, 1300, 1700   -- the new tiers between Mythic and Secret
 
 -- Luck (bought at the Egg Luck shop outside your base)
-G.LuckPerLevel = 0.25
-G.LuckMaxLevel = 20
--- price of the next luck level (level 0 -> 1 is the first buy). Scaled with the new per-animal income
--- (Jacob, 11 Nov 2026): each level costs about as many seconds of your income as before.
-G.LuckCosts = {500, 3200, 19000, 39000, 140000, 540000, 2e6, 6.4e6, 17e6, 57e6, 160e6, 430e6, 1.2e9, 2.9e9, 8.1e9, 19e9, 47e9, 110e9, 260e9, 400e9}
-function G.luckCost(level) return G.LuckCosts[level + 1] or G.LuckCosts[#G.LuckCosts] end
+-- (Jacob, 11 Nov 2026) Luck multiplies each level, so the maxed shop reaches the best animals:
+-- level 0 = x1 (Commons) .. level 40 = x150 (rolls centred on the Dragon). Each level is about x1.13.
+-- Strength still decides whether you can score on the egg you roll.
+G.LuckMaxLevel = 40
+function G.luckAt(level) return G.LuckTop ^ (math.clamp(level, 0, G.LuckMaxLevel) / G.LuckMaxLevel) end
+-- price of the next level: the income of the animals your luck is rolling now (the centre rank) times
+-- 100 s at the start, growing to 20,000 s for the last level
+local LUCK_COST = {}
+function G.luckCost(level)
+	if LUCK_COST[level] then return LUCK_COST[level] end
+	local inc = G.IncomeAtRank(G.rollCentre(G.luckAt(level)))
+	local n = inc * 100 * 200 ^ (math.clamp(level, 0, G.LuckMaxLevel - 1) / (G.LuckMaxLevel - 1))
+	local mag = n >= 100 and 10 ^ (math.floor(math.log10(n)) - 1) or 1
+	LUCK_COST[level] = math.floor(n / mag + 0.5) * mag
+	return LUCK_COST[level]
+end
 
 -- Rebirth: needs cash AND placed animals; only cash resets
 function G.rebirthCash(r) return 25000 * 3 ^ r end
@@ -254,15 +264,22 @@ function G.rankOf(name) return RANK[G.AnimalForEgg(name)] or 1 end
 -- Income (Jacob, 11 Nov 2026): every animal has its own cash per second, climbing along the ranks from
 -- $5/s (Hamster) to $100T/s (Dragon), rounded to 2 digits. Mutations multiply it (Hacked Dragon $800T/s).
 G.IncomeBottom, G.IncomeTop = 5, 1e14
+local function round2(n)
+	if n < 100 then return math.floor(n + 0.5) end
+	local mag = 10 ^ (math.floor(math.log10(n)) - 1)
+	return math.floor(n / mag + 0.5) * mag
+end
 local INCOME = {}
 function G.AnimalIncome(name)
 	name = G.AnimalForEgg(name)
 	if INCOME[name] then return INCOME[name] end
 	local p = (G.rankOf(name) - 1) / math.max(1, #G.AnimalOrder - 1)
-	local n = G.IncomeBottom * (G.IncomeTop / G.IncomeBottom) ^ p
-	if n >= 100 then local mag = 10 ^ (math.floor(math.log10(n)) - 1) n = math.floor(n / mag + 0.5) * mag else n = math.floor(n + 0.5) end
-	INCOME[name] = n
-	return n
+	INCOME[name] = round2(G.IncomeBottom * (G.IncomeTop / G.IncomeBottom) ^ p)
+	return INCOME[name]
+end
+function G.IncomeAtRank(r)
+	local p = (math.clamp(r, 1, #G.AnimalOrder) - 1) / math.max(1, #G.AnimalOrder - 1)
+	return G.IncomeBottom * (G.IncomeTop / G.IncomeBottom) ^ p
 end
 
 -- Strength: you start at 10. Each animal's egg needs StrengthFor(name) to score on it,
@@ -411,7 +428,7 @@ end
 -- Luck slides the egg roll up the ranks: at luck 1 you get the most common animals; as luck grows
 -- the window moves to rarer commons, then uncommons, rares and so on. LuckTop = the luck that centres
 -- the roll on the rarest animal.
-G.LuckTop = 150     -- luck 1.25 (first shop level) ~ rank 10, luck 6 (shop maxed) ~ rank 77, 150 = the rarest
+G.LuckTop = 150     -- x150 (luck shop maxed) = rolls centred on the rarest animal
 G.LuckBelow, G.LuckAbove = 14, 3.5        -- how far the roll spreads below / above the centre (in ranks)
 function G.rollCentre(luck) return 1 + (#G.AnimalOrder - 1) * math.clamp(math.log(math.max(luck, 1)) / math.log(G.LuckTop), 0, 1) end
 function G.rollWeight(name, luck)

@@ -41,7 +41,7 @@ local friends = {}   -- [player] = friends in this server
 local function refreshStats(player)
 	local p = D.get(player)
 	if not p then return end
-	local luck = (1 + p.LuckLevel * G.LuckPerLevel + p.Rebirths * G.RebirthLuck) * (has(player, "Luck2x") and 2 or 1)
+	local luck = (G.luckAt(p.LuckLevel) + p.Rebirths * G.RebirthLuck) * (has(player, "Luck2x") and 2 or 1)
 	player:SetAttribute("Luck", luck)
 	local fb = math.min(G.FriendBonusMax, (friends[player] or 0) * G.FriendBonus)
 	player:SetAttribute("FriendBonus", fb)
