@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 22:20 CT · jacob-claude
+**Done:** BackpackMenu: AllTab/PetsTab/ToolsTab hidden, BackpackPanel centred on screen (Position 0.468, 0.5). Fixed UI not hiding during the kick: Jacob replaced Stats.FriendBoostLabel with StrengthLable, HUDClient errored on the missing label and never reached the hide code. HUDClient now skips the label if it's gone, and the hiding moved to its own StarterPlayerScripts.HideUIWhileKicking. Tested in Play: HUD hidden during the kick, no errors.
+**Next:** waiting on Jacob.
+**Blockers / questions:** Stats.StrengthLable has no number yet (Kick Power isn't built).
+
 ## 2026-11-10 20:47 CT · pigeon-claude
 **Done:** Egg restyle rewritten (`models/restyle/eggs/eggs_v2.py`) after several rejected tries: pigeon found the swapped-in gentle eggs "barely different", then rejected bigger sizes, added feet, smoothed parts (melted the croc) and per-piece scaling (mammoth cap overhung a thinner body: "horrible"). v2 rules: every corner first moves with the body, so caps/shells/roots stay fitted; only what sticks out of the egg changes more (35% longer along its own length, 15% thicker, side-top parts lean 10 degrees), fading in with distance from the egg's surface; the body never gets thinner, it grows toward its animal's proportions (taller / longer / wider, sizes read from `Workspace.BaseAnimals`); no smoothing, no new geometry, UVs untouched. All 197 run and every one checked old-vs-new with real textures in Blender (`eggs/renders/v2_audit_*.png` locally; sample `v2_sheet.png` in the repo): none broken. Export ready as `Desktop\ROBLOX IMPORT\Eggs_1..5.fbx`.
 **Next:** pigeon's yes on the look, import, then swap. IMPORTANT for the swap: the game's eggs currently hold the earlier gentle meshes, so restore `Assets.Eggs` / `BaseEggs` from the `*Backup_BeforeRestyle` folders first (the manifest matches ORIGINAL MeshIds), and yield after every egg (the last swap froze the Ropilot plugin).
