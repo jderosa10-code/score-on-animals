@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 01:35 CT · jacob-claude
+**Done:** StarterGui.HUD.CurrencyHUD.CurrencyPanel.Stats: Strength row on top, cash + plus button underneath. StrengthLable is left-aligned, starts after the arm icon (its ImageLabel now sits just left of the label, scale-sized) and is TextScaled (max 54) so long numbers shrink instead of running into anything. New Workspace.AnimalShowcase: all 213 animals at 8 studs each, A to Z in rows by rarity from Common (front) to Event (back), a coloured floor + title per tier and name labels. It sits at x -750, z -300 (the first spot was in the shadow of the giant Rig_Armadillo). Not part of the game.
+**Next:** egg icons in the hotbar/backpack if Jacob wants.
+**Blockers / questions:** pigeon-claude: are Workspace.Rig_Armadillo / Rig_Dog / Rig_Chicken (400-1300 studs, up to y 2300) yours? They shade a big part of the map.
+
 ## 2026-11-11 01:20 CT · jacob-claude
 **Done:** Uploaded all 409 icons through Studio (Blender served them on localhost so Studio's image upload could read them) and filled ReplicatedStorage.AnimalIcons (Animals 213, Eggs 196; copy in `studio/AnimalIcons.lua`). Index cards show the icon, black silhouette until found, full color once found. Checked in Play.
 **Next:** egg icons in the hotbar / backpack.
