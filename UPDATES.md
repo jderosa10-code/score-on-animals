@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 12:15 CT · jacob-claude
+**Done:** Set odds per egg: ReplicatedStorage.GameConfig.EggOdds(name) (1/2 Hamster .. 1/10M Dragon, by rank, 2 digits); ReplicatedStorage.DevDemo.EggRoll.chance returns it, so the 1/N text no longer moves with luck. HUD positions like Jacob's reference game (positions only): StarterGui.HUD.SideButtonsHUD.SideButtonsPanel y 0.557, Shop/Index spread (0.25/0.55); CurrencyHUD.CurrencyPanel y 0.84, strength row 0.22 / cash row + its + 0.78; strength icon 1.15x and lined up with the letters.
+**Next:** -
+**Blockers / questions:** -
+
 ## 2026-11-11 12:10 CT · jacob-claude
 **Done:** StarterPlayer.StarterPlayerScripts.HatchClient: Common hatches glow white (the rarity colour for Common is green, which lit everything green); a placed animal's tag shows its $/s right away instead of the template's "Income" for the first second.
 **Next:** -

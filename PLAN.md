@@ -76,6 +76,7 @@ You collect the animals that hatch. Each has one number that matters: cash per s
 - Event tier is only for seasonal animals (Christmas, Thanksgiving...); it starts empty (Jacob, 11 Nov 2026).
 - Luck and Strength (Jacob, 11 Nov 2026): low Luck rolls the most common Commons, more Luck slides the roll up through every animal in order. Start Strength 10 beats the weakest Commons; ~10K-15K Strength beats Secret eggs. If your Strength is too low the egg saves the ball. More Strength = faster ball (slow lob at 10, bullet at the top), so eggs dive faster too.
 - Aim zones (Jacob, 11 Nov 2026): every shot the goal shows a green zone (strength x1.5) and red zones (x0.5). Each animal has a habit spot that shifts a bit every shot; rarer eggs get a smaller green and more/bigger red. Top egg needs 18,700 kick strength (10K Strength + Perfect + green).
+- Egg odds text (Jacob, 11 Nov 2026): every animal shows a set 1/N that never changes with luck (GameConfig.EggOdds: 1/2 for Hamster up to 1/10,000,000 for Dragon). Luck still changes what you actually roll.
 - Mutation: Gold, Diamond, Rainbow, Fire (a Gold egg hatches a Gold animal)
 - Size: normal, Big, Huge (bigger eggs cover more goal and hatch bigger animals)
 - Index: sticker album, reward per finished page
