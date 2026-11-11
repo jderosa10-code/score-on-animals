@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 20:55 CT · jacob-claude
+**Done:** IndexMenu.IndexPanel.CategoryTabs.EventButton moved up into the hidden Tools tab's spot.
+**Next:** waiting on Jacob.
+**Blockers / questions:** none.
+
 ## 2026-11-10 20:50 CT · jacob-claude
 **Done:** Egg reveal during the kick now shows the egg's name (and mutation, once eggs have a Mutation attribute) above the odds (PenaltyDemoRunner showOdds). Jacob's UpgradeBaseSign copied to every plot as Workspace.Plots.PlotN.UpgradeSign (SurfaceGui "UPGRADE BASE" both faces); prompt shows the price, only on your own plot. New ServerScriptService.PlotLevels grows/shrinks a plot (back fence, side planks/posts, Land, Area, sign) from GameConfig.BaseDepths {42,58,74}; costs GameConfig.BaseUpgradeCost {25K,150K}; level saved (GameData BaseLevel), placed animals keep their spot. All plots start at the first level (also set in Studio). New StarterPlayerScripts.PromptStyle gives every ProximityPrompt Jacob's reference look (dark key box with outlined key, grey object text over white action text; tap the key on phones). Tested upgrade in Play.
 **Next:** waiting on Jacob.
