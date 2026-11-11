@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 23:10 CT · jacob-claude
+**Done:** EnergyBarHUD's 3 boost buttons show again while lifting (only the + stays hidden), bar back in its normal spot (StarterPlayerScripts.WorkoutClient). All 16 barbells in ServerStorage.Barbells scaled to 80% (pivot still bottom centre, Height attribute updated) so the bar starts lower and travels further. Tested in Play: bar on the mat, hands on the bar.
+**Next:** decide what the boost buttons sell (needs product ids).
+**Blockers / questions:** none.
+
 ## 2026-11-10 23:15 CT · jacob-claude
 **Done:** Lifting levels: each rep gives XP = barbell Power, each level up gives +5 Strength (ReplicatedStorage.GameConfig: LiftXP(level) = 10·level^1.25, StrengthPerLevel). Saved LiftLevel / LiftXP (ServerScriptService.GameData, ServerScriptService.Workout). While lifting, StarterGui.HUD.EnergyBarHUD replaces HotbarHUD and shows "LEVEL N" + xp/need with the fill (StarterPlayerScripts.WorkoutClient; its boost buttons and + are hidden until they sell something). New tag above each Workspace.Plots.PlotN.WorkoutZone.UpgradeWeightsBtn (Part.TagAtt.UpgradeTag): next barbell price, "+N XP / rep", arrow. Upgrade Base sign redone (UpgradeSign SurfaceGui UpgradeLabelBack: "UPGRADE BASE", "LV 1 → 2", green price pill; text set in ServerScriptService.EggHatching updateSign). Tested in Play.
 **Next:** Strength feeding Kick Power; product ids for the bar's boost buttons.
