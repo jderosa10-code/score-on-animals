@@ -16,11 +16,15 @@ from mathutils import Vector
 
 blend_out, which = sys.argv[sys.argv.index("--") + 1:][:2]
 
+import os
 BODY_WIDE = 1.08      # sideways growth of the body at its middle height
-BODY_TAPER = 0.05     # extra at the very bottom, less at the very top (bottom-heavy)
+BODY_TAPER = float(os.environ.get("EGG_TAPER", "0.05"))   # extra at the bottom, less at the top
 BODY_TALL = 0.96      # height of the body
 FEATURE = 1.18        # ears / tails / horns
-SOFTEN, SOFTEN_ITERS = 0.4, 1
+SOFTEN, SOFTEN_ITERS = float(os.environ.get("EGG_SOFTEN", "0.4")), 1
+# 2026-11-10: the first full run (taper 0.05, soften 0.4) looked "all messed up" in the game. The
+# eggs' textures are pixel art laid on the flat block faces; softening tilts those faces and the
+# texture smears. EGG_SOFTEN=0 EGG_TAPER=0 keeps every face flat and square.
 
 
 def islands(bm):

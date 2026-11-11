@@ -53,7 +53,7 @@ end
 if MODE == "rebuild" then
 	-- 1. undo the importer's scale and rotation on each import (markers), collect parts by pack name
 	local byPack = {}
-	for _, mn in ipairs({ "Restyle_R2_A", "Restyle_R2_B" }) do
+	for _, mn in ipairs({ "Restyle_R2_A", "Restyle_R2_B", "Restyle_R3" }) do
 		local imp = workspace:FindFirstChild(mn)
 		if imp then
 			if imp:FindFirstChild("SOA_AxisO") then
@@ -95,7 +95,9 @@ if MODE == "rebuild" then
 			end
 		end
 	end
-	local quarter, best = 0, -1
+	-- Round 3 animals are one piece (no separate eyes), so there is nothing to vote with. The
+	-- export path is the same as round 2, which measured 185 of 186 votes for a half turn.
+	local quarter, best = 2, -1
 	for q, n in pairs(votes) do if n > best then quarter, best = q, n end end
 	local vs = {}
 	for q, n in pairs(votes) do vs[#vs + 1] = (q * 90) .. "deg x" .. n end
@@ -142,7 +144,7 @@ if MODE == "rebuild" then
 			if i % 25 == 0 then task.wait() end
 		end
 	end
-	for _, mn in ipairs({ "Restyle_R2_A", "Restyle_R2_B" }) do
+	for _, mn in ipairs({ "Restyle_R2_A", "Restyle_R2_B", "Restyle_R3" }) do
 		local imp = workspace:FindFirstChild(mn)
 		if imp then
 			local left = 0

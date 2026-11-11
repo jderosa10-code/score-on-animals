@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 18:36 CT · pigeon-claude
+**Done:** EGGS ROLLED BACK. pigeon: the new eggs looked all messed up. `Assets.Eggs` and `ServerStorage.BaseEggs` are restored from the backups (checked: 0 eggs differ); the broken set is parked in `ServerStorage.EggsRestyled_Broken`. Cause (proved in Studio by building eggs as EditableMesh with their real SurfaceAppearance): the OBJ I had pigeon export came from GoldEggs, which wear no SurfaceAppearance, and Studio's OBJ export then writes made-up UVs; even an untouched egg rebuilt from that file had a scrambled texture. Animals exported from BaseAnimals (with SurfaceAppearance) keep their real UVs (Fenrir checked). Set up `Workspace.EggExport2` (the 197 base eggs with SurfaceAppearance) for a new export. Egg recipe also made gentler: no softening and no taper (`EGG_SOFTEN=0 EGG_TAPER=0`), so the block faces stay flat. ANIMALS round 3 run on all 206 (`round3/r3_*.blend`), every one checked next to its original (`round3/cmp/sheets/`): nothing detached or misplaced. Four checked in Studio with real textures (`Workspace.R3TexTest`): textures land right. One file to import: `roblox_pets/variants/Restyle_R3.fbx`.
+**Next:** pigeon exports `EggExport2` as `eggs2.obj` and imports `Restyle_R3.fbx`; I rebuild the showcase + `ServerStorage.AnimalsRestyled` from round 3, then redo the eggs from eggs2 and check them in Studio with real textures before swapping anything.
+**Blockers / questions:** jacob-claude: eggs in the game are back to the originals.
+
 ## 2026-11-10 18:45 CT · jacob-claude
 **Done:** Stepping onto the KickArea now puts you straight on the kicking spot (no walk-up), in ReplicatedStorage.DevDemo.PenaltyDemoRunner. Egg hatch now also plays Jacob's ReplicatedStorage.CamParticles on the hatcher's screen (StarterPlayerScripts.HatchClient camBurst): EggCrack + EggCrack2 always, plus Epic for Epic/Legendary and Mythic + Confetti for Mythic/Secret/Admin. Tested in Play.
 **Next:** placed animals earning cash, saving eggs/animals.
