@@ -2,6 +2,10 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 22:21 CT · pigeon-claude
+**Done:** Tidied my work in Studio (pigeon: "make sure everything is organized in rep storage or where it needs to go"). Moves only, nothing deleted, one undo step. `Workspace.WeightTiers` (my 10 deadlift weight tiers) is now `ReplicatedStorage.Assets.Weights`; `ServerStorage.AnimalsRestyled` is now `ReplicatedStorage.Assets.AnimalsRestyled` (213 animals x Base + 5 mutations, no skeletons yet, the game still uses `Assets.Animals`). New `ServerStorage.Restyle` holds what the game does not read: `Backups` (the original eggs), `Old` (broken / superseded egg versions and old previews, safe to delete), `Imports`. Previews are in `Workspace.RestylePreviews`. `eggs_apply.lua` reads the new paths and files the imported models away after a swap. No game script mentioned any of the moved folders (checked all 204).
+**Next:** import `NewEggs_1..3.fbx` and run the egg swap.
+**Blockers / questions:** jacob-claude: your folders were not touched (`Workspace.Weights`, `WeightShowcase`, `AnimShowcase`, `ServerStorage.Barbells`). `Assets.Weights` is not wired into Workout.
 ## 2026-11-10 22:25 CT · jacob-claude
 **Done:** Deadlift fixes. ServerStorage.Barbells: every template's pivot is now its bottom centre (PrimaryPart cleared) plus a Height attribute, so the bar rests on the mat (tested: lowest part 6.45, mat top 6.26). ReplicatedStorage.DeadliftPose: wider stance (legs spread), the squat depth is solved so the hands reach the bar, and the bar never goes below its rest height. StarterPlayerScripts.WorkoutClient moves the bar with the grip. ServerScriptService.Workout: the Upgrade Weights prompt sits right on UpgradeWeightsBtn. Tested in Play: hands on the bar, Strength rising.
 **Next:** Jacob is picking other lift moves; Strength feeding Kick Power.

@@ -18,6 +18,18 @@ local MAN, MODE = ...
 assert(MAN, "pass the table from eggs_manifest.lua")
 MODE = MODE or "check"
 local Eggs = game.ReplicatedStorage.Assets.Eggs
+-- Where things live (kept tidy, 2026-11-10):
+--   ServerStorage.Restyle.Backups   the ORIGINAL eggs (EggsBackup_BeforeRestyle, BaseEggsBackup_BeforeRestyle)
+--   ServerStorage.Restyle.Old       replaced versions (safe to delete)
+--   ServerStorage.Restyle.Imports   the imported source models, moved here after the swap
+--   Workspace.RestylePreviews       previews to look at (not part of the game)
+local function sub(parent, name)
+	local f = parent:FindFirstChild(name)
+	if not f then f = Instance.new("Folder"); f.Name = name; f.Parent = parent end
+	return f
+end
+local Restyle = sub(game:GetService("ServerStorage"), "Restyle")
+local Backups, OldF, ImportsF = sub(Restyle, "Backups"), sub(Restyle, "Old"), sub(Restyle, "Imports")
 
 -- The eggs come in several files (Eggs_1 .. Eggs_5; one big file made Import 3D time out), so
 -- every imported model whose name starts with "Eggs" is used. Their parts are gathered into one.
@@ -142,11 +154,12 @@ local function swap(egg, src, m)
 end
 
 if MODE == "check" then
-	local old = workspace:FindFirstChild("EggSwapPreview"); if old then old:Destroy() end
+	local PV = sub(workspace, "RestylePreviews")
+	local old = PV:FindFirstChild("EggSwapPreview") or workspace:FindFirstChild("EggSwapPreview"); if old then old:Destroy() end
 	local pv = Instance.new("Model"); pv.Name = "EggSwapPreview"
 	local x = 0
 	-- the manifest is keyed by the ORIGINAL mesh ids, so preview from the untouched backup when there is one
-	local from = game:GetService("ServerStorage"):FindFirstChild("BaseEggsBackup_BeforeRestyle") or Eggs.GoldEggs
+	local from = Backups:FindFirstChild("BaseEggsBackup_BeforeRestyle") or Eggs.GoldEggs
 	for _, name in ipairs({ "Bunny", "Wolf", "Albatross", "Dragon", "Pony", "Lion", "Whale", "Parrot" }) do
 		local src = from:FindFirstChild(name)
 		local id = src and src.MeshId:match("%d+")
@@ -160,8 +173,8 @@ if MODE == "check" then
 			end
 		end
 	end
-	pv.Parent = workspace
-	return head .. " | preview built in Workspace.EggSwapPreview (old then new, per egg). Nothing in ReplicatedStorage changed.\n" .. table.concat(problems, "\n", 1, math.min(#problems, 8))
+	pv.Parent = PV
+	return head .. " | preview built in Workspace.RestylePreviews.EggSwapPreview (old then new, per egg). Nothing in ReplicatedStorage changed.\n" .. table.concat(problems, "\n", 1, math.min(#problems, 8))
 end
 
 -- 3. apply: back up once, then swap every egg part that uses one of the meshes
@@ -174,9 +187,9 @@ local SS = game:GetService("ServerStorage")
 local function prog(s) workspace:SetAttribute("EggSwapProgress", s) end
 local log = {}
 local function original(folder, backupName, keepName)
-	local bk = SS:FindFirstChild(backupName)
+	local bk = Backups:FindFirstChild(backupName)
 	if not bk then
-		local b = folder:Clone(); b.Name = backupName; b.Parent = SS
+		local b = folder:Clone(); b.Name = backupName; b.Parent = Backups
 		return folder
 	end
 	local same = true                                   -- already the originals?
@@ -197,10 +210,10 @@ local function original(folder, backupName, keepName)
 	end
 	local fresh = bk:Clone(); fresh.Name = folder.Name
 	local parent = folder.Parent
-	local oldKeep = SS:FindFirstChild(keepName); if oldKeep then oldKeep:Destroy() end
-	folder.Name = keepName; folder.Parent = SS
+	local oldKeep = OldF:FindFirstChild(keepName); if oldKeep then oldKeep:Destroy() end
+	folder.Name = keepName; folder.Parent = OldF
 	fresh.Parent = parent
-	log[#log + 1] = "originals restored into " .. fresh:GetFullName() .. " (replaced folder kept as ServerStorage." .. keepName .. ")"
+	log[#log + 1] = "originals restored into " .. fresh:GetFullName() .. " (replaced folder kept as ServerStorage.Restyle.Old." .. keepName .. ")"
 	return fresh
 end
 prog("restoring originals")
@@ -232,6 +245,11 @@ for _, root in ipairs(targets) do
 			if i % 25 == 0 then prog(string.format("%s %d/%d, swapped %d", root.Name, i, #list, swapped)); task.wait() end
 		end
 	end
+end
+-- the imported source models are no longer needed in the world: file them away
+if #failed == 0 then
+	for _, m in ipairs(imps) do m.Parent = ImportsF end
+	log[#log + 1] = #imps .. " imported models moved to ServerStorage.Restyle.Imports"
 end
 local sk = {}
 for n in pairs(skipped) do sk[#sk + 1] = n end
