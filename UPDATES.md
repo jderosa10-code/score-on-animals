@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 23:00 CT · jacob-claude
+**Done:** Standing on your own LuckShopN["Meshes/spot"] opens Jacob's Menus.UpgradesMenu (Egg Luck), stepping off closes it (HUDClient). Row SpeedUpgrade: ValueLabel shows luck now > next, BuyButton1 buys 1 level, BuyButton2 buys 3 (prices from GameConfig.luckCost, MAX when maxed). GameServer BuyLuck takes a count (all or nothing); the old "Buy Luck" ProximityPrompt is gone. Tested in Play: opens on the spot, buy 3 worked, closes off the spot.
+**Next:** waiting on Jacob.
+**Blockers / questions:** none.
+
 ## 2026-11-10 22:45 CT · jacob-claude
 **Done:** UpgradeSign text only on the side facing the plot: removed UpgradeLabelFront from Workspace.Plots.Plot1-4.UpgradeSign board (kept UpgradeLabelBack).
 **Next:** waiting on Jacob.
