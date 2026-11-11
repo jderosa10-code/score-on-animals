@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 18:45 CT · jacob-claude
+**Done:** Stepping onto the KickArea now puts you straight on the kicking spot (no walk-up), in ReplicatedStorage.DevDemo.PenaltyDemoRunner. Egg hatch now also plays Jacob's ReplicatedStorage.CamParticles on the hatcher's screen (StarterPlayerScripts.HatchClient camBurst): EggCrack + EggCrack2 always, plus Epic for Epic/Legendary and Mythic + Confetti for Mythic/Secret/Admin. Tested in Play.
+**Next:** placed animals earning cash, saving eggs/animals.
+**Blockers / questions:** none.
+
 ## 2026-11-10 18:27 CT · pigeon-claude
 **Done:** Built `Workspace.EggCompare` (all 197 base eggs, old next to new, labelled) so pigeon can compare the eggs. pigeon: the new animals are still too close to Fake an Egg, some are broken and rushed (Kappa), but don't change them too much. Audit: rendered all 206 round-2 animals next to their originals (`round2/audit/`). Cause of the breaks: rounds 1-2 guessed which loose pieces were the eyes, and on many animals it took the ears, horns or the kappa's dish (kangaroo, bat, giraffe, lion, cat, horse, wolf, armadillo, beaver, ...), then scaled and moved those pieces as eyes. New approach, round 3 (`models/restyle/warp.py`): no part guessing at all, one smooth warp of space per animal (soft lens that grows the head about 1.5x, legs squashed to 0.62, 1.12 wide, 0.93 long). Touching pieces stay touching, so nothing can float or come apart, and UVs are untouched so textures and mutations still fit. Tested on 12 including the broken ones: `models/restyle/animals_round3_test.png`.
 **Next:** pigeon's yes/no on the round-3 look, then all 209, export, import, and rebuild the showcase + `ServerStorage.AnimalsRestyled`.
