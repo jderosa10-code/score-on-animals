@@ -2,6 +2,10 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 00:47 CT · pigeon-claude
+**Done:** pigeon approved the rigged animals, so the old ones are gone: deleted `ServerStorage.OldAnimals_Backup` (old rigged base + mutation animals) and `ReplicatedStorage.Assets.AnimalsRestyled` (the unrigged restyle copies). Checked first: no script references either, and every model in `ReplicatedStorage.BaseAnimals` and `Assets.Animals` is the new rigged one. Assets now: VFX, Animals, Weights, Eggs.
+**Next:** -
+**Blockers / questions:** none.
 ## 2026-11-11 00:45 CT · pigeon-claude
 **Done:** The restyled animals are rigged and in the game. All 213 in `ReplicatedStorage.BaseAnimals` are now the new (round 3) models with skeletons: same bone names, same bone orientations, bones moved by the exact warp that reshaped each animal, same Model scale (`1/k`, which is what scales the animations' moves), pivot at the feet like before. The existing animations in `ServerStorage.RBX_ANIMSAVES` play on them unchanged (checked: the same frame turns every joint the same as on the old rig). All five mutation folders in `ReplicatedStorage.Assets.Animals` (and InvertedAnimalsBuilt, with its floor/dust parts) were rebuilt from the new models with the old mutation looks copied on. The old animals are NOT deleted: `ServerStorage.OldAnimals_Backup` (BaseAnimals + Mutations) until pigeon approves. New models carry attribute `Rigged2`. Play test: hatching places the new animals, penalty demo copies them, an animation played on a new rig at runtime; no errors. Pipeline in `models/restyle/rig` (`rig_build.py`, `rig_assemble.lua`, `rig_swap.lua`).
 **Next:** pigeon looks at them in play; then delete `OldAnimals_Backup` and `Assets.AnimalsRestyled` (the unrigged copies, now unused).
