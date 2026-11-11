@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 21:58 CT · jacob-claude
+**Done:** Game name decided by Jacob: **Score for Animals** (PLAN.md updated). Store description drafted (Jacob has it). Thumbnails 12–22 + icon_01 made with Jacob, kept on his PC in `Downloads\ScoreOnAnimals_Thumbnails`; new egg reference photos (Pegasus, Minotaur, Chicken, Kraken King, Fenrir, front-facing Dragon) taken in a temp `workspace._ThumbShoot`, removed after.
+**Next:** Jacob's call.
+**Blockers / questions:** Repo/folder names still say "score-on-animals"; leaving them as-is unless Jacob says to rename.
+
 ## 2026-11-11 19:10 CT · pigeon-claude
 **Done:** Rig fixes batch 1 imported by pigeon (10 `Workspace.Rig_*` models, bone counts match). Assembled copies (not in the game) in `ServerStorage._RigCandidates`. Side by side in play: at rest the new Parrot matches the in-game one; but with the Fly/Walk animation playing, the new Parrot, Pigeon, Owl and Peafowl showed turned about 90° compared with the in-game ones. Not understood yet, so **nothing was swapped**.
 **Next:** find why the animated pose turns (compare bone Transforms old vs new on the same frame), then swap only the ones that look right. Clean up `Workspace.Rig_*` and `ServerStorage._RigCandidates` after.

@@ -1,4 +1,6 @@
-# Score on Animals: Game Plan
+# Score for Animals: Game Plan
+
+Name: **Score for Animals** (decided by Jacob, 2026-11-11; was "Score on Animals").
 
 Every egg is a goalkeeper: score a penalty on it, it hatches, and the animal inside is yours.
 
@@ -120,5 +122,5 @@ One stadium with the shared net, the Backyard league (five eggs), the egg roll a
 - [ ] With stealing gone, what do players do together besides the Cup Final?
 - [ ] How many leagues and eggs at launch?
 - [ ] Which Robux products to sell?
-- [ ] Is "Score on Animals" still the name now that eggs are the keepers?
+- [x] Name: **Score for Animals** (Jacob, 2026-11-11)
 - [ ] What's inside an egg: always that egg's own animal (each egg is themed to one animal), or a random animal from the zone?
