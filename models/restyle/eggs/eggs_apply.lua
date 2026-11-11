@@ -202,10 +202,11 @@ local function original(folder, backupName, keepName)
 	if same then return folder end
 	-- nothing may be lost: the backup must hold every egg the folder has now
 	local names = {}
-	for _, e in ipairs(bk:GetDescendants()) do if e:IsA("MeshPart") then names[e.Parent.Name .. "/" .. e.Name] = true end end
+	local function rel(e, root) return (e.Parent == root and "" or e.Parent.Name) .. "/" .. e.Name end      -- path inside the folder (the two folders have different names)
+	for _, e in ipairs(bk:GetDescendants()) do if e:IsA("MeshPart") then names[rel(e, bk)] = true end end
 	for _, e in ipairs(folder:GetDescendants()) do
-		if e:IsA("MeshPart") and e.Name ~= "VFXShell" and not names[e.Parent.Name .. "/" .. e.Name] then
-			error(folder:GetFullName() .. " has an egg the backup does not (" .. e.Parent.Name .. "/" .. e.Name .. "): stopped, nothing changed")
+		if e:IsA("MeshPart") and e.Name ~= "VFXShell" and not names[rel(e, folder)] then
+			error(folder:GetFullName() .. " has an egg the backup does not (" .. rel(e, folder) .. "): stopped before touching this folder")
 		end
 	end
 	local fresh = bk:Clone(); fresh.Name = folder.Name
