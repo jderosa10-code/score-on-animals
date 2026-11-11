@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 20:30 CT · pigeon-claude
+**Done:** Rig fixes batch 3 in the game: 30 animals (Manticore ... Sabertooth) swapped with 155 mutation models, previous ones in `ServerStorage.OldAnimals_Backup`. Front-view pairs while animating: all the same or better; Mammoth clearly fixed (old: a tusk swung with the leg and an ear tilted off). 5 of them (Anglerfish, CoralGoby, GoblinShark, Quokka, Sabertooth) finished importing after the first check, so they were checked after the swap against their backups: same look. 51 animals done. Batch 4 = all 46 remaining (the complex ones: Qilin, Kraken, Dragon, TRex, Spinosaurus...) in `ROBLOX IMPORT\Rig fixes 4`.
+**Next:** import batch 4; check those one by one more closely.
+**Blockers / questions:** -
+
 ## 2026-11-11 20:00 CT · pigeon-claude
 **Done:** Rig fixes batch 2 in the game: Bunny, Hamster, Frog, Gorilla, Dog, Capybara, Koala, Lemur, Hedgehog, Kangaroo (pigeon imported). Front-view pairs while walking: all look the same or fine, none worse; swapped with 51 mutation models (previous ones in `ServerStorage.OldAnimals_Backup`), imports and test copies removed. Batch 3 (30 animals with the fewest changed parts, 3.4 MB) is in `ROBLOX IMPORT\Rig fixes 3`; old batch folders cleared. 21 animals done so far.
 **Next:** import batch 3, same check. 46 left after it, including the complex ones (Qilin, Kraken, Dragon, TRex, Spinosaurus...) that need a closer look.
