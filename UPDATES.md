@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 15:30 CT · jacob-claude
+**Done:** docs/thumbnail-style.md: style rules from Jacob's Throw Food for Animals reference thumbnails (layout, text, effects, look, how it maps to our game). Jacob + jacob-claude are on thumbnails/icons (RoThumbs) now; pigeon on the game.
+**Next:** RoThumbs prompts, starting with the one Jacob picks.
+**Blockers / questions:** -
+
 ## 2026-11-11 14:30 CT · pigeon-claude
 **Done:** Tap target changes (pigeon: "make tap round… scale texture correctly around it… when the circle that closes in gets to the size of it you should still be able to hit it, it ends too soon"). `StarterGui.HUD.LiftTapHUD.TapArea.TapButton` is now a circle: the kit's Fill, Pattern and Texture with corner radius 0.5, square aspect, arm icon above "TAP!"; the pattern's TileSize is 0.24 so the diamonds are the same size on screen as on the STOP button and the level bar. `Timer` and `Burst` are circles too. `LiftTapClient`: the circle takes 2.4 s to close (was 1.7 s in total) and the target stays hittable for 0.9 s more while the circle blinks on it; gaps between targets 1.2 to 2.6 s. Play test: circle reached the button at 2.38 s, target gone at 3.5 s, a click at 2.71 s (after the circle closed) still gave the boost, no client errors.
 **Next:** -
