@@ -6,7 +6,8 @@ Balance rule (pigeon-claude, 2026-11-11): a pack is worth minutes of the player'
 
 | Key | Type | Price | Gives | Where |
 |---|---|---|---|---|
-| VIP | game pass (+ gift product) | 299 | 1.5x cash (stacks with 2x Cash = 3x), 1.25x lifting XP, a free Giraffe egg + 2 h of income once (at least $25K) | shop VIPPack |
+| StarterPack | product, one per player | 99 | Giraffe egg (Rare) + 150 min of lifting (or 14% of your Strength, at least +100) + 2 h of income (at least $25K); about 2x the value of buying them separately | shop top card (VIPPack frame) |
+| VIP | game pass | 299 | not sold any more (card now sells the Starter Pack); perks still work if owned: 1.5x cash, 1.25x lift XP | - |
 | Cash2x | game pass (+ gift) | 199 | 2x cash | shop Boost2xCash, BoostsHUD |
 | Luck2x | game pass (+ gift) | 249 | 2x luck | shop Boost2xStrength card, BoostsHUD |
 | Pack10M | product (+ gift) | 49 | 60 min of your income, at least $10K | shop Pack10M |

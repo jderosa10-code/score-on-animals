@@ -28,9 +28,10 @@ local function refreshPasses(player)
 	owned[player] = t
 	if t.VIP and p and not p.VIPGiven then   -- VIP one-time bonus
 		p.VIPGiven = true
-		D.addCash(player, G.VIPCash)
+		local vipCash = math.max(G.VIPCashMin, math.floor((player:GetAttribute("CashPerSec") or 0) * 60 * G.VIPCashMinutes))
+		D.addCash(player, vipCash)
 		D.giveItem(player, "Egg", G.VIPEgg)
-		notify(player, "VIP: +$" .. G.short(G.VIPCash) .. " and a free egg!")
+		notify(player, "VIP: +$" .. G.short(vipCash) .. " and a free " .. G.VIPEgg .. " egg!")
 	end
 end
 local function has(player, key) return owned[player] and owned[player][key] == true end
@@ -44,7 +45,7 @@ local function refreshStats(player)
 	player:SetAttribute("Luck", luck)
 	local fb = math.min(G.FriendBonusMax, (friends[player] or 0) * G.FriendBonus)
 	player:SetAttribute("FriendBonus", fb)
-	local mult = (1 + p.Rebirths * G.RebirthCashBonus) * (has(player, "Cash2x") and 2 or 1) * (has(player, "VIP") and 2 or 1) * (1 + fb)
+	local mult = (1 + p.Rebirths * G.RebirthCashBonus) * (has(player, "Cash2x") and 2 or 1) * (has(player, "VIP") and G.VIPCashMulti or 1) * (1 + fb)
 	player:SetAttribute("CashMulti", mult)
 	local income = 0
 	for _, a in p.Placed do income += (G.Income[D.rarityOf(a.Name)] or 0) * G.mutIncome(a.Mutation) end
@@ -65,6 +66,8 @@ local function onCharacter(player)
 end
 local function setup(player)
 	refreshPasses(player)
+	local prof = D.get(player)
+	for key in prof and prof.Bought or {} do player:SetAttribute("Bought_" .. key, true) end
 	refreshStats(player)
 	if player.Character then onCharacter(player) end
 end
@@ -174,7 +177,28 @@ end
 
 local function grantProduct(player, key)
 	local pr = G.Products[key]
+	if pr.OnePer then   -- one-per-player packs (the Starter Pack): remembered in the save, the shop shows OWNED
+		local p = D.get(player)
+		p.Bought = p.Bought or {}
+		p.Bought[key] = true
+		player:SetAttribute("Bought_" .. key, true)
+	end
 	if pr.Cash then D.addCash(player, pr.Cash); notify(player, "+$" .. G.short(pr.Cash)) end
+	if pr.CashMinutes then   -- scales with your income (GameConfig.packCash)
+		local cash = G.packCash(pr, player:GetAttribute("CashPerSec") or 0)
+		D.addCash(player, cash)
+		notify(player, "+$" .. G.short(cash))
+	end
+	if pr.LiftMinutes then   -- that many minutes of lifting with your barbell (GameConfig.packLift)
+		local p = D.get(player)
+		local gain, level, xp = G.packLift(pr, p.LiftLevel, p.LiftXP, p.BarbellLevel, p.Strength)
+		p.LiftLevel, p.LiftXP = level, xp
+		p.Strength += gain
+		player:SetAttribute("Strength", p.Strength)
+		player:SetAttribute("LiftLevel", p.LiftLevel)
+		player:SetAttribute("LiftXP", p.LiftXP)
+		notify(player, "+" .. G.commas(gain) .. " Strength!")
+	end
 	if pr.Egg then D.giveItem(player, "Egg", pr.Egg); notify(player, pr.Egg .. " Egg added to your backpack!") end
 	if pr.LuckyEgg then
 		local name = EggRoll.pick(G.EggPool, (player:GetAttribute("Luck") or 1) * 10)
@@ -279,6 +303,7 @@ if game:GetService("RunService"):IsStudio() then
 		player = player or Players:GetPlayers()[1]
 		if cmd == "give" then return D.giveItem(player, a, b, nil, c) ~= nil   -- c = mutation
 		elseif cmd == "cash" then D.addCash(player, a); return true
+		elseif cmd == "grant" then grantProduct(player, a); return true   -- test a Robux product without buying it
 		elseif cmd == "profile" then return D.get(player)
 		end
 	end

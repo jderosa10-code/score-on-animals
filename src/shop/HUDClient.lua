@@ -408,6 +408,7 @@ local function prompt(itemName)
 		MPS:PromptGamePassPurchase(player, pass.Id)
 	else
 		local pr = G.Products[item.Product]
+		if pr.OnePer and player:GetAttribute("Bought_" .. item.Product) then banner("You already got this!") return end
 		if pr.Id == 0 then banner("Coming soon!") return end
 		MPS:PromptProductPurchase(player, pr.Id)
 	end

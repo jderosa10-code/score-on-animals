@@ -160,6 +160,12 @@ G.Products = {
 	EggElephant = {Id = 0, GiftId = 0, Price = 129, Egg = "Elephant"},  -- Epic, $75/s (0.58/s per Robux)
 	EggTurtle = {Id = 0, GiftId = 0, Price = 25, Egg = "Turtle"},       -- Uncommon, $12/s: the cheap first buy
 	LuckyPack = {Id = 0, Price = 99, LuckyEgg = true},   -- a random egg rolled with x10 luck
+	-- Starter Pack (in the shop's top card, the old VIPPack frame): one per player, about 2x the value of buying
+	-- the same things one by one (a Rare egg ~60 R + 150 min of lifting = the 79 R pack + 2 h of income ~85 R)
+	StarterPack = {Id = 0, Price = 99, OnePer = true, Perks = "ONE TIME ONLY * 2X VALUE",
+		Egg = "Giraffe", EggLabel = "RARE EGG",
+		LiftMinutes = 150, StrengthMin = 100, StrengthPct = 0.14,
+		CashMinutes = 120, CashMin = 25000},
 	SkipRebirth = {Id = 0, Price = 149, Skip = true},
 }
 -- What a scaling pack gives this player right now (the shop labels and the server use the same maths).
@@ -188,7 +194,7 @@ G.VIPPerks = "1.5x CASH * 1.25x LIFT * EGG"   -- keep it about as long as the ca
 
 -- which shop / HUD frame sells what (frame name in Jacob's UI -> pass or product)
 G.ShopItems = {
-	VIPPack = {Pass = "VIP"},
+	VIPPack = {Product = "StarterPack", Title = "STARTER PACK"},   -- was the VIP pass (pigeon: an offer, not a VIP bundle). VIP stays defined but isn't sold.
 	Boost2xCash = {Pass = "Cash2x"},
 	Boost2xStrength = {Pass = "Luck2x", Title = "2x Luck"},
 	Pack10M = {Product = "Pack10M"},

@@ -1,8 +1,11 @@
 -- ShopOfferLabels (pigeon-claude, 2026-11-11). StarterPlayerScripts.
--- The packs that scale with the player show what they'd give YOU right now:
+-- Shows what each offer would give YOU right now:
 --   the shop's cash packs (Pack10M / Pack100M cards) -> "$X Cash" from your income (GameConfig.packCash)
 --   the lifting bar's three Strength buttons (BoostButton1-3) -> "+X" Strength from your barbell and level (GameConfig.packLift)
--- Prices and buying are HUDClient's job; this only writes the amount labels.
+--   pack cards (the Starter Pack in the old VIPPack frame): one picture tile per thing inside
+--   (ItemEgg / ItemStrength / ItemCash, each with a Caption), and "OWNED" once a one-time pack is bought
+-- Egg offers show their egg's picture (ReplicatedStorage.AnimalIcons, the same pictures as the hotbar).
+-- Prices and buying are HUDClient's job; this only writes labels and pictures.
 local Players = game:GetService("Players")
 local RS = game:GetService("ReplicatedStorage")
 local G = require(RS:WaitForChild("GameConfig"))
@@ -11,51 +14,56 @@ local gui = player:WaitForChild("PlayerGui")
 local content = gui:WaitForChild("Menus"):WaitForChild("ShopMenu"):WaitForChild("ShopPanel"):WaitForChild("Window")
 	:WaitForChild("Backdrop"):WaitForChild("List"):WaitForChild("Content")
 local energy = gui:WaitForChild("HUD"):WaitForChild("EnergyBarHUD"):WaitForChild("EnergyBarPanel")
+local okIcons, ICONS = pcall(require, RS:WaitForChild("AnimalIcons", 10))
+if not okIcons then ICONS = nil end
 
-local function amountLabel(name)
-	local f = content:FindFirstChild(name, true) or energy:FindFirstChild(name, true)
-	return f and f:FindFirstChild("AmountLabel")
+local function cardOf(name) return content:FindFirstChild(name, true) or energy:FindFirstChild(name, true) end
+local function eggImage(egg) return ICONS and (ICONS.Eggs[egg] or ICONS.Eggs[G.AnimalForEgg(egg)]) end
+local function caption(card, tile, text)
+	local t = card:FindFirstChild(tile)
+	local c = t and t:FindFirstChild("Caption")
+	if c then c.Text = text end
 end
 
 local function render()
+	local cps = player:GetAttribute("CashPerSec") or 0
+	local function lift(pr)
+		return G.packLift(pr, player:GetAttribute("LiftLevel") or 1, player:GetAttribute("LiftXP") or 0, player:GetAttribute("BarbellLevel") or 1, player:GetAttribute("Strength") or 0)
+	end
 	for name, item in G.ShopItems do
 		local pr = item.Product and G.Products[item.Product]
-		if pr and (pr.CashMinutes or pr.LiftMinutes) then
-			local l = amountLabel(name)
-			if l then
-				if pr.CashMinutes then
-					l.Text = "$" .. G.short(G.packCash(pr, player:GetAttribute("CashPerSec") or 0)) .. " Cash"
-				else
-					local gain = G.packLift(pr, player:GetAttribute("LiftLevel") or 1, player:GetAttribute("LiftXP") or 0, player:GetAttribute("BarbellLevel") or 1, player:GetAttribute("Strength") or 0)
-					l.Text = "+" .. G.short(gain)
-				end
+		local card = pr and cardOf(name)
+		if card then
+			local amount = card:FindFirstChild("AmountLabel")
+			if amount and pr.CashMinutes then amount.Text = "$" .. G.short(G.packCash(pr, cps)) .. " Cash"
+			elseif amount and pr.LiftMinutes then amount.Text = "+" .. G.short(lift(pr)) end
+			-- a pack card: one tile per thing inside
+			if card:FindFirstChild("ItemEgg") or card:FindFirstChild("ItemStrength") or card:FindFirstChild("ItemCash") then
+				if pr.Egg then caption(card, "ItemEgg", pr.EggLabel or "EGG") end
+				if pr.LiftMinutes then caption(card, "ItemStrength", "+" .. G.short(lift(pr))) end
+				if pr.CashMinutes then caption(card, "ItemCash", "$" .. G.short(G.packCash(pr, cps))) end
+			end
+			if pr.OnePer and player:GetAttribute("Bought_" .. item.Product) then
+				local price = card:FindFirstChild("PriceLabel", true)
+				if price then price.Text = "OWNED" end
 			end
 		end
 	end
 end
 
--- egg offers show their egg's picture (ReplicatedStorage.AnimalIcons, the same pictures as the hotbar and backpack)
-local okIcons, ICONS = pcall(require, RS:WaitForChild("AnimalIcons", 10))
-if okIcons and ICONS then
-	for name, item in G.ShopItems do
-		local pr = item.Product and G.Products[item.Product]
-		local card = pr and pr.Egg and content:FindFirstChild(name, true)
-		local icon = card and card:FindFirstChild("IconFrame") and card.IconFrame:FindFirstChild("Icon")
-		local image = icon and (ICONS.Eggs[pr.Egg] or ICONS.Eggs[G.AnimalForEgg(pr.Egg)])
+-- pictures: egg offers and pack tiles
+for name, item in G.ShopItems do
+	local pr = item.Product and G.Products[item.Product]
+	local card = pr and pr.Egg and content:FindFirstChild(name, true)
+	if card then
+		local frame = card:FindFirstChild("ItemEgg") or card:FindFirstChild("IconFrame")
+		local icon = frame and frame:FindFirstChild("Icon")
+		local image = icon and eggImage(pr.Egg)
 		if image then icon.Image = image end
 	end
-	-- VIP: its perks text and the picture of the egg it gives
-	local vip = content:FindFirstChild("VIPPack", true)
-	if vip and G.VIPEgg then
-		local icon = vip:FindFirstChild("IconFrame") and vip.IconFrame:FindFirstChild("Icon")
-		local image = ICONS.Eggs[G.VIPEgg] or ICONS.Eggs[G.AnimalForEgg(G.VIPEgg)]
-		if icon and image then icon.Image = image end
-	end
-end
-do
-	local vip = content:FindFirstChild("VIPPack", true)
-	local perks = vip and vip:FindFirstChild("PerksLabel")
-	if perks and G.VIPPerks then perks.Text = G.VIPPerks end
+	local perks = pr and pr.Perks and content:FindFirstChild(name, true)
+	perks = perks and perks:FindFirstChild("PerksLabel")
+	if perks then perks.Text = pr.Perks end
 end
 
 local queued = false
@@ -64,7 +72,11 @@ local function soon()      -- LiftXP changes every rep: redraw at most twice a s
 	queued = true
 	task.delay(0.5, function() queued = false; render() end)
 end
-for _, a in {"CashPerSec", "LiftLevel", "LiftXP", "BarbellLevel"} do
+for _, a in {"CashPerSec", "LiftLevel", "LiftXP", "BarbellLevel", "Strength"} do
 	player:GetAttributeChangedSignal(a):Connect(soon)
 end
+for key, pr in G.Products do
+	if pr.OnePer then player:GetAttributeChangedSignal("Bought_" .. key):Connect(soon) end
+end
 render()
+task.delay(3, render)   -- after HUDClient has written the prices
