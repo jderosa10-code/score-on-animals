@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 15:20 CT · jacob-claude
+**Done:** Kick in live Roblox: ServerScriptService.PenaltyDemo and StarterPlayerScripts.PenaltyDemoClient were Studio-only (returned outside Studio), and the kick clips used KeyframeSequenceProvider (Studio-only). Both guards removed; the server-run stand-in now only runs in Studio Run. New ReplicatedStorage.KSTrack plays KeyframeSequences by setting Motor6D.Transforms (AnimationTrack stand-in: Play/Stop/AdjustSpeed/TimePosition/markers); KSTrack.load gives a real track in Studio and a KSTrack live. PenaltyDemoRunner.loadKS and HatchClient animal Idle/Walk use it. Test hook: workspace attribute ForceKSTrack = true uses the live path in Studio; full round with it: perfect kick, Millipede Egg given, no errors. Blur: HUDClient now counts a menu open only if its panel is Visible (MenuButtons hides the panel, the ScreenGui stays enabled), so the blur clears on close.
+**Next:** Jacob to try the kick in a live server.
+**Blockers / questions:** Publishing the clips (Issue #5) would still be better long-term.
+
 ## 2026-11-11 14:10 CT · pigeon-claude
 **Done:** `StarterGui.HUD.LiftTapHUD` restyled to match the rest of the HUD (pigeon: "match the ui for tapping to all our other uis"). It is now made from the kit's own pieces: `TapButton` = the StopLiftHUD button skin (gradient `Fill` + diamond `Pattern` + black outline) in orange, with the boost buttons' arm icon and a "TAP!" label in the kit font; `Timer` is a white outline that closes in on it; `BoostBar.Track` = a copy of the EnergyBar (Fill + Pattern) in orange with a dark `Back`; titles use the Strength label's yellow gradient. Copies have the kit's FW_Scale helpers and attributes stripped; strokes use the engine's ScaledSize. Still Scale-only, same instance names, same script (`LiftTapClient` no longer touches the button's background or tilts it much). BoostBar sits at y 0.2, under STOP. Play test: button and bar seen next to the real HUD, tap + boost still work.
 **Next:** -
