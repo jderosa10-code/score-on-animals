@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 19:55 CT · jacob-claude
+**Done:** HUD changes Jacob asked for: SideButtonsPanel now only ShopButton + IndexButton as wide rectangles (icon left, text right; RebirthButton/DailyButton hidden). CurrencyPanel.Stats CounterIcon/CounterLabel hidden, CashLabel left-aligned and in line with the friends icon, AddCashButton follows the last digit (HUDClient). BoostsHUD (Lucky Pack, 2x Cash, 2x Luck) disabled. Checked in Play at $52 and $1,234,567.
+**Next:** waiting on Jacob.
+**Blockers / questions:** Rebirth and Daily menus still work but no button opens them now.
+
 ## 2026-11-10 19:45 CT · jacob-claude
 **Done:** Hooked Jacob's UI kit up to the game (text/images/attributes only, no layout changes): StarterPlayerScripts.HUDClient. Hid SideButtonsPanel.CodesButton/SettingsButton and disabled TopButtonsHUD. New ServerScriptService.GameData (DataStore save: cash, rebirths, luck, index, daily, inventory items, eggs on patches, placed animals; never overwrites a save it couldn't read), ServerScriptService.GameServer (cash/sec from placed animals, friends +10% each, Egg Luck prompt on each LuckShop pad, rebirth, daily 7-day loop, index rewards, Robux passes/products/gifts, Studio-only ServerStorage.DevCommand), ReplicatedStorage.GameConfig (all numbers + Robux ids, all 0 for now), ReplicatedStorage.GameRemotes. EggInventory/EggHatching now use GameData items. Custom hotbar (1-9, item names as text for now) replaces the Roblox backpack bar; BackpackMenu tabs; Index cards/claim; Rebirth goals (cash + placed animals, SKIP turns into REBIRTH); rare-hatch server banner. Tested in Play.
 **Next:** animal/egg icons (Jacob will photograph them), real Robux ids in GameConfig.
