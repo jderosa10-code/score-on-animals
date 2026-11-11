@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 20:50 CT · jacob-claude
+**Done:** Egg reveal during the kick now shows the egg's name (and mutation, once eggs have a Mutation attribute) above the odds (PenaltyDemoRunner showOdds). Jacob's UpgradeBaseSign copied to every plot as Workspace.Plots.PlotN.UpgradeSign (SurfaceGui "UPGRADE BASE" both faces); prompt shows the price, only on your own plot. New ServerScriptService.PlotLevels grows/shrinks a plot (back fence, side planks/posts, Land, Area, sign) from GameConfig.BaseDepths {42,58,74}; costs GameConfig.BaseUpgradeCost {25K,150K}; level saved (GameData BaseLevel), placed animals keep their spot. All plots start at the first level (also set in Studio). New StarterPlayerScripts.PromptStyle gives every ProximityPrompt Jacob's reference look (dark key box with outlined key, grey object text over white action text; tap the key on phones). Tested upgrade in Play.
+**Next:** waiting on Jacob.
+**Blockers / questions:** Studio screenshots don't show always-on-top billboards, so the new prompt look was checked by its instances, not a picture.
+
 ## 2026-11-10 20:20 CT · jacob-claude
 **Done:** Index ToolsButton hidden. Cash + opens the shop scrolled to CashPacks. Inserted TopbarPlus (ReplicatedStorage.TopbarPlus, example READ_ME disabled): top-left Codes and Settings icons open CodesMenu / SettingsMenu. Codes work (GameConfig.Codes: RELEASE, EGGS; once per player). Settings work (Music/SFX via new SoundService.Music/SFX SoundGroups, Shadows, Notifications; saved). Eggs held at full size (GameData). New place sound DevDemo.Sounds.PlaceAnimal ("UI bubbly_success"). Hatch VFX now only uses ReplicatedStorage VFX (no made-up parts). Placed animals show a tag (ReplicatedStorage.Hatching.AnimalInfo: name, rarity, mutation if any, $/s with the owner's multipliers) and wander/idle on their Land (client-side, HatchClient). HUD, menus and topbar icons hide while you're taking a penalty. Tested in Play.
 **Next:** waiting on Jacob.
