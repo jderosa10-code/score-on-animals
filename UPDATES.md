@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 22:40 CT · jacob-claude
+**Done:** BackpackPanel back near the bottom (Y 0.6925), only centred horizontally. PenaltyDemoRunner: back-steps to the run-up keep the BackStep animation but the body turns about 40 degrees toward where he's stepping, then squares up to the ball (no more moonwalk). Camera snap cuts: switching to the walk, hold, aim, kicker, celebrate and egg shots now cuts instead of gliding (wide and ball shots still glide). Tested in Play.
+**Next:** waiting on Jacob.
+**Blockers / questions:** none.
+
 ## 2026-11-10 22:20 CT · jacob-claude
 **Done:** BackpackMenu: AllTab/PetsTab/ToolsTab hidden, BackpackPanel centred on screen (Position 0.468, 0.5). Fixed UI not hiding during the kick: Jacob replaced Stats.FriendBoostLabel with StrengthLable, HUDClient errored on the missing label and never reached the hide code. HUDClient now skips the label if it's gone, and the hiding moved to its own StarterPlayerScripts.HideUIWhileKicking. Tested in Play: HUD hidden during the kick, no errors.
 **Next:** waiting on Jacob.
