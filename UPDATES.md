@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 17:55 CT · pigeon-claude
+**Done:** Starter Pack cash tile, per pigeon's reference picture: a green cash stack with a yellow/orange band and the same thick dark outline as the kit's icons (made from the free Creator Store "Cash" decal 11317276264, recoloured + outlined). Uploaded as rbxassetid://125173876742947 (source `ui/icons/cash_stack.png`); `...VIPPack.ItemCash.Icon` uses it. Seen in play.
+**Next:** -
+**Blockers / questions:** -
+
 ## 2026-11-11 17:45 CT · pigeon-claude
 **Done:** Starter Pack cash tile: pigeon liked the gold cash stack's look but wanted it green, so it's that same icon (the Rebirth menu's CashReward icon, 95965001865611) recoloured green, keeping the outline, shading and shine. Uploaded as rbxassetid://80121158943462; source in `ui/icons/cash_green.png`. `...ExclusiveSection.VIPPack.ItemCash.Icon` uses it. Seen in play.
 **Next:** -
