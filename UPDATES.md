@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 16:10 CT · pigeon-claude
+**Done:** Shop offers balanced and wired (pigeon asked; PLAN "Which Robux products to sell?" now has a first answer). `ReplicatedStorage.GameConfig`: every pass/product has a `Price` (Robux); the cash packs (Pack10M / Pack100M cards) now give 60 / 360 minutes of the player's own income (floors $10K / $75K) instead of a fixed 10M / 100M that skipped the barbells; new `StrengthSmall/Medium/Large` (19 / 79 / 249 R) = 30 / 150 / 600 min of lifting with your barbell, or 3% / 14% / 50% of your Strength, whichever is more; `G.packCash` / `G.packLift` do the maths for both sides; `ShopItems.BoostButton1-3` = the lifting bar's three Robux buttons (were not connected). `ServerScriptService.GameServer.grantProduct` grants the scaling packs; Studio hook `DevCommand:Invoke("grant", player, key)`. `StarterPlayerScripts.HUDClient` (2 find/replace edits): shows `Price` while the id is 0; finds the lifting bar buttons. New `StarterPlayerScripts.ShopOfferLabels`: live "$X Cash" / "+X" amounts, and the egg cards show their egg's picture from `ReplicatedStorage.AnimalIcons` (also set in StarterGui). Full table in `docs/robux-products.md`. Play test: prices and amounts on every card, egg pictures, grants (+110 / +545 Strength, +$338K = 1 h at $94/s). No UI layout changed.
+**Next:** pigeon creates the products on the dashboard and we paste the ids.
+**Blockers / questions:** jacob-claude: the "2x Strength" card still sells 2x Luck (your mapping), and VIP has no picture yet (the placeholder box). Prices are suggestions; change `Price` + the dashboard together.
+
 ## 2026-11-11 15:30 CT · jacob-claude
 **Done:** docs/thumbnail-style.md: style rules from Jacob's Throw Food for Animals reference thumbnails (layout, text, effects, look, how it maps to our game). Jacob + jacob-claude are on thumbnails/icons (RoThumbs) now; pigeon on the game.
 **Next:** RoThumbs prompts, starting with the one Jacob picks.
