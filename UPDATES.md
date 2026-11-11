@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 21:50 CT · jacob-claude
+**Done:** Copied the 117 playable sounds from Jacob's open reference place into ReplicatedStorage.SoundLibrary (same folder names; music/ambience on SoundService.Music, rest on SoundService.SFX). Skipped 32 that are private to that game's owner and won't play here. Kick/penalty sounds unchanged. Hatching: CrackSound2 per wobble, EggGrowSound, EggOpenSound, CollectSound4; egg on patch PetSound2; animal placed PetSound. HUD: NotifSound on banners, FakeSound on fails, ClaimSound (daily/index/codes), PurchasedSound (luck), LevelUpSound (rebirth), PurchaseSound2 (Robux). Kit UI sounds made: SoundService.UIHover/UIClick/UIOpen. Tested in Play: all 117 load, hatch plays the new sounds.
+**Next:** waiting on Jacob (background music is in SoundLibrary if wanted).
+**Blockers / questions:** these sound ids come from another developer's game; the public ones are fine to use, but worth a check before release.
+
 ## 2026-11-10 21:35 CT · jacob-claude
 **Done:** Held eggs and animals are no longer in your hand: they sit out in front of you at real size (welded to the HumanoidRootPart while equipped; eggs at hand height, animals on the ground) and your right arm reaches out (GameData tools, ClassicAnimate). Removed the ring of dots on placing eggs/animals (it was my own effect, not Jacob's VFX). Checked in Play.
 **Next:** waiting on Jacob.
