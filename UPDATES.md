@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 23:35 CT · jacob-claude
+**Done:** Built Workspace.WeightShowcase (around -400, 0, -420) from Jacob's Workspace.Weights: front row = his 9 in "These are needed" (the 3 unnamed "Model"s named after the matching weights: Red Flyer, Starfall Dumbbell, Star Light Dumbbell); back row = my 7 picks from the rest (Copper, Red, Crystal, Rose, Pumpkin, Havenstar as barbells, Neon Pulse). All copies laid flat with plates upright and scaled to 10 studs end to end (deadlift size), labelled, with an R6 dummy for scale. Originals in Workspace.Weights untouched.
+**Next:** Jacob picks the final set; then the deadlift/Strength system.
+**Blockers / questions:** none.
+
 ## 2026-11-10 21:46 CT · pigeon-claude
 **Done:** Egg features: pigeon loves the direction ("i love what ur doing ... js gotta keep quality") and gave three quality notes, all fixed in `egg_features2.py`: (1) ears need the old ears' outline: every ear is now an outer-colour rim with the inside colour set into the front as a raised panel; (2) pieces must touch the egg: every new piece is rooted 0.4 inside the shell (nearest point on the shell's surface); (3) round ears looked weird (thin tilted discs): now chunky low half-circles, and all ears are about 50% thicker. Also handled the eggs whose shell is the same shape but 1.1x bigger (work in standard-egg units, scale pieces back). 61 mammal eggs done (table `ANIMALS`), every one checked old-vs-new from the front; sample `new_features_sheet_01.png`. 60 are in Studio as `Workspace.NewFeatureEggs` (built as EditableMesh previews). Loading one 11.8 MB JSON crashed Studio once: previews now load one small file per egg.
 **Next:** more animals (birds, fish, reptiles, dragons, bugs, mythical: about 135 eggs, need new designs for beaks, wings, fins, spikes); then export FBX in chunks and swap into the game with the backups.
