@@ -13,6 +13,7 @@ blender -b eggs2_originals.blend -P egg_features2.py -- <out.blend> <render_dir>
 import bpy, bmesh, sys, os, math, json
 import numpy as np
 from mathutils import Vector, Matrix
+from mathutils.bvhtree import BVHTree
 
 argv = sys.argv[sys.argv.index("--") + 1:]
 blend_out, render_dir, which = argv[0], argv[1], argv[2]
@@ -41,18 +42,23 @@ def catmull(pts, per=5):
     return out
 
 
-def sweep(bm, pts, side, wa, wb, sides=6):
+def sweep(bm, pts, side, wa, wb, sides=6, urange=None, shift=None):
+    """Tube along a smooth path. urange keeps only part of its length (for an ear's inner panel);
+    shift moves the whole piece (the inner panel sits a touch in front of the ear)."""
     path = catmull(pts)
     s = Vector(side)
     rings, n = [], len(path)
+    off = Vector(shift) if shift else Vector((0, 0, 0))
     for i, p in enumerate(path):
         t = (path[min(i + 1, n - 1)] - path[max(i - 1, 0)]).normalized()
         s = (s - t * s.dot(t)).normalized()
         nrm = t.cross(s)
         u = i / (n - 1)
+        if urange and not (urange[0] <= u <= urange[1]): continue
         a, b = wa(u), wb(u)
-        rings.append([bm.verts.new(p + s * a * math.cos(2 * math.pi * k / sides) + nrm * b * math.sin(2 * math.pi * k / sides)) for k in range(sides)])
+        rings.append([bm.verts.new(p + off + s * a * math.cos(2 * math.pi * k / sides) + nrm * b * math.sin(2 * math.pi * k / sides)) for k in range(sides)])
     faces = []
+    n = len(rings)
     for i in range(n - 1):
         for k in range(sides):
             faces.append(bm.faces.new([rings[i][k], rings[i][(k + 1) % sides], rings[i + 1][(k + 1) % sides], rings[i + 1][k]]))
@@ -76,15 +82,19 @@ flat = lambda w: (lambda u: w)
 STYLES = {
     # --- ears
     "ears_lop":   dict(path=[(0, 0.6, 2.16), (0, 1.45, 2.61), (0, 2.1, 1.86), (0, 2.3, 0.56), (0, 2.25, -0.74)], side=(1, 0.35, 0),
-                       wa=leaf(0.85, 0.5), wb=flat(0.22), ear=True, ref=3.3),
+                       wa=leaf(0.85, 0.5), wb=flat(0.3), ear=True, ref=3.3),
     "ears_wide":  dict(path=[(0, 0.35, 1.61), (0, 0.95, 2.41), (0, 1.6, 3.06), (0, 1.95, 3.41)], side=(0, 0.8, -0.6),
-                       wa=taper(1.05, 0.08, 0.75), wb=flat(0.2), ear=True, ref=2.4),
+                       wa=taper(1.05, 0.08, 0.75), wb=flat(0.3), ear=True, ref=2.4),
     "ears_droop": dict(path=[(0, 1.2, 1.5), (0, 2.1, 1.55), (0, 2.9, 1.2), (0, 3.2, 0.5)], side=(0, 0, 1),
-                       wa=leaf(0.5), wb=flat(0.16), ear=True, ref=1.4),
+                       wa=leaf(0.5), wb=flat(0.26), ear=True, ref=1.4),
     "ears_fan":   dict(path=[(0, 1.6, 1.42), (0, 2.6, 1.52), (0, 3.3, 0.82), (0, 3.3, -0.38)], side=(0, 0, 1),
-                       wa=leaf(1.15, 0.45), wb=flat(0.2), ear=True, ref=2.3),
-    "ears_round": dict(path=[(0, 0.9, 1.9), (0, 1.5, 2.6), (0, 1.9, 3.1)], side=(0, 0.8, -0.6),          # bear / mouse ears
-                       wa=leaf(0.85, 0.75), wb=flat(0.24), ear=True, ref=1.2),
+                       wa=leaf(1.15, 0.45), wb=flat(0.32), ear=True, ref=2.3),
+    # bear / mouse ears. v1 was a thin disc leaning out and back ("the new ears just look weird"):
+    # now a chunky upright half-round, about as thick as the old game's block ears
+    # (v2 was upright but tall and narrow, like rabbit ears: now low and wide, a half circle)
+    "ears_round": dict(path=[(0, 1.05, 1.7), (0, 1.22, 2.2), (0, 1.33, 2.6), (0, 1.38, 2.88)], side=(0, 0.97, -0.25),
+                       wa=(lambda u: 0.95 * (1.0 if u < 0.5 else math.sqrt(max(0.0, 1 - ((u - 0.5) / 0.5) ** 2)) * 0.9 + 0.1)),
+                       wb=flat(0.4), ear=True, ref=1.6),
     # --- horns / tusks
     "horns_long": dict(path=[(0, 0.7, 1.6), (0, 1.7, 2.1), (0, 2.5, 2.6), (-0.15, 2.9, 3.5), (-0.45, 2.8, 4.2)], side=(1, 0, 0),
                        wa=taper(0.36, 0.05, 0.8), wb=taper(0.36, 0.05, 0.8), ref=1.15),
@@ -101,14 +111,14 @@ STYLES = {
 }
 STYLES.update({
     "ears_tall":  dict(path=[(0, 0.5, 1.9), (0, 0.8, 2.9), (0, 1.15, 3.8), (0, 1.3, 4.3)], side=(0, 0.95, -0.3),          # horse / llama / zebra
-                       wa=leaf(0.5, 0.15), wb=flat(0.17), ear=True, ref=2.4),
+                       wa=leaf(0.5, 0.15), wb=flat(0.27), ear=True, ref=2.4),
     # bunny: one ear up, one folded over (the lop ears read as bag handles and were dropped)
     "ears_bent":  dict(path=[(0, 0.55, 1.9), (0, 0.75, 3.0), (0, 0.95, 4.1), (0, 1.0, 5.0)],
                        path_neg=[(0, 0.55, 1.9), (0, 0.8, 3.0), (0, 1.3, 3.75), (0, 2.1, 3.55), (0, 2.6, 2.7)], side=(0, 1, -0.1),
-                       wa=leaf(0.6, 0.3), wb=flat(0.2), ear=True, ref=3.3),
+                       wa=leaf(0.6, 0.3), wb=flat(0.3), ear=True, ref=3.3),
     # dog: flat floppy ears hanging at the sides (start at the side, no arch over the top)
     "ears_flop":  dict(path=[(0, 1.5, 1.5), (0, 2.2, 1.3), (0, 2.45, 0.2), (0, 2.35, -0.9)], side=(1, 0.2, 0),
-                       wa=leaf(0.8, 0.6), wb=flat(0.2), ear=True, ref=2.3),
+                       wa=leaf(0.8, 0.6), wb=flat(0.3), ear=True, ref=2.3),
     "tail_curl":  dict(path=[(1.5, 0, -1.3), (2.9, 0, -1.3), (3.9, 0, -0.6), (4.0, 0, 0.5), (3.3, 0, 1.1)],                 # dog: sticks out, curls up
                        side=(0, 1, 0), wa=taper(0.46, 0.22), wb=taper(0.46, 0.22), single=True, absx=True, ref=2.6),
     "tail_flow":  dict(path=[(1.5, 0, -0.6), (2.6, 0, -0.4), (3.1, 0, -1.4), (2.9, 0, -2.5)],                                # horse / zebra: hangs down
@@ -132,6 +142,34 @@ ANIMALS = {
     "llama":    dict(ears="ears_tall", tail="tail_pom"),
     "zebra":    dict(ears="ears_tall"),
     "mammoth":  dict(tusks="tusks_curl", ears="ears_fan"),
+    # ---- batch 2: dogs
+    "akita": dict(ears="ears_wide", tail="tail_curl"), "bichon": dict(ears="ears_flop", tail="tail_pom"),
+    "bulldog": dict(ears="ears_flop", tail="tail_pom"), "cattledog": dict(ears="ears_wide", tail="tail_curl"),
+    "cavalier": dict(ears="ears_flop", tail="tail_curl"), "chowchow": dict(ears="ears_round", tail="tail_curl"),
+    "corgi": dict(ears="ears_wide", tail="tail_pom"), "dingo": dict(ears="ears_wide", tail="tail_curl"),
+    "goldenretriever": dict(ears="ears_flop", tail="tail_curl"), "greatdane": dict(ears="ears_flop", tail="tail_curl"),
+    "maltese": dict(ears="ears_flop", tail="tail_pom"), "papillon": dict(ears="ears_wide", tail="tail_curl"),
+    "shibainu": dict(ears="ears_wide", tail="tail_curl"), "terrier": dict(ears="ears_wide", tail="tail_pom"),
+    "wolf": dict(ears="ears_wide", tail="tail_s"), "jackal": dict(ears="ears_wide", tail="tail_curl"),
+    "hyena": dict(ears="ears_round", tail="tail_curl"), "fennecfox": dict(ears="ears_wide", tail="tail_s"),
+    # ---- cats
+    "caracal": dict(ears="ears_wide", tail="tail_s"), "serval": dict(ears="ears_wide", tail="tail_s"),
+    "lion": dict(ears="ears_round", tail="tail_s"), "tiger": dict(ears="ears_round", tail="tail_s"),
+    "sabertooth": dict(ears="ears_round", tail="tail_s"), "fossa": dict(ears="ears_round", tail="tail_s"),
+    "binturong": dict(ears="ears_round", tail="tail_s"),
+    # ---- other mammals
+    "bear": dict(ears="ears_round"), "polarbear": dict(ears="ears_round"), "capybara": dict(ears="ears_round"),
+    "guineapig": dict(ears="ears_round"), "quokka": dict(ears="ears_round"), "badger": dict(ears="ears_round"),
+    "honeybadger": dict(ears="ears_round"), "tanuki": dict(ears="ears_round", tail="tail_curl"),
+    "redpanda": dict(ears="ears_wide", tail="tail_s"), "lemur": dict(ears="ears_round", tail="tail_s"),
+    "meerkat": dict(ears="ears_round"), "otter": dict(ears="ears_round"), "beaver": dict(ears="ears_round"),
+    "hedgehog": dict(ears="ears_round"), "tapir": dict(ears="ears_round"), "hippopotamus": dict(ears="ears_round"),
+    "whiterhino": dict(ears="ears_round"), "pony": dict(ears="ears_tall"), "unicorn": dict(ears="ears_tall"),
+    "okapi": dict(ears="ears_tall"), "aardvark": dict(ears="ears_tall"), "armadillo": dict(ears="ears_tall"),
+    "bull": dict(horns="horns_long", ears="ears_droop"), "yak": dict(horns="horns_long"),     # the yak egg has horns only
+    "americanbison": dict(horns="horns_long", ears="ears_droop"), "moose": dict(ears="ears_droop"),
+    "elephant": dict(ears="ears_fan", tusks="tusks_curl"), "woollymammoth": dict(ears="ears_fan", tusks="tusks_curl"),
+    "jackalope": dict(ears="ears_tall"),                   # bent ear next to the antlers read as a broken horn
 }
 
 
@@ -149,9 +187,9 @@ def islands(bm):
     return out
 
 
-def describe(isl, c):
+def describe(isl, c, sc=1.0):
     """Centre / size in egg space and the shape class of one loose piece."""
-    P = np.array([list(v.co - c) for v in isl])
+    P = np.array([list((v.co - c) / sc) for v in isl])
     mn, mx = P.min(axis=0), P.max(axis=0)
     ev = np.sqrt(np.maximum(np.linalg.eigvalsh(np.cov((P - P.mean(axis=0)).T)), 1e-9)) if len(isl) >= 4 else np.array([1e-3, 1e-3, 1e-3])
     l0, l1, l2 = float(ev[0]), float(ev[1]), float(ev[2])
@@ -199,15 +237,54 @@ def redesign(src):
     uvl = bm.loops.layers.uv.active
     isls = islands(bm)
     body = max(isls, key=len)
-    cs = [v.co for v in body]
-    bmn = Vector((min(p.x for p in cs), min(p.y for p in cs), min(p.z for p in cs)))
-    bmx = Vector((max(p.x for p in cs), max(p.y for p in cs), max(p.z for p in cs)))
-    if max(abs((bmx - bmn)[k] - SHELL[k]) for k in range(3)) > 0.35:
+
+    def box(vs):
+        cs = [v.co for v in vs]
+        return (Vector((min(p.x for p in cs), min(p.y for p in cs), min(p.z for p in cs))),
+                Vector((max(p.x for p in cs), max(p.y for p in cs), max(p.z for p in cs))))
+    bmn, bmx = box(body)
+    if max(abs((bmx - bmn)[k] - SHELL[k]) for k in range(3)) > 0.35 and REF_SHELL:
+        # On about a third of the eggs some features share corners with the shell, so "the biggest
+        # piece" is shell + features. Every egg has the SAME shell, so find it by matching corners
+        # against a reference shell (any offset), then cut the features off it.
+        ref = REF_SHELL
+        probes = ref[::max(1, len(ref) // 8)][:8]
+        votes = {}
+        for v in body:
+            for r in probes:
+                t = v.co - r
+                key = (round(t.x, 2), round(t.y, 2), round(t.z, 2))
+                votes[key] = votes.get(key, 0) + 1
+        t = Vector(max(votes, key=votes.get))
+        refset = {(round(r.x + t.x, 2), round(r.y + t.y, 2), round(r.z + t.z, 2)) for r in ref}
+        is_shell = {v.index for v in body if (round(v.co.x, 2), round(v.co.y, 2), round(v.co.z, 2)) in refset}
+        if len(is_shell) >= 0.9 * len(ref):
+            feat_faces = list({f for v in body for f in v.link_faces if any(w.index not in is_shell for w in f.verts)})
+            if feat_faces:
+                bmesh.ops.split(bm, geom=feat_faces)
+                bm.verts.ensure_lookup_table(); bm.verts.index_update()
+                isls = islands(bm)
+                body = max(isls, key=lambda isl: sum(1 for v in isl if (round(v.co.x, 2), round(v.co.y, 2), round(v.co.z, 2)) in refset))
+                bmn, bmx = box(body)
+    # about a third of the eggs use the same shell a little bigger (x1.1): work in "standard egg"
+    # units (everything divided by SC) and scale the new pieces back up
+    SC = (bmx.z - bmn.z) / SHELL.z
+    if not (0.8 < SC < 1.4) or max(abs((bmx - bmn)[k] / SC - SHELL[k]) for k in range(3)) > 0.3:
         bm.free(); return ob, ["odd shell: left alone"]
     c = (bmn + bmx) / 2
     for isl in isls:
         if isl is not body: bmesh.ops.recalc_face_normals(bm, faces=list({f for v in isl for f in v.link_faces}))
-    ds = [describe(isl, c) for isl in isls if isl is not body]
+    # the shell's surface, so every new piece can be rooted INSIDE it (pigeon: "these ears aren't touching")
+    body_faces = list({f for v in body for f in v.link_faces})
+    bmesh.ops.recalc_face_normals(bm, faces=body_faces)
+    shell = BVHTree.FromPolygons([v.co.copy() for v in bm.verts], [[v.index for v in f.verts] for f in body_faces])
+
+    def rooted(pts):
+        loc, nrm, _, dist = shell.find_nearest(pts[0])
+        if loc is None: return pts
+        if (pts[0] - loc).dot(nrm) < -0.3: return pts                # already well inside
+        return [loc - nrm * 0.4] + pts
+    ds = [describe(isl, c, SC) for isl in isls if isl is not body]
     for d in ds:
         d["pair"] = None
         if abs(d["c"].y) > 0.25:
@@ -251,8 +328,10 @@ def redesign(src):
         top = lambda t: max(t.values(), key=lambda e: e[0]) if t else None
         main = top(tally)
         outer = top(back) or main
-        inner = top(front)
-        if inner and sum(abs(a - b) for a, b in zip(inner[2], outer[2])) < 0.25: inner = None
+        # the ear's inside colour: the most common colour on its front that isn't the outer colour
+        differs = lambda e: sum(abs(a - b) for a, b in zip(e[2], outer[2])) > 0.2
+        inner = max((e for e in front.values() if differs(e)), key=lambda e: e[0], default=None) \
+            or max((e for e in tally.values() if differs(e)), key=lambda e: e[0], default=None)
         # fit: where the old piece sat, and how big it was
         size_old = max(d["s"])
         k = max(0.85, min(1.2, size_old / st["ref"]))
@@ -260,26 +339,39 @@ def redesign(src):
         if kind == "tusks": dx = d["mx"].x - 0.5
         for isl in olds:
             bmesh.ops.delete(bm, geom=[v for v in isl if v.is_valid], context='VERTS')
-        new = []
+        new, panels = [], []
         for sgn in ((1,) if st.get("single") else (1, -1)):
             if "ball" in st:
                 bx, by, bz, br = st["ball"]
-                fs = ball(bm, c + Vector((bx, by, bz)), br * k)
+                ctr = c + Vector((bx, by, bz)) * SC
+                kk = k * SC
+                loc, nrm, _, dist = shell.find_nearest(ctr)
+                if loc is not None and (ctr - loc).dot(nrm) > br * kk * 0.5: ctr = loc + nrm * br * kk * 0.5     # sunk half into the shell
+                fs = ball(bm, ctr, br * kk)
             else:
+                kk = k * SC
                 path = st["path_neg"] if (sgn < 0 and "path_neg" in st) else st["path"]
                 p0 = Vector(path[0])
-                pts = [c + Vector((dx, 0, 0)) + Vector(((p0.x + (Vector(p).x - p0.x) * k), sgn * (p0.y + (Vector(p).y - p0.y) * k), p0.z + (Vector(p).z - p0.z) * k)) for p in path]
+                pts = [c + SC * (Vector((dx, 0, 0)) + Vector(((p0.x + (Vector(p).x - p0.x) * k), sgn * (p0.y + (Vector(p).y - p0.y) * k), p0.z + (Vector(p).z - p0.z) * k))) for p in path]
+                pts = rooted(pts)
                 sd = Vector(st["side"]); sd.y *= sgn
-                fs = sweep(bm, pts, sd, (lambda u, f=st["wa"]: f(u) * k), (lambda u, f=st["wb"]: f(u) * k))
+                fs = sweep(bm, pts, sd, (lambda u, f=st["wa"]: f(u) * kk), (lambda u, f=st["wb"]: f(u) * kk))
+                # ears keep the old ears' look: an outer rim with the inside colour set into the front
+                # (pigeon: "outline the ears"). The panel is a narrower copy sitting a touch forward.
+                if st.get("ear") and inner and abs(sd.x) < 0.5:
+                    panels += sweep(bm, pts, sd, (lambda u, f=st["wa"]: f(u) * kk * 0.6), (lambda u, f=st["wb"]: f(u) * kk),
+                                    urange=(0.24, 0.88), shift=(-0.12 * kk, 0, 0))
             new += fs
-        bmesh.ops.recalc_face_normals(bm, faces=new)
+        bmesh.ops.recalc_face_normals(bm, faces=new + panels)
         lowest = bmn.z + 0.05
-        for f in new:
+        for f in new + panels:
             for v in f.verts:
                 if v.co.z < lowest: v.co.z = lowest
-            f.normal_update()
-            use = inner if (st.get("ear") and inner and f.normal.x < -0.35) else (outer if st.get("ear") else main)
+        for f in new:
+            use = outer if st.get("ear") else main
             for l in f.loops: l[uvl].uv = use[1]
+        for f in panels:
+            for l in f.loops: l[uvl].uv = inner[1]
         notes.append(f"{kind}:{style}x{k:.2f}")
     bm.normal_update()
     bm.to_mesh(me); bm.free()
@@ -287,7 +379,19 @@ def redesign(src):
     return ob, notes
 
 
+# the reference shell: the bunny's (a clean one), corners relative to nothing in particular
+REF_SHELL = []
+_b = bpy.data.objects.get("Eggbunny1")
+if _b:
+    _bm = bmesh.new(); _bm.from_mesh(_b.data)
+    bmesh.ops.remove_doubles(_bm, verts=_bm.verts, dist=1e-4)
+    REF_SHELL = [v.co.copy() for v in max(islands(_bm), key=len)]
+    _bm.free()
+
 names = sorted(o.name for o in bpy.data.objects if o.get("kind") == "egg") if which == "ALL" else which.split(",")
+if which == "TABLE":
+    import re as _re
+    names = sorted(o.name for o in bpy.data.objects if o.get("kind") == "egg" and _re.sub(r"\d+$", "", o.name[3:]).lower() in ANIMALS)
 rows, untouched = [], []
 for n in names:
     src = bpy.data.objects.get(n)
@@ -324,6 +428,9 @@ if json_out:
         off = ctr - (omn + omx) / 2
         payload[src.name] = dict(verts=verts, uvs=uvs, tris=tris, offset=[round(off.x, 4), round(off.z, 4), round(-off.y, 4)])
     json.dump(payload, open(json_out, "w"))
+    _pd = json_out[:-5] + "_parts"; os.makedirs(_pd, exist_ok=True)
+    for _k, _v in payload.items(): json.dump(_v, open(os.path.join(_pd, _k + ".json"), "w"))
+    json.dump(sorted(payload), open(os.path.join(_pd, "index.json"), "w"))
 
 sc.render.engine = 'BLENDER_WORKBENCH'
 sh = sc.display.shading
