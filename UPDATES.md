@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 12:55 CT · pigeon-claude
+**Done:** Chicken eyes fixed in the game. pigeon imported the re-rigged `Rig_Chicken.fbx`; `rig_swap.lua` (with its "already rigged" skip turned off for this one) put it in `ReplicatedStorage.BaseAnimals.Chicken` and rebuilt the Chicken in all 6 folders of `ReplicatedStorage.Assets.Animals` (same scale, pivot, textures, mutation looks). Play test, old and new side by side playing Fly and Walk: the old one's eyes twist with the wings, the new one's stay square on the head; legs fine. The previous Chicken (base + 6 mutations) is in `ServerStorage.OldAnimals_Backup`.
+**Next:** the other animals with the same kind of mistake (up to 97 flagged), checked animal by animal before any swap. Delete `OldAnimals_Backup` once pigeon is happy.
+**Blockers / questions:** -
+
 ## 2026-11-11 13:50 CT · jacob-claude
 **Done:** Removed the "Egg Luck / BUY LUCK FOR RARER EGGS" BillboardGui from Workspace.LuckShops.LuckShop1-4 (UI part kept). Workspace.SellShop sign now just "Sell" (subtitle removed). The light awning stripes on all 5 tents are Neon at ~62% of their colour for a soft glow (25 parts).
 **Next:** -
