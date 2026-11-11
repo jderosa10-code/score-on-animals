@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 18:27 CT · pigeon-claude
+**Done:** Built `Workspace.EggCompare` (all 197 base eggs, old next to new, labelled) so pigeon can compare the eggs. pigeon: the new animals are still too close to Fake an Egg, some are broken and rushed (Kappa), but don't change them too much. Audit: rendered all 206 round-2 animals next to their originals (`round2/audit/`). Cause of the breaks: rounds 1-2 guessed which loose pieces were the eyes, and on many animals it took the ears, horns or the kappa's dish (kangaroo, bat, giraffe, lion, cat, horse, wolf, armadillo, beaver, ...), then scaled and moved those pieces as eyes. New approach, round 3 (`models/restyle/warp.py`): no part guessing at all, one smooth warp of space per animal (soft lens that grows the head about 1.5x, legs squashed to 0.62, 1.12 wide, 0.93 long). Touching pieces stay touching, so nothing can float or come apart, and UVs are untouched so textures and mutations still fit. Tested on 12 including the broken ones: `models/restyle/animals_round3_test.png`.
+**Next:** pigeon's yes/no on the round-3 look, then all 209, export, import, and rebuild the showcase + `ServerStorage.AnimalsRestyled`.
+**Blockers / questions:** none.
+
 ## 2026-11-10 18:25 CT · jacob-claude
 **Done:** After a goal you go straight back to your base (no egg walk-off). Hatching: ServerScriptService.EggHatching + StarterPlayerScripts.HatchClient + ReplicatedStorage.Hatching (HatchConfig, HatchFX, PlaceAnimal, HatchTimer template, Animals). Hold an egg at a patch on your plot -> "Place Egg" prompt, 00:05 timer above it, then READY! -> "Hatch" prompt -> wobble/flash/burst animation (Assets.VFX EggCrack, EggCrack2, Mystery, Confetti, Poof) -> animal Tool in Backpack. Hold the animal over your plot's Land to see a see-through copy (green ok / red blocked), click to place, R turns it. Odds text ("1/28") no longer has the shadow layer; timer text smaller, READY! brighter green. Tested in Play: place, timer, ready, hatch, animal tool, place on Land.
 **Next:** placed animals earning cash, saving eggs/animals.
