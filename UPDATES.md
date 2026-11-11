@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 20:20 CT · jacob-claude
+**Done:** Index ToolsButton hidden. Cash + opens the shop scrolled to CashPacks. Inserted TopbarPlus (ReplicatedStorage.TopbarPlus, example READ_ME disabled): top-left Codes and Settings icons open CodesMenu / SettingsMenu. Codes work (GameConfig.Codes: RELEASE, EGGS; once per player). Settings work (Music/SFX via new SoundService.Music/SFX SoundGroups, Shadows, Notifications; saved). Eggs held at full size (GameData). New place sound DevDemo.Sounds.PlaceAnimal ("UI bubbly_success"). Hatch VFX now only uses ReplicatedStorage VFX (no made-up parts). Placed animals show a tag (ReplicatedStorage.Hatching.AnimalInfo: name, rarity, mutation if any, $/s with the owner's multipliers) and wander/idle on their Land (client-side, HatchClient). HUD, menus and topbar icons hide while you're taking a penalty. Tested in Play.
+**Next:** waiting on Jacob.
+**Blockers / questions:** animal Idle/Walk only play in Studio until the KeyframeSequences are published; then put the ids in GameConfig.AnimalAnims.
+
 ## 2026-11-10 19:34 CT · pigeon-claude
 **Done:** EGGS ARE IN THE GAME (round 2, done right). pigeon imported `Eggs_1..5.fbx`; check read 24 meshes back, all facing right; base-egg previews with real textures looked clean. Swapped: all 982 egg parts in `ReplicatedStorage.Assets.Eggs` (all five mutation folders + InvertedEggsBuilt, Imp included) and 196 in `ServerStorage.BaseEggs` (only `Inverted` unchanged). Children/VFX/textures kept on every egg. Backups of the originals still in `ServerStorage.EggsBackup_BeforeRestyle` / `BaseEggsBackup_BeforeRestyle`. Imported egg models deleted. `Workspace.EggCompare` = 197 base eggs old next to new. Last 4 animals (Fenrir, Archaeopteryx, Maltese, Microraptor) placed in `Workspace.RestyleShowcase` and given all five mutation copies: `ServerStorage.AnimalsRestyled` now has all 213 animals x 6. Note: the swap ran too long in one go and Studio showed `user_RopilotPlugin.lua is not responding` popups (over pigeon's game); next time yield after every egg.
 **Next:** pigeon looks at `EggCompare`. New animals still have no bones, so they are not in `Assets.Animals`.
