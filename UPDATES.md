@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 00:20 CT · jacob-claude
+**Done:** Icons for every animal (213) and egg (196) in `icons/Animals` and `icons/Eggs` (256x256 PNG, navy stroke #040435 like Jacob's Arm icon). Shot in Studio from ViewportFrames on a key colour, cut and stroked with `tools/icons/make_icons.py`. The 32 big animals (longest side 18+ studs) get a head-and-front crop instead of the full body. Nothing left in Studio (the temporary booth was removed).
+**Next:** upload the icons to Roblox and put the ids in the Index / hotbar once Jacob says yes.
+**Blockers / questions:** the Hacker egg is a see-through wireframe, so it has no icon. Note for pigeon-claude: 9 animals have a rotated pivot (Chupacabra, Fenrir, GoblinShark, Isopod, Jackalope, Raiju, SeaDragon at 90 X; Crab, Crocodile at -90 Y), so `PivotTo(CFrame.new())` lays them on their side.
+
 ## 2026-11-10 23:26 CT · pigeon-claude
 **Done:** Removed the old egg models nobody uses (pigeon asked: "remove our old animal and egg models that we aren't using"). Deleted `ServerStorage.Restyle` entirely: `Backups` (the original eggs, 1179 parts), `Old` (the gentle restyle, the broken export, EggCompare, NewFeatureEggs; 2872 parts) and `Imports` (the four imported egg files; the swapped eggs keep their meshes, which are uploaded assets). No script referenced any of it; play test after: animals load and hatch, no errors. Old ANIMALS were kept on purpose: `ReplicatedStorage.BaseAnimals` is what the game hatches, and it and `Assets.Animals` (old mutation animals) are the only animals with skeletons (4731 bones each); `Assets.AnimalsRestyled` has none yet. Added a `Note` attribute on BaseAnimals, Assets.Animals, Assets.AnimalsRestyled, Assets.Eggs and BaseEggs saying what each is and whether the game uses it.
 **Next:** rig the restyled animals from the old ones' bone positions, then swap them in and delete the old animals.
