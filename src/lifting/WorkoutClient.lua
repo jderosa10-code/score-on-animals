@@ -97,7 +97,8 @@ RunService.Stepped:Connect(function()
 			local t = now - (pl:GetAttribute("LiftStart") or now)
 			local f = liftAmount(t)
 			local rest = barRest[bar]
-			local restCentre = rest.Position + Vector3.new(0, (bar:GetAttribute("Height") or 4) / 2, 0)
+			-- (GripHeight = where the model's grip bar is; on some barbells it is not the middle of the model)
+			local restCentre = rest.Position + Vector3.new(0, bar:GetAttribute("GripHeight") or (bar:GetAttribute("Height") or 4) / 2, 0)
 			local y, shift = restCentre.Y, nil
 			if j then y, shift = pose(j, f, restCentre, t % REP) end
 			bar:PivotTo(rest + Vector3.new(0, y - restCentre.Y, 0) + (shift or Vector3.zero))   -- the bar rides in the hands

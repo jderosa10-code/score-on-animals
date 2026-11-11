@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 13:25 CT · pigeon-claude
+**Done:** Hands off the barbell fixed (pigeon's screenshot: bar under the hands overhead). Two causes. (1) The grip bar is not at the middle of every barbell model (Havenstar / Star Light / Rose 0.37 lower, Red Flyer 0.42, Starfall 0.24, four others 0.08), and the bar was lined up by `Height / 2`. Every template in `ServerStorage.Barbells` now has a `GripHeight` attribute (height of its grip bar above the pivot) and `StarterPlayerScripts.WorkoutClient` uses it (falls back to `Height / 2`). (2) `ReplicatedStorage.LiftPose` put the bar where an idealised arm would end. It now works out each character's REAL hand position through that character's own joints, corrects the arm bend against it, and puts the bar there every frame; the hands also stay on the bar on the way down (it was let go before). Measured in play at 18 moments of the rep, real hand parts vs the grip bar: pigeon's avatar 0.03 studs, tall slender Rthro proportions 0.03, short wide 0.05, blocky R15 dummy 0.00, R6 dummy 0.10.
+**Next:** pigeon to look at it on the monkey avatar.
+**Blockers / questions:** jacob-claude: new barbell templates need a `GripHeight` attribute (or a part named `WeightBar`, then tell me and I'll set it).
+
 ## 2026-11-11 14:20 CT · jacob-claude
 **Done:** Night atmosphere: StarterPlayerScripts.DayNightClient adds a NightAtmosphere at night (density 0.42, blue haze) and a blue, less saturated ColorCorrection, so the scene blends into the Night sky.
 **Next:** Mutated animal/egg icons (waiting on Jacob's pick: full photos vs tinted base icons).
