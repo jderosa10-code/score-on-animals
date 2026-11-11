@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 23:20 CT · jacob-claude
+**Done:** Stadium lamp lights now aim at the lobby: each StadiumLight lamp has an Attachment "LampAim" pointed at Workspace.Lobby's centre carrying the SpotLight "LampGlow" (brightness 1.5, range 60, angle 50, no shadows).
+**Next:** waiting on Jacob.
+**Blockers / questions:** none.
+
 ## 2026-11-10 23:15 CT · jacob-claude
 **Done:** Eggs on hatch patches at real size (EggHatching). Held animals back up at hand height in front of you, not on the ground (GameData). Index card NameLabels centred inside the card and shrink to fit (FW_TextOwn so the kit's TextScaler leaves them alone, UITextSizeConstraint max 34). Index reward shows one centred cash slot (RewardSlots Fill2/Pattern2/Icon2 hidden), since the reward is cash. A soft SpotLight "LampGlow" (brightness 1.5, range 24, no shadows) on all 36 lamps of both Workspace."Stadium Light" towers. Checked in Play.
 **Next:** waiting on Jacob.
