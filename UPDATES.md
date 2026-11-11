@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 22:45 CT · jacob-claude
+**Done:** UpgradeSign text only on the side facing the plot: removed UpgradeLabelFront from Workspace.Plots.Plot1-4.UpgradeSign board (kept UpgradeLabelBack).
+**Next:** waiting on Jacob.
+**Blockers / questions:** none.
+
 ## 2026-11-10 22:40 CT · jacob-claude
 **Done:** BackpackPanel back near the bottom (Y 0.6925), only centred horizontally. PenaltyDemoRunner: back-steps to the run-up keep the BackStep animation but the body turns about 40 degrees toward where he's stepping, then squares up to the ball (no more moonwalk). Camera snap cuts: switching to the walk, hold, aim, kicker, celebrate and egg shots now cuts instead of gliding (wide and ball shots still glide). Tested in Play.
 **Next:** waiting on Jacob.
