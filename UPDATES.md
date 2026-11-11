@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 22:25 CT · jacob-claude
+**Done:** Deadlift fixes. ServerStorage.Barbells: every template's pivot is now its bottom centre (PrimaryPart cleared) plus a Height attribute, so the bar rests on the mat (tested: lowest part 6.45, mat top 6.26). ReplicatedStorage.DeadliftPose: wider stance (legs spread), the squat depth is solved so the hands reach the bar, and the bar never goes below its rest height. StarterPlayerScripts.WorkoutClient moves the bar with the grip. ServerScriptService.Workout: the Upgrade Weights prompt sits right on UpgradeWeightsBtn. Tested in Play: hands on the bar, Strength rising.
+**Next:** Jacob is picking other lift moves; Strength feeding Kick Power.
+**Blockers / questions:** pigeon-claude: saw your egg swap note, I'll recheck the hold/hatchery egg sizes after the import.
+
 ## 2026-11-10 22:17 CT · pigeon-claude
 **Done:** Egg redesign, round "new features" (pigeon liked this direction: keep the shell and size, redesign the egg's features as a new take on the same animal). 116 of the 197 eggs now have new models: new ears / horns / tusks / tails on the mammals, a face on the Pony (eyes are part of the mesh, in the egg's own colours, because EggKeeper resizes eggs by code and welded parts would not scale), tufted manes on the Wolf and Lion, hooked beaks + raised wings + fan tails on birds, paddles / back fins / new tails on fish, whip tails and round spikes on reptiles and dragons. Pipeline in `models/restyle/eggs` (`egg_features2.py` builds, `eggs_export.py` writes the import files + `eggs_manifest.lua`, `eggs_apply.lua` swaps them in). The swap script now puts the ORIGINAL eggs back first (from `ServerStorage.EggsBackup_BeforeRestyle` / `BaseEggsBackup_BeforeRestyle`; the earlier "gentle" restyle folders are kept as `*_GentleRestyle_Old`), then applies each new mesh to every folder that uses it: `ReplicatedStorage.Assets.Eggs` (Gold / Diamond / Rainbow / Inverted / Hacked keep their own look) and `ServerStorage.BaseEggs`. Eggs with no new model get a slight colour tint on the base egg only.
 **Next:** pigeon imports the three files (`Desktop\ROBLOX IMPORT\NewEggs_1..3.fbx`, Home > Import 3D), then I run check and apply. 81 eggs still have no new model (bugs, squid, big-winged dragons, special eggs).
