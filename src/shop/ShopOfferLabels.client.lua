@@ -44,6 +44,18 @@ if okIcons and ICONS then
 		local image = icon and (ICONS.Eggs[pr.Egg] or ICONS.Eggs[G.AnimalForEgg(pr.Egg)])
 		if image then icon.Image = image end
 	end
+	-- VIP: its perks text and the picture of the egg it gives
+	local vip = content:FindFirstChild("VIPPack", true)
+	if vip and G.VIPEgg then
+		local icon = vip:FindFirstChild("IconFrame") and vip.IconFrame:FindFirstChild("Icon")
+		local image = ICONS.Eggs[G.VIPEgg] or ICONS.Eggs[G.AnimalForEgg(G.VIPEgg)]
+		if icon and image then icon.Image = image end
+	end
+end
+do
+	local vip = content:FindFirstChild("VIPPack", true)
+	local perks = vip and vip:FindFirstChild("PerksLabel")
+	if perks and G.VIPPerks then perks.Text = G.VIPPerks end
 end
 
 local queued = false

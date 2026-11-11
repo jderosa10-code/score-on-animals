@@ -146,7 +146,7 @@ G.AnnounceFrom = "Legendary"
 -- and never hand out a fixed 100M that skips the game. The floors make them worth it for brand-new players.
 -- Eggs: never sell the top tiers (Secret, Celestial...). Gift products cost the same as the item.
 G.Passes = {
-	VIP = {Id = 0, GiftId = 0, Price = 299},          -- $1M cash once, 2x cash, a free egg
+	VIP = {Id = 0, GiftId = 0, Price = 299},          -- 1.5x cash, 1.25x lifting XP, a free Giraffe egg + 2 h of income once
 	Cash2x = {Id = 0, GiftId = 0, Price = 199},
 	Luck2x = {Id = 0, GiftId = 0, Price = 249},
 }
@@ -179,7 +179,12 @@ function G.packLift(pr, level, xp, barbellLevel, strength)
 	if ups < least then level += least - ups; ups = least end
 	return ups * G.StrengthPerLevel, level, xp
 end
-G.VIPCash, G.VIPEgg = 1e6, "Turtle"
+-- VIP (pigeon-claude, 11 Nov 2026): its own perks, so it isn't just the 2x Cash pass again (the two stack: 3x).
+-- The old one-time $1M skipped most of the barbells for a new player; now it's 2 h of your income (at least $25K).
+G.VIPCashMulti, G.VIPLiftMulti = 1.5, 1.25
+G.VIPCashMinutes, G.VIPCashMin = 120, 25000
+G.VIPEgg = "Giraffe"   -- Rare, $30/s
+G.VIPPerks = "1.5x CASH * 1.25x LIFT * EGG"   -- keep it about as long as the card's old text, or it runs into the VIP title
 
 -- which shop / HUD frame sells what (frame name in Jacob's UI -> pass or product)
 G.ShopItems = {

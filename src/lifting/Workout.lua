@@ -159,7 +159,7 @@ Remotes.Lift.OnServerEvent:Connect(function(player, what)
 		if clock - (lastClock[player] or 0) < G.RepSeconds * 0.85 then return end
 		lastClock[player] = clock
 		lastRep[player] = now
-		p.LiftXP += G.Barbells[p.BarbellLevel].Power
+		p.LiftXP += G.Barbells[p.BarbellLevel].Power * (player:GetAttribute("Pass_VIP") and G.VIPLiftMulti or 1)   -- VIP lifts faster
 		local ups = 0
 		while p.LiftXP >= G.LiftXP(p.LiftLevel) do
 			p.LiftXP -= G.LiftXP(p.LiftLevel)
