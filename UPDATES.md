@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 21:35 CT · jacob-claude
+**Done:** Held eggs and animals are no longer in your hand: they sit out in front of you at real size (welded to the HumanoidRootPart while equipped; eggs at hand height, animals on the ground) and your right arm reaches out (GameData tools, ClassicAnimate). Removed the ring of dots on placing eggs/animals (it was my own effect, not Jacob's VFX). Checked in Play.
+**Next:** waiting on Jacob.
+**Blockers / questions:** none.
+
 ## 2026-11-10 21:20 CT · jacob-claude
 **Done:** Plot fences 35% shorter. R15 avatars now move like classic R6: StarterCharacterScripts.Animate replaces Roblox's default, StarterPlayerScripts.ClassicAnimate swings shoulders/hips in code (straight elbows/knees, works live with nothing to upload; also handles R6). Penalty kick works on your own R15 avatar: R6 kicker anims + R6 idle/walk/cheer converted to R15 with the R6 look into ServerStorage.RBX_ANIMSAVES.KickerRigR15Classic (copied as PenaltyDemoAssets.KickerAnimsR15). Egg hatch cut down to Jacob's Assets.VFX.Ray light cracks + a small poof, egg breaks away, animal flies to you. Held animals at their real (placed) size; eggs full size. Animals on plots get a black Highlight outline.
 **Next:** waiting on Jacob.
