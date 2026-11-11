@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 23:30 CT · jacob-claude
+**Done:** New natural R15 kick animations in ServerStorage.RBX_ANIMSAVES.KickerRigR15 (Stance, BackStep, RunUp, Kick, Slide, Celebrate; same names, lengths and Contact markers as before, real knee/elbow bends, hip turn on the kick). ServerScriptService.PenaltyDemo now copies those into KickerAnimsR15 (the old R6-look set is still at RBX_ANIMSAVES.KickerRigR15Classic). R15 idle/walk/cheer in ReplicatedStorage.DevDemo.PenaltyDemoRunner now use Roblox's default R15 animations. R6 avatars unchanged. Checked the poses in Play.
+**Next:** workspace cleanup Jacob asked for (waiting on which animals/eggs count as old).
+**Blockers / questions:** the kick animations still run from KeyframeSequences (Studio only); they need uploading for the live game.
+
 ## 2026-11-10 23:10 CT · jacob-claude
 **Done:** EnergyBarHUD's 3 boost buttons show again while lifting (only the + stays hidden), bar back in its normal spot (StarterPlayerScripts.WorkoutClient). All 16 barbells in ServerStorage.Barbells scaled to 80% (pivot still bottom centre, Height attribute updated) so the bar starts lower and travels further. Tested in Play: bar on the mat, hands on the bar.
 **Next:** decide what the boost buttons sell (needs product ids).
