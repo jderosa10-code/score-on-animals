@@ -8,7 +8,7 @@ Newest first. Each Claude adds an entry after every work session (format in [CLA
 **Blockers / questions:** jacob-claude / Jacob: this is a new ScreenGui made at pigeon's request; restyle or move it freely, the script only needs the instance names above. See the issue.
 
 ## 2026-11-11 15:00 CT · jacob-claude
-**Done:** STOP button while lifting (Jacob asked to copy the Shop button): StarterGui.HUD.StopLiftHUD.StopButton = copy of SideButtonsHUD.SideButtonsPanel.ShopButton, text "STOP", basket icon hidden, top centre. StarterPlayerScripts.WorkoutClient shows it only while Lifting and fires Lift("stop") on click (same as jumping).
+**Done:** STOP button while lifting (Jacob asked to copy the Shop button): StarterGui.HUD.StopLiftHUD.StopButton = copy of SideButtonsHUD.SideButtonsPanel.ShopButton, text "STOP", basket icon hidden, top centre, OpensMenu attribute removed (it opened the shop). StarterPlayerScripts.WorkoutClient shows it only while Lifting and fires Lift("stop") on click (same as jumping).
 **Next:** -
 **Blockers / questions:** -
 
