@@ -32,10 +32,13 @@ local comboLabel = boostBar:WaitForChild("Combo")
 local sounds = gui:WaitForChild("Sounds")
 
 local REP = G.RepSeconds
-local TARGET_TIME = 1.7          -- seconds you have to hit a target
-local GAP_MIN, GAP_MAX = 1.4, 3.0  -- seconds between targets
+local RING_TIME = 2.4            -- seconds the circle takes to close in on a target
+local GRACE = 0.9                -- after the circle has reached the button you can still hit it for this long (it blinks)
+local GAP_MIN, GAP_MAX = 1.2, 2.6  -- seconds between targets
 local BUTTON_SIZE = button.Size
-local RING_BIG, RING_SMALL = ring.Size, UDim2.fromScale(1.02, 0.96)
+local RING_BIG, RING_SMALL = ring.Size, UDim2.fromScale(1.04, 1.04)
+local ringStroke = ring:FindFirstChildOfClass("UIStroke")
+local RING_SHOW = ringStroke and ringStroke.Transparency or 0
 
 ---------------------------------------------------------------- helpers
 local function sfx(name, volume, pitch)
@@ -106,8 +109,9 @@ local function showTarget()
 	shownAt = os.clock()
 	button.Position = UDim2.fromScale(0.1 + math.random() * 0.8, 0.14 + math.random() * 0.72)
 	button.Size = UDim2.fromScale(0, 0)
-	button.Rotation = math.random(-4, 4)
+	button.Rotation = 0
 	ring.Size = RING_BIG
+	if ringStroke then ringStroke.Transparency = RING_SHOW end
 	button.Visible = true
 	TweenService:Create(button, TweenInfo.new(0.22, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {Size = BUTTON_SIZE}):Play()
 	sfx("TargetPop", 1, 0.95 + math.random() * 0.15)
@@ -233,9 +237,13 @@ RunService.Heartbeat:Connect(function()
 	if lifting then
 		local t = os.clock()
 		if active then
-			local u = (t - shownAt) / TARGET_TIME
-			ring.Size = RING_BIG:Lerp(RING_SMALL, math.clamp(u, 0, 1))
-			if u >= 1 then          -- missed
+			local age = t - shownAt
+			ring.Size = RING_BIG:Lerp(RING_SMALL, math.clamp(age / RING_TIME, 0, 1))
+			if ringStroke then
+				-- last chance: the circle sits on the button and blinks until the grace time is up
+				ringStroke.Transparency = age > RING_TIME and (math.sin((age - RING_TIME) * 22) > 0 and RING_SHOW or 0.75) or RING_SHOW
+			end
+			if age >= RING_TIME + GRACE then          -- missed
 				hideTarget(false)
 				combo = 0
 				nextSpawn = t + GAP_MIN + math.random() * (GAP_MAX - GAP_MIN)

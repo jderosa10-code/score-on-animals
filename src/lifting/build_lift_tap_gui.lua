@@ -59,31 +59,42 @@ return function(clientSource)
 	local area = make("Frame", {Name = "TapArea", AnchorPoint = Vector2.new(0.5, 0.5), Position = UDim2.fromScale(0.5, 0.47),
 		Size = UDim2.fromScale(0.6, 0.42), BackgroundTransparency = 1}, gui)
 
-	-- the target: a kit button in orange
-	local RATIO = 1.7
+	-- the target: a ROUND kit button in orange (the kit's gradient Fill + diamond Pattern + black outline, as a circle)
+	local RATIO = 1
 	local btn = make("TextButton", {Name = "TapButton", AnchorPoint = Vector2.new(0.5, 0.5), Position = UDim2.fromScale(0.5, 0.5),
-		Size = UDim2.fromScale(0.34, 0.34), BackgroundTransparency = 1, Text = "", AutoButtonColor = false, Visible = false, ZIndex = 3}, area)
+		Size = UDim2.fromScale(0.4, 0.4), BackgroundTransparency = 1, Text = "", AutoButtonColor = false, Visible = false, ZIndex = 3}, area)
 	make("UIAspectRatioConstraint", {AspectRatio = RATIO, AspectType = Enum.AspectType.ScaleWithParentSize, DominantAxis = Enum.DominantAxis.Height}, btn)
 	-- never smaller than a fingertip on a small phone, never huge on a big monitor
-	make("UISizeConstraint", {MinSize = Vector2.new(122, 72), MaxSize = Vector2.new(340, 200)}, btn)
+	make("UISizeConstraint", {MinSize = Vector2.new(84, 84), MaxSize = Vector2.new(210, 210)}, btn)
+	local function circle(piece)
+		piece.AnchorPoint = Vector2.new(0.5, 0.5); piece.Position = UDim2.fromScale(0.5, 0.5); piece.Size = UDim2.fromScale(1, 1)
+		for _, d in ipairs(piece:GetDescendants()) do
+			if d:IsA("UICorner") then d.CornerRadius = UDim.new(0.5, 0) end
+		end
+	end
 	local fill = kitCopy(kitButton.Fill, btn)
 	recolor(fill, ORANGE)
-	kitCopy(kitButton.Pattern, btn)
+	circle(fill)
+	local pattern = kitCopy(kitButton.Pattern, btn)
+	circle(pattern)
+	-- the diamonds are the same size on screen as on the STOP button and the level bar: there a tile is about
+	-- 0.04 of the screen's height, and this button is about 0.17 of it, so one tile is 0.24 of the button
+	pattern.Texture.TileSize = UDim2.fromScale(0.24, 0.24)
 	local icon = kitCopy(kitIcon, btn)
-	icon.Name = "Icon"; icon.AnchorPoint = Vector2.new(0.5, 0.5); icon.Position = UDim2.fromScale(0.21, 0.46); icon.Size = UDim2.fromScale(0.34, 0.7); icon.ZIndex = 12
-	label("Label", "TAP!", {AnchorPoint = Vector2.new(0.5, 0.5), Position = UDim2.fromScale(0.64, 0.5), Size = UDim2.fromScale(0.56, 0.62), ZIndex = 14}, btn)
-	-- the outline that closes in on the target: when it reaches the button, the target is gone
-	local ring = make("Frame", {Name = "Timer", AnchorPoint = Vector2.new(0.5, 0.5), Position = UDim2.fromScale(0.5, 0.468), Size = UDim2.fromScale(1.5, 1.8),
+	icon.Name = "Icon"; icon.AnchorPoint = Vector2.new(0.5, 0.5); icon.Position = UDim2.fromScale(0.5, 0.33); icon.Size = UDim2.fromScale(0.46, 0.42); icon.ZIndex = 12
+	label("Label", "TAP!", {AnchorPoint = Vector2.new(0.5, 0.5), Position = UDim2.fromScale(0.5, 0.69), Size = UDim2.fromScale(0.74, 0.3), ZIndex = 14}, btn)
+	-- the circle that closes in on the target. When it reaches the button you still have a moment to hit it.
+	local ring = make("Frame", {Name = "Timer", AnchorPoint = Vector2.new(0.5, 0.5), Position = UDim2.fromScale(0.5, 0.5), Size = UDim2.fromScale(1.9, 1.9),
 		BackgroundTransparency = 1, ZIndex = 2}, btn)
-	make("UICorner", {CornerRadius = UDim.new(0.08, 0)}, ring)
+	make("UICorner", {CornerRadius = UDim.new(0.5, 0)}, ring)
 	make("UIStroke", {Color = Color3.new(1, 1, 1), Thickness = 0.035, StrokeSizingMode = Enum.StrokeSizingMode.ScaledSize, Transparency = 0.1,
 		ApplyStrokeMode = Enum.ApplyStrokeMode.Border, LineJoinMode = Enum.LineJoinMode.Round}, ring)
 
 	-- templates the script copies when you hit a target
-	local burst = make("Frame", {Name = "Burst", AnchorPoint = Vector2.new(0.5, 0.5), Position = UDim2.fromScale(0.5, 0.5), Size = UDim2.fromScale(0.34, 0.34),
+	local burst = make("Frame", {Name = "Burst", AnchorPoint = Vector2.new(0.5, 0.5), Position = UDim2.fromScale(0.5, 0.5), Size = UDim2.fromScale(0.4, 0.4),
 		BackgroundTransparency = 1, Visible = false, ZIndex = 2}, area)
 	make("UIAspectRatioConstraint", {AspectRatio = RATIO, AspectType = Enum.AspectType.ScaleWithParentSize, DominantAxis = Enum.DominantAxis.Height}, burst)
-	make("UICorner", {CornerRadius = UDim.new(0.08, 0)}, burst)
+	make("UICorner", {CornerRadius = UDim.new(0.5, 0)}, burst)
 	make("UIStroke", {Color = Color3.fromRGB(255, 220, 40), Thickness = 0.05, StrokeSizingMode = Enum.StrokeSizingMode.ScaledSize,
 		ApplyStrokeMode = Enum.ApplyStrokeMode.Border, LineJoinMode = Enum.LineJoinMode.Round}, burst)
 	label("PopText", "SPEED UP!", {AnchorPoint = Vector2.new(0.5, 0.5), Position = UDim2.fromScale(0.5, 0.5), Size = UDim2.fromScale(0.5, 0.2), Visible = false, ZIndex = 16}, area, true)
