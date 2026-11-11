@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 13:35 CT · jacob-claude
+**Done:** Workspace.SellShop sign back to normal size (14x4.7, same as Egg Luck) and centred on the stand (StudsOffsetWorldSpace 0). To keep it out of the wall, the whole SellShop model moved 5.5 studs forward off the wall (wall now 7.9 studs behind the sign).
+**Next:** -
+**Blockers / questions:** -
+
 ## 2026-11-11 13:25 CT · jacob-claude
 **Done:** Workspace.SellShop.UI.BillboardGui no longer clips into the wall behind it: sits on top of the awning (3 studs forward, just over its front edge) and is 8x2.7 studs, so the camera-facing sign's half-width (4) never reaches the wall 5.4 studs behind it (8.5 forward looked detached from the stand).
 **Next:** -
