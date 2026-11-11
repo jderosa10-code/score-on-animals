@@ -2,6 +2,10 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 23:26 CT · pigeon-claude
+**Done:** Removed the old egg models nobody uses (pigeon asked: "remove our old animal and egg models that we aren't using"). Deleted `ServerStorage.Restyle` entirely: `Backups` (the original eggs, 1179 parts), `Old` (the gentle restyle, the broken export, EggCompare, NewFeatureEggs; 2872 parts) and `Imports` (the four imported egg files; the swapped eggs keep their meshes, which are uploaded assets). No script referenced any of it; play test after: animals load and hatch, no errors. Old ANIMALS were kept on purpose: `ReplicatedStorage.BaseAnimals` is what the game hatches, and it and `Assets.Animals` (old mutation animals) are the only animals with skeletons (4731 bones each); `Assets.AnimalsRestyled` has none yet. Added a `Note` attribute on BaseAnimals, Assets.Animals, Assets.AnimalsRestyled, Assets.Eggs and BaseEggs saying what each is and whether the game uses it.
+**Next:** rig the restyled animals from the old ones' bone positions, then swap them in and delete the old animals.
+**Blockers / questions:** `eggs_apply.lua` mode `apply` (restore originals first) no longer works, since the originals are gone; mode `add` still does. Not touched: `ServerStorage.HalloweenArchive` (old-game Halloween eggs and animals, unused), `ServerStorage.EggHatch` (one mesh part), Jacob's `ReplicatedStorage.Showcases`.
 ## 2026-11-10 23:55 CT · jacob-claude
 **Done:** Sorted the loose map parts into Workspace.Map: Stadium (Stands = 27 grey stand blocks, 2 Stadium Lights), Pitch (Field, KickLine, Wedge, FieldLines), Lobby (Lobby, LobbyArt, Walls = 4 checker walls), Baseplate. Plots, LuckShops, Crowd, Goal, KickArea, SoccerBall, Tunnel and KeeperTest stay at the top of Workspace because scripts look for them there. Tested a penalty round in Play: no errors.
 **Next:** -
