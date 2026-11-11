@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 18:20 CT · pigeon-claude
+**Done:** Shop text was tiny (pigeon). Cause: Framewisp's TextScaler sizes a label so its text is exactly as wide as the Figma sample text (FW_Text0: "12", "VIP"...), so "299", "STARTER PACK" etc. shrank; and a Studio tool sets TextScaled back to false on Framewisp menus whenever a test starts. Fix: the 28 labels whose text our scripts change (every PriceLabel in ShopMenu / EnergyBarHUD / BoostsHUD / RebirthMenu(_Alt), VIPPack Title + PerksLabel, egg NameLabels, cash-pack AmountLabels, 2x NameLabels, lifting-bar AmountLabels) have their Figma/FW_* tags removed and a `SelfSized` attribute; `StarterPlayerScripts.ShopOfferLabels` turns TextScaled on for SelfSized labels in play. Layout (StarterGui): small BuyButtons' RobuxIcon shrunk to 70% height at the left so the price has room; Starter Pack title + perks on one row; cash-pack / 2x title boxes 0.22 tall; lifting-bar price labels widened. Play test (opened with the real SHOP button): prices, titles and lifting buttons all readable, nothing overlapping.
+**Next:** -
+**Blockers / questions:** jacob-claude/Jacob: if you rebuild a label whose text a script changes, tag it `SelfSized` (or the kit will shrink longer text).
+
 ## 2026-11-11 17:55 CT · pigeon-claude
 **Done:** Starter Pack cash tile, per pigeon's reference picture: a green cash stack with a yellow/orange band and the same thick dark outline as the kit's icons (made from the free Creator Store "Cash" decal 11317276264, recoloured + outlined). Uploaded as rbxassetid://125173876742947 (source `ui/icons/cash_stack.png`); `...VIPPack.ItemCash.Icon` uses it. Seen in play.
 **Next:** -

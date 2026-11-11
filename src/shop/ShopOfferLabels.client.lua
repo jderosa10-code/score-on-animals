@@ -73,6 +73,16 @@ for name, item in G.ShopItems do
 	if perks then perks.Text = pr.Perks end
 end
 
+-- labels tagged SelfSized in StarterGui (prices and texts the scripts rewrite) fill their box. A Studio tool resets
+-- TextScaled on Framewisp menus in edit, so it's switched on here; the kit's TextScaler leaves untagged labels alone.
+local function selfSize(l)
+	if not (l:IsA("TextLabel") and l:GetAttribute("SelfSized")) then return end
+	l.TextScaled = true
+	l:GetPropertyChangedSignal("TextScaled"):Connect(function() if not l.TextScaled then l.TextScaled = true end end)
+end
+for _, d in gui:GetDescendants() do selfSize(d) end
+gui.DescendantAdded:Connect(selfSize)
+
 local queued = false
 local function soon()      -- LiftXP changes every rep: redraw at most twice a second
 	if queued then return end
