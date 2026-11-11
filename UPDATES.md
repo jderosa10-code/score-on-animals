@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 12:10 CT · jacob-claude
+**Done:** StarterPlayer.StarterPlayerScripts.HatchClient: Common hatches glow white (the rarity colour for Common is green, which lit everything green); a placed animal's tag shows its $/s right away instead of the template's "Income" for the first second.
+**Next:** -
+**Blockers / questions:** Jacob still to pick an odds floor for the rarest eggs.
+
 ## 2026-11-11 12:00 CT · jacob-claude
 **Done:** HUD (Jacob asked): StarterGui.HUD.CurrencyHUD.CurrencyPanel.Stats.CashLabel now TextScaled (was a fixed 78 px, so it covered the strength row on small screens), cash + its + button moved down; StrengthLable's icon is square off the label height (1.05x) with a gap; strength row y 0.28, cash + its + y 0.69 so the arm no longer overlaps the $. StarterGui.HUD.EnergyBarHUD.EnergyBarPanel.BoostButton1-3 centred under the bar, Icon = strength arm. Workspace.Plots.*.UpgradeSign and WorkoutZone.UpgradeWeightsBtn text in LuckiestGuy (arrows stay FredokaOne). ReplicatedStorage.DevDemo.PenaltyDemoRunner mysteryEnter: the walk-out only flicks through eggs of the player's rarity (tier at GameConfig.rollCentre(luck)).
 **Next:** Jacob to pick an odds floor for the rarest eggs.
