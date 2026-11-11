@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 12:30 CT · jacob-claude
+**Done:** Penalty flow polish (Jacob asked), all in ReplicatedStorage.DevDemo.PenaltyDemoRunner unless noted: "TAP TO KICK!" under the timing bar; "1X LUCK" (your luck) at the top while the egg walks out; when you win, "<Egg> Egg" in its rarity colour + "NEW!" if that animal isn't in your Index yet (StarterPlayerScripts.HUDClient adds _G.SOA_IndexFound); smooth fade to black when you step onto the kick area; white flash when you teleport home. Captions are clones of the TimingResult label (PlayerGui.Caption_<key>), the fade is PlayerGui.ScreenFade. StarterPlayerScripts.HideUIWhileKicking keeps CurrencyHUD up during a kick with the cash + its + hidden, so Strength shows. Play test: all shown, Duck Egg given, no errors.
+**Next:** -
+**Blockers / questions:** -
+
 ## 2026-11-11 12:15 CT · jacob-claude
 **Done:** Set odds per egg: ReplicatedStorage.GameConfig.EggOdds(name) (1/2 Hamster .. 1/10M Dragon, by rank, 2 digits); ReplicatedStorage.DevDemo.EggRoll.chance returns it, so the 1/N text no longer moves with luck. HUD positions like Jacob's reference game (positions only): StarterGui.HUD.SideButtonsHUD.SideButtonsPanel y 0.557, Shop/Index spread (0.25/0.55); CurrencyHUD.CurrencyPanel y 0.84, strength row 0.22 / cash row + its + 0.78; strength icon 1.15x and lined up with the letters.
 **Next:** -
