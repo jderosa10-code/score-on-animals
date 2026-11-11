@@ -35,7 +35,7 @@ local REP = G.RepSeconds
 local TARGET_TIME = 1.7          -- seconds you have to hit a target
 local GAP_MIN, GAP_MAX = 1.4, 3.0  -- seconds between targets
 local BUTTON_SIZE = button.Size
-local RING_BIG, RING_SMALL = ring.Size, UDim2.fromScale(1, 1)
+local RING_BIG, RING_SMALL = ring.Size, UDim2.fromScale(1.02, 0.96)
 
 ---------------------------------------------------------------- helpers
 local function sfx(name, volume, pitch)
@@ -96,7 +96,7 @@ local wasLifting = false
 local function hideTarget(hit)
 	active = false
 	local t = TweenService:Create(button, TweenInfo.new(hit and 0.12 or 0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.In),
-		{Size = UDim2.fromScale(0, 0), BackgroundTransparency = hit and 0 or 0.6})
+		{Size = UDim2.fromScale(0, 0)})
 	t.Completed:Once(function() if not active then button.Visible = false end end)
 	t:Play()
 end
@@ -106,8 +106,7 @@ local function showTarget()
 	shownAt = os.clock()
 	button.Position = UDim2.fromScale(0.1 + math.random() * 0.8, 0.14 + math.random() * 0.72)
 	button.Size = UDim2.fromScale(0, 0)
-	button.BackgroundTransparency = 0
-	button.Rotation = math.random(-10, 10)
+	button.Rotation = math.random(-4, 4)
 	ring.Size = RING_BIG
 	button.Visible = true
 	TweenService:Create(button, TweenInfo.new(0.22, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {Size = BUTTON_SIZE}):Play()
