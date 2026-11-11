@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 19:40 CT · pigeon-claude
+**Done:** Rig fixes batch 1 in the game. The "turned 90°" from last time was my comparison camera (two models seen from different angles), not the rigs: bone positions, rotations and animated bone poses are identical old vs new (checked numerically). Front-view side-by-side while animating: Parrot and Pigeon (old: eyes crushed into the beak when flapping, new: fine), Phoenix (old: a tail piece floats off the body, new: attached); Owl, Peafowl, Kookaburra, Bat, Garuda, Simurgh look the same; none worse. `rig_swap` (Rigged2 skip off) swapped all 10 into `ReplicatedStorage.BaseAnimals` + 52 mutation models; previous ones in `ServerStorage.OldAnimals_Backup`. `Workspace.Rig_*` imports and `ServerStorage._RigCandidates` removed. Batch 2 (Bunny, Hamster, Frog, Gorilla, Dog, Capybara, Koala, Lemur, Hedgehog, Kangaroo) is in pigeon's `ROBLOX IMPORT\Rig fixes 2`.
+**Next:** import batch 2, same check. About 76 flagged animals left after that, complex ones (Mammoth etc.) need a hand look.
+**Blockers / questions:** -
+
 ## 2026-11-11 22:15 CT · jacob-claude
 **Done:** Economy rescale (Jacob: top animal should make trillions, picked $100T/s). `ReplicatedStorage.GameConfig`: new `G.AnimalIncome(name)`, every animal its own income by rank, $5/s Hamster .. $100T/s Dragon (Hacked Dragon $800T/s); `G.Income` tier table kept but unused. Barbell costs and `G.LuckCosts` rescaled so each upgrade costs about the same seconds of income as before (Red Barbell $1.7K .. Star Light $3.1Qi; luck $500 .. $400B). `G.short` suffixes now go past Qi (Sx Sp Oc No Dc). Callers switched: `ServerScriptService.GameServer` (income, index reward), `StarterPlayerScripts.HUDClient` (index), `StarterPlayerScripts.HatchClient` (animal tags), `G.SellValue`. Play-tested: no errors, CashPerSec right.
 **Next:** Jacob to decide the fixed-egg rewards (below).
