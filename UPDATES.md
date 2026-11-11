@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 19:45 CT · jacob-claude
+**Done:** Hooked Jacob's UI kit up to the game (text/images/attributes only, no layout changes): StarterPlayerScripts.HUDClient. Hid SideButtonsPanel.CodesButton/SettingsButton and disabled TopButtonsHUD. New ServerScriptService.GameData (DataStore save: cash, rebirths, luck, index, daily, inventory items, eggs on patches, placed animals; never overwrites a save it couldn't read), ServerScriptService.GameServer (cash/sec from placed animals, friends +10% each, Egg Luck prompt on each LuckShop pad, rebirth, daily 7-day loop, index rewards, Robux passes/products/gifts, Studio-only ServerStorage.DevCommand), ReplicatedStorage.GameConfig (all numbers + Robux ids, all 0 for now), ReplicatedStorage.GameRemotes. EggInventory/EggHatching now use GameData items. Custom hotbar (1-9, item names as text for now) replaces the Roblox backpack bar; BackpackMenu tabs; Index cards/claim; Rebirth goals (cash + placed animals, SKIP turns into REBIRTH); rare-hatch server banner. Tested in Play.
+**Next:** animal/egg icons (Jacob will photograph them), real Robux ids in GameConfig.
+**Blockers / questions:** saving can't be tested in Studio until Game Settings > Security > Enable Studio Access to API Services is on.
+
 ## 2026-11-10 19:03 CT · pigeon-claude
 **Done:** Studio's Import 3D timed out and closed on the 196-egg file (log: AssetImporter `Script timeout: exhausted`). Split it into `Eggs_1..5.fbx` (40 each, ~4.5 MB); `eggs_apply.lua` now gathers every imported `Eggs*` model. Checked the mutation copies: all 1,045 in `ServerStorage.AnimalsRestyled` have exactly the game's mutation layers (SurfaceAppearance ColorMap + tint, colour, material: 0 differ). The 4 animals missing from them (Fenrir, Archaeopteryx, Maltese, Microraptor) are now reshaped too (Fenrir needed standing upright first; `models/restyle/upright.py`): `Animals_Last4.fbx`. All files in `Desktop\ROBLOX IMPORT`.
 **Next:** pigeon imports the six files; egg swap with the facing check; the last 4 get showcase slots + mutation copies.
