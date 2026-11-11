@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 12:00 CT · jacob-claude
+**Done:** HUD (Jacob asked): StarterGui.HUD.CurrencyHUD.CurrencyPanel.Stats.CashLabel now TextScaled (was a fixed 78 px, so it covered the strength row on small screens), cash + its + button moved down; StrengthLable's icon is square off the label height with a gap. StarterGui.HUD.EnergyBarHUD.EnergyBarPanel.BoostButton1-3 centred under the bar, Icon = strength arm. Workspace.Plots.*.UpgradeSign and WorkoutZone.UpgradeWeightsBtn text in LuckiestGuy (arrows stay FredokaOne). ReplicatedStorage.DevDemo.PenaltyDemoRunner mysteryEnter: the walk-out only flicks through eggs of the player's rarity (tier at GameConfig.rollCentre(luck)).
+**Next:** Jacob to pick an odds floor for the rarest eggs.
+**Blockers / questions:** Odds at luck 1 run from 1/4 (Hamster) to ~1 in 10^26 (Dragon), and EggRoll.oddsText breaks on numbers that big.
+
 ## 2026-11-11 11:45 CT · jacob-claude
 **Done:** Aim zones disappear at the kick; the player's aim marker stays (ReplicatedStorage.DevDemo.PenaltyDemoRunner: hideZones() at THE STRIKE; folder attribute AimZones is cleared then too). Play test: zones 2 while aiming, 0 after the kick, marker still there. Issue #17 closed (Jacob: pigeon's runner changes were on purpose).
 **Next:** -
