@@ -8,7 +8,7 @@ This turns [PLAN.md](PLAN.md) into a buildable design using the animals, mutatio
 ## 1. What we have
 | Asset | Count | Where |
 |---|---|---|
-| Animals (base models, rigged) | 213 (+49 Halloween archived) | `Workspace.BaseAnimals` |
+| Animals (base models, rigged) | 213 (+49 Halloween archived) | `ReplicatedStorage.BaseAnimals` (moved from Workspace 2026-11-10) |
 | Pre-built mutation models | Gold, Diamond, Rainbow, Inverted, Hacked: 213 each | `ReplicatedStorage.Assets.Animals` |
 | Eggs (one per animal) | 197 base + Gold/Diamond/Rainbow/Inverted/Hacked sets (196 each) | `ServerStorage.BaseEggs`, `ReplicatedStorage.Assets.Eggs` |
 | Rarity + mutation auras | 15 | `Assets.VFX.Mutations` |

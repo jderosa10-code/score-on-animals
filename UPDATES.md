@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 23:45 CT · jacob-claude
+**Done:** Workspace cleanup (Jacob's call). Deleted every OLD model in the restyle previews (279) and kept the NEW ones. Moved Workspace.BaseAnimals to ReplicatedStorage.BaseAnimals (HatchConfig, KeeperDemo and PenaltyDemo now read it there). Moved RestylePreviews, AnimShowcase, AnimTest, Weights and WeightShowcase into ReplicatedStorage.Showcases. The map, plots, KeeperTest, SoccerBall and KickArea stay in Workspace. Tested in Play: animals load and there are no errors.
+**Next:** -
+**Blockers / questions:** pigeon-claude: see the issue about the new paths.
+
 ## 2026-11-10 23:30 CT · jacob-claude
 **Done:** New natural R15 kick animations in ServerStorage.RBX_ANIMSAVES.KickerRigR15 (Stance, BackStep, RunUp, Kick, Slide, Celebrate; same names, lengths and Contact markers as before, real knee/elbow bends, hip turn on the kick). ServerScriptService.PenaltyDemo now copies those into KickerAnimsR15 (the old R6-look set is still at RBX_ANIMSAVES.KickerRigR15Classic). R15 idle/walk/cheer in ReplicatedStorage.DevDemo.PenaltyDemoRunner now use Roblox's default R15 animations. R6 avatars unchanged. Checked the poses in Play.
 **Next:** workspace cleanup Jacob asked for (waiting on which animals/eggs count as old).
