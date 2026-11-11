@@ -164,13 +164,25 @@ ANIMALS = {
     "redpanda": dict(ears="ears_wide", tail="tail_s"), "lemur": dict(ears="ears_round", tail="tail_s"),
     "meerkat": dict(ears="ears_round"), "otter": dict(ears="ears_round"), "beaver": dict(ears="ears_round"),
     "hedgehog": dict(ears="ears_round"), "tapir": dict(ears="ears_round"), "hippopotamus": dict(ears="ears_round"),
-    "whiterhino": dict(ears="ears_round"), "pony": dict(ears="ears_tall"), "unicorn": dict(ears="ears_tall"),
+    "whiterhino": dict(ears="ears_round"), "pony": dict(ears="ears_tall", face=True), "unicorn": dict(ears="ears_tall"),
     "okapi": dict(ears="ears_tall"), "aardvark": dict(ears="ears_tall"), "armadillo": dict(ears="ears_tall"),
     "bull": dict(horns="horns_long", ears="ears_droop"), "yak": dict(horns="horns_long"),     # the yak egg has horns only
     "americanbison": dict(horns="horns_long", ears="ears_droop"), "moose": dict(ears="ears_droop"),
     "elephant": dict(ears="ears_fan", tusks="tusks_curl"), "woollymammoth": dict(ears="ears_fan", tusks="tusks_curl"),
     "jackalope": dict(ears="ears_tall"),                   # bent ear next to the antlers read as a broken horn
 }
+
+
+# batch 3 groups (found by where a piece sits; the group only says which rules may run)
+BIRDS = set("albatross argentavis caladrius cassowary chicken cockatrice duck emu flamingo garuda griffin kookaburra ostrich owl parrot "
+            "peafowl pigeon puffin roc secretary shoebill simurgh stymphalian thunderbird toucan phoenix azhdarchid pteranodon "
+            "pterodactyl quetzalcoatlus".split())
+FISH = set("anglerfish blobfish bluewhale goblinshark greatwhiteshark megalodon shark swordfish whale seal "   # fangtooth / goldfish / plesiosaur came out worse: left alone
+           "leviathan mosasaurus seadragon".split())
+MANES = {"wolf", "lion"}
+NO_TAIL = set("stegosaurus kitsune manticore ankylosaurus peafowl jellyfish kraken krakenking giantsquid cuttlefish octopus nautilus "
+              "snail crab horse zebra unicorn pony".split())
+NO_GENERIC = {"hacker", "inverted", "crystalcandy", "dimetrodon", "spinosaurus"}
 
 
 def islands(bm):
@@ -294,9 +306,19 @@ def redesign(src):
     import re
     want = dict(ANIMALS.get(re.sub(r"\d+$", "", src.name[3:]).lower(), {}))
     want.update(OVERRIDE.get(src.name, {}))
-    if not want:
+    if os.environ.get("EGG_FACE_ALL") == "1": want["face"] = True      # test: which eggs have no face
+    if os.environ.get("EGG_DUMP") == "1":
+        # what loose pieces this egg has (for writing the per-animal table)
+        seen_ = set(); rows_ = []
+        for d in sorted(ds, key=lambda d: -max(d["s"])):
+            if id(d) in seen_ or max(d["s"]) < 0.6: continue
+            seen_.add(id(d))
+            if d["pair"]: seen_.add(id(d["pair"]))
+            cc = d["c"] if not d["pair"] or d["c"].y > 0 else d["pair"]["c"]
+            rows_.append(f'{"P" if d["pair"] else "S"}{d["n"]}{d["shape"][0]} c({cc.x:.1f},{cc.y:.1f},{cc.z:.1f}) s({d["s"].x:.1f},{d["s"].y:.1f},{d["s"].z:.1f})')
+        print("DUMP", src.name, f"SC{SC:.2f} pieces{len(ds)}", " | ".join(rows_[:14]))
         bm.free(); return ob, []
-    plus = [d for d in ds if d["pair"] and d["c"].y > 0 and d["n"] <= 48]
+    plus =[d for d in ds if d["pair"] and d["c"].y > 0 and d["n"] <= 48]
     # on top of the egg, or big and hanging at its sides (dog ears); not far back (that's a mane)
     top = sorted((d for d in plus if -1.4 < d["c"].x < 0.9 and max(d["s"]) >= 0.7
                   and (d["c"].z > 0.7 or (d["c"].z > 0.2 and abs(d["c"].y) > 1.5 and max(d["s"]) >= 1.5))), key=lambda d: abs(d["c"].y))
@@ -373,6 +395,236 @@ def redesign(src):
         for f in panels:
             for l in f.loops: l[uvl].uv = inner[1]
         notes.append(f"{kind}:{style}x{k:.2f}")
+
+    # ------------------------------------------------------------ batch 3: every other kind of egg
+    # Birds, fish, reptiles, dragons and the manes. Same idea as above (old piece out, newly designed
+    # piece of the same kind in, coloured from the old piece), but found by where a piece sits.
+    name = re.sub(r"\d+$", "", src.name[3:]).lower()
+    used = set()
+    for _, _, d in plan:
+        used.add(id(d))
+        if d["pair"]: used.add(id(d["pair"]))
+    free = lambda d: id(d) not in used and not d.get("dead")
+    mid = lambda d: not d["pair"] and abs(d["c"].y) < 0.2
+    both = lambda d: [d] + ([d["pair"]] if d["pair"] else [])
+    E = lambda x, y, z: c + SC * Vector((x, y, z))                    # egg space -> this mesh
+
+    def take(*dd):
+        for d in dd:
+            used.add(id(d))
+            if d["pair"]: used.add(id(d["pair"]))
+
+    def tally_main(pieces):
+        t = {}
+        for d in pieces:
+            for f in {f for v in d["isl"] if v.is_valid for f in v.link_faces}:
+                uv = sum((l[uvl].uv for l in f.loops), Vector((0, 0))) / len(f.loops)
+                col = colour(uv); key = tuple(round(a * 8) for a in col)
+                e = t.setdefault(key, [0.0, uv.copy(), col]); e[0] += f.calc_area()
+        return max(t.values(), key=lambda e: e[0])[1] if t else None
+
+    def kill(pieces):
+        for d in pieces:
+            bmesh.ops.delete(bm, geom=[v for v in d["isl"] if v.is_valid], context='VERTS')
+            d["dead"] = True
+
+    def put(paths, side, wa, wb, uv, sides=6, root=True):
+        fs = []
+        for pth in paths:
+            pts = [Vector(p) for p in pth]
+            if root: pts = rooted(pts)
+            fs += sweep(bm, pts, side, wa, wb, sides=sides)
+        bmesh.ops.recalc_face_normals(bm, faces=fs)
+        for f in fs:
+            for v in f.verts:
+                if v.co.z < bmn.z + 0.05: v.co.z = bmn.z + 0.05
+            for l in f.loops: l[uvl].uv = uv
+        return fs
+
+    if os.environ.get("EGG_NO_GENERIC") != "1" and name not in NO_GENERIC:
+        bird, fish = name in BIRDS, name in FISH
+        # --- mane (pigeon: "for the wolf change the mane a little"): the old manes are a star of big
+        #     flat slabs; the new one is a ruff of chunky pointed tufts, swept back
+        if name in MANES:
+            old = [d for d in ds if free(d) and mid(d) and d["n"] <= 12 and max(d["s"]) >= 4.4 and abs(d["c"].x) < 0.7 and abs(d["c"].z) < 0.9]
+            if len(old) >= 3:
+                uv = tally_main(old)
+                cx, cz = old[0]["c"].x, old[0]["c"].z
+                R = 0.5 * max(max(d["s"].y, d["s"].z) for d in old) + 0.2
+                deep = max(d["s"].x for d in old) >= 4.0
+                kill(old); take(*old)
+                paths = []
+                for rx, cnt, ph, rr, back in [(cx + 0.3, 10, 0.0, R, 0.5)] + ([(cx + 1.3, 8, 0.5, R - 0.2, 1.2)] if deep else []):
+                    for i in range(cnt):
+                        a = 2 * math.pi * (i + ph + 0.5) / cnt
+                        dy, dz = math.cos(a), math.sin(a)
+                        if cz + dz * rr < -SHELL.z / 2 + 0.25: continue          # would poke out under the egg
+                        paths.append([E(rx, dy * rr * 0.4, cz + dz * rr * 0.4), E(rx + back * 0.4, dy * rr * 0.78, cz + dz * rr * 0.78),
+                                      E(rx + back, dy * rr, cz + dz * rr)])
+                put(paths, (1, 0, 0), taper(0.8 * SC, 0.1 * SC), taper(0.8 * SC, 0.1 * SC), uv, sides=5, root=False)
+                notes.append(f"mane:tufts x{len(paths)}")
+        # --- beak: straight beaks become hooked, hooked ones long and pointed
+        if bird:
+            bk = [d for d in ds if free(d) and mid(d) and d["c"].x < -1.6 and d["n"] <= 70 and d["s"].x >= 0.9 and d["s"].z <= 2.0 and d["c"].z > -0.65]
+            if bk and (-2.0 - min(d["mn"].x for d in bk)) >= 1.6 and (max(d["mx"].z for d in bk) - min(d["mn"].z for d in bk)) / (-2.0 - min(d["mn"].x for d in bk)) <= 0.8:
+                mnx = min(d["mn"].x for d in bk); mxz = max(d["mx"].z for d in bk); mnz = min(d["mn"].z for d in bk)
+                uv = tally_main([max(bk, key=lambda d: d["s"].x * d["s"].y * d["s"].z)])
+                out_, hz = -2.0 - mnx, mxz - mnz
+                L = max(1.3, min(3.6, out_ * 1.15))
+                w = max(0.7, min(1.3, max(d["s"].y for d in bk))); h = max(0.7, min(1.2, hz))
+                z0 = mxz - 0.5 * h
+                if hz / max(0.1, out_) > 0.8:
+                    pth, st_ = [(-1.7, 0, z0), (-1.7 - 0.5 * L, 0, z0 + 0.02 * L), (-1.7 - L, 0, z0 + 0.12 * L)], "long"
+                else:
+                    pth, st_ = [(-1.7, 0, z0), (-1.7 - 0.5 * L, 0, z0 + 0.06 * L), (-1.7 - 0.85 * L, 0, z0 - 0.1 * L), (-1.7 - L, 0, z0 - 0.42 * L)], "hook"
+                kill(bk); take(*bk)
+                put([[E(*p) for p in pth]], (0, 1, 0), taper(0.5 * w * SC, 0.07 * SC), taper(0.5 * h * SC, 0.07 * SC), uv)
+                notes.append("beak:" + st_)
+        # --- wings (birds: raised and swept back) / side fins (fish: flat, sticking out, swept back)
+        if bird or fish:
+            cand = [d for d in ds if free(d) and d["pair"] and d["c"].y >= 1.7 and d["n"] <= 50 and abs(d["c"].x) < 1.3
+                    and (d["c"].z < -0.3 if fish else -1.5 < d["c"].z < 0.4) and max(d["s"]) >= 1.4 and (fish or d["s"].y <= 1.3)]
+            if cand:
+                d = max(cand, key=lambda d: d["s"].x * max(d["s"].y, d["s"].z))
+                uv = tally_main(both(d)); k = max(0.85, min(1.25 if fish else 1.0, max(d["s"]) / 2.6))
+                kill(both(d)); take(d)
+                for sgn in (1, -1):
+                    if fish:
+                        pth = [(-0.3, 1.7, -1.3), (0.1, 1.7 + 0.8 * k, -1.4), (0.7, 1.7 + 1.5 * k, -1.45), (1.3, 1.7 + 1.9 * k, -1.45)]
+                        put([[E(x, sgn * y, z) for x, y, z in pth]], (1, 0, 0), (lambda u: leaf(0.85, 0.3)(u) * k * SC), flat(0.27 * SC), uv)
+                    else:
+                        pth = [(-0.6, 1.9, -0.6), (-0.6 + 0.9 * k, 2.25, -0.2), (-0.6 + 1.8 * k, 2.45, 0.4 * k), (-0.6 + 2.5 * k, 2.5, 1.1 * k)]
+                        put([[E(x, sgn * y, z) for x, y, z in pth]], (0, 0, 1), (lambda u: leaf(0.62, 0.3)(u) * k * SC), flat(0.24 * SC), uv)
+                notes.append("fins:side" if fish else "wings:up")
+        # --- back fin (fish): taller and swept back
+        if fish:
+            cand = [d for d in ds if free(d) and mid(d) and d["c"].z > 1.2 and -1.0 < d["c"].x < 2.2 and d["s"].y <= 1.0 and d["n"] <= 60 and max(d["s"]) >= 1.5]
+            if cand:
+                d = max(cand, key=lambda d: d["s"].z)
+                uv = tally_main([d]); k = max(0.85, min(1.2, d["s"].z / 2.2)); x0 = d["c"].x - 0.6
+                kill([d]); take(d)
+                pth = [(x0, 0, 2.2), (x0 + 0.5 * k, 0, 2.2 + 0.8 * k), (x0 + 1.1 * k, 0, 2.2 + 1.5 * k)]
+                put([[E(*p) for p in pth]], (1, 0, -0.6), (lambda u: taper(1.35, 0.22, 1.0)(u) * k * SC), flat(0.26 * SC), uv)
+                notes.append("fin:back")
+        # --- tail
+        tail_done = any(k_ == "tail" for k_, _, _ in plan)
+        if not tail_done and name not in NO_TAIL:
+            rear = [d for d in ds if free(d) and d["c"].x > 1.8 and d["c"].z < 0.5 and d["n"] <= 85 and abs(d["c"].y) < 1.8 and d["mx"].x > 2.8]
+            singles = [d for d in rear if mid(d) and d["s"].y >= 0.3]
+            if singles:
+                d = max(singles, key=lambda d: max(d["s"]))
+                s = d["s"]; st_ = None
+                if fish: st_ = "fluke" if s.y >= 3.0 else ("fin" if s.z >= 2.2 and s.y <= 1.6 else None)
+                elif bird: st_ = "fan"
+                elif d["n"] <= 60 and s.x >= 2.2 and s.y <= 1.6 and s.z <= 2.9: st_ = "whip"
+                if st_:
+                    z0 = d["c"].z
+                    olds_ = rear if bird else [d]
+                    if st_ == "whip":           # spikes that sat on the old tail go with it
+                        olds_ = olds_ + [e for e in ds if free(e) and e is not d and mid(e) and e["c"].x > 2.4 and e["n"] <= 30]
+                    uv = tally_main([d])
+                    seen_ = set(); kl = []
+                    for e in olds_:
+                        for q in both(e):
+                            if id(q) not in seen_: seen_.add(id(q)); kl.append(q)
+                    kill(kl); take(*kl)
+                    if st_ == "whip":
+                        k = max(0.85, min(1.25, s.x / 3.6)); r0 = max(0.4, min(0.62, 0.5 * max(s.y, 0.8)))
+                        pth = [(1.5 + k * a, 0, -1.2 + k * (b + 1.2)) for a, b in [(0, -1.2), (1.4, -1.55), (2.7, -1.2), (3.5, -0.2), (3.4, 0.9), (2.7, 1.5)]]
+                        put([[E(*p) for p in pth]], (0, 1, 0), taper(r0 * SC, 0.1 * SC), taper(r0 * SC, 0.1 * SC), uv)
+                    elif st_ == "fin":
+                        k = max(0.8, min(1.3, s.z / 4.0))
+                        lobes = [[(0, 0), (1.0, 0.5), (1.9, 1.5), (2.3, 2.1)], [(0, 0), (1.0, -0.5), (1.9, -1.4), (2.3, -1.9)]]
+                        put([[E(1.5 + k * a, 0, z0 + k * b) for a, b in lb] for lb in lobes], (0, 0, 1), (lambda u: leaf(1.0, 0.3)(u) * k * SC), flat(0.3 * SC), uv)
+                    elif st_ == "fluke":
+                        k = max(0.8, min(1.25, s.y / 5.0))
+                        put([[E(1.5, 0, z0), E(1.5 + 1.3 * k, 0, z0), E(1.5 + 2.3 * k, sg * 0.9 * k, z0 + 0.1), E(1.5 + 3.0 * k, sg * 2.3 * k, z0 + 0.2)] for sg in (1, -1)],
+                            (0, 1, 0), (lambda u: leaf(0.8, 0.2)(u) * k * SC), flat(0.24 * SC), uv)
+                    else:
+                        k = max(0.7, min(1.0, max(s) / 3.0))
+                        fe = [[(0, 0, 0), (1.2, 0, 0.4), (2.2, 0, 1.3), (2.8, 0, 2.3)], [(0, 0.3, 0), (1.1, 0.9, 0.3), (1.9, 1.6, 1.0), (2.4, 2.1, 1.9)], [(0, -0.3, 0), (1.1, -0.9, 0.3), (1.9, -1.6, 1.0), (2.4, -2.1, 1.9)]]
+                        put([[E(1.4 + k * a, k * b, -1.0 + k * g) for a, b, g in f_] for f_ in fe], (0, 1, 0), (lambda u: leaf(0.55, 0.3)(u) * k * SC), flat(0.2 * SC), uv)
+                    notes.append("tail:" + st_)
+                    tail_done = True
+        # --- rows of back plates / mane spikes: flat triangles become round pointed spikes, taller
+        row = [d for d in ds if free(d) and mid(d) and abs(d["c"].y) < 0.1 and d["n"] <= 20 and 0.6 <= max(d["s"]) <= 1.7
+               and d["c"].x > -1.0 and d["c"].z > -1.6 and d["s"].y <= 1.1]
+        if len(row) >= 3 and name not in ANIMALS:          # (the hyena's mane spikes turned into horns: table animals keep theirs)
+            made = 0
+            for d in row:
+                p = c + SC * d["c"]
+                loc, nrm, _, dist = shell.find_nearest(p)
+                if loc is None or dist > 0.9 * SC: continue              # sits on something else (a tail): leave it
+                uv = tally_main([d])
+                hh = max(0.8, min(1.5, 1.1 * max(d["s"]))) * SC; r0 = max(0.3, min(0.55, 0.42 * max(d["s"].x, d["s"].z))) * SC
+                dr = (nrm + Vector((0.45, 0, 0))).normalized()
+                kill([d]); take(d)
+                put([[loc - nrm * 0.35 * SC, loc + dr * hh * 0.5, loc + dr * hh + Vector((0.12 * hh, 0, 0))]], (0, 1, 0), taper(r0, 0.04 * SC), taper(r0, 0.04 * SC), uv, sides=5, root=False)
+                made += 1
+            if made: notes.append(f"spikes:x{made}")
+
+    # A FACE for eggs that have none (pigeon: "maybe the pony you can add a face but it's gotta follow
+    # the face of all the other ones"): the same build as the cow's / dog's faces - square eye frames
+    # with a darker pupil block set in front, a snout block, two nostrils. Colours are the lightest and
+    # darkest flat areas of the egg's own texture (true white only if the texture has it).
+    if want.get("face"):
+        front = [d for d in ds if d["c"].x < -1.5 and abs(d["c"].y) < 1.4 and -1.8 < d["c"].z < 1.8]
+        if front:
+            notes.append("face:kept (already has one)")
+        else:
+            # flat areas of the texture (a texel whose neighbours match), so filtering can't bleed
+            lum = px[:, :, :3].mean(axis=2)
+            sat = px[:, :, :3].max(axis=2) - px[:, :, :3].min(axis=2)
+            flatness = np.zeros_like(lum)
+            for dy in (-2, 0, 2):
+                for dx_ in (-2, 0, 2):
+                    flatness = np.maximum(flatness, np.abs(np.roll(np.roll(px[:, :, :3], dy, 0), dx_, 1) - px[:, :, :3]).max(axis=2))
+            ok = (flatness < 0.03) & (px[:, :, 3] > 0.5)
+            if not ok.any(): ok = np.ones_like(lum, dtype=bool)
+
+            def pick(score):
+                s = np.where(ok, score, -9.0)
+                y, x = np.unravel_index(np.argmax(s), s.shape)
+                return Vector(((x + 0.5) / W, (y + 0.5) / H))
+            uv_light, uv_dark = pick(lum - sat), pick(-lum)
+            med = float(np.median(lum[ok]))
+            uv_snout = pick(-np.abs(lum - (med + 0.6 * (float(lum[ok].max()) - med))))
+
+            # The other eggs' eyes are white frames with black pupils. If this egg's texture has no
+            # white / black (the pony's is all browns), the eyes can't be part of the mesh: they are
+            # written out as small blocks that Studio adds as welded parts (eggs already carry welded
+            # parts for their effects), white + black on base eggs.
+            real_eyes = float((lum - sat)[ok].max()) > 0.8 and float(lum[ok].min()) < 0.12
+            # ...but the game moves and RESIZES eggs by code (EggKeeper: CFrame + Size), and welded parts
+            # don't scale with the egg. So eyes are always part of the mesh, in the lightest / darkest
+            # colours the egg's own texture has. EGG_WELD_EYES=1 brings the welded version back.
+            if os.environ.get("EGG_WELD_EYES") != "1": real_eyes = True
+            face_parts = []
+
+            def block(cy, cz, sx_, sy_, sz_, uv, sink, ahead=None, part=None):
+                """A box on the egg's front at (cy, cz), `sink` of its depth inside the shell (or just in front of `ahead`)."""
+                hit = shell.ray_cast(c + Vector((-6 * SC, cy * SC, cz * SC)), Vector((1, 0, 0)))[0]
+                if hit is None: return None
+                cx_ = (ahead - sx_ * SC / 2 + 0.04 * SC) if ahead is not None else hit.x + sx_ * SC * (sink - 0.5)
+                if part:
+                    face_parts.append([cx_, c.y + cy * SC, c.z + cz * SC, sx_ * SC, sy_ * SC, sz_ * SC, part])
+                    return cx_ - sx_ * SC / 2
+                res = bmesh.ops.create_cube(bm, size=1.0, matrix=Matrix.Translation(Vector((cx_, c.y + cy * SC, c.z + cz * SC)))
+                                            @ Matrix.Diagonal(Vector((sx_ * SC, sy_ * SC, sz_ * SC, 1))))
+                fs = list({f for v in res["verts"] for f in v.link_faces})
+                bmesh.ops.recalc_face_normals(bm, faces=fs)
+                for f in fs:
+                    for l in f.loops: l[uvl].uv = uv
+                return cx_ - sx_ * SC / 2                 # x of its front face
+
+            for sgn in (1, -1):
+                fx = block(sgn * 0.62, 0.72, 0.24, 0.72, 0.92, uv_light, 0.35, part=None if real_eyes else "white")
+                if fx is not None: block(sgn * 0.6, 0.66, 0.16, 0.46, 0.6, uv_dark, 0, ahead=fx, part=None if real_eyes else "black")
+            sx = block(0, -0.62, 1.0, 1.7, 1.15, uv_snout, 0.3)
+            if sx is not None:
+                for sgn in (1, -1): block(sgn * 0.42, -0.42, 0.14, 0.32, 0.46, uv_dark, 0, ahead=sx)
+            ob["face_parts"] = json.dumps(face_parts)
+            notes.append("face:added" + ("" if real_eyes else " (eyes as welded parts)"))
     bm.normal_update()
     bm.to_mesh(me); bm.free()
     for p in me.polygons: p.use_smooth = False
@@ -426,8 +678,10 @@ if json_out:
                 u, v = uvl[li].uv; uvs += [round(u, 5), round(1 - v, 5)]; ids.append(len(uvs) // 2)
             tris.append([me.loops[li].vertex_index + 1 for li in t.loops] + ids)
         off = ctr - (omn + omx) / 2
-        payload[src.name] = dict(verts=verts, uvs=uvs, tris=tris, offset=[round(off.x, 4), round(off.z, 4), round(-off.y, 4)])
-    json.dump(payload, open(json_out, "w"))
+        fp = [[round(p[0] - ctr.x, 4), round(p[2] - ctr.z, 4), round(-(p[1] - ctr.y), 4), round(p[3], 4), round(p[5], 4), round(p[4], 4), p[6]]
+              for p in json.loads(ob.get("face_parts", "[]"))]
+        payload[src.name] = dict(verts=verts, uvs=uvs, tris=tris, offset=[round(off.x, 4), round(off.z, 4), round(-off.y, 4)], face=fp)
+    # (no combined file: with every egg in it, it is far too big to load in Studio at once)
     _pd = json_out[:-5] + "_parts"; os.makedirs(_pd, exist_ok=True)
     for _k, _v in payload.items(): json.dump(_v, open(os.path.join(_pd, _k + ".json"), "w"))
     json.dump(sorted(payload), open(os.path.join(_pd, "index.json"), "w"))

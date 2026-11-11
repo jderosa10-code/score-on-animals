@@ -17,10 +17,12 @@ for item in open(lst).read().strip().split(","):
     name, mid, size = item.split("=")
     studio.append(dict(name=name, id=mid, size=[float(x) for x in size.split("/")], used=False))
 
-news = sorted((o for o in bpy.data.objects if o.name.endswith("_NEW") and o.name.lower().startswith("egg")), key=lambda o: o.name)
+import os, json
+SUFFIX = os.environ.get("EGG_SUFFIX", "_NEW")        # "_FEAT" for the new-feature eggs
+news = sorted((o for o in bpy.data.objects if o.name.endswith(SUFFIX) and o.name.lower().startswith("egg")), key=lambda o: o.name)
 out, lines, unmatched = [], [], []
 for i, o in enumerate(news):
-    src = bpy.data.objects[o.name[:-4]]
+    src = bpy.data.objects[o.name[:-len(SUFFIX)]]
     key = re.sub(r"\d+$", "", src.name[3:])                       # 'Eggpolarbear2' -> 'polarbear'
     d = src.dimensions                                           # Blender x, y, z = Roblox x, z, y
     cands = [s for s in studio if not s["used"] and re.sub(r"[^a-z0-9]", "", s["name"].lower()) == key]
@@ -34,6 +36,11 @@ for i, o in enumerate(news):
     cs = [v.co for v in me.vertices]
     mn = Vector((min(p.x for p in cs), min(p.y for p in cs), min(p.z for p in cs)))
     mx = Vector((max(p.x for p in cs), max(p.y for p in cs), max(p.z for p in cs)))
+    ctr = (mn + mx) / 2
+    ocs = [v.co for v in src.data.vertices]
+    octr = Vector(((min(p.x for p in ocs) + max(p.x for p in ocs)) / 2, (min(p.y for p in ocs) + max(p.y for p in ocs)) / 2, (min(p.z for p in ocs) + max(p.z for p in ocs)) / 2))
+    off = ctr - octr                                             # how far the new features moved the box centre
+    face = [[p[0] - ctr.x, p[2] - ctr.z, -(p[1] - ctr.y), p[3], p[5], p[4], p[6]] for p in json.loads(o.get("face_parts", "[]"))]
     me.transform(Matrix.Translation(-(mn + mx) / 2))             # origin = box centre, like a MeshPart
     size = mx - mn
     # which way the egg leans: average corner position, as a fraction of its size, in ROBLOX mesh
@@ -48,7 +55,8 @@ for i, o in enumerate(news):
     c.matrix_world = Matrix.Translation(((i % 14) * 30.0, (i // 14) * 30.0, 10.0))
     lines.append(f'\t["{s["id"]}"] = {{ name = "{s["name"]}", size = Vector3.new({size.x:.4f}, {size.z:.4f}, {size.y:.4f}), '
                  f'old = Vector3.new({s["size"][0]}, {s["size"][1]}, {s["size"][2]}), '
-                 f'lean = Vector3.new({lean[0]:.4f}, {lean[1]:.4f}, {lean[2]:.4f}) }},')
+                 f'lean = Vector3.new({lean[0]:.4f}, {lean[1]:.4f}, {lean[2]:.4f}), '
+                 f'off = Vector3.new({off.x:.4f}, {off.z:.4f}, {-off.y:.4f}), face = {{' + ', '.join('{{{:.3f},{:.3f},{:.3f},{:.3f},{:.3f},{:.3f},"{}"}}'.format(*p) for p in face) + '} },')
     out.append(c)
 missing = [s["name"] + "=" + s["id"] for s in studio if not s["used"]]
 print("MATCHED", len(out), "UNMATCHED_OBJ", unmatched, "MISSING_FROM_EXPORT", missing)

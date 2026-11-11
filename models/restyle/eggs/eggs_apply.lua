@@ -22,11 +22,12 @@ local Eggs = game.ReplicatedStorage.Assets.Eggs
 -- The eggs come in several files (Eggs_1 .. Eggs_5; one big file made Import 3D time out), so
 -- every imported model whose name starts with "Eggs" is used. Their parts are gathered into one.
 local imps = {}
+local function isImport(c) return c:IsA("Model") and (c.Name:find("^NewEggs") or c.Name:find("^Eggs_")) end
 for _, c in ipairs(workspace:GetChildren()) do
-	if c:IsA("Model") and c.Name:find("^Eggs") and c:FindFirstChild("SOA_AxisO", false) ~= nil then imps[#imps + 1] = c end
+	if isImport(c) and c:FindFirstChild("SOA_AxisO", false) ~= nil then imps[#imps + 1] = c end
 end
 for _, c in ipairs(workspace:GetChildren()) do
-	if c:IsA("Model") and c.Name:find("^Eggs") and not table.find(imps, c) then
+	if isImport(c) and not table.find(imps, c) then
 		for _, p in ipairs(c:GetChildren()) do if p.Name:find("^EGG_") then imps[#imps + 1] = c; break end end
 	end
 end
@@ -100,11 +101,43 @@ end
 local function swap(egg, src, m)
 	local ratio = m.size / m.old
 	local size = egg.Size * ratio
+	-- how big this egg is compared with the mesh's own units (eggs in the folders are all scale 1,
+	-- but be safe): old part size / old mesh size
+	local s = egg.Size.Y / m.old.Y
 	egg:ApplyMesh(src)
 	egg.Size = size
-	local k = (ratio.X + ratio.Y + ratio.Z) / 3
-	for _, c in ipairs(egg:GetChildren()) do
-		if c:IsA("BasePart") and c.Name == "VFXShell" then c.Size = c.Size * k end
+	if m.off then
+		-- New-feature eggs: the shell is unchanged, but taller ears / horns move the part's centre.
+		-- Everything that was placed relative to the shell (EggCenter, VFXShell) moves back with it.
+		local off = m.off * s
+		for _, c in ipairs(egg:GetChildren()) do
+			if c:IsA("Attachment") then c.Position -= off
+			elseif c:IsA("BasePart") and c.Name == "VFXShell" then c.CFrame = egg.CFrame * (egg.CFrame:ToObjectSpace(c.CFrame) * CFrame.new(-off)) end
+		end
+	else
+		local k = (ratio.X + ratio.Y + ratio.Z) / 3
+		for _, c in ipairs(egg:GetChildren()) do
+			if c:IsA("BasePart") and c.Name == "VFXShell" then c.Size = c.Size * k end
+		end
+	end
+	-- eyes for eggs whose texture has no white / black (pony): small welded blocks, like the welded
+	-- VFXShell the eggs already carry. Mutation eggs that are one plain colour get them in that colour.
+	for _, c in ipairs(egg:GetChildren()) do if c.Name == "FacePart" then c:Destroy() end end
+	for _, fp in ipairs(m.face or {}) do
+		local p = Instance.new("Part")
+		p.Name = "FacePart"; p.Size = Vector3.new(fp[4], fp[5], fp[6]) * s
+		p.CFrame = egg.CFrame * CFrame.new(Vector3.new(fp[1], fp[2], fp[3]) * s)
+		p.Material = Enum.Material.SmoothPlastic
+		p.Anchored = egg.Anchored; p.CanCollide = false; p.CanQuery = false; p.CanTouch = false; p.Massless = true
+		p.TopSurface = Enum.SurfaceType.Smooth; p.BottomSurface = Enum.SurfaceType.Smooth
+		if egg:FindFirstChildWhichIsA("SurfaceAppearance") then
+			p.Color = (fp[7] == "white") and Color3.fromRGB(245, 245, 245) or Color3.fromRGB(20, 20, 24)
+		else
+			p.Color = (fp[7] == "white") and egg.Color:Lerp(Color3.new(1, 1, 1), 0.35) or egg.Color:Lerp(Color3.new(0, 0, 0), 0.55)
+			p.Material = egg.Material; p.Reflectance = egg.Reflectance
+		end
+		local w = Instance.new("WeldConstraint"); w.Part0 = egg; w.Part1 = p; w.Parent = p
+		p.Parent = egg
 	end
 end
 
@@ -112,8 +145,10 @@ if MODE == "check" then
 	local old = workspace:FindFirstChild("EggSwapPreview"); if old then old:Destroy() end
 	local pv = Instance.new("Model"); pv.Name = "EggSwapPreview"
 	local x = 0
-	for _, name in ipairs({ "Bunny", "Akita", "Cat", "Bear", "Jellyfish", "Moose" }) do
-		local src = Eggs.GoldEggs:FindFirstChild(name)
+	-- the manifest is keyed by the ORIGINAL mesh ids, so preview from the untouched backup when there is one
+	local from = game:GetService("ServerStorage"):FindFirstChild("BaseEggsBackup_BeforeRestyle") or Eggs.GoldEggs
+	for _, name in ipairs({ "Bunny", "Wolf", "Albatross", "Dragon", "Pony", "Lion", "Whale", "Parrot" }) do
+		local src = from:FindFirstChild(name)
 		local id = src and src.MeshId:match("%d+")
 		if src and new[id] then
 			for k = 1, 2 do
@@ -130,23 +165,78 @@ if MODE == "check" then
 end
 
 -- 3. apply: back up once, then swap every egg part that uses one of the meshes
+--    Two places hold eggs: ReplicatedStorage.Assets.Eggs (the five mutation folders) and
+--    ServerStorage.BaseEggs (what the game's scripts use). Every mutation folder shares the base
+--    eggs' meshes, so swapping by mesh id gives every mutation the new model with its own look kept.
+--    The manifest is keyed by the ORIGINAL mesh ids: if an earlier restyle is in the game, the
+--    originals are put back from the backups first (the replaced folder is kept in ServerStorage).
 local SS = game:GetService("ServerStorage")
-if not SS:FindFirstChild("EggsBackup_BeforeRestyle") then
-	local b = Eggs:Clone(); b.Name = "EggsBackup_BeforeRestyle"; b.Parent = SS
-end
-local swapped, skipped, failed = 0, {}, {}
-for i, egg in ipairs(Eggs:GetDescendants()) do
-	if egg:IsA("MeshPart") then
-		local id = egg.MeshId:match("%d+")
-		if id and new[id] then
-			local ok, err = pcall(swap, egg, new[id], MAN[id])
-			if ok then swapped += 1 else failed[#failed + 1] = egg:GetFullName() .. ": " .. tostring(err) end
-		elseif egg.Name ~= "VFXShell" then
-			skipped[egg.Name] = true
+local function prog(s) workspace:SetAttribute("EggSwapProgress", s) end
+local log = {}
+local function original(folder, backupName, keepName)
+	local bk = SS:FindFirstChild(backupName)
+	if not bk then
+		local b = folder:Clone(); b.Name = backupName; b.Parent = SS
+		return folder
+	end
+	local same = true                                   -- already the originals?
+	for _, e in ipairs(folder:GetDescendants()) do
+		if e:IsA("MeshPart") and e.Name ~= "VFXShell" then
+			local o = bk:FindFirstChild(e.Name, true)
+			if o and o:IsA("MeshPart") and o.MeshId ~= e.MeshId then same = false; break end
 		end
-		if i % 100 == 0 then task.wait() end
+	end
+	if same then return folder end
+	-- nothing may be lost: the backup must hold every egg the folder has now
+	local names = {}
+	for _, e in ipairs(bk:GetDescendants()) do if e:IsA("MeshPart") then names[e.Parent.Name .. "/" .. e.Name] = true end end
+	for _, e in ipairs(folder:GetDescendants()) do
+		if e:IsA("MeshPart") and e.Name ~= "VFXShell" and not names[e.Parent.Name .. "/" .. e.Name] then
+			error(folder:GetFullName() .. " has an egg the backup does not (" .. e.Parent.Name .. "/" .. e.Name .. "): stopped, nothing changed")
+		end
+	end
+	local fresh = bk:Clone(); fresh.Name = folder.Name
+	local parent = folder.Parent
+	local oldKeep = SS:FindFirstChild(keepName); if oldKeep then oldKeep:Destroy() end
+	folder.Name = keepName; folder.Parent = SS
+	fresh.Parent = parent
+	log[#log + 1] = "originals restored into " .. fresh:GetFullName() .. " (replaced folder kept as ServerStorage." .. keepName .. ")"
+	return fresh
+end
+prog("restoring originals")
+local targets = { original(Eggs, "EggsBackup_BeforeRestyle", "Eggs_GentleRestyle_Old") }
+if SS:FindFirstChild("BaseEggs") then targets[#targets + 1] = original(SS.BaseEggs, "BaseEggsBackup_BeforeRestyle", "BaseEggs_GentleRestyle_Old") end
+local swapped, skipped, failed, tinted = 0, {}, {}, 0
+-- eggs with no new model get a slight colour shift instead (base eggs only; pigeon: "maybe slight
+-- color change on some"). Special eggs are left alone.
+local TINTS = { Color3.fromRGB(255, 232, 208), Color3.fromRGB(214, 232, 255), Color3.fromRGB(255, 222, 236), Color3.fromRGB(226, 255, 226) }
+local NO_TINT = { Hacker = true, Inverted = true, CrystalCandy = true }
+for _, root in ipairs(targets) do
+	local list = root:GetDescendants()
+	for i, egg in ipairs(list) do
+		if egg:IsA("MeshPart") and egg.Name ~= "VFXShell" and egg.Name ~= "FacePart" then
+			local id = egg.MeshId:match("%d+")
+			if id and new[id] then
+				local ok, err = pcall(swap, egg, new[id], MAN[id])
+				if ok then swapped += 1 else failed[#failed + 1] = egg:GetFullName() .. ": " .. tostring(err) end
+				task.wait()                                  -- one egg per frame: Studio stays responsive
+			else
+				skipped[egg.Name] = true
+				local sa = egg:FindFirstChildWhichIsA("SurfaceAppearance")
+				if root.Name == "BaseEggs" and sa and not NO_TINT[egg.Name] and sa.Color == Color3.new(1, 1, 1) then
+					local h = 0
+					for k = 1, #egg.Name do h = (h * 31 + egg.Name:byte(k)) % 9973 end
+					sa.Color = TINTS[h % #TINTS + 1]; tinted += 1
+				end
+			end
+			if i % 25 == 0 then prog(string.format("%s %d/%d, swapped %d", root.Name, i, #list, swapped)); task.wait() end
+		end
 	end
 end
 local sk = {}
 for n in pairs(skipped) do sk[#sk + 1] = n end
-return string.format("%s | swapped %d egg parts | failed %d | left as they were: %s\n%s", head, swapped, #failed, table.concat(sk, ","), table.concat(failed, "\n", 1, math.min(#failed, 8)))
+table.sort(sk)
+local res = string.format("%s | swapped %d egg parts | failed %d | tinted %d | %s\nno new model (%d): %s\n%s", head, swapped, #failed, tinted,
+	table.concat(log, "; "), #sk, table.concat(sk, ","), table.concat(failed, "\n", 1, math.min(#failed, 8)))
+prog("DONE " .. res:sub(1, 900))
+return res
