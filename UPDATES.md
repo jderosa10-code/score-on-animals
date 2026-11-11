@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 13:20 CT · jacob-claude
+**Done:** Sell stand (Jacob asked). The stray Workspace.LuckShop2 by the stadium is now Workspace.SellShop: recoloured red/white, billboard "Sell / SELL YOUR ANIMALS", Plot attribute removed. Standing on its "Meshes/spot" opens Menus.SellMenu (StarterPlayerScripts.HUDClient), which lists the animals in your inventory (placed ones stay) with icon, name and price; more than 5 clone Row1. SELL sells one, SELL ALL asks first (_G.SOA_Confirm). Server: ServerScriptService.GameServer actions SellAnimal(id) / SellAll; price ReplicatedStorage.GameConfig.SellValue = income x SellSeconds (60): Common $300 .. Secret $120K. Play test: Lion sold +$4,500, Sell All sold 6 for $133K, eggs kept, no errors.
+**Next:** -
+**Blockers / questions:** Jacob: SellAllButton sits on top of the 4th row in SellMenu; move it if you want.
+
 ## 2026-11-11 13:05 CT · jacob-claude
 **Done:** Deleted Workspace.AnimalShowcase (Jacob asked).
 **Next:** -
