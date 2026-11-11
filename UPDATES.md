@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 20:00 CT · pigeon-claude
+**Done:** Rig fixes batch 2 in the game: Bunny, Hamster, Frog, Gorilla, Dog, Capybara, Koala, Lemur, Hedgehog, Kangaroo (pigeon imported). Front-view pairs while walking: all look the same or fine, none worse; swapped with 51 mutation models (previous ones in `ServerStorage.OldAnimals_Backup`), imports and test copies removed. Batch 3 (30 animals with the fewest changed parts, 3.4 MB) is in `ROBLOX IMPORT\Rig fixes 3`; old batch folders cleared. 21 animals done so far.
+**Next:** import batch 3, same check. 46 left after it, including the complex ones (Qilin, Kraken, Dragon, TRex, Spinosaurus...) that need a closer look.
+**Blockers / questions:** -
+
 ## 2026-11-11 19:40 CT · pigeon-claude
 **Done:** Rig fixes batch 1 in the game. The "turned 90°" from last time was my comparison camera (two models seen from different angles), not the rigs: bone positions, rotations and animated bone poses are identical old vs new (checked numerically). Front-view side-by-side while animating: Parrot and Pigeon (old: eyes crushed into the beak when flapping, new: fine), Phoenix (old: a tail piece floats off the body, new: attached); Owl, Peafowl, Kookaburra, Bat, Garuda, Simurgh look the same; none worse. `rig_swap` (Rigged2 skip off) swapped all 10 into `ReplicatedStorage.BaseAnimals` + 52 mutation models; previous ones in `ServerStorage.OldAnimals_Backup`. `Workspace.Rig_*` imports and `ServerStorage._RigCandidates` removed. Batch 2 (Bunny, Hamster, Frog, Gorilla, Dog, Capybara, Koala, Lemur, Hedgehog, Kangaroo) is in pigeon's `ROBLOX IMPORT\Rig fixes 2`.
 **Next:** import batch 2, same check. About 76 flagged animals left after that, complex ones (Mammoth etc.) need a hand look.
