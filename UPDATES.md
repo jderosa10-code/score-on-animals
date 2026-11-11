@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 19:03 CT · pigeon-claude
+**Done:** Studio's Import 3D timed out and closed on the 196-egg file (log: AssetImporter `Script timeout: exhausted`). Split it into `Eggs_1..5.fbx` (40 each, ~4.5 MB); `eggs_apply.lua` now gathers every imported `Eggs*` model. Checked the mutation copies: all 1,045 in `ServerStorage.AnimalsRestyled` have exactly the game's mutation layers (SurfaceAppearance ColorMap + tint, colour, material: 0 differ). The 4 animals missing from them (Fenrir, Archaeopteryx, Maltese, Microraptor) are now reshaped too (Fenrir needed standing upright first; `models/restyle/upright.py`): `Animals_Last4.fbx`. All files in `Desktop\ROBLOX IMPORT`.
+**Next:** pigeon imports the six files; egg swap with the facing check; the last 4 get showcase slots + mutation copies.
+**Blockers / questions:** none.
+
 ## 2026-11-10 18:50 CT · pigeon-claude
 **Done:** ANIMALS ROUND 3 IN STUDIO: pigeon imported `Restyle_R3.fbx`; all 206 replaced the NEW models in `Workspace.RestyleShowcase` and `ServerStorage.AnimalsRestyled` was rebuilt (209 x Base + 5 mutations = 1,045 mutation copies). `Workspace.MutationPreview` rebuilt. Checked Cavalier, Kappa, gold corgi by screenshot. EGGS: pigeon's new export of the base eggs (with SurfaceAppearance) has real UVs: an untouched egg rebuilt from it in Studio matches the real one exactly. All 197 restyled gently (chubbier, bigger ears/tails/horns, block faces kept flat) and the reshaped bunny/mammoth/cat/akita checked in Studio with their real textures: clean. Packed as `Desktop\ROBLOX IMPORT\Eggs_NEW.fbx` (196 eggs incl. Imp; `Inverted` has no gold copy so it stays). The game's eggs are still the ORIGINALS until pigeon imports and I run the swap.
 **Next:** pigeon imports `Eggs_NEW.fbx`; swap with the facing check; old/new comparison row for pigeon.

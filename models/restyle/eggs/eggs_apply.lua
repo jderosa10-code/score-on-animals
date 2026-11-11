@@ -19,12 +19,22 @@ assert(MAN, "pass the table from eggs_manifest.lua")
 MODE = MODE or "check"
 local Eggs = game.ReplicatedStorage.Assets.Eggs
 
-local imp
-for _, c in ipairs(workspace:GetChildren()) do if c:IsA("Model") and c.Name:find("^Eggs_NEW") then imp = c end end
-assert(imp, "import the FBX first (Home > Import 3D > Eggs_NEW.fbx)")
-
+-- The eggs come in several files (Eggs_1 .. Eggs_5; one big file made Import 3D time out), so
+-- every imported model whose name starts with "Eggs" is used. Their parts are gathered into one.
+local imps = {}
+for _, c in ipairs(workspace:GetChildren()) do
+	if c:IsA("Model") and c.Name:find("^Eggs") and c:FindFirstChild("SOA_AxisO", false) ~= nil then imps[#imps + 1] = c end
+end
+for _, c in ipairs(workspace:GetChildren()) do
+	if c:IsA("Model") and c.Name:find("^Eggs") and not table.find(imps, c) then
+		for _, p in ipairs(c:GetChildren()) do if p.Name:find("^EGG_") then imps[#imps + 1] = c; break end end
+	end
+end
+assert(#imps > 0, "import the egg files first (Home > Import 3D > Desktop\\ROBLOX IMPORT)")
+for _, m in ipairs(imps) do
 -- 1. undo the importer's scale and rotation, using the three marker cubes (only once)
-if imp:FindFirstChild("SOA_AxisO") then
+if m:FindFirstChild("SOA_AxisO") then
+	local imp = m
 	local function axis(v)
 		local a = Vector3.new(math.abs(v.X), math.abs(v.Y), math.abs(v.Z))
 		if a.X >= a.Y and a.X >= a.Z then return Vector3.new(math.sign(v.X), 0, 0) end
@@ -40,6 +50,9 @@ if imp:FindFirstChild("SOA_AxisO") then
 	imp:SetPrimaryPartCFrame(CFrame.new(O.Position) * C:Inverse() * O.CFrame.Rotation)
 	for _, mk in ipairs({ O, Up, Fw }) do mk:Destroy() end
 end
+end
+local parts = {}
+for _, m in ipairs(imps) do for _, p in ipairs(m:GetChildren()) do parts[#parts + 1] = p end end
 
 -- 2. check every imported part: known id, right size. And check the MESH DATA faces the right way:
 --    ApplyMesh copies the mesh as it is stored, whatever way the imported part is turned in the
@@ -48,7 +61,7 @@ end
 --    manifest: the average corner position as a fraction of the size, per axis.
 local new, problems, turned, tested = {}, {}, 0, 0
 local AS = game:GetService("AssetService")
-for _, p in ipairs(imp:GetChildren()) do
+for _, p in ipairs(parts) do
 	local id = p:IsA("MeshPart") and p.Name:match("^EGG_(%d+)")
 	if id then
 		local m = MAN[id]

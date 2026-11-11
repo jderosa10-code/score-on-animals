@@ -53,6 +53,16 @@ for i, o in enumerate(news):
 missing = [s["name"] + "=" + s["id"] for s in studio if not s["used"]]
 print("MATCHED", len(out), "UNMATCHED_OBJ", unmatched, "MISSING_FROM_EXPORT", missing)
 
+# EGG_CHUNK="k/n": export only the k-th of n slices (1-based). One file with all 196 eggs made
+# Studio's Import 3D time out and close (2026-11-10), so the eggs go in several smaller files.
+# The manifest above always covers every egg.
+import os
+chunk = os.environ.get("EGG_CHUNK")
+if chunk:
+    k, nchunks = (int(a) for a in chunk.split("/"))
+    per = -(-len(out) // nchunks)
+    out = out[(k - 1) * per:k * per]
+    print("CHUNK", chunk, len(out), "eggs")
 for mname, loc in (("SOA_AxisO", (0, 0, 0)), ("SOA_AxisUp", (0, 0, 3)), ("SOA_AxisFwd", (0, 3, 0))):
     bpy.ops.mesh.primitive_cube_add(size=0.2, location=loc)
     mk = bpy.context.active_object; mk.name = mname; out.append(mk)
