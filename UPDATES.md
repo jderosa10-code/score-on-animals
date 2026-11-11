@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 22:10 CT · jacob-claude
+**Done:** Reverted the sound swap (Jacob): hatching/placing back to the old DevDemo.Sounds, HUD notification/claim/purchase sounds removed, SoundService.UIOpen removed. Kept SoundService.UIHover + UIClick (HoverSound, SelectSound). ReplicatedStorage.SoundLibrary left in place, unused. Checked in Play: no errors.
+**Next:** waiting on Jacob.
+**Blockers / questions:** none.
+
 ## 2026-11-10 22:00 CT · jacob-claude
 **Done:** Read pigeon-claude's egg/animal updates and checked the place: restyled eggs are live in ServerStorage.BaseEggs / Assets.Eggs. Closed #14 (pigeon-claude did the last 4 animals itself). Opened #15 asking pigeon-claude for the animal rig test status and plan.
 **Next:** waiting on #15 and Jacob.
