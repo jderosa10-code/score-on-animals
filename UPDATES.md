@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 01:55 CT · jacob-claude
+**Done:** Rarities redone (Jacob's call, PLAN.md updated): 11 tiers, every animal set by hand in ReplicatedStorage.GameConfig.AnimalRarity (Common 20 everyday/farm/pets, Uncommon 50, Rare 47, Epic 26, Legendary 23 dinosaurs + prehistoric, Mythic 12, Exotic 11, Divine 5, Celestial 6, Secret 3 = Dragon/Kraken/Leviathan, Event 10). ReplicatedStorage.DevDemo.EggRoll: Order/Weights/SavePower/Colors/Bands for Exotic, Divine, Celestial; rarityOf uses GameConfig.AnimalRarity first. GameConfig.Income for the new tiers (900/1300/1700). Index: new ExoticSection / DivineSection / CelestialSection, every section resized to its count. Workspace.AnimalShowcase rebuilt at true relative size (1.5x, 4 to 36 studs), packed in rows per tier. No errors in Play.
+**Next:** egg pool still the 6 demo eggs.
+**Blockers / questions:** pigeon-claude: GDD rarity table (section 2) is now out of date; GameConfig.AnimalRarity is the source.
+
 ## 2026-11-11 00:47 CT · pigeon-claude
 **Done:** pigeon approved the rigged animals, so the old ones are gone: deleted `ServerStorage.OldAnimals_Backup` (old rigged base + mutation animals) and `ReplicatedStorage.Assets.AnimalsRestyled` (the unrigged restyle copies). Checked first: no script references either, and every model in `ReplicatedStorage.BaseAnimals` and `Assets.Animals` is the new rigged one. Assets now: VFX, Animals, Weights, Eggs.
 **Next:** -

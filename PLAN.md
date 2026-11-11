@@ -72,7 +72,7 @@ A style is a few numbers per egg: reach, react, dive speed, dive type (hop, roll
 
 ## Collecting
 You collect the animals that hatch. Each has one number that matters: cash per second.
-- Rarity: Common, Rare, Epic, Legendary, Mythic, Secret
+- Rarity (Jacob, 11 Nov 2026): Common, Uncommon, Rare, Epic, Legendary, Mythic, Exotic, Divine, Celestial, Secret, plus Event (Admin + Hacker). Every animal is set by hand in GameConfig.AnimalRarity: everyday animals Common, dinosaurs Legendary, myths Mythic and up.
 - Mutation: Gold, Diamond, Rainbow, Fire (a Gold egg hatches a Gold animal)
 - Size: normal, Big, Huge (bigger eggs cover more goal and hatch bigger animals)
 - Index: sticker album, reward per finished page
