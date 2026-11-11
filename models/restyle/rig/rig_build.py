@@ -296,6 +296,63 @@ for e in data:
             main = min(segs, key=lambda s: seg_dist(cen, s[1], s[2]))[0]
             for v in isl: W[v.index] = {main: 1.0}
             rigid += 1
+    # DECORATIONS (2026-11-11, the chicken's eyes flapped with its wings): a small piece that no bone
+    # runs through, sitting on a piece at least 3x its size (the nearest such piece: the head, not the whole body; with 10x the mammoth's ears and tusks skipped its head and went to the body) (an eye, beak or comb on a head with no
+    # bone of its own), must not go to "the nearest bone" (for the eyes that was the wing). It moves
+    # exactly like the spot it sits on instead. Pieces = islands welded at shared corners (UV seams
+    # split a box into faces).
+    isls = islands_of(bm)
+    isl_of = {}
+    for k_, isl in enumerate(isls):
+        for v in isl: isl_of[v.index] = k_
+    par = list(range(len(isls)))
+
+    def find(a):
+        while par[a] != a:
+            par[a] = par[par[a]]; a = par[a]
+        return a
+    for idxs in pos_groups.values():
+        for i in idxs[1:]:
+            ra, rb = find(isl_of[idxs[0]]), find(isl_of[i])
+            if ra != rb: par[rb] = ra
+    groups_ = {}
+    for k_, isl in enumerate(isls): groups_.setdefault(find(k_), []).extend(isl)
+    eps = 0.02 * span
+    pieces = []
+    for vs in groups_.values():
+        lo = Vector((min(v.co.x for v in vs), min(v.co.y for v in vs), min(v.co.z for v in vs)))
+        hi = Vector((max(v.co.x for v in vs), max(v.co.y for v in vs), max(v.co.z for v in vs)))
+        ext = [max(hi[i] - lo[i], eps) for i in range(3)]
+        pieces.append({"vs": vs, "lo": lo, "hi": hi, "vol": ext[0] * ext[1] * ext[2], "cen": (lo + hi) / 2, "size": max(ext),
+                       "corners": len({tuple(round(c, 5) for c in v.co) for v in vs})})
+    pieces.sort(key=lambda p: -p["vol"])
+
+    def box_dist(p, lo, hi):
+        return Vector((max(lo[i] - p[i], 0.0, p[i] - hi[i]) for i in range(3))).length
+
+    def seg_box(a, b, lo, hi):
+        return min(box_dist(a.lerp(b, t / 8.0), lo, hi) for t in range(9))
+    decor = []
+    for pc in pieces:
+        if pc["corners"] > RIGID_MAX: continue
+        if min(seg_box(s[1], s[2], pc["lo"], pc["hi"]) for s in segs) <= 0.3 * pc["size"]: continue     # a bone runs through or right along it (the chicken's leg bones sit 0.11 in front of its leg blocks)
+        hosts = [h for h in pieces if h is not pc and h["vol"] >= 3 * pc["vol"]
+                 and all(h["lo"][i] - eps <= pc["hi"][i] and pc["lo"][i] <= h["hi"][i] + eps for i in range(3))]
+        if not hosts: continue
+        host = min(hosts, key=lambda h: (round(box_dist(pc["cen"], h["lo"], h["hi"]), 4), h["vol"]))   # the piece it sits on (nearest box, then the smaller one), not the whole body
+        near = min(host["vs"], key=lambda v: (v.co - pc["cen"]).length_squared)
+        old = sorted({max(W[v.index], key=W[v.index].get) for v in pc["vs"]})
+        new = dict(W[near.index])
+        if old != [max(new, key=new.get)] or len(new) > 1:
+            decor.append({"at": [round(c, 3) for c in pc["cen"]], "size": round(pc["size"], 3), "was": old, "now": max(new, key=new.get)})
+            if os.environ.get("RIG_AUDIT_DEBUG") == "1":
+                ds = sorted((round(seg_box(s[1], s[2], pc["lo"], pc["hi"]), 3), s[0], [round(c, 2) for c in s[1]], [round(c, 2) for c in s[2]]) for s in segs)[:3]
+                print("DEBUG lo", [round(c, 2) for c in pc["lo"]], "hi", [round(c, 2) for c in pc["hi"]], "corners", pc["corners"], "hostvol/vol", round(host["vol"] / pc["vol"], 1), "nearest", ds)
+        for v in pc["vs"]: W[v.index] = dict(new)
+    rep["decorations"] = decor
+    if os.environ.get("RIG_AUDIT") == "1":
+        print("AUDIT", e["name"], "changed", len(decor), json.dumps(decor))
+        bm.free(); continue
     # vertices at the same spot (split by UV seams) must move together: average them
     for idxs in pos_groups.values():
         if len(idxs) > 1:
@@ -380,6 +437,10 @@ for e in data:
     export_objs += [aob, wob]
     print("RIG", e["name"], pack, "fit", round(mism, 3), round(outside, 3), "surf", e.get("_fiterr"), "gap", e.get("_fitgap"), "warp", rep["warp"], rep["warpErr"], "unw", unw, "rigid", rigid, "tiny", tiny, "noWeight", rep["bonesWithoutWeight"], "k", round(k, 2))
 
+if os.environ.get("RIG_AUDIT") == "1":
+    json.dump(report, open(report_out, "w"), indent=1)
+    print("AUDIT DONE", len(report))
+    raise SystemExit
 # markers to measure the importer (scale and turn), like the egg exports
 for mname, loc in (("SOA_AxisO", (0, 0, 0)), ("SOA_AxisUp", (0, 0, 3)), ("SOA_AxisFwd", (0, 3, 0))):
     bpy.ops.mesh.primitive_cube_add(size=0.2, location=loc)

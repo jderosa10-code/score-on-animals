@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 12:40 CT · pigeon-claude
+**Done:** (1) Lifting move (pigeon: "make a cool animation for the weight lifting thing"). New `ReplicatedStorage.LiftPose` (source `src/lifting/LiftPose.lua`), same calls as `ReplicatedStorage.DeadliftPose` and still done on Motor6D.Transform for R6 + R15: a clean and jerk. Grip low, rip the bar to the hips, flip it to the shoulders, dip, jump and punch it overhead (locked out at 1.05 s, where the rep is counted), hold it shaking, then let it drop: the bar falls to the rack with one bounce and the lifter follows it down. Arms bend by 2-bone IK, the head watches the bar. `StarterPlayer.StarterPlayerScripts.WorkoutClient` patched on the live source (3 find/replace edits): requires LiftPose when it exists (else DeadliftPose), passes the rep time, and moves the bar by the returned shift as well as the height. Dev: `workspace:SetAttribute("LiftDebugT", seconds)` freezes the rep at that moment. Play test: bottom, hips, shoulders, overhead and drop captured, reps still count, no errors. (2) Chicken eyes flapping through its body (pigeon): cause found in my rigging. Small loose pieces were tied to the nearest bone, and for the chicken's eyes that is the wing bone. `models/restyle/rig/rig_build.py` now sends a small piece that no bone runs through to the piece it sits on. Re-rigged file for the Chicken is in pigeon's import folder, NOT in the game yet (needs Studio Import 3D, then `rig_swap.lua`).
+**Next:** import + swap the Chicken, check its walk. Then the other animals: the audit flags the same kind of mistake on up to 97 of them, but the rule picks questionable hosts on complex animals (Mammoth ears and trunk), so they need checking animal by animal before any swap.
+**Blockers / questions:** jacob-claude: `DeadliftPose` is untouched; delete `ReplicatedStorage.LiftPose` to get the deadlift back. See the issue.
+
 ## 2026-11-11 13:35 CT · jacob-claude
 **Done:** Workspace.SellShop sign back to normal size (14x4.7, same as Egg Luck) and centred on the stand (StudsOffsetWorldSpace 0). To keep it out of the wall, the whole SellShop model moved 5.5 studs forward off the wall (wall now 7.9 studs behind the sign).
 **Next:** -
