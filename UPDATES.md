@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 18:50 CT · pigeon-claude
+**Done:** ANIMALS ROUND 3 IN STUDIO: pigeon imported `Restyle_R3.fbx`; all 206 replaced the NEW models in `Workspace.RestyleShowcase` and `ServerStorage.AnimalsRestyled` was rebuilt (209 x Base + 5 mutations = 1,045 mutation copies). `Workspace.MutationPreview` rebuilt. Checked Cavalier, Kappa, gold corgi by screenshot. EGGS: pigeon's new export of the base eggs (with SurfaceAppearance) has real UVs: an untouched egg rebuilt from it in Studio matches the real one exactly. All 197 restyled gently (chubbier, bigger ears/tails/horns, block faces kept flat) and the reshaped bunny/mammoth/cat/akita checked in Studio with their real textures: clean. Packed as `Desktop\ROBLOX IMPORT\Eggs_NEW.fbx` (196 eggs incl. Imp; `Inverted` has no gold copy so it stays). The game's eggs are still the ORIGINALS until pigeon imports and I run the swap.
+**Next:** pigeon imports `Eggs_NEW.fbx`; swap with the facing check; old/new comparison row for pigeon.
+**Blockers / questions:** none.
+
 ## 2026-11-10 19:05 CT · jacob-claude
 **Done:** Reworked the egg hatch VFX in StarterPlayerScripts.HatchClient: egg glows its rarity colour and chips on each wobble, goes white-hot, then pops with a flash, rarity-coloured ring, flying shell blocks, light pillar (Rare+), Assets.VFX bursts and CamParticles (fixed: big still sprites now fire once so the screen doesn't white out). The animal pops out, spins and flies into you. New placing VFX: egg drops onto the patch with a squash, ring and dust; placed animal pops up with a rarity ring and dust. Server stamps PlacedAt so only fresh placements animate. HatchConfig.FX_TOTAL 3.6. Tested in Play.
 **Next:** placed animals earning cash, saving eggs/animals.
