@@ -10,6 +10,7 @@ local TweenService = game:GetService("TweenService")
 local RS = game:GetService("ReplicatedStorage")
 local EggKeeper = require(RS.Keeper.EggKeeper)
 local KA = require(RS.Keeper.KeeperAnimator)
+local G = require(RS:WaitForChild("GameConfig"))   -- luck roll, strength per egg, ball speed, aim zones
 local gameSpeed, gameSpeedTarget = 1, 1            -- whole-game slow motion while you aim
 local function DBG() return workspace:GetAttribute("DebugSpeed") or 1 end   -- dev only: slow motion / pause for checking animations
 -- hit-stop: a few frozen frames on a big impact (the strike, a save, the net). Camera shake keeps running.
@@ -42,7 +43,7 @@ local SPOT = Vector3.new(ORIGIN.X, KICK_GROUND + 0.9, KICK_FRONT - 3.5)   -- the
 local BALL_SPEED = 75                            -- studs per second (before slow motion)
 local ballModel = workspace:WaitForChild("SoccerBall")
 local ballR = 0.9
-local ROSTER = {"Chicken", "Giraffe", "Turtle", "Elephant", "TRex", "Blobfish"}
+local ROSTER = G.EggPool                         -- every egg you can roll
 local STYLE = {Blobfish = EggKeeper.Styles.Fish}
 
 local folder = Instance.new("Folder"); folder.Name = "PenaltyDemo"; folder.Parent = workspace
@@ -188,24 +189,49 @@ local function loadKS(name) return load(KSP:RegisterKeyframeSequence(KA6[name]))
 local tIdle = isR15 and load("rbxassetid://507766666") or load("rbxassetid://180435571"); tIdle.Looped = true; tIdle.Priority = Enum.AnimationPriority.Idle        -- R6 default idle
 local tWalk = isR15 and load("rbxassetid://507777826") or load("rbxassetid://180426354"); tWalk.Looped = true; tWalk.Priority = Enum.AnimationPriority.Movement    -- R6 default walk
 local tCheer = isR15 and load("rbxassetid://507770677") or load("rbxassetid://129423030"); tCheer.Priority = Enum.AnimationPriority.Action                         -- R6 default cheer
-local tBack = loadKS("BackStep"); tBack.Looped = true; tBack.Priority = Enum.AnimationPriority.Movement   -- RigDirectors
-local tStance = loadKS("Stance"); tStance.Looped = true; tStance.Priority = Enum.AnimationPriority.Idle     -- RigDirectors
-local tRun = loadKS("RunUp"); tRun.Looped = false; tRun.Priority = Enum.AnimationPriority.Action           -- RigDirectors, 1.4 s
-tKick = loadKS("Kick"); tKick.Priority = Enum.AnimationPriority.Action2
-local tSlide = loadKS("Slide"); tSlide.Priority = Enum.AnimationPriority.Action3    -- PERFECT: slide into the ball
+-- footwork + strikes: KickerAnimKit's set (ServerStorage.KickerAnimKit builds it) when it is there, else the older clips
+local function clip(new, old) return KA6:FindFirstChild(new) and new or old end
+local N_BACK, N_SET, N_RUN = clip("PenaltyRetreat3", "PenaltyRetreat"), clip("PenaltySet3", "PenaltySet"), clip("PenaltyApproach3", "PenaltyApproach")
+local N_KICK, N_PERFECT = clip("PenaltyStrike3", "PenaltyLacesDrive"), clip("PenaltyPerfect3", "PenaltyScissorVolley")
+local tBack = loadKS(N_BACK)
+tBack.Looped = false
+tBack.Priority = Enum.AnimationPriority.Action
+local tStance = loadKS(N_SET)
+tStance.Looped = true
+tStance.Priority = Enum.AnimationPriority.Action
+local tRun = loadKS(N_RUN)
+tRun.Looped = false
+tRun.Priority = Enum.AnimationPriority.Action
+local strikes = {}
+for _, name in {N_KICK, N_PERFECT} do
+	-- The authored contact offset scales with the avatar. This also works on characters
+	-- whose animated joints are constraints or have not replicated yet.
+	local seq = KA6:WaitForChild(name)
+	local track = loadKS(name)
+	track.Looped = false
+	track.Priority = Enum.AnimationPriority.Action2
+	strikes[name] = {
+		track = track,
+		time = seq:GetAttribute("ContactTime"),
+		toeRatio = seq:GetAttribute("ContactOffsetRatio"),
+		flickRatio = seq:GetAttribute("FlickOffsetRatio"),
+		flickTime = seq:GetAttribute("FlickTime"),
+		chargeTime = seq:GetAttribute("ChargeTime"),     -- PERFECT: the wound-up frame that is held for a beat
+	}
+end
+tKick = strikes[N_KICK].track
 local tCeleb = loadKS("Celebrate"); tCeleb.Priority = Enum.AnimationPriority.Action3 -- jump, spin, arms out
 if not ownChar then tIdle:Play() end
 local inRound = not isClient     -- in Run there is no player: the stand-in just keeps going
-local ours = {[tIdle] = true, [tWalk] = true, [tRun] = true, [tCheer] = true, [tKick] = true, [tBack] = true, [tStance] = true, [tSlide] = true, [tCeleb] = true}
+local ours = {[tIdle] = true, [tWalk] = true, [tRun] = true, [tCheer] = true, [tKick] = true, [tBack] = true, [tStance] = true, [strikes[N_PERFECT].track] = true, [tCeleb] = true}
 animator.AnimationPlayed:Connect(function(t) if inRound and ownChar and not ours[t] then t:Stop(0) end end)
 
 local HRP_OFF = isR15 and (hum.HipHeight + hrp.Size.Y / 2) or (rig["Right Leg"].Size.Y + rig.Torso.Size.Y / 2)   -- root height above the floor
 local HRP_Y = KICK_GROUND + HRP_OFF
-local KICK_POS = Vector3.new(SPOT.X + 0.5, HRP_Y, SPOT.Z - 2.9)   -- right foot meets the back of the ball at "Contact"
-local BALL_POS = Vector3.new(SPOT.X + 0.6, HRP_Y, SPOT.Z - 2.4)   -- standing over the ball
-local WAIT_POS = KICK_POS + Vector3.new(5, 0, -11)                  -- well back, to the left of the ball
-local SLIDE_POS = Vector3.new(SPOT.X + 1.1, HRP_Y, SPOT.Z - 2.9)   -- where the slide meets the ball ("Contact" in Slide)
-local SLIDE_FROM = SLIDE_POS + Vector3.new(0.6, 0, -4.5)           -- where he drops into the slide
+local BALL_POS = Vector3.new(SPOT.X + 0.6, HRP_Y, SPOT.Z - 2.4)
+local retreatDir = Vector3.new(0.36, 0, -0.933).Unit
+local WAIT_POS = BALL_POS + retreatDir * KA6[N_BACK]:GetAttribute("TravelByHeight") * HRP_OFF
+
 local yawNow = 0
 local function setRig(pos, yaw) yawNow = yaw; hrp.CFrame = CFrame.new(pos) * CFrame.Angles(0, math.pi + yaw, 0) end
 if not ownChar then setRig(BALL_POS, 0) end
@@ -244,8 +270,38 @@ RunService.Heartbeat:Connect(function()
 	local sp = gameSpeed * DBG() * (frozen() and 0.02 or 1)
 	if sp == animSpeedApplied then return end
 	animSpeedApplied = sp
-	for t in pairs(ours) do if t.IsPlaying and t ~= tKick then t:AdjustSpeed(sp) end end
+	for t in pairs(ours) do if t.IsPlaying and t ~= tKick and t ~= tRun and t ~= tBack then t:AdjustSpeed(sp) end end
 end)
+-- The sequence stores the distance traveled at each pose. Use the same clock for both
+-- so the support boot stays planted as the character crosses the pitch.
+local function playFootwork(track, sequence, destination, heading)
+	local frames = sequence:GetKeyframes()
+	table.sort(frames, function(a,b) return a.Time < b.Time end)
+	local origin, initialYaw = hrp.Position, yawNow
+	local deltaYaw = (heading-initialYaw+math.pi) % (2*math.pi)-math.pi
+	local duration = frames[#frames].Time
+	local elapsed, index = 0, 1
+	track:Play(0.09, 1, 0)
+	while true do
+		while index < #frames and elapsed >= frames[index+1].Time do
+			index += 1
+			local sound = frames[index]:GetAttribute("Footstep")
+			if sound then sfx(sound, track == tBack and 0.14 or 0.23, 1) end
+		end
+		local current = frames[index]
+		local travel = current:GetAttribute("Travel")
+		local following = frames[index+1]
+		if following then
+			local alpha = (elapsed-current.Time)/(following.Time-current.Time)
+			travel += (following:GetAttribute("Travel")-travel)*alpha
+		end
+		setRig(origin:Lerp(destination, travel), initialYaw + deltaYaw*ease(math.min(1,elapsed/0.22)))
+		if track.Length > 0 then track.TimePosition = math.min(elapsed, track.Length-.0001) end
+		if elapsed >= duration then break end
+		elapsed = math.min(duration, elapsed+step())
+	end
+end
+
 local function onKickArea()
 	local kcf, ksz = A:GetAttribute("KickCF"), A:GetAttribute("KickSize")
 	local c = player and player.Character
@@ -287,13 +343,40 @@ local nameLbl
 local showOdds = function() end                       -- "1/28" at the bottom, in the timing-result style
 local aimShot = function() return nil end             -- slow motion + click the goal; returns the spot (goal space) or nil
 local clearAim = function() end
+-- this round: the egg (the server rolls it), the aim-zone seed, which try, and the shot that scored
+local roundEgg, roundSeed, tryNo, scoreShot = nil, 0, 1, nil
+local aimZones = nil          -- this shot's green/red zones (GameConfig.AimZones), shown while aiming
+local hideZones = function() end   -- removes the zones at the strike; your aim marker stays
+local showCaption = function() end -- big text in the TimingResult style: showCaption(key, text, colour, y, height)
+local hideCaption = function() end -- hideCaption(key, fadeSeconds)
+-- full-screen fade: black when you step onto the kick area, a white flash when you teleport home
+local fadeFrame
+local function screenFade(color, alpha, t)
+	if not (isClient and player) then return end
+	if not fadeFrame then
+		local g = Instance.new("ScreenGui")
+		g.Name = "ScreenFade"; g.IgnoreGuiInset = true; g.ResetOnSpawn = false; g.DisplayOrder = 100
+		g.Parent = player:WaitForChild("PlayerGui")
+		fadeFrame = Instance.new("Frame")
+		fadeFrame.Size = UDim2.fromScale(1, 1); fadeFrame.BorderSizePixel = 0; fadeFrame.BackgroundTransparency = 1
+		fadeFrame.Parent = g
+	end
+	if color then fadeFrame.BackgroundColor3 = color end
+	TweenService:Create(fadeFrame, TweenInfo.new(t, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), {BackgroundTransparency = 1 - alpha}):Play()
+end
+local function luckText(l)
+	local s = string.format("%.2f", l):gsub("0+$", ""):gsub("%.$", "")
+	return s .. "X LUCK"
+end
+local function myLuck() return (player and player:GetAttribute("Luck")) or folder:GetAttribute("Luck") or 1 end
+local function myStrength() return (player and player:GetAttribute("Strength")) or G.StartStrength end
 -- returns the timing zone the player stopped on: 1 Perfect, 2 Great, 3 Good, 4 Weak, 5 Miss
 local waitForClick = function() task.wait(1.8); return math.random(1, 5) end
 if isClient then
 	local cam = workspace.CurrentCamera
 	local tvCam = false
 	-- shots that cut in hard; the rest (wide, ball) glide like before
-	local CUT_SHOTS = {walk = true, hold = true, aim = true, kicker = true, celebrate = true, egg = true, save = true, net = true, claim = true}
+	local CUT_SHOTS = {walk = true, hold = true, aim = true, kicker = true, powerKick = true, celebrate = true, egg = true, save = true, net = true, claim = true}
 	local lastShot
 	local inShow = false
 	UIS.InputBegan:Connect(function(i, gp)
@@ -375,6 +458,39 @@ if isClient then
 		Common = Color3.fromRGB(150, 255, 110), Uncommon = Color3.fromRGB(60, 240, 210), Rare = Color3.fromRGB(70, 160, 255),
 		Epic = Color3.fromRGB(205, 80, 255), Legendary = Color3.fromRGB(255, 205, 30), Mythic = Color3.fromRGB(255, 70, 130),
 	}   -- Secret / Admin (and anything rarer) get the rainbow, like PERFECT
+	-- captions (TAP TO KICK!, your luck, the egg you won): clones of the TimingResult label, one per key
+	local caps = {}
+	showCaption = function(key, text, color, y, h)
+		local l = caps[key]
+		if not (l and l.Parent) then
+			local src = player.PlayerGui:FindFirstChild("TimingResult")
+			local res = src and src:FindFirstChild("Result")
+			if not res then return end
+			local g = Instance.new("ScreenGui")
+			g.Name = "Caption_" .. key; g.ResetOnSpawn = false; g.DisplayOrder = 41
+			g.Parent = player.PlayerGui
+			l = res:Clone(); l.Name = "Text"
+			local sh = l:FindFirstChild("Shadow"); if sh then sh:Destroy() end
+			l.Parent = g
+			caps[key] = l
+		end
+		l.Position = UDim2.fromScale(0.5, y or 0.5); l.Size = UDim2.fromScale(0.5, h or 0.07)
+		local rb = l:FindFirstChild("Rainbow"); if rb then rb.Enabled = color == nil end
+		l.Text = text; l.TextColor3 = color or Color3.new(1, 1, 1); l.TextTransparency = 0; l.Rotation = 0
+		local st = l:FindFirstChildOfClass("UIStroke"); if st then st.Transparency = 0 end
+		l.Visible = true
+		local sc = l:FindFirstChildOfClass("UIScale")
+		if sc then sc.Scale = 0.6; TweenService:Create(sc, TweenInfo.new(0.25, Enum.EasingStyle.Back), {Scale = 1}):Play() end
+	end
+	hideCaption = function(key, fade)
+		local l = caps[key]
+		if not (l and l.Parent and l.Visible) then return end
+		if not fade then l.Visible = false; return end
+		local st = l:FindFirstChildOfClass("UIStroke")
+		TweenService:Create(l, TweenInfo.new(fade), {TextTransparency = 1}):Play()
+		if st then TweenService:Create(st, TweenInfo.new(fade), {Transparency = 1}):Play() end
+		task.delay(fade, function() if l.TextTransparency > 0.95 then l.Visible = false end end)
+	end
 	local oddsTok = 0
 	local oddsLbl
 	showOdds = function(text, rarity, final, eggName, mutation)
@@ -453,7 +569,34 @@ if isClient then
 	local TARGET_IMG = "rbxassetid://132576202596882"
 	local AIM_TOP = 8.5                     -- highest aimable point (under the crossbar)
 	local aimPart
-	clearAim = function() if aimPart then aimPart:Destroy(); aimPart = nil end end
+	-- AIM ZONES: Jacob's aim UI reads folder attribute "AimZones" (JSON list of {kind, x, y, r} in goal studs,
+	-- x from the goal's centre, y from the ground) while it is set. Until that UI exists, flat green/red discs
+	-- on the goal stand in for it (turn them off with the workspace attribute AimZonePlaceholder = false).
+	local zoneParts = {}
+	local function clearZones()
+		for _, z in zoneParts do z:Destroy() end
+		table.clear(zoneParts)
+		folder:SetAttribute("AimZones", nil)
+	end
+	local function showZones(zones)
+		clearZones()
+		if not zones then return end
+		folder:SetAttribute("AimZones", game:GetService("HttpService"):JSONEncode(zones))
+		if workspace:GetAttribute("AimZonePlaceholder") == false then return end
+		for _, z in zones do
+			local d = Instance.new("Part")
+			d.Name = "AimZonePlaceholder"; d.Shape = Enum.PartType.Cylinder
+			d.Anchored = true; d.CanCollide = false; d.CanQuery = false; d.CanTouch = false; d.CastShadow = false
+			d.Material = Enum.Material.Neon; d.Transparency = 0.55
+			d.Color = z.kind == "green" and Color3.fromRGB(60, 230, 90) or Color3.fromRGB(235, 60, 60)
+			d.Size = Vector3.new(0.05, z.r * 2, z.r * 2)
+			d.CFrame = goal.cf * CFrame.new(z.x, z.y, z.kind == "green" and -0.5 or -0.45) * CFrame.Angles(0, math.rad(90), 0)
+			d.Parent = folder
+			table.insert(zoneParts, d)
+		end
+	end
+	clearAim = function() if aimPart then aimPart:Destroy(); aimPart = nil end; clearZones() end
+	hideZones = clearZones
 	local function goalPoint(pos, isViewport)
 		local ray = isViewport and cam:ViewportPointToRay(pos.X, pos.Y) or cam:ScreenPointToRay(pos.X, pos.Y)
 		local n = goal.cf.LookVector
@@ -479,6 +622,7 @@ if isClient then
 		img.Size = UDim2.fromScale(1, 1); img.BackgroundTransparency = 1; img.Image = TARGET_IMG; img.ImageTransparency = 0.55
 		img.Parent = bb
 		aimPart = p
+		showZones(aimZones)
 		gameSpeedTarget = 0.12
 		camShot = "aim"; camFov = 30
 		crowd("aim")
@@ -536,6 +680,7 @@ if isClient then
 		-- the marker sweeps up and down at a constant speed (no slowing at the ends)
 		local t, y = 0, BAR_H - 13
 		local PERIOD = 1.1                                                -- seconds for bottom -> top -> bottom
+		showCaption("tap", "TAP TO KICK!", Color3.new(1, 1, 1), 0.86, 0.075)
 		while not clicked and not folder:GetAttribute("Go") do
 			t += step()
 			local ph = (t / PERIOD) % 1
@@ -543,6 +688,7 @@ if isClient then
 			y = (BAR_H - 13) - p * (BAR_H - 26)       -- the marker's centre goes from the very bottom to the very top
 			if line then line.Position = UDim2.fromScale(0, y / BAR_H) end
 		end
+		hideCaption("tap")
 		local forced = folder:GetAttribute("Go")
 		folder:SetAttribute("Go", nil)
 		con:Disconnect()
@@ -582,7 +728,7 @@ if isClient then
 			want = CFrame.lookAt(Vector3.new(k.X - 9, k.Y + 1, k.Z - 9), goalMid:Lerp(k, 0.06) + Vector3.new(0, 1.2, 0))
 		elseif camShot == "walk" then
 			-- low and back, looking up at the player so you see the feet
-			want = CFrame.lookAt(Vector3.new(k.X - 3.5, k.Y - 2.2, k.Z - 11), k + Vector3.new(0, 0.6, 0))
+			want = CFrame.lookAt(k + Vector3.new(-7.5, 0.35, -8.5), k:Lerp(SPOT, 0.2))
 		elseif camShot == "celebrate" then
 			-- low and in front of him (he has spun round to face this way), so you see the celebration
 			want = CFrame.lookAt(Vector3.new(k.X - 2.5, k.Y + 0.6, k.Z - 8.5), k + Vector3.new(0, 0.6, 0))
@@ -603,6 +749,12 @@ if isClient then
 			want = CFrame.lookAt(goalMid + Vector3.new(-camSide * 3.5, -1.7, -9), b:Lerp(goalMid, 0.4))
 		elseif camShot == "hold" then
 			want = CFrame.lookAt(Vector3.new(k.X - 5.2, k.Y + 3, k.Z - 12.5), goalMid)
+		elseif camShot == "powerKick" then
+			-- On the kicking-foot side, keep the ball and the planted leg in the same shot.
+			local ball = ballModel:GetPivot().Position
+			-- (when the ball is flicked up for the PERFECT volley the shot tilts up with it, so the leap stays in frame)
+			local focus = k:Lerp(ball, 0.32) + Vector3.yAxis*(0.5 + math.max(0, ball.Y - SPOT.Y)*0.5)
+			want = CFrame.lookAt(k + Vector3.new(-9, 0.8, -6), focus)
 		elseif camShot == "kicker" or camShot == "ball" then
 			-- behind and over the right shoulder (your right is -X here), kept low for drama
 			local eye, look
@@ -613,8 +765,8 @@ if isClient then
 				eye = Vector3.new(k.X - 6.5, k.Y + 2.2, k.Z - 7):Lerp(Vector3.new(b.X - 4, b.Y + 2.5, b.Z - 10), away)
 				look = b:Lerp(goalMid, 0.15)
 			else
-				eye = Vector3.new(k.X - 3.2, k.Y + 2.4, k.Z - 9.5)
-				look = goalMid
+				eye = k + Vector3.new(-6.5, 1.15, -8.5)
+				look = k:Lerp(SPOT, 0.5) + Vector3.new(0, 0.45, 0)
 			end
 			want = CFrame.lookAt(eye, look)
 		else
@@ -806,33 +958,19 @@ local function touchingEgg(egg, p)
 	return (lp.X / h.X) ^ 2 + (lp.Y / h.Y) ^ 2 + (lp.Z / h.Z) ^ 2 <= 1
 end
 
--- perfect = true: the timing bar hit PERFECT -> the kicker slides into the ball and hammers it
+-- perfect = true: the timing bar hit PERFECT -> the kicker coils and whips the strike across their body
 local function shoot(egg, target, willSave, perfect, zone)
 	setBars(0.07)
-	camShot = "walk"; camFov = 52
-	task.wait(0.5)
-	tIdle:Stop(0.4)
-	-- back-steps to the run-up spot (RigDirectors BackStep), the body turned partly toward where he's
-	-- stepping so it reads as backing up, not a moonwalk; then squares up to the ball again
-	local function turnTo(yaw, dur)
-		local y0, pos, t = yawNow, hrp.Position, 0
-		local diff = (yaw - y0 + math.pi) % (2 * math.pi) - math.pi
-		while t < dur do
-			setRig(pos, y0 + diff * easeInOut(math.min(1, t / dur)))
-			t += step()
-		end
-		setRig(pos, y0 + diff)
-	end
-	local away = WAIT_POS - hrp.Position
-	local backYaw = math.atan2(away.X, away.Z) - math.pi       -- back pointing straight where he's stepping
-	backYaw = (backYaw + math.pi) % (2 * math.pi) - math.pi
-	-- about 40 degrees, turned the side he's stepping toward
-	moveRig(WAIT_POS, 4.2, tBack, 3.0, easeInOut, math.rad(40) * math.sign(backYaw))   -- big slow steps back, turned partway
-	tBack:Stop(0.4); tStance:Play(0.4)
-	turnTo(0, 0.45)
+	camShot = "walk"; camFov = 49
+	tIdle:Stop(0.12)
+	local toBall = hrp.Position - WAIT_POS
+	playFootwork(tBack, KA6[N_BACK], WAIT_POS, math.atan2(toBall.X, toBall.Z))
+	tStance:Play(0.09)
+	tBack:Stop(0.09)
 	camShot = "hold"
 	setBars(0.025); camFov = 40
 	zone = waitForClick()
+	aimZones = roundEgg and G.AimZones(roundEgg, roundSeed + tryNo) or nil   -- new zones every shot
 	if perfect == nil then perfect = zone == 1 end
 	if willSave == nil then willSave = zone >= 4 end
 	if perfect then
@@ -855,67 +993,92 @@ local function shoot(egg, target, willSave, perfect, zone)
 	end
 	setBars(0.09); camFov = 60
 	camShot = "kicker"
-	tStance:Stop(0.2)
-	egg:ready()                      -- the egg gets on its toes as you start your run
-	local contact = false
-	local runDone = false
-	local runT = 0
-	local RUN = tRun.Length > 0 and tRun.Length or 1.4
-	local accel = function(t) return t * t * (1.5 - 0.5 * t) end
-	if perfect then
-		-- 4 strides of the run-up, then drop into the slide and skid into the ball
-		local runPart = 1.0
-		task.spawn(function()
-			local from = hrp.Position
-			local t = 0
-			tRun:Play(0.15)
-			while t < runPart do setRig(from:Lerp(SLIDE_FROM, accel(t / runPart)), 0); t += step(); runT = t end
-			local con = tSlide:GetMarkerReachedSignal("Contact"):Connect(function() contact = true end)
-			tSlide:Play(0.1); tRun:Stop(0.12)
-			sfx("Whoosh", 0.6, 0.55)
-			local s0, t2, SL = hrp.Position, 0, 0.5
-			while t2 < SL do
-				local a = t2 / SL
-				setRig(s0:Lerp(SLIDE_POS, 1 - (1 - a) ^ 2), 0)          -- fast in, skidding to a stop
-				t2 += step()
-			end
-			setRig(SLIDE_POS, 0)
-			while not contact do step() end
-			con:Disconnect()
-			runDone = true
-		end)
-		local aimed = aimShot()
-		if aimed then target = aimed end
-		while not runDone do step() end
-	else
-		task.spawn(function()
-			local from = hrp.Position
-			local t = 0
-			tRun:Play(0.15)
-			while t < RUN do setRig(from:Lerp(KICK_POS, accel(t / RUN)), 0); t += step(); runT = t end
-			setRig(KICK_POS, 0)
-			runDone = true
-		end)
-		local aimed = aimShot()
-		if aimed then target = aimed end
-		while runT < RUN - 0.14 do step() end
-		local con = tKick:GetMarkerReachedSignal("Contact"):Connect(function() contact = true end)
-		tKick:Play(0.14)
-		tRun:Stop(0.14)
-		while not runDone do step() end
-		local t0 = os.clock()
-		while not contact and os.clock() - t0 < 0.5 do step() end
-		con:Disconnect()
-	end
-
-	camShot = "ball"; camFov = perfect and 36 or 42
+	egg:ready()
+	local aimed = aimShot()
+	if aimed then target = aimed end
 	local world = (goal.cf * CFrame.new(target.X, target.Y, -0.4)).Position
-	local hitPos, hitNet, dir = netHit(SPOT, world)
+	local direction = (world - SPOT) * Vector3.new(1, 0, 1)
+	direction = direction.Unit
+	local strike = perfect and strikes[N_PERFECT] or strikes[N_KICK]
+	tKick = strike.track
+	local avatarSize = Vector3.new(hrp.Size.X, HRP_OFF, HRP_OFF)
+	local localToe = (strike.flickRatio or strike.toeRatio) * avatarSize
+	local height = HRP_Y + localToe.Y - SPOT.Y
+	local depth = math.sqrt(math.max(0, ballR*ballR-height*height))*0.94
+	-- wide-bodied avatars: keep the ball clear of the belly (the boot then stops a little short of it)
+	local chest = rig:FindFirstChild("UpperTorso")
+	local belly = chest and math.max(0, chest.Size.Z/2 - 0.5) or 0
+	local contactPoint = SPOT-direction*(depth + (strike.flickTime and 0 or belly*0.6))
+	-- Approach at an angle. Align the swinging instep with the ball along that line.
+	local heading, plant = yawNow, hrp.Position
+	for _ = 1, 4 do
+		local toe = CFrame.Angles(0, math.pi+heading, 0):VectorToWorldSpace(localToe)
+		plant = Vector3.new(contactPoint.X-toe.X, HRP_Y, contactPoint.Z-toe.Z)
+		local path = plant-hrp.Position
+		heading = math.atan2(path.X,path.Z)
+	end
+	camShot = perfect and "powerKick" or "kicker"
+	camFov = perfect and 49 or 54
+	tStance:Stop(0.10)
+	playFootwork(tRun, KA6[N_RUN], plant, heading)
+	local releaseSpot = SPOT
+	if strike.flickTime then
+		local boot = CFrame.Angles(0, math.pi+heading, 0):VectorToWorldSpace(strike.toeRatio*avatarSize)
+		releaseSpot = plant + boot + direction*(ballR*0.92 + belly)
+	end
+	local contact = false
+	local marker = tKick:GetMarkerReachedSignal("Contact"):Connect(function() contact = true end)
+	tKick:Play(0.055, 1, curScale)
+	tRun:Stop(0.065)
+	local elapsed, flicked, charged = 0, false, false
+	while not contact and tKick.TimePosition < strike.time and elapsed < strike.time + 0.25 do
+		elapsed += step()
+		local clock = tKick.Length > 0 and tKick.TimePosition or elapsed
+		if strike.chargeTime and not charged and clock >= strike.chargeTime then
+			-- PERFECT: fully wound up in the air, held for a beat before the smash
+			charged = true
+			camFov = 45
+			burst("Gold", ballMesh, nil, 0.7)
+			sfx("WhooshBig", 0.7, 1.45)
+			sfx("BarPop", 0.6, 1.8)
+			shake(0.3, 0.3)
+			hitStop(0.3)
+		end
+		if strike.flickTime then
+			local u = math.clamp((clock-strike.flickTime)/(strike.time-strike.flickTime), 0, 1)
+			if u > 0 then
+				if not flicked then
+					flicked = true
+					sfx("Bounce", 0.30, 1.26)
+					sfx("Whoosh", 0.40, 1.12)
+				end
+				local rise = math.max(0,releaseSpot.Y-SPOT.Y)
+				if strike.chargeTime then
+					-- popped up fast, hangs while the kicker spins under it, drops onto the boot
+					local flat = SPOT:Lerp(releaseSpot, 1 - (1 - u) ^ 4)
+					ballTo(Vector3.new(flat.X, SPOT.Y + rise*((1 - (1 - u) ^ 2.4) + 0.2*math.sin(math.pi*u)), flat.Z))
+				else
+					ballTo(SPOT:Lerp(releaseSpot,u) + Vector3.yAxis*(rise*u*(1-u)))
+				end
+			end
+		end
+	end
+	marker:Disconnect()
+	-- the kick's strength = your Strength x timing x aim zone. Below what this egg needs, it saves the ball.
+	local kickStrength = 100
+	if isClient and roundEgg then
+		kickStrength = myStrength() * (G.ZoneStrength[zone] or 1) * (aimZones and G.aimMult(aimZones, target.X, target.Y) or 1)
+		willSave = kickStrength < G.StrengthFor(roundEgg)
+		scoreShot = {zone = zone, x = target.X, y = target.Y, try = tryNo}
+	end
+	local hitPos, hitNet, dir = netHit(releaseSpot, world)
 	local ballPart = ballMesh
 	local blast = perfect and not willSave      -- far more power than the egg can handle: the ball takes the egg with it
-	local speed = perfect and BALL_SPEED * 1.3 or BALL_SPEED
-	local shotDir = (world - SPOT).Unit
+	-- more strength = faster, flatter ball: a little lob at 10, a bullet at the top (GameConfig.ballSpeed / ballArc)
+	local speed = isClient and roundEgg and G.ballSpeed(kickStrength) or (perfect and BALL_SPEED * 1.3 or BALL_SPEED)
+	local shotDir = (world - releaseSpot).Unit
 	-- THE STRIKE: the ball flattens on the boot for a few frozen frames, then it is gone
+	hideZones()                      -- the aim zones go at the kick; the aim marker stays
 	burst("Diamond", ballPart, nil, perfect and 0.8 or 0.5)
 	sfx("Kick", perfect and 1 or 0.85, perfect and 0.85 or 1)
 	crowd("kick", perfect)
@@ -925,18 +1088,25 @@ local function shoot(egg, target, willSave, perfect, zone)
 	end
 	shake(perfect and 1 or 0.5, 0.25)
 	shapeAxis = shotDir; shapeK = perfect and 0.55 or 0.68
-	ballTo(SPOT + shotDir * 0.2)
+	ballTo(releaseSpot + shotDir * 0.2)
 	hitStop(perfect and 0.12 or 0.075)
 	waitFreeze()
 	sfx(perfect and "WhooshBig" or "Whoosh", perfect and 0.8 or 0.55, perfect and 0.9 or 1.15)
 	ballTrail.Enabled = true
-	local flight = (world - SPOT).Magnitude / speed
+	local flight = (world - releaseSpot).Magnitude / speed
 	egg.atBall, egg.holdAtBall = false, blast
+	-- a save is decided by strength, so the egg always gets there (however far the shot is from it)
+	local reach0 = egg.stats.reach
+	if willSave then egg.stats.reach = 99 end
 	task.spawn(function() egg:dive(target, willSave or blast, flight) end)
+	egg.stats.reach = reach0
 	camSide = target.X >= 0 and 1 or -1
 	local cut = false
-	local pos = flyShot(SPOT, world, flight, {bend = Vector3.new(camSide * (perfect and 0.5 or 2.2), 0, 0),
-		arc = perfect and 0.5 or 1.7, stretch = perfect and 0.55 or 0.35}, function(p, a)
+	local pos = flyShot(releaseSpot, world, flight, {bend = Vector3.new(camSide * (perfect and 0.5 or 2.2), 0, 0),
+		arc = isClient and roundEgg and G.ballArc(kickStrength) or (perfect and 0.5 or 1.7), stretch = perfect and 0.55 or 0.35}, function(p, a)
+		if a >= 0.24 and not cut and camShot ~= "ball" then
+			camShot = "ball"; camFov = perfect and 36 or 42
+		end
 		if targetScale == 1 and (world - p).Magnitude < 18 then targetScale = SLOWMO end
 		if not cut and a > 0.5 then cut = true; camShot = "save"; camFov = 44 end      -- cut to the goal-side camera for the dive
 		return (willSave or blast) and a > 0.6 and touchingEgg(egg, p)
@@ -962,7 +1132,7 @@ local function shoot(egg, target, willSave, perfect, zone)
 		fly(pos, land, 0.75, 3)
 		ballTrail.Enabled = false
 		settleBall(land, land - pos)
-		tKick:Stop(0.4); tSlide:Stop(0.4); tIdle:Play(0.4)
+		tKick:Stop(0.4); tIdle:Play(0.4)
 		task.wait(0.6)
 		setBars(0)
 		camShot = "wide"; camFov = 55
@@ -1042,9 +1212,9 @@ local function shoot(egg, target, willSave, perfect, zone)
 		while not eggDown and os.clock() - t0 < 5 do task.wait() end
 		task.wait(0.5)
 	end
-	-- PERFECT celebration: get up from the slide, then jump, spin to face the camera and fling the arms out
+	-- PERFECT celebration: recover from the strike, then jump, spin to face the camera and fling the arms out
 	task.wait(0.5)
-	tKick:Stop(0.25); tSlide:Stop(0.3)
+	tKick:Stop(0.25)
 	task.wait(0.35)
 	camShot = "celebrate"; camFov = 45
 	tCeleb:Play(0.15)
@@ -1102,6 +1272,17 @@ end
 local function claimEgg(egg)
 	local p = egg.part
 	if not (p and p.Parent) then return end
+	-- first: which egg you won, and NEW! if that animal isn't in your Index yet (HUDClient: _G.SOA_IndexFound)
+	if isClient and roundEgg then
+		local ER = require(RS.DevDemo.EggRoll)
+		local r = ER.rarityOf(roundEgg, A.Eggs)
+		local hex = ER.Colors and ER.Colors[r] and ER.Colors[r][1]
+		showCaption("got", roundEgg .. " Egg", hex and Color3.fromHex(hex) or Color3.new(1, 1, 1), 0.17, 0.085)
+		local found = _G.SOA_IndexFound and _G.SOA_IndexFound(G.AnimalForEgg(roundEgg))
+		if not found then showCaption("new", "NEW!", Color3.fromRGB(255, 225, 50), 0.245, 0.06) end
+		task.wait(0.8)
+		task.delay(1.6, function() hideCaption("got", 0.35); hideCaption("new", 0.35) end)
+	end
 	egg:take()
 	egg:standUp(0.3)
 	egg:take()
@@ -1239,10 +1420,16 @@ local function mysteryEnter(egg, winner)
 		end
 	end
 	local follow = followSignal:Connect(place)
+	-- it only flicks through eggs of YOUR rarity: the tier your Luck rolls most (GameConfig.rollCentre).
+	-- A lucky roll from a higher tier still lands at the end, as a surprise.
+	local yourTier = EggRoll.rarityOf(G.AnimalOrder[math.floor(G.rollCentre(myLuck()) + 0.5)] or winner, A.Eggs)
+	local shown = {}
+	for _, n in ROSTER do if EggRoll.rarityOf(n, A.Eggs) == yourTier then table.insert(shown, n) end end
+	if #shown < 2 then shown = ROSTER end
 	local function pick(notThis)
-		if #ROSTER < 2 then return ROSTER[1] end
+		if #shown < 2 then return shown[1] end
 		local n
-		repeat n = ROSTER[math.random(#ROSTER)] until n ~= notThis
+		repeat n = shown[math.random(#shown)] until n ~= notThis
 		return n
 	end
 	local busy = false
@@ -1344,11 +1531,20 @@ end
 ----------------------------------------------------------------- one egg: roll it, up to 3 tries
 local rollGui = isClient and player and player:WaitForChild("PlayerGui"):FindFirstChild("EggRollVS")   -- Jacob's VS screen, once it exists
 local function playEgg()
-	local name = EggRoll.pick(ROSTER, folder:GetAttribute("Luck") or 1, A.Eggs)
+	-- the server rolls the egg with your Luck (ServerScriptService.EggInventory) and sends this round's aim-zone seed
+	local name, seed
+	local rollRF = isClient and RS.DevDemo:FindFirstChild("RollEgg")
+	if rollRF then
+		local ok, n, s = pcall(function() return rollRF:InvokeServer() end)
+		if ok and n and A.Eggs:FindFirstChild(n) then name, seed = n, s end
+	end
+	name = name or EggRoll.pick(ROSTER, myLuck(), A.Eggs)
+	roundEgg, roundSeed, scoreShot = name, tonumber(seed) or math.random(1, 1e8), nil
+	folder:SetAttribute("RolledEgg", name)
 	if rollGui then
 		setBars(0)
 		name = EggRoll.play{gui = rollGui, eggs = A.Eggs, pool = ROSTER, force = name,
-			kickPower = 100, character = rig, playerName = player and player.DisplayName, sfx = sfx}
+			kickPower = myStrength(), character = rig, playerName = player and player.DisplayName, sfx = sfx}
 	end
 	local tmpl = A.Eggs:FindFirstChild(name)
 	if not tmpl then return end
@@ -1369,13 +1565,17 @@ local function playEgg()
 		end
 		if strength >= 2 then shake(0.4, 0.2) end      -- the egg crashing down after a dive
 	end
+	-- your luck at the top while the egg walks out
+	if isClient then showCaption("luck", luckText(myLuck()), Color3.fromRGB(255, 215, 60), 0.09, 0.075) end
 	if rollGui then enterEgg(egg) else mysteryEnter(egg, name) end
+	hideCaption("luck", 0.4)
 	egg:idle()
 	sfx("Whistle", 0.5)
 	task.wait(0.3)
-	-- up to 3 tries; the timing bar decides each shot (Perfect slides, Weak/Miss get saved)
+	-- up to 3 tries; the timing bar decides each shot (Perfect whips across the ball, Weak/Miss get saved)
 	local scored = false
 	for try = 1, 3 do
+		tryNo = try
 		scored = shoot(egg, nil, nil, nil)
 		if scored then break end
 		egg:celebrate()
@@ -1421,6 +1621,9 @@ resetBall()
 while true do
 	-- walk onto the kick area to start
 	while not onKickArea() do task.wait(0.1) end
+	-- a smooth fade to black, then we're at the ball
+	screenFade(Color3.new(0, 0, 0), 1, 0.45)
+	task.wait(0.5)
 	inRound = true
 	local stateRE = RS.DevDemo:FindFirstChild("PenaltyState")
 	if stateRE then stateRE:FireServer(true) end
@@ -1431,6 +1634,7 @@ while true do
 		setRig(BALL_POS, 0)   -- straight onto the kicking spot, no walk-up
 		tIdle:Play(0.3)
 	end
+	task.delay(0.2, function() screenFade(nil, 0, 0.6) end)
 	local scored, eggName = playEgg()
 	-- hand you back. Scored: the server puts the egg in your Backpack and sends you to your base
 	-- (ServerScriptService.EggInventory). Missed: walk off the kick area and back on for the next egg.
@@ -1439,7 +1643,14 @@ while true do
 	inRound = false
 	releaseControl()
 	local scoredRE = RS.DevDemo:FindFirstChild("EggScored")
-	if scored and scoredRE then scoredRE:FireServer(eggName) end
+	-- the server re-checks the kick: timing zone, aim spot, which try (for the zones)
+	if scored and scoredRE and scoreShot then
+		-- teleport home: flash white, the server moves you while the screen is white, then it fades
+		screenFade(Color3.new(1, 1, 1), 1, 0.1)
+		task.wait(0.12)
+		scoredRE:FireServer(scoreShot.zone, scoreShot.x, scoreShot.y, scoreShot.try)
+		task.delay(0.25, function() screenFade(nil, 0, 0.7) end)
+	end
 	if stateRE then stateRE:FireServer(false) end
 	while onKickArea() do task.wait(0.2) end
 end
