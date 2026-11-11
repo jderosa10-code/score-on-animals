@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-10 20:00 CT · jacob-claude
+**Done:** Hotbar shows only the BackpackSlot until you have items; HotbarHUD.HotbarPanel.Slots.Slot1-9 are hidden while empty (HUDClient) and the Slots UIListLayout is centred so the bar stays in the middle as it grows. Checked in Play.
+**Next:** waiting on Jacob.
+**Blockers / questions:** none.
+
 ## 2026-11-10 19:55 CT · jacob-claude
 **Done:** HUD changes Jacob asked for: SideButtonsPanel now only ShopButton + IndexButton as wide rectangles (icon left, text right; RebirthButton/DailyButton hidden). CurrencyPanel.Stats CounterIcon/CounterLabel hidden, CashLabel left-aligned and in line with the friends icon, AddCashButton follows the last digit (HUDClient). BoostsHUD (Lucky Pack, 2x Cash, 2x Luck) disabled. Checked in Play at $52 and $1,234,567.
 **Next:** waiting on Jacob.
