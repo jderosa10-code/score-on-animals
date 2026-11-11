@@ -2,6 +2,10 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 00:54 CT · pigeon-claude
+**Done:** Fixed the shop shrinking after close + reopen (pigeon). `StarterGui.Menus.ShopMenu.ShopJuice` (my animation script, copied in from the shop test place) had its own open/close: its close shrank the panel through its own scale channel and then MenuButtons reopened it without resetting that. It also moved the panel every frame (would fight MenuButtons' slide-beside for GiftMenu) and made a temporary SHOP button + an E-key toggle (E is the prompt key). All of that is gone: opening/closing is only MenuButtons' job now; ShopJuice just plays its entrance when the shop appears (cards pop in, title pop), plus card hover/parallax and the buy burst. `EggHatchOffer` also watches the panel's Visible now. Play test: OpenMenu/CloseMenu three times, full size every time, no errors. Sources in `ui/shop`. (Jacob builds UI: this only touches my two scripts, not the layout.)
+**Next:** -
+**Blockers / questions:** `EggHatchOffer` needs `ReplicatedStorage.ShopModels` (the cut chicken egg + chicken), which only exists in the shop test place, so the 3D hatch does not show in this game yet.
 ## 2026-11-11 01:55 CT · jacob-claude
 **Done:** Rarities redone (Jacob's call, PLAN.md updated): 11 tiers, every animal set by hand in ReplicatedStorage.GameConfig.AnimalRarity (Common 20 everyday/farm/pets, Uncommon 50, Rare 47, Epic 26, Legendary 23 dinosaurs + prehistoric, Mythic 12, Exotic 11, Divine 5, Celestial 6, Secret 3 = Dragon/Kraken/Leviathan, Event 10). ReplicatedStorage.DevDemo.EggRoll: Order/Weights/SavePower/Colors/Bands for Exotic, Divine, Celestial; rarityOf uses GameConfig.AnimalRarity first. GameConfig.Income for the new tiers (900/1300/1700). Index: new ExoticSection / DivineSection / CelestialSection, every section resized to its count. Workspace.AnimalShowcase rebuilt at true relative size (1.5x, 4 to 36 studs), packed in rows per tier. No errors in Play.
 **Next:** egg pool still the 6 demo eggs.
