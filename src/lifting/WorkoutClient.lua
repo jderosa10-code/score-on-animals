@@ -94,7 +94,7 @@ RunService.Stepped:Connect(function()
 			if not rigs[char] then rigs[char] = joints(char) end
 			local j = rigs[char]
 			if not barRest[bar] then barRest[bar] = bar:GetPivot() end
-			local t = now - (pl:GetAttribute("LiftStart") or now)
+			local t = G.LiftClock(pl, now)      -- real time + what boosts from the tap game added
 			local f = liftAmount(t)
 			local rest = barRest[bar]
 			-- (GripHeight = where the model's grip bar is; on some barbells it is not the middle of the model)
