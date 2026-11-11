@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 15:00 CT · jacob-claude
+**Done:** STOP button while lifting (Jacob asked to copy the Shop button): StarterGui.HUD.StopLiftHUD.StopButton = copy of SideButtonsHUD.SideButtonsPanel.ShopButton, text "STOP", basket icon hidden, top centre. StarterPlayerScripts.WorkoutClient shows it only while Lifting and fires Lift("stop") on click (same as jumping).
+**Next:** -
+**Blockers / questions:** -
+
 ## 2026-11-11 14:50 CT · jacob-claude
 **Done:** StarterPlayerScripts.HUDClient: slot ItemIcon / MutTag / KeyLabel ZIndex 40-42 (the kit's Backdrop/Outline frames at 32-34 were drawn over them, which hid the mutation text and darkened the icons); lighter mutation tints and a pastel rainbow. ConfirmPopup DisplayOrder 50 and every open Menus ScreenGui hides while it's up (back when it closes). Lighting.UIBlur tweens to 10 while any menu or popup is open.
 **Next:** -
