@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 00:45 CT · jacob-claude
+**Done:** Index now lists all 213 animals. StarterGui.Menus.IndexMenu.IndexPanel.Backdrop.List: sections resized to fit (Common 92, Rare 17, Epic 17, Legendary 17) and 3 new sections cloned from Legendary: MythicSection 34 (pink cards), SecretSection 26 (dark), EventSection 10 (red, Admin + Hacker). Rarity for animals without an egg tier comes from their `VFX_<tier>` tag using the GDD table (ReplicatedStorage.DevDemo.EggRoll.rarityOf, TagRarity). GameConfig: new IndexSections + G.IndexAnimals (every BaseAnimals name, A to Z). HUDClient index uses it and sets card icons from the new ReplicatedStorage.AnimalIcons (black silhouette until found).
+**Next:** fill AnimalIcons with the uploaded image ids.
+**Blockers / questions:** The egg pool (G.Animals) is still the 6 demo animals, so most index entries can't be found yet. The new sections reuse the Legendary banner images.
+
 ## 2026-11-11 00:20 CT · jacob-claude
 **Done:** Icons for every animal (213) and egg (196) in `icons/Animals` and `icons/Eggs` (256x256 PNG, navy stroke #040435 like Jacob's Arm icon). Shot in Studio from ViewportFrames on a key colour, cut and stroked with `tools/icons/make_icons.py`. The 32 big animals (longest side 18+ studs) get a head-and-front crop instead of the full body. Nothing left in Studio (the temporary booth was removed).
 **Next:** upload the icons to Roblox and put the ids in the Index / hotbar once Jacob says yes.
