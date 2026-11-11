@@ -288,7 +288,7 @@ do
 			img.ImageColor3 = found and Color3.new(1, 1, 1) or Color3.new(0, 0, 0)
 		end
 	end
-	local function income(name) return G.Income[EggRoll.rarityOf(name)] or 0 end
+	local function income(name) return G.AnimalIncome(name) end
 	local function renderInfo()
 		local found = data.Index[selected]
 		info.PetBox.IncomeLabel.Text = found and ("$" .. G.short(income(selected)) .. "/s") or "???"

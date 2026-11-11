@@ -2,14 +2,18 @@
 -- Used by ServerScriptService.GameServer / GameData and StarterPlayerScripts.HUDClient.
 local G = {}
 
--- cash per second for each placed animal, by rarity (ReplicatedStorage.DevDemo.EggRoll.EggRarity)
+-- OLD flat cash per second by rarity. Not used for income any more: every animal now has its own income,
+-- G.AnimalIncome(name) further down ($5/s Hamster .. $100T/s Dragon, Jacob 11 Nov 2026).
 G.Income = {Common = 5, Uncommon = 12, Rare = 30, Epic = 75, Legendary = 200, Mythic = 600, Secret = 2000, Admin = 8000}
 G.Income.Exotic, G.Income.Divine, G.Income.Celestial = 900, 1300, 1700   -- the new tiers between Mythic and Secret
 
 -- Luck (bought at the Egg Luck shop outside your base)
 G.LuckPerLevel = 0.25
 G.LuckMaxLevel = 20
-function G.luckCost(level) return math.floor(500 * 1.8 ^ level) end
+-- price of the next luck level (level 0 -> 1 is the first buy). Scaled with the new per-animal income
+-- (Jacob, 11 Nov 2026): each level costs about as many seconds of your income as before.
+G.LuckCosts = {500, 3200, 19000, 39000, 140000, 540000, 2e6, 6.4e6, 17e6, 57e6, 160e6, 430e6, 1.2e9, 2.9e9, 8.1e9, 19e9, 47e9, 110e9, 260e9, 400e9}
+function G.luckCost(level) return G.LuckCosts[level + 1] or G.LuckCosts[#G.LuckCosts] end
 
 -- Rebirth: needs cash AND placed animals; only cash resets
 function G.rebirthCash(r) return 25000 * 3 ^ r end
@@ -23,23 +27,25 @@ G.BaseDepths = {42, 58, 74}
 G.BaseUpgradeCost = {25000, 150000}   -- level 1 -> 2, level 2 -> 3
 
 -- Deadlift barbells, in upgrade order (models in ServerStorage.Barbells). Power = XP per rep.
+-- Costs scaled with the per-animal income (Jacob, 11 Nov 2026): barbell k is bought with the animals
+-- about k/16 of the way up the ranks, and costs about as many seconds of their income as before.
 G.Barbells = {
 	{Name = "Copper Barbell", Cost = 0, Power = 1},
-	{Name = "Red Barbell", Cost = 250, Power = 2},
-	{Name = "Crystal Barbell", Cost = 1000, Power = 4},
-	{Name = "Rose Barbell", Cost = 3500, Power = 7},
-	{Name = "Pumpkin Barbell", Cost = 10000, Power = 12},
-	{Name = "Havenstar Barbell", Cost = 30000, Power = 20},
-	{Name = "Neon Pulse", Cost = 80000, Power = 35},
-	{Name = "Bone Barbell", Cost = 200000, Power = 60},
-	{Name = "Donut Barbell", Cost = 500000, Power = 100},
-	{Name = "Golden Barbell", Cost = 1.2e6, Power = 160},
-	{Name = "Ice Barbell", Cost = 3e6, Power = 250},
-	{Name = "Mega Golden Barbell", Cost = 7.5e6, Power = 400},
-	{Name = "Giant Gold Star Barbell", Cost = 18e6, Power = 650},
-	{Name = "Red Flyer", Cost = 45e6, Power = 1000},
-	{Name = "Starfall Dumbbell", Cost = 110e6, Power = 1600},
-	{Name = "Star Light Dumbbell", Cost = 270e6, Power = 2500},
+	{Name = "Red Barbell", Cost = 1700, Power = 2},
+	{Name = "Crystal Barbell", Cost = 21e3, Power = 4},
+	{Name = "Rose Barbell", Cost = 470e3, Power = 7},
+	{Name = "Pumpkin Barbell", Cost = 9.2e6, Power = 12},
+	{Name = "Havenstar Barbell", Cost = 170e6, Power = 20},
+	{Name = "Neon Pulse", Cost = 1.4e9, Power = 35},
+	{Name = "Bone Barbell", Cost = 23e9, Power = 60},
+	{Name = "Donut Barbell", Cost = 370e9, Power = 100},
+	{Name = "Golden Barbell", Cost = 6e12, Power = 160},
+	{Name = "Ice Barbell", Cost = 44e12, Power = 250},
+	{Name = "Mega Golden Barbell", Cost = 720e12, Power = 400},
+	{Name = "Giant Gold Star Barbell", Cost = 4.2e15, Power = 650},
+	{Name = "Red Flyer", Cost = 70e15, Power = 1000},
+	{Name = "Starfall Dumbbell", Cost = 280e15, Power = 1600},
+	{Name = "Star Light Dumbbell", Cost = 3.1e18, Power = 2500},
 }
 G.RepSeconds = 2.1   -- one deadlift rep
 -- Lift boost (the tap mini-game, StarterGui.HUD.LiftTapHUD): hitting a tap target makes your reps run this
@@ -211,7 +217,7 @@ G.ShopItems = {
 }
 
 -- $1,234 / $12.5K / $3.2M ...
-local SUFFIX = {"", "K", "M", "B", "T", "Qa", "Qi"}
+local SUFFIX = {"", "K", "M", "B", "T", "Qa", "Qi", "Sx", "Sp", "Oc", "No", "Dc"}
 function G.short(n)
 	n = math.floor(n)
 	if n < 1000 then return tostring(n) end
@@ -244,6 +250,20 @@ G.EggPool = string.split("Aardvark Akita Albatross AmericanBison Amphiptere Angl
 local RANK = {}
 for i, n in G.AnimalOrder do RANK[n] = i end
 function G.rankOf(name) return RANK[G.AnimalForEgg(name)] or 1 end
+
+-- Income (Jacob, 11 Nov 2026): every animal has its own cash per second, climbing along the ranks from
+-- $5/s (Hamster) to $100T/s (Dragon), rounded to 2 digits. Mutations multiply it (Hacked Dragon $800T/s).
+G.IncomeBottom, G.IncomeTop = 5, 1e14
+local INCOME = {}
+function G.AnimalIncome(name)
+	name = G.AnimalForEgg(name)
+	if INCOME[name] then return INCOME[name] end
+	local p = (G.rankOf(name) - 1) / math.max(1, #G.AnimalOrder - 1)
+	local n = G.IncomeBottom * (G.IncomeTop / G.IncomeBottom) ^ p
+	if n >= 100 then local mag = 10 ^ (math.floor(math.log10(n)) - 1) n = math.floor(n / mag + 0.5) * mag else n = math.floor(n + 0.5) end
+	INCOME[name] = n
+	return n
+end
 
 -- Strength: you start at 10. Each animal's egg needs StrengthFor(name) to score on it,
 -- from 10 for the most common to 18,700 for the rarest Secret (exponential along the ranks).
@@ -373,9 +393,9 @@ function G.mutAnimalModel(name, mut)
 end
 
 -- Selling an animal from your inventory at Workspace.SellShop pays this many seconds of its income
--- (Common $5/s -> $300 ... Secret $2,000/s -> $120K), times its mutation.
+-- (Hamster $5/s -> $300 ... Dragon $100T/s -> $6Qa), times its mutation.
 G.SellSeconds = 60
-function G.SellValue(name, mut) return (G.Income[G.AnimalRarity[name] or "Common"] or 0) * G.SellSeconds * G.mutIncome(mut) end
+function G.SellValue(name, mut) return G.AnimalIncome(name) * G.SellSeconds * G.mutIncome(mut) end
 
 -- The "1/N" shown for each egg is a set number per animal (Jacob, 11 Nov 2026): it never changes with luck.
 -- 1/2 for the most common, up to 1/10,000,000 for the rarest, rounded to 2 digits.

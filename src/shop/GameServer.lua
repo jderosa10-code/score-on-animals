@@ -48,7 +48,7 @@ local function refreshStats(player)
 	local mult = (1 + p.Rebirths * G.RebirthCashBonus) * (has(player, "Cash2x") and 2 or 1) * (has(player, "VIP") and G.VIPCashMulti or 1) * (1 + fb)
 	player:SetAttribute("CashMulti", mult)
 	local income = 0
-	for _, a in p.Placed do income += (G.Income[D.rarityOf(a.Name)] or 0) * G.mutIncome(a.Mutation) end
+	for _, a in p.Placed do income += G.AnimalIncome(a.Name) * G.mutIncome(a.Mutation) end
 	player:SetAttribute("CashPerSec", income * mult)
 	player:SetAttribute("PlacedCount", #p.Placed)
 	local hum = player.Character and player.Character:FindFirstChildOfClass("Humanoid")
@@ -159,7 +159,7 @@ local function claimIndex(player, name)
 	local p = D.get(player)
 	if not (p and type(name) == "string" and p.Index[name] and not p.IndexClaimed[name]) then return false end
 	p.IndexClaimed[name] = true
-	local cash = (G.Income[D.rarityOf(name)] or 0) * G.IndexRewardSeconds
+	local cash = G.AnimalIncome(name) * G.IndexRewardSeconds
 	D.addCash(player, cash)
 	D.sync(player)
 	return true, "+$" .. G.short(cash)

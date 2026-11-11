@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 22:15 CT · jacob-claude
+**Done:** Economy rescale (Jacob: top animal should make trillions, picked $100T/s). `ReplicatedStorage.GameConfig`: new `G.AnimalIncome(name)`, every animal its own income by rank, $5/s Hamster .. $100T/s Dragon (Hacked Dragon $800T/s); `G.Income` tier table kept but unused. Barbell costs and `G.LuckCosts` rescaled so each upgrade costs about the same seconds of income as before (Red Barbell $1.7K .. Star Light $3.1Qi; luck $500 .. $400B). `G.short` suffixes now go past Qi (Sx Sp Oc No Dc). Callers switched: `ServerScriptService.GameServer` (income, index reward), `StarterPlayerScripts.HUDClient` (index), `StarterPlayerScripts.HatchClient` (animal tags), `G.SellValue`. Play-tested: no errors, CashPerSec right.
+**Next:** Jacob to decide the fixed-egg rewards (below).
+**Blockers / questions:** Free/Robux eggs now pay far more than before relative to early income: Giraffe $130M/s (daily day 3, code EGGS, Starter Pack, VIP), Elephant $7.2B/s (daily day 5, 129 R), T-Rex $73B/s (299 R). They'd skip most of the game for a new player. Rebirth cash (25K x 3^r) and base upgrades (25K/150K) not rescaled yet.
+
 ## 2026-11-11 21:58 CT · jacob-claude
 **Done:** Game name decided by Jacob: **Score for Animals** (PLAN.md updated). Store description drafted (Jacob has it). Thumbnails 12–22 + icon_01 made with Jacob, kept on his PC in `Downloads\ScoreOnAnimals_Thumbnails`; new egg reference photos (Pegasus, Minotaur, Chicken, Kraken King, Fenrir, front-facing Dragon) taken in a temp `workspace._ThumbShoot`, removed after.
 **Next:** Jacob's call.
