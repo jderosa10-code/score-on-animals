@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 17:25 CT · pigeon-claude
+**Done:** Starter Pack cash tile is green money now (pigeon: "the money should be green not gold"): `...ExclusiveSection.VIPPack.ItemCash.Icon` = rbxassetid://14405332888, a green cash stack with black outlines (free Creator Store decal "Images/Money", 14405332914). Seen in play. Preview leftovers removed.
+**Next:** -
+**Blockers / questions:** -
+
 ## 2026-11-11 17:10 CT · pigeon-claude
 **Done:** Starter Pack card fixes (pigeon: the cash tile showed a rebirth icon, and OWNED was cut off). In StarterGui: `VIPPack.ItemCash.Icon` = the gold cash stack the Rebirth menu uses for its cash reward (95965001865611); new `VIPPack.BuyButton.OwnedLabel` (a copy of PriceLabel, centered, TextScaled, hidden). `ShopOfferLabels` only toggles it: bought = OwnedLabel shown, PriceLabel + RobuxIcon hidden. Studio-only `DevCommand:Invoke("unbuy", player, "StarterPack")` undoes a test purchase (DevCommand "profile" returns a copy, so editing it changes nothing). pigeon's test save no longer has the Starter Pack (checked after a rejoin). Play test: OWNED fits the button; cash tile shows cash.
 **Next:** -
