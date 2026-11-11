@@ -43,9 +43,16 @@ local function render()
 				if pr.LiftMinutes then caption(card, "ItemStrength", "+" .. G.short(lift(pr))) end
 				if pr.CashMinutes then caption(card, "ItemCash", "$" .. G.short(G.packCash(pr, cps))) end
 			end
-			if pr.OnePer and player:GetAttribute("Bought_" .. item.Product) then
-				local price = card:FindFirstChild("PriceLabel", true)
-				if price then price.Text = "OWNED" end
+			-- a bought one-time pack: the buy button's own OwnedLabel (made in StarterGui) replaces the price
+			local buy = pr.OnePer and card:FindFirstChild("BuyButton")
+			local ownedLabel = buy and buy:FindFirstChild("OwnedLabel")
+			if ownedLabel then
+				local owned = player:GetAttribute("Bought_" .. item.Product) == true
+				ownedLabel.Visible = owned
+				for _, n in {"PriceLabel", "RobuxIcon"} do
+					local c = buy:FindFirstChild(n)
+					if c then c.Visible = not owned end
+				end
 			end
 		end
 	end

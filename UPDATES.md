@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 17:10 CT · pigeon-claude
+**Done:** Starter Pack card fixes (pigeon: the cash tile showed a rebirth icon, and OWNED was cut off). In StarterGui: `VIPPack.ItemCash.Icon` = the gold cash stack the Rebirth menu uses for its cash reward (95965001865611); new `VIPPack.BuyButton.OwnedLabel` (a copy of PriceLabel, centered, TextScaled, hidden). `ShopOfferLabels` only toggles it: bought = OwnedLabel shown, PriceLabel + RobuxIcon hidden. Studio-only `DevCommand:Invoke("unbuy", player, "StarterPack")` undoes a test purchase (DevCommand "profile" returns a copy, so editing it changes nothing). pigeon's test save no longer has the Starter Pack (checked after a rejoin). Play test: OWNED fits the button; cash tile shows cash.
+**Next:** -
+**Blockers / questions:** -
+
 ## 2026-11-11 16:55 CT · pigeon-claude
 **Done:** The shop's top card sells a Starter Pack instead of VIP (pigeon: "change vip to a different pack, an offer rather than a VIP bundle", and show a picture for each thing in it like the egg cards). `ReplicatedStorage.GameConfig`: `Products.StarterPack` (99 R, one per player): Giraffe egg (Rare) + 150 min of lifting (or 14% of Strength, at least +100) + 2 h of income (at least $25K), about 2x the value of the same things bought separately; `ShopItems.VIPPack` now = StarterPack (frame name kept). VIP pass stays defined but isn't sold. `GameServer.grantProduct`: one-per-player packs saved in `profile.Bought` + player attribute `Bought_<key>` (set on join too). `HUDClient.prompt`: "You already got this!" for a bought one-time pack. Card (`...ExclusiveSection.VIPPack`): title "STARTER PACK", three picture tiles copied from the egg-style IconFrame (`ItemEgg` egg picture, `ItemStrength` arm icon, `ItemCash` cash icon, each with a `Caption`), perks "ONE TIME ONLY * 2X VALUE"; old IconFrame hidden, HalftoneBeam hidden. `StarterPlayerScripts.ShopOfferLabels` fills the captions live (+Strength, $cash) and shows OWNED. Play test: card seen, grant gave +110 Strength, +$677K and a Giraffe egg, price turned OWNED (test purchase undone on the test save).
 **Next:** dashboard ids.

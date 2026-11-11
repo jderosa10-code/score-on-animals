@@ -304,6 +304,11 @@ if game:GetService("RunService"):IsStudio() then
 		if cmd == "give" then return D.giveItem(player, a, b, nil, c) ~= nil   -- c = mutation
 		elseif cmd == "cash" then D.addCash(player, a); return true
 		elseif cmd == "grant" then grantProduct(player, a); return true   -- test a Robux product without buying it
+		elseif cmd == "unbuy" then   -- undo a test purchase of a one-time pack (Studio only)
+			local p = D.get(player)
+			if p and p.Bought then p.Bought[a] = nil end
+			player:SetAttribute("Bought_" .. a, nil)
+			return true
 		elseif cmd == "profile" then return D.get(player)
 		end
 	end
