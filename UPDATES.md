@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 12:50 CT · jacob-claude
+**Done:** Egg-opening glow toned down (Jacob: too much white). StarterPlayerScripts.HatchClient hatch FX: Ray emitter brightness x0.45, fewer rays (1/1/2 per wobble, rate 14->6, 2 on the break), PointLight peak 6.6 -> 1.8.
+**Next:** -
+**Blockers / questions:** -
+
 ## 2026-11-11 12:40 CT · jacob-claude
 **Done:** Saved animals after a rejoin had no outline, no tag and didn't walk: with StreamingEnabled the model (or its mesh / the plot's Land) reaches the client late and StarterPlayerScripts.HatchClient.setupAnimal gave up after 0.5 s. It now keeps checking for up to 15 s, and ServerScriptService.EggHatching sends placed animals with ModelStreamingMode = Atomic (whole model at once). Play test: 6/6 saved animals tagged, outlined, walking.
 **Next:** Jacob to confirm on a real rejoin in the live game.
