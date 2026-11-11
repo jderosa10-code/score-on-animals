@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 13:50 CT · jacob-claude
+**Done:** Removed the "Egg Luck / BUY LUCK FOR RARER EGGS" BillboardGui from Workspace.LuckShops.LuckShop1-4 (UI part kept). Workspace.SellShop sign now just "Sell" (subtitle removed). The light awning stripes on all 5 tents are Neon at ~62% of their colour for a soft glow (25 parts).
+**Next:** -
+**Blockers / questions:** -
+
 ## 2026-11-11 13:40 CT · jacob-claude
 **Done:** Hanging grass checker: the checker Texture (rbxassetid://6905003203) on all 338 Workspace.Map.Lobby.LobbyArt.Drips parts was at Transparency 1 (invisible); set to 0.86 like the GrassCap it hangs from (1,352 textures).
 **Next:** -
