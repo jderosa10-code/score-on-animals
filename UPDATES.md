@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 14:20 CT · jacob-claude
+**Done:** Night atmosphere: StarterPlayerScripts.DayNightClient adds a NightAtmosphere at night (density 0.42, blue haze) and a blue, less saturated ColorCorrection, so the scene blends into the Night sky.
+**Next:** Mutated animal/egg icons (waiting on Jacob's pick: full photos vs tinted base icons).
+**Blockers / questions:** -
+
 ## 2026-11-11 14:10 CT · jacob-claude
 **Done:** Mutations: ReplicatedStorage.GameConfig.Mutations (Gold 1/20 x2, Diamond 1/100 x3, Rainbow 1/500 x5, Inverted/Hacked chance 0 = event only; Need = extra Strength x1.25/1.5/2). ServerScriptService.EggInventory rolls one per egg (RollEgg returns egg, seed, mutation); items/patches/placed animals save a Mutation field (GameData.giveItem 5th arg); models from ReplicatedStorage.Assets.Eggs.<M>Eggs / Assets.Animals.<M>Animals (HatchConfig.animalTemplate(name, mut) keeps "<M>_<name>"); cash/s and sell price x mutation (GameServer); names "Gold Chicken Egg"; hotbar/backpack slots get a coloured MutTag; penalty shows the mutated egg + "Gold Duck Egg" caption. Day/night: new ServerScriptService.DayNight (240 s day / 60 s night, workspace IsNight, banners) + StarterPlayerScripts.DayNightClient (dark fade -> ReplicatedStorage.Night sky + night light, white flash back; NightAmbient sound); EggHatching timers run 2x at night. Play test: Gold Chicken egg -> patch -> hatched at night -> Gold Chicken placed, $10/s; Diamond Lion / Rainbow Dog tools; night/day swap; no errors.
 **Next:** -
