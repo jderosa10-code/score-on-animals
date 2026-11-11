@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 21:15 CT · pigeon-claude
+**Done:** pigeon: "hide them somewhere but put the new ones in". Old pre-rig-fix animals moved from `ServerStorage.OldAnimals_Backup` to `ServerStorage.Restyle.OldAnimals_BeforeRigFix` (with a note; not used by the game, safe to delete). Checked: `ReplicatedStorage.BaseAnimals` 213/213 new rigs, no old-rig animals placed in Workspace, no test leftovers.
+**Next:** -
+**Blockers / questions:** -
+
 ## 2026-11-11 21:05 CT · pigeon-claude
 **Done:** Rig fixes finished: last 46 animals (the complex ones incl. Qilin, Kraken, Dragon, TRex, Spinosaurus) swapped in with 237 mutation models. Front-view pairs while animating: all the same or better; Kraken clearly fixed (old: a fin bent the wrong way and a loose piece floating off its side). All 97 flagged animals + Chicken are now re-rigged with the small-piece rule; earlier visible fixes: Chicken, Parrot, Pigeon, Phoenix, Mammoth. `ReplicatedStorage.BaseAnimals` 213/213 Rigged2. Previous versions: `ServerStorage.OldAnimals_Backup` (97 base, 501 mutation models). Note: Studio stops drawing the 3D view while its window is minimized, and with streaming on, far-away test models don't load on the client unless the character is parked near them.
 **Next:** delete `OldAnimals_Backup` once pigeon has seen the animals in play.
