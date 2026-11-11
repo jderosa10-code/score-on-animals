@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 21:05 CT · pigeon-claude
+**Done:** Rig fixes finished: last 46 animals (the complex ones incl. Qilin, Kraken, Dragon, TRex, Spinosaurus) swapped in with 237 mutation models. Front-view pairs while animating: all the same or better; Kraken clearly fixed (old: a fin bent the wrong way and a loose piece floating off its side). All 97 flagged animals + Chicken are now re-rigged with the small-piece rule; earlier visible fixes: Chicken, Parrot, Pigeon, Phoenix, Mammoth. `ReplicatedStorage.BaseAnimals` 213/213 Rigged2. Previous versions: `ServerStorage.OldAnimals_Backup` (97 base, 501 mutation models). Note: Studio stops drawing the 3D view while its window is minimized, and with streaming on, far-away test models don't load on the client unless the character is parked near them.
+**Next:** delete `OldAnimals_Backup` once pigeon has seen the animals in play.
+**Blockers / questions:** -
+
 ## 2026-11-11 20:30 CT · pigeon-claude
 **Done:** Rig fixes batch 3 in the game: 30 animals (Manticore ... Sabertooth) swapped with 155 mutation models, previous ones in `ServerStorage.OldAnimals_Backup`. Front-view pairs while animating: all the same or better; Mammoth clearly fixed (old: a tusk swung with the leg and an ear tilted off). 5 of them (Anglerfish, CoralGoby, GoblinShark, Quokka, Sabertooth) finished importing after the first check, so they were checked after the swap against their backups: same look. 51 animals done. Batch 4 = all 46 remaining (the complex ones: Qilin, Kraken, Dragon, TRex, Spinosaurus...) in `ROBLOX IMPORT\Rig fixes 4`.
 **Next:** import batch 4; check those one by one more closely.
