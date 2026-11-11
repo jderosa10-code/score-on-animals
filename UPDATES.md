@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 00:55 CT · jacob-claude
+**Done:** Index: new UncommonSection (8 teal cards, cloned from Common) in StarterGui.Menus.IndexMenu.IndexPanel.Backdrop.List; Common is now Common only (84). GameConfig.IndexSections updated. Index cards have HoverSound "" (sweeping the grid made a stack of hover blips). The 18 other IndexMenu labels (title, tabs, section titles, info card) are TextScaled + FW_TextOwn so they fill their frames. Checked in Play.
+**Next:** icon ids into ReplicatedStorage.AnimalIcons.
+**Blockers / questions:** Can't find Jacob's uploaded icons yet (not in the place or in his inventory by name).
+
 ## 2026-11-11 00:45 CT · jacob-claude
 **Done:** Index now lists all 213 animals. StarterGui.Menus.IndexMenu.IndexPanel.Backdrop.List: sections resized to fit (Common 92, Rare 17, Epic 17, Legendary 17) and 3 new sections cloned from Legendary: MythicSection 34 (pink cards), SecretSection 26 (dark), EventSection 10 (red, Admin + Hacker). Rarity for animals without an egg tier comes from their `VFX_<tier>` tag using the GDD table (ReplicatedStorage.DevDemo.EggRoll.rarityOf, TagRarity). GameConfig: new IndexSections + G.IndexAnimals (every BaseAnimals name, A to Z). HUDClient index uses it and sets card icons from the new ReplicatedStorage.AnimalIcons (black silhouette until found).
 **Next:** fill AnimalIcons with the uploaded image ids.
