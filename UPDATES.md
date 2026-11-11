@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 18:45 CT · pigeon-claude
+**Done:** (1) Weight drop sound (pigeon asked): when the bar lands, a heavy bang + low thud ("Tricycle Impact Slammed On Wood Floor Big 5" 9120265201 + "Meaty Thud 2" 9116488438 pitched down), new Sounds `Drop` / `Thud` in `StarterGui.HUD.LiftTapHUD.Sounds`. Your own lifting plays them in your ears; other players' lifting plays them from their bar (3D, fades out by 70 studs). `LiftTapClient` patched live (`sfxAt`). Not heard by me. (2) Rig fixes batch 1 (pigeon: "go ahead fix them"): the 10 winged animals most likely to have the chicken's flapping-eyes problem (Parrot, Pigeon, Owl, Peafowl, Kookaburra, Bat, Garuda, Stymphalian, Phoenix, Simurgh), re-rigged with the fixed small-piece rule, are in pigeon's `ROBLOX IMPORT\Rig fixes 1`. After import: compare each with the current one (Walk + Fly side by side), swap only the ones that look better.
+**Next:** pigeon imports batch 1; then the side-by-side check and swap.
+**Blockers / questions:** -
+
 ## 2026-11-11 18:20 CT · pigeon-claude
 **Done:** Shop text was tiny (pigeon). Cause: Framewisp's TextScaler sizes a label so its text is exactly as wide as the Figma sample text (FW_Text0: "12", "VIP"...), so "299", "STARTER PACK" etc. shrank; and a Studio tool sets TextScaled back to false on Framewisp menus whenever a test starts. Fix: the 28 labels whose text our scripts change (every PriceLabel in ShopMenu / EnergyBarHUD / BoostsHUD / RebirthMenu(_Alt), VIPPack Title + PerksLabel, egg NameLabels, cash-pack AmountLabels, 2x NameLabels, lifting-bar AmountLabels) have their Figma/FW_* tags removed and a `SelfSized` attribute; `StarterPlayerScripts.ShopOfferLabels` turns TextScaled on for SelfSized labels in play. Layout (StarterGui): small BuyButtons' RobuxIcon shrunk to 70% height at the left so the price has room; Starter Pack title + perks on one row; cash-pack / 2x title boxes 0.22 tall; lifting-bar price labels widened. Play test (opened with the real SHOP button): prices, titles and lifting buttons all readable, nothing overlapping.
 **Next:** -

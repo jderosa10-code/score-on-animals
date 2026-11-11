@@ -123,7 +123,9 @@ return function(clientSource)
 	end
 	sound("Pull", "9113269991", 0.35)          -- Barbell Weights 7 (Roblox's licensed library): a short rattle as the bar comes up
 	sound("Lockout", "109359226723492", 0.45, 1.5)   -- the game's own pop, pitched up
-	sound("Land", "9113269783", 0.5)           -- Barbell Weights 3: the bar back on the rack
+	sound("Land", "9113269783", 0.5)           -- Barbell Weights 3: the plates rattle as the bar lands
+	sound("Drop", "9120265201", 0.8)           -- "Tricycle Impact Slammed On Wood Floor Big 5": the heavy bang on the floor
+	sound("Thud", "9116488438", 0.6, 0.7)      -- "Meaty Thud 2", pitched down: the weight behind it
 	sound("LevelUp", "112485797063762", 0.8)   -- "UI - Level Up"
 	sound("Boost", "8208591201", 0.7)          -- "Speed Boost Start"
 	sound("TargetPop", "6586979979", 0.5)      -- the game's UI hover blip

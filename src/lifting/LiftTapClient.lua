@@ -52,6 +52,22 @@ local function sfx(name, volume, pitch)
 	Debris:AddItem(s, 6)
 end
 
+-- a sound from a spot in the world (other players' lifting: quieter the further away)
+local function sfxAt(name, pos, volume, pitch)
+	local src = sounds:FindFirstChild(name)
+	if not src then return end
+	local att = Instance.new("Attachment")
+	att.Parent = workspace.Terrain
+	att.WorldPosition = pos
+	local s = src:Clone()
+	s.Volume = src.Volume * (volume or 1)
+	s.PlaybackSpeed = src.PlaybackSpeed * (pitch or 1)
+	s.RollOffMinDistance, s.RollOffMaxDistance = 8, 70
+	s.Parent = att
+	s:Play()
+	Debris:AddItem(att, 4)
+end
+
 -- emit(effect, worldPosition, scale, countMul): one burst of an effect from ReplicatedStorage.Assets.VFX.Effects
 local function emit(name, pos, scale, countMul)
 	local src = FX:FindFirstChild(name)
@@ -215,7 +231,13 @@ RunService.Heartbeat:Connect(function()
 				if passed(prev, cur, REP - 0.12) then
 					local at = barOf(pl)
 					if at then emit("Poof", at - Vector3.new(0, 0.6, 0), 0.3, 0.4) end
-					if mine then sfx("Land", 1, 0.94 + math.random() * 0.12) end
+					-- the bar hits the floor: a heavy thud + clank (yours in your ears, other lifters' from their bar)
+					local pitch = 0.94 + math.random() * 0.12
+					if mine then
+						sfx("Drop", 1, pitch); sfx("Thud", 1, pitch); sfx("Land", 0.6, pitch)
+					elseif at then
+						sfxAt("Drop", at, 0.55, pitch); sfxAt("Thud", at, 0.55, pitch)
+					end
 				end
 			end
 		else
