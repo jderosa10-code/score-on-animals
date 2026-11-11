@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 14:50 CT · jacob-claude
+**Done:** StarterPlayerScripts.HUDClient: slot ItemIcon / MutTag / KeyLabel ZIndex 40-42 (the kit's Backdrop/Outline frames at 32-34 were drawn over them, which hid the mutation text and darkened the icons); lighter mutation tints and a pastel rainbow. ConfirmPopup DisplayOrder 50 and every open Menus ScreenGui hides while it's up (back when it closes). Lighting.UIBlur tweens to 10 while any menu or popup is open.
+**Next:** -
+**Blockers / questions:** -
+
 ## 2026-11-11 14:35 CT · jacob-claude
 **Done:** Hacked now rolls (GameConfig.Mutations Chance 2000, x8); only Inverted is event-only. GameConfig.addMutationVFX(part, mut) clones ReplicatedStorage.Assets.VFX.Mutations.<mut> onto the egg/animal: patch eggs + placed animals (ServerScriptService.EggHatching), held eggs/animals (GameData tools), the penalty egg once revealed (PenaltyDemoRunner). Mutated icons: HUDClient tints the normal icon (Gold/Diamond/Hacked colour, Rainbow = moving rainbow gradient) in hotbar, backpack and Sell rows (Jacob chose tinted over ~1,230 new photos for now).
 **Next:** -
