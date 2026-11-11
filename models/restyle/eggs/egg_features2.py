@@ -124,6 +124,8 @@ STYLES.update({
     "tail_flow":  dict(path=[(1.5, 0, -0.6), (2.6, 0, -0.4), (3.1, 0, -1.4), (2.9, 0, -2.5)],                                # horse / zebra: hangs down
                        side=(0, 1, 0), wa=leaf(0.5, 0.35), wb=leaf(0.42, 0.35), single=True, absx=True, ref=2.5),
 })
+STYLES["horns_knob"] = dict(path=[(0, 0.45, 2.4), (0, 0.5, 3.0), (0, 0.55, 3.5)], side=(1, 0, 0),
+                            wa=(lambda u: 0.2 if u < 0.7 else 0.34), wb=(lambda u: 0.2 if u < 0.7 else 0.34), ref=1.3)
 SHELL = Vector((4.15, 4.16, 5.51))
 
 # WHAT EACH ANIMAL GETS. The first try guessed from shapes alone and gave the bunny horns and every
@@ -169,6 +171,8 @@ ANIMALS = {
     "bull": dict(horns="horns_long", ears="ears_droop"), "yak": dict(horns="horns_long"),     # the yak egg has horns only
     "americanbison": dict(horns="horns_long", ears="ears_droop"), "moose": dict(ears="ears_droop"),
     "elephant": dict(ears="ears_fan", tusks="tusks_curl"), "woollymammoth": dict(ears="ears_fan", tusks="tusks_curl"),
+    "gorilla": dict(ears="ears_round"), "minotaur": dict(ears="ears_droop"),
+    "giraffe": dict(horns="horns_knob", ears="ears_droop"),          # new ossicones (knobbed) + ears
     "jackalope": dict(ears="ears_tall"),                   # bent ear next to the antlers read as a broken horn
 }
 
@@ -180,6 +184,9 @@ BIRDS = set("albatross argentavis caladrius cassowary chicken cockatrice duck em
 FISH = set("anglerfish blobfish bluewhale goblinshark greatwhiteshark megalodon shark swordfish whale seal "   # fangtooth / goldfish / plesiosaur came out worse: left alone
            "leviathan mosasaurus seadragon".split())
 MANES = {"wolf", "lion"}
+# batch 4
+WINGED = set("amphiptere bat gargoyle greendragon imp manticore moth mothman prehistoricmoth dragonfly pegasus".split())
+BUGS = set("beetle caterpillar ladybug millipede prayingmantis moth mothman snail".split())
 NO_TAIL = set("stegosaurus kitsune manticore ankylosaurus peafowl jellyfish kraken krakenking giantsquid cuttlefish octopus nautilus "
               "snail crab horse zebra unicorn pony".split())
 NO_GENERIC = {"hacker", "inverted", "crystalcandy", "dimetrodon", "spinosaurus"}
@@ -335,6 +342,17 @@ def redesign(src):
         cand = [d for d in ds if not d["pair"] and abs(d["c"].y) < 0.2 and d["c"].x > 1.3 and d["n"] <= 60 and d["c"].z < 0.5]   # low at the back
         if cand: plan.append(("tail", want["tail"], max(cand, key=lambda d: max(d["s"]))))
     notes = []
+    if not plan and (want.get("ears") or want.get("horns") or want.get("tusks")):
+        # batch 4: the x1.1 eggs' ears / tusks have more corners than the limit above (hippo, rhino, polar bear, woolly mammoth)
+        plus = [d for d in ds if d["pair"] and d["c"].y > 0 and d["n"] <= 70]
+        top = sorted((d for d in plus if -1.4 < d["c"].x < 0.9 and max(d["s"]) >= 0.7
+                      and (d["c"].z > 0.7 or (d["c"].z > 0.2 and abs(d["c"].y) > 1.5 and max(d["s"]) >= 1.5))), key=lambda d: abs(d["c"].y))
+        if top:
+            kind = "ears" if want.get("ears") else ("horns" if want.get("horns") else None)
+            if kind: plan.append((kind, want[kind], max(top, key=lambda d: max(d["s"]))))
+        if want.get("tusks"):
+            cand = [d for d in plus if d["c"].x < -0.6 and d["c"].z < 0.2 and max(d["s"]) >= 1.6]
+            if cand: plan.append(("tusks", want["tusks"], max(cand, key=lambda d: max(d["s"]))))
     for kind, style, d in plan:
         st = STYLES[style]
         olds = [d["isl"]] + ([d["pair"]["isl"]] if d["pair"] else [])
@@ -506,6 +524,46 @@ def redesign(src):
                 pth = [(x0, 0, 2.2), (x0 + 0.5 * k, 0, 2.2 + 0.8 * k), (x0 + 1.1 * k, 0, 2.2 + 1.5 * k)]
                 put([[E(*p) for p in pth]], (1, 0, -0.6), (lambda u: taper(1.35, 0.22, 1.0)(u) * k * SC), flat(0.26 * SC), uv)
                 notes.append("fin:back")
+        # --- big wings (bats, dragons, moths): far too detailed to rebuild well, so the wings themselves are kept
+        #     and re-posed: raised (or lowered, if they were already up), turning about where they join the egg
+        if name in WINGED:
+            grp = [d for d in ds if free(d) and d["pair"] and d["c"].y > 0 and ((d["mx"].y >= 3.2 and d["c"].y >= 1.6) or d["c"].y >= 2.2)]
+            if grp and max(d["mx"].y for d in grp) >= 3.2:
+                y0 = min(d["mn"].y for d in grp)
+                P = [(v.co - c) / SC for d in grp for v in d["isl"]]
+                near = [p for p in P if p.y <= y0 + 0.4]
+                z0 = sum(p.z for p in near) / len(near)
+                cy, cz = sum(p.y for p in P) / len(P), sum(p.z for p in P) / len(P)
+                a = math.radians(-22 if math.degrees(math.atan2(cz - z0, cy - y0)) > 40 else 24)
+
+                def turned(p, a_, sg):
+                    y, z = sg * p.y - y0, p.z - z0
+                    return Vector((p.x, sg * (y0 + y * math.cos(a_) - z * math.sin(a_)), z0 + y * math.sin(a_) + z * math.cos(a_)))
+                floor_ = min(min(p.z for p in P), -SHELL.z / 2) - 0.05
+                if min(turned(p, a, 1).z for p in P) < floor_: a = -a
+                if min(turned(p, a, 1).z for p in P) >= floor_:
+                    for d in grp:
+                        for sg, isl in ((1, d["isl"]), (-1, d["pair"]["isl"])):
+                            for v in isl: v.co = c + SC * turned((v.co - c) / SC, a, sg)
+                    take(*grp)
+                    notes.append("wings:" + ("raised" if a > 0 else "lowered"))
+        # --- feelers (bugs, snail): long, curling outward, with a ball on the end
+        if name in BUGS:
+            cand = [d for d in ds if free(d) and d["pair"] and d["c"].y > 0 and d["c"].x < -0.7 and d["c"].z > 0.9 and 0.25 <= d["c"].y <= 1.3
+                    and d["n"] <= 60 and d["shape"] == "rod" and max(d["s"]) >= 1.0]
+            if cand:
+                d = max(cand, key=lambda d: max(d["s"]))
+                uv = tally_main(both(d)); k = max(0.65, min(0.95, max(d["s"]) / 1.7))
+                bx, by, bz = d["mx"].x - 0.25, max(0.3, d["mn"].y + 0.15), d["mn"].z + 0.2
+                kill(both(d)); take(d)
+                for sgn in (1, -1):
+                    pts = [E(bx + k * a_, sgn * (by + k * b_), bz + k * g_) for a_, b_, g_ in [(0, 0, 0), (-0.6, 0.25, 1.0), (-1.1, 0.65, 1.7), (-1.0, 1.15, 2.1), (-0.6, 1.35, 1.9)]]
+                    put([pts], (1, 0, 0), flat(0.19 * SC), flat(0.19 * SC), uv)
+                    bf = ball(bm, pts[-1], 0.34 * SC * k)
+                    bmesh.ops.recalc_face_normals(bm, faces=bf)
+                    for f_ in bf:
+                        for l in f_.loops: l[uvl].uv = uv
+                notes.append("feelers:curled")
         # --- tail
         tail_done = any(k_ == "tail" for k_, _, _ in plan)
         if not tail_done and name not in NO_TAIL:

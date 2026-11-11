@@ -160,7 +160,7 @@ if MODE == "check" then
 	local x = 0
 	-- the manifest is keyed by the ORIGINAL mesh ids, so preview from the untouched backup when there is one
 	local from = Backups:FindFirstChild("BaseEggsBackup_BeforeRestyle") or Eggs.GoldEggs
-	for _, name in ipairs({ "Bunny", "Wolf", "Albatross", "Dragon", "Pony", "Lion", "Whale", "Parrot" }) do
+	for _, name in ipairs({ "Bunny", "Wolf", "Albatross", "Dragon", "Pony", "Lion", "Whale", "Parrot", "Bat", "Beetle", "Gorilla", "Moth", "Pegasus", "WoollyMammoth" }) do
 		local src = from:FindFirstChild(name)
 		local id = src and src.MeshId:match("%d+")
 		if src and new[id] then
@@ -217,9 +217,19 @@ local function original(folder, backupName, keepName)
 	log[#log + 1] = "originals restored into " .. fresh:GetFullName() .. " (replaced folder kept as ServerStorage.Restyle.Old." .. keepName .. ")"
 	return fresh
 end
-prog("restoring originals")
-local targets = { original(Eggs, "EggsBackup_BeforeRestyle", "Eggs_GentleRestyle_Old") }
-if SS:FindFirstChild("BaseEggs") then targets[#targets + 1] = original(SS.BaseEggs, "BaseEggsBackup_BeforeRestyle", "BaseEggs_GentleRestyle_Old") end
+-- MODE "add": a further batch for eggs that still carry their ORIGINAL mesh. Nothing is restored
+-- (that would undo the batches already in), nothing is tinted, and a base egg that gets a new
+-- model loses the tint it was given for having none.
+local ADD = (MODE == "add")
+local targets
+if ADD then
+	targets = { Eggs }
+	if SS:FindFirstChild("BaseEggs") then targets[2] = SS.BaseEggs end
+else
+	prog("restoring originals")
+	targets = { original(Eggs, "EggsBackup_BeforeRestyle", "Eggs_GentleRestyle_Old") }
+	if SS:FindFirstChild("BaseEggs") then targets[#targets + 1] = original(SS.BaseEggs, "BaseEggsBackup_BeforeRestyle", "BaseEggs_GentleRestyle_Old") end
+end
 local swapped, skipped, failed, tinted = 0, {}, {}, 0
 -- eggs with no new model get a slight colour shift instead (base eggs only; pigeon: "maybe slight
 -- color change on some"). Special eggs are left alone.
@@ -232,12 +242,16 @@ for _, root in ipairs(targets) do
 			local id = egg.MeshId:match("%d+")
 			if id and new[id] then
 				local ok, err = pcall(swap, egg, new[id], MAN[id])
-				if ok then swapped += 1 else failed[#failed + 1] = egg:GetFullName() .. ": " .. tostring(err) end
+				if ok then
+					swapped += 1
+					local sa0 = egg:FindFirstChildWhichIsA("SurfaceAppearance")
+					if ADD and root.Name == "BaseEggs" and sa0 then sa0.Color = Color3.new(1, 1, 1) end
+				else failed[#failed + 1] = egg:GetFullName() .. ": " .. tostring(err) end
 				task.wait()                                  -- one egg per frame: Studio stays responsive
 			else
 				skipped[egg.Name] = true
 				local sa = egg:FindFirstChildWhichIsA("SurfaceAppearance")
-				if root.Name == "BaseEggs" and sa and not NO_TINT[egg.Name] and sa.Color == Color3.new(1, 1, 1) then
+				if not ADD and root.Name == "BaseEggs" and sa and not NO_TINT[egg.Name] and sa.Color == Color3.new(1, 1, 1) then
 					local h = 0
 					for k = 1, #egg.Name do h = (h * 31 + egg.Name:byte(k)) % 9973 end
 					sa.Color = TINTS[h % #TINTS + 1]; tinted += 1
