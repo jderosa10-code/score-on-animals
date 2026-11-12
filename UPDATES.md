@@ -2,6 +2,15 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 15:20 CT · pigeon-claude
+**Done:** Leaderboards (pigeon asked).
+- **Boards:** 4 lobby boards in `Workspace.Map.Leaderboards`: Top Strength, Richest, Most Rebirths, Most Animals. They stand in front of the two cliffs by the pitch mouth and face the plots. Blender model (`tools/leaderboards/build_board.py`, asset 120988479360730): studded wood + the stalls' purple/white awning, map stud texture (6905003203, black 80%, 8 studs). Template in `ServerStorage.LeaderboardBoard`.
+- **Displays:** real Frames in `StarterGui.Leaderboards` (title + top-10 SurfaceGuis per board).
+- **Scripts:** `ServerScriptService.Leaderboards` (OrderedDataStores `LB_<Key>_v1` every 60 s, Cash stored as log10 x1e15, top 10 to `ReplicatedStorage.Leaderboards`, plus leaderstats Strength / Cash / Rebirths); `StarterPlayerScripts.LeaderboardClient` fills the rows + avatars.
+- Play-tested: boards fill in about 15 s, no errors. Saved.
+**Next:** phone test.
+**Blockers / questions:** none.
+
 ## 2026-11-12 14:30 CT · pigeon-claude
 **Done:** 'Long Offline' renamed to **2x Offline Cash** (shop card, `G.ShopItems.PassLongOffline.Title`, the pass name and description on Roblox, and the gift product). The code key stays `LongOffline`. Saved v379.
 **Next:** Jacob makes the remaining pass icons (pigeon's call); launch checklist below.
