@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 02:58 CT · jacob-claude
+**Done:** (Jacob: "the Dragon being the same size as the base animals is ridiculous, they should be huge", like Throw Food for Animals) `ReplicatedStorage.Hatching.HatchConfig.placedScale` now sizes placed animals by rarity: each tier has a target size (cube root of the model's box, so wings don't count as "big"): Common 4.5, Uncommon 5, Rare 6, Epic 8, Legendary 11, Mythic 14, Exotic 18, Divine 23, Celestial 28, Secret 34; inside a tier bigger models stay a bit bigger (x0.5..1.6); nothing longer than 70 studs. Also found why the Dragon was small: rarityOf used EggRoll's old table, so most animals counted as Common; it now reads `GameConfig.AnimalRarity`. Examples (longest side): Hamster 4, Corgi 9, Giraffe 16, T-Rex 19, Unicorn 18, Fenrir 31, Phoenix 53, Kraken 43, Dragon 70. Held size unchanged (`heldScale`). Equip Best falls back to any spot on the Land for huge animals. Saved. Dev showcase `Workspace._AnimalShowcase` (x 3000) kept out of the save.
+**Next:** funnels.
+**Blockers / questions:** pigeon: this replaces your C.SIZE Grow/Max rule (table left in, unused). Big ones stick out past the fences on purpose.
+
 ## 2026-11-12 02:42 CT · jacob-claude
 **Done:** (Jacob: "place them anywhere on the plot, only reason you can't is max animals") `ReplicatedStorage.Hatching.HatchConfig.canPlace(plot, pos, radius, spread)`: by default only checks the point is on your Land (animals may overlap / stand at the edge); `spread = true` keeps the old margin + no-overlap rule, used only by Equip Best's auto-placing (`EggHatching.freeSpot`). The base-slots limit is unchanged. Saved.
 **Next:** funnels.
