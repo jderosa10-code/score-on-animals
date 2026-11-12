@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 23:58 CT · jacob-claude
+**Done:** held animals play their Idle in your hands (any player's, on every screen): `StarterPlayerScripts.HatchClient` bottom section adds `<Tool>.HeldAnim` AnimationController (or KSTrack live for unpublished clips), stops on unequip. Tested with a Frog
+**Next:** Jacob playtests
+**Blockers / questions:** none
+
 ## 2026-11-12 02:20 CT · pigeon-claude
 **Done:** Shop egg cards: the egg pictures are ~20% bigger than the originals and pop slightly past their boxes (Icon 1.12x, sitting a bit high). Boxes are 83% size, still below the panel's top edge and clear of the buttons. Saved.
 **Next:** pigeon publishes.
