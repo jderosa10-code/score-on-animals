@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 16:25 CT · jacob-claude
+**Done:** lifting rebalance (Jacob): `ReplicatedStorage.GameConfig` — levels quicker, `G.LiftXP` 10*L^1.25 -> 5*L^1.15 (L1 5 XP, L50 449, L100 997); Strength per level-up now comes from the barbell you're on, new `G.Barbells[k].Strength` 5,6,7,9,11,14,17,20,25,30,37,45,55,67,82,100 (first -> last). `G.StrengthGain(level, barbellLevel)`; callers updated (`ServerScriptService.Workout`, `G.packLift`) (place v390)
+**Next:** Jacob playtests the feel
+**Blockers / questions:** pigeon: egg Strength needs weren't touched; strength now grows faster early and slower at very high levels on low barbells
+
 ## 2026-11-12 16:15 CT · jacob-claude
 **Done:** SellMenu on phones: the scroll bar covered the right side of the SELL buttons. `StarterGui.Menus.SellMenu.SellPanel.Backdrop.List` VerticalScrollBarInset = ScrollBar, `List.Rows` width 0.977 -> 0.95 (left edge unchanged) so the buttons clear the bar (place v389)
 **Next:** Jacob checks on phone
