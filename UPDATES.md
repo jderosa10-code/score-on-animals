@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 13:30 CT · pigeon-claude
+**Done:** Passes panel background un-stretched (pattern tiles, margins, halftone strip match the egg row). New icons from pigeon's ChatGPT art for Fast Hatch, Long Offline and Bigger Green Zone: white backgrounds cleared (`tools/passes/clear_bg.ps1`), uploaded, set on the shop cards and on the passes + their gift products. Saved v376.
+**Next:** pigeon publishes. Super Luck / Mutation Hunter may get ChatGPT icons too (kit in ROBLOX IMPORT\passes\chatgpt_refs).
+**Blockers / questions:** none.
+
 ## 2026-11-12 03:30 CT · pigeon-claude
 **Done:** +3 Hatcheries dropped (pigeon: no room without cutting into the pen or the walkway). Removed from `GameConfig.Passes`; it never had a shop card. On Roblox the pass and its gift product stay off sale (passes can't be deleted). Shop scroll trimmed so the Passes section ends 7 px from the bottom. Saved.
 **Next:** pigeon publishes.
