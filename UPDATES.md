@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 00:14 CT · jacob-claude
+**Done:** music fades out when night starts and restarts from the top (fade in) when day returns (`StarterPlayerScripts.MusicPlayer`, reads workspace IsNight) (place v370)
+**Next:** Jacob playtests
+**Blockers / questions:** none
+
 ## 2026-11-12 03:10 CT · pigeon-claude
 **Done:** 8 new game passes (pigeon picked them). Each has a gift product; ids are in `GameConfig.Passes` and `tools/passes/passes_ids.json`.
 - **Wired:**
