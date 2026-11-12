@@ -125,23 +125,24 @@ RunService.Stepped:Connect(function()
 	end
 end)
 
--- white flash when you start lifting (Jacob, 11 Nov 2026)
+-- white flash when you get on and off the weights (Jacob, 11 Nov 2026): holds white a moment, then fades
 local wasLifting = player:GetAttribute("Lifting") ~= nil
 local function flashWhite()
 	local gui = Instance.new("ScreenGui")
 	gui.Name = "LiftFlash"; gui.IgnoreGuiInset = true; gui.DisplayOrder = 100; gui.ResetOnSpawn = false
 	local f = Instance.new("Frame")
 	f.Size = UDim2.fromScale(1, 1); f.BackgroundColor3 = Color3.new(1, 1, 1); f.BorderSizePixel = 0
-	f.BackgroundTransparency = 0.05; f.Parent = gui
+	f.BackgroundTransparency = 0.55; f.Parent = gui   -- soft (Jacob: toned down)
 	gui.Parent = player:WaitForChild("PlayerGui")
-	game:GetService("TweenService"):Create(f, TweenInfo.new(0.55, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 1}):Play()
-	game:GetService("Debris"):AddItem(gui, 0.7)
+	local tw = game:GetService("TweenService"):Create(f, TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 1})
+	tw:Play()
+	game:GetService("Debris"):AddItem(gui, 0.6)
 end
 
 -- pause Roblox's default Animate while you lift (it would fight the pose), resume after
 local function onLifting()
 	local now = player:GetAttribute("Lifting") ~= nil
-	if now and not wasLifting then flashWhite() end
+	if now ~= wasLifting then flashWhite() end
 	wasLifting = now
 	local char = player.Character
 	local animate = char and char:FindFirstChild("Animate")
@@ -231,3 +232,69 @@ do
 		end
 	end)
 end
+
+------------------------------------------------------------ a new barbell drops in from the sky (Jacob, 11 Nov 2026)
+-- Workout sets "DropAt" on the barbell it places after an upgrade: it falls in, lands with a burst and a small shake.
+local Debris = game:GetService("Debris")
+local VFX = RS:WaitForChild("Assets"):WaitForChild("VFX"):WaitForChild("Effects")
+local function burst(name, pos, scale)
+	local src = VFX:FindFirstChild(name)
+	if not src then return end
+	local host = Instance.new("Part")
+	host.Anchored, host.CanCollide, host.CanQuery, host.CanTouch, host.Transparency = true, false, false, false, 1
+	host.Size = Vector3.one; host.CFrame = CFrame.new(pos); host.Parent = workspace
+	local att = Instance.new("Attachment"); att.Parent = host
+	for _, e in src:GetDescendants() do
+		if e:IsA("ParticleEmitter") then
+			local c = e:Clone(); c.Enabled = false
+			local kps = {}
+			for _, k in c.Size.Keypoints do table.insert(kps, NumberSequenceKeypoint.new(k.Time, k.Value * scale, k.Envelope * scale)) end
+			c.Size = NumberSequence.new(kps)
+			c.Speed = NumberRange.new(c.Speed.Min * scale, c.Speed.Max * scale)
+			c.Parent = att
+			c:Emit(math.max(1, math.floor((c:GetAttribute("EmitCount") or 8) + 0.5)))
+		end
+	end
+	Debris:AddItem(host, 4)
+end
+local function shake(dur, mag)
+	local hum = player.Character and player.Character:FindFirstChildOfClass("Humanoid")
+	if not hum then return end
+	local t0 = os.clock()
+	while os.clock() - t0 < dur do
+		local k = 1 - (os.clock() - t0) / dur
+		hum.CameraOffset = Vector3.new(math.random() - 0.5, math.random() - 0.5, math.random() - 0.5) * mag * k
+		RunService.RenderStepped:Wait()
+	end
+	hum.CameraOffset = Vector3.zero
+end
+local function dropIn(bar, plot)
+	local at = bar:GetAttribute("DropAt")
+	if not at or workspace:GetServerTimeNow() - at > 2 then return end
+	local rest = bar:GetPivot()
+	local H, T = 45, 0.55
+	bar:PivotTo(rest + Vector3.new(0, H, 0))
+	local t0 = os.clock()
+	while bar.Parent and os.clock() - t0 < T do
+		local a = (os.clock() - t0) / T
+		bar:PivotTo(rest + Vector3.new(0, H * (1 - a * a), 0))   -- falls faster and faster
+		RunService.RenderStepped:Wait()
+	end
+	if not bar.Parent then return end
+	bar:PivotTo(rest)
+	local mine = plot.Name == player:GetAttribute("Plot")
+	local snd = mine and RS:FindFirstChild("BallLand", true)   -- only your own new weight makes the crash sound
+	if snd and snd:IsA("Sound") then
+		local c = snd:Clone(); c.Volume = 0.8; c.PlaybackSpeed = 0.7; c.Parent = bar.PrimaryPart or bar:FindFirstChildWhichIsA("BasePart", true)
+		if c.Parent then c:Play(); Debris:AddItem(c, 3) end
+	end
+	burst("Poof", rest.Position + Vector3.new(0, 0.5, 0), 1.6)
+	burst("LevelUp", rest.Position + Vector3.new(0, 1.5, 0), 1.2)
+	if mine then shake(0.3, 0.35) end
+end
+plots.DescendantAdded:Connect(function(d)
+	if d.Name == "Barbell" and d:IsA("Model") and d.Parent and d.Parent.Name == "WorkoutZone" then
+		local plot = d.Parent.Parent
+		task.defer(dropIn, d, plot)   -- (DropAt is set before the server parents it, so it arrives with the model)
+	end
+end)

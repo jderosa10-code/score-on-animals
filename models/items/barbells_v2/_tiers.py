@@ -14,8 +14,9 @@ BASE.update({
 })
 GLOW = GLOW + ("Carve",)
 # pigeon: "ur making them a bit too high quality" -> chunkier steps, less rounding, fewer small details
-C = 0.25
-LOWQ_ITERS = 1
+C = 0.14      # pigeon: 0.25 was "so voxely/pixely", 0.125 + detail was "too high quality": fine steps, simple shapes
+SMOOTH = 0.65
+LOWQ_ITERS = 4
 
 
 def t_copper(x, y, z, i, j, k):

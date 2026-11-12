@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 01:00 CT · pigeon-claude
+**Done:** (1) pigeon: "I can hear other ppl working out, I don't like that". `StarterGui.HUD.LiftTapHUD.LiftTapClient`: other lifters' rep thud/drop (`sfxAt`) no longer plays; `WorkoutClient.dropIn`: the crash when a new weight drops onto a rack only plays for your own plot. Their sparkles/poofs still show. Play-tested, no errors. (2) Barbell v2 concepts re-rendered smoother (pigeon: blocky ones "so voxely/pixely"): step 0.14, 4 smoothing passes, same simple shapes (`barbells_v2_all16.png`; blocky kept as `_blocky.png`). The showroom in Studio still has the blocky ones until pigeon OKs these.
+**Next:** pigeon's yes/no on the smoother set -> re-upload into `Workspace.BarbellShowcase`.
+**Blockers / questions:** -
+
 ## 2026-11-11 21:15 CT · jacob-claude
 **Done:** `CodesMenu.CodesPanel.HintLabel` now reads "FOLLOW Stud Works Co on roblox to get EXCLUSIVE codes" (group that owns the game; SelfSized). `Workout`: stopping a lift puts you 7 studs off the mat (was 2.5) and there's a 2.5 s cooldown before you can start again. Saved.
 **Next:** Jacob publishes `RBX_ANIMSAVES.KickerRigR15.Celebrate`, then I set its AssetId.

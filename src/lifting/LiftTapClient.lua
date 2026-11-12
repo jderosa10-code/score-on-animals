@@ -231,12 +231,11 @@ RunService.Heartbeat:Connect(function()
 				if passed(prev, cur, REP - 0.12) then
 					local at = barOf(pl)
 					if at then emit("Poof", at - Vector3.new(0, 0.6, 0), 0.3, 0.4) end
-					-- the bar hits the floor: a heavy thud + clank (yours in your ears, other lifters' from their bar)
+					-- the bar hits the floor: a heavy thud + clank, only for your own lifting
+					-- (pigeon: "I can also hear other ppl working out, I don't like that")
 					local pitch = 0.94 + math.random() * 0.12
 					if mine then
 						sfx("Drop", 1, pitch); sfx("Thud", 1, pitch); sfx("Land", 0.6, pitch)
-					elseif at then
-						sfxAt("Drop", at, 0.55, pitch); sfxAt("Thud", at, 0.55, pitch)
 					end
 				end
 			end
