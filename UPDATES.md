@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 16:00 CT · pigeon-claude
+**Done:** Leaderboard boards rebuilt from Parts (pigeon: the stud texture was stretched and the roof was disconnected). Mesh textures stretch across the whole face; Parts tile the map's stud texture 1:1. New builder `ServerStorage.LeaderboardBuilder` (`build(cframe)`): posts, frame, header, a top beam, a sloped striped roof resting on it, and trim hanging from the roof edge. The old mesh template moved to `ServerStorage.Restyle.LeaderboardBoard_mesh_old`. Also fixed the Studio edit camera, which was stuck Scriptable from my screenshot tool. Saved v383.
+**Next:** phone test.
+**Blockers / questions:** none.
+
 ## 2026-11-12 15:20 CT · pigeon-claude
 **Done:** Leaderboards (pigeon asked).
 - **Boards:** 4 lobby boards in `Workspace.Map.Leaderboards`: Top Strength, Richest, Most Rebirths, Most Animals. They stand in front of the two cliffs by the pitch mouth and face the plots. Blender model (`tools/leaderboards/build_board.py`, asset 120988479360730): studded wood + the stalls' purple/white awning, map stud texture (6905003203, black 80%, 8 studs). Template in `ServerStorage.LeaderboardBoard`.
