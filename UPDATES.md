@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 17:45 CT · pigeon-claude
+**Done:** Admin panel hidden on phones (pigeon: nobody needs it there; its ADMIN button covered the Animals menu). `MobileMenus` switches `PlayerGui.AdminPanel` off on phones; your script and `ServerStorage.AdminPanel` are untouched. Tested: hidden on the phone sim, shown on PC, PC menus at 1.00x. Saved.
+**Next:** publish, then a real-phone check.
+**Blockers / questions:** Jacob: `AdminPanelClient:245` still errors on join (index boolean with 'ActiveList').
+
 ## 2026-11-12 17:30 CT · pigeon-claude
 **Done:** Bigger menus on phones (pigeon OK'd).
 - **How:** new `StarterPlayerScripts.MobileMenus`. On touch screens under 600 px tall, each Menus/Popups panel gets a `k_mobile` channel on its `FW_Scale` (up to 1.3x). It waits for the open animation to settle, caps the zoom to what fits, and slides the panel back on screen. PC and tablets are untouched; the frames themselves don't change.
