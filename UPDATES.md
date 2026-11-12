@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 23:15 CT · jacob-claude
+**Done:** Tutorial v3 (Jacob): his arrow image `rbxassetid://117926794026113` (`TutorialConfig.Arrow`, white down triangle tinted gold) bounces over the spot to go (camera-facing plate in `Workspace.TutorialTrail`) and over the screen button to press (`PlayerGui.TutorialPointer`, positioned relative to its ScreenGui): hotbar slot of your egg/animal when you're not holding it, the luck BUY button when the Egg Luck menu is open. `TutorialClient.guide()` gives exact text per situation (hold egg -> walk to hatchery and press E / tap Place Egg -> wait for READY -> press E to Hatch -> hold animal -> click plot -> walk onto weights -> keep lifting -> walk into Egg Luck tent -> press BUY / earn $X). Step 7 ends on buying luck or 6 s with the menu open. Video mode off (`D.MaxFor` empty, `TutorialConfig.Off` empty), tutorial-every-join back on, wipe re-armed for Jacob's test account (Tag tutorial3). Saved.
+**Next:** Jacob plays it through.
+**Blockers / questions:** none.
+
 ## 2026-11-11 23:45 CT · pigeon-claude
 **Done:** Minotaur loincloth no longer stretches on its walk. The cloth was skinned to both thighs and the left hand, so it tore between the legs (up to 6x). New `RIG_SKIRT` rule in `tools/rig/rig_build.py` makes it follow Hips, with the hem following the nearer leg up to 35%. Walk went from 72 stretched edges to 0, idle from 6 to 0.
 Uploaded via Open Cloud (asset 131937513978405), swapped into `ReplicatedStorage.BaseAnimals.Minotaur` + 6 mutations. Undo copy is in `ServerStorage.Restyle.Animals_BeforeSkirt`. Play-tested, saved v341.
