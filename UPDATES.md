@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 16:40 CT · jacob-claude
+**Done:** egg walk-out (`ReplicatedStorage.DevDemo.PenaltyDemoRunner` mysteryEnter): silhouettes now wear mutation auras (still black + white outline). The rolled egg uses its real mutation; the ones flicking past roll one at real odds (`G.rollMutation`), and the odds shown include it. Rare ones get a "whoa" when they pop out: 1 in 100K+ = rainbow/diamond burst + gasp; 1 in 1M+ = bigger bursts, galaxy, sting, crowd, shake. Tested in Play (place v391)
+**Next:** Jacob playtests
+**Blockers / questions:** none
+
 ## 2026-11-12 16:25 CT · jacob-claude
 **Done:** lifting rebalance (Jacob): `ReplicatedStorage.GameConfig` — levels quicker, `G.LiftXP` 10*L^1.25 -> 5*L^1.15 (L1 5 XP, L50 449, L100 997); Strength per level-up now comes from the barbell you're on, new `G.Barbells[k].Strength` 5,6,7,9,11,14,17,20,25,30,37,45,55,67,82,100 (first -> last). `G.StrengthGain(level, barbellLevel)`; callers updated (`ServerScriptService.Workout`, `G.packLift`) (place v390)
 **Next:** Jacob playtests the feel
