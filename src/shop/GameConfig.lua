@@ -34,12 +34,13 @@ G.RebirthSpeed = 2           -- +2 walk speed per rebirth
 G.RebirthLuck = 0.5          -- +0.5 luck per rebirth
 
 -- Base upgrades (the sign behind each plot): land depth per level, and the price to reach the next one
-G.BaseDepths = {42, 58, 74}   -- land depth for levels 0, 1, 2; from level 2 on it stays 74
--- (Jacob, 11 Nov 2026) how many animals your base holds: 10 at the start, +2 every upgrade (10, 12, 14 ... 28)
-G.BaseMaxLevel = 9
+G.BaseDepths = {42, 58, 74}   -- land depth for levels 0, 1, 2 (the lobby's back wall stops it there)
+-- (Jacob, 11 Nov 2026) how many animals your base holds: 10, then +2 per upgrade (10, 12, 14).
+-- An upgrade only exists if it makes the plot bigger, so there are 2.
+G.BaseMaxLevel = #G.BaseDepths - 1
 function G.BaseSlots(level) return 10 + 2 * math.clamp(level or 0, 0, G.BaseMaxLevel) end
--- price to go from level k-1 to k: ~3,000 s of income of the animal (k/10) of the way up the ranks
-G.BaseUpgradeCost = {320e3, 6.9e6, 150e6, 3.1e9, 67e9, 1.4e12, 31e12, 660e12, 14e15}
+-- price to go from level k-1 to k: ~3,000 s of income of the animal 1/4 and 1/2 of the way up the ranks
+G.BaseUpgradeCost = {32e6, 67e9}
 
 -- Deadlift barbells, in upgrade order (models in ServerStorage.Barbells). Power = XP per rep.
 -- Costs scaled with the per-animal income (Jacob, 11 Nov 2026): barbell k is bought with the animals

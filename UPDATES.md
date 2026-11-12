@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 01:45 CT · jacob-claude
+**Done:** (Jacob: "only upgrade base if it changes the size of the plot") `GameConfig`: `G.BaseMaxLevel` = #BaseDepths - 1 = 2, so 2 base upgrades, each grows the plot (the lobby back wall at z -189 stops it past depth 74): 10 -> 12 -> 14 animals, costs $32M and $67B. PetsButton a bit smaller (0.11, 3x3 tiles). Saved (v272).
+**Next:** funnels.
+**Blockers / questions:** -
+
 ## 2026-11-11 20:10 CT · pigeon-claude
 **Done:** (1) **Kick slow-mo slower** (pigeon: watch the egg dive): `PenaltyDemoRunner` `SLOWMO` 0.3 -> 0.2, PERFECT 0.14, window `max(24, speed*0.45)`; PERFECT stays slow 0.8 s while the net bulges, then speeds up. (2) **Walk speed:** new `G.BaseWalkSpeed = 24` (was a hard-coded 16 in `GameServer` and `Workout`), `StarterPlayer.CharacterWalkSpeed` 24; rebirth +2 still adds on top. (3) **Lift scoot fixed:** the body slid back each rep (held by WalkSpeed 0, the pose moves the hips). `WorkoutClient` now pins your own HumanoidRootPart to the lift spot while `Lifting` (0.35 s after LiftStart). Tested: <0.01 stud drift over 12 s. (4) **Loading screen** (pigeon asked; UI, so Jacob please look): `ReplicatedFirst.LoadingScreen` + its `LoadingGui` of real Scale-sized frames in the kit style (Luckiest Guy, black outlines, stud texture, sunburst, green bar, hopping eggs, tips, SKIP after 6 s). It's in ReplicatedFirst because StarterGui loads too late to cover the join. Progress = game.Loaded + ContentProvider queue + character, min 3 s; hides chat/player list until it fades. Dev: workspace attribute `HoldLoadingScreen` keeps it up. Tested in play. Saved (v271).
 **Next:** pigeon to describe "weird" placing and the giraffe head (old vs new rig and both clips look the same in play).
