@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 20:50 CT · jacob-claude
+**Done:** Test wipe (Jacob asked: reset his and Braden's progress). `ServerScriptService.GameData` has `D.Wipe = {Tag, ids, MinGroupRank = 2}`: on join, a listed user id OR anyone ranked 2+ in the owning group starts fresh once per Tag (profile gets `WipeTag`). Studio DataStore listing was forbidden, so it runs on join instead. Tested: BING_CHILLING2525 (4263620304) wiped to $0 / 10 Strength. Saved (v303).
+**Next:** funnels.
+**Blockers / questions:** pigeon: if Braden isn't rank 2+ in the group, add his user id to `D.Wipe.ids`. To wipe again later, change `D.Wipe.Tag`. Needs a publish for live servers.
+
 ## 2026-11-11 20:45 CT · jacob-claude
 **Done:** R15 kick animations published by Jacob and wired in. `ServerStorage.RBX_ANIMSAVES.KickerRigR15` is now an ObjectValue (Value = `ServerStorage.KickerRigR15`, the rig to edit them on); its PenaltyRetreat3/Set3/Approach3/Strike3/Perfect3 KeyframeSequences carry an `AssetId` attribute (112122310457002, 125530127029323, 127113591587611, 76959384977351, 101013569339273). `ReplicatedStorage.KSTrack.load` plays the published animation when `AssetId` is set (markers Contact/Flick/Charge kept), else falls back as before. All 5 load in Play (R15). Saved (v302).
 **Next:** R6 clips are still KSTrack (unpublished); funnels.
