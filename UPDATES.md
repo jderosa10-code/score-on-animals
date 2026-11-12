@@ -2,6 +2,13 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 14:10 CT · pigeon-claude
+**Done:**
+- Pass icons: the black squares are gone. Pasted ChatGPT images arrive as WebP without transparency; cut the black with `clear_bg.ps1 -Black` and re-uploaded to the shop cards, passes and gift products.
+- Passes section cards bigger: icon boxes 114 -> 178 px, cards taller into the old row gap, text and buttons kept at their pixel size, and less dead space at the end of the scroll. Backup `ServerStorage.Restyle.ShopMenu_before_passresize`. Saved v378.
+**Next:** pigeon decides on Long Offline: rename to '2x Offline Cash' or drop it. Then publish.
+**Blockers / questions:** none.
+
 ## 2026-11-12 13:30 CT · pigeon-claude
 **Done:** Passes panel background un-stretched (pattern tiles, margins, halftone strip match the egg row). New icons from pigeon's ChatGPT art for Fast Hatch, Long Offline and Bigger Green Zone: white backgrounds cleared (`tools/passes/clear_bg.ps1`), uploaded, set on the shop cards and on the passes + their gift products. Saved v376.
 **Next:** pigeon publishes. Super Luck / Mutation Hunter may get ChatGPT icons too (kit in ROBLOX IMPORT\passes\chatgpt_refs).
