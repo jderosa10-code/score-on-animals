@@ -2,6 +2,14 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 17:35 CT · jacob-claude
+**Done:**
+- Hatch patch eggs centred on the body: 11 eggs had no `EggCenter` attachment (Akita, Amphiptere, Blobfish, Cerberus, Dragon, Fenrir, Griffin, Microraptor, Phoenix, Shark, Unicorn) so their tails pushed the body off the patch. Added to `ServerStorage.BaseEggs.<egg>.EggCenter` (measured from the mesh, checked by eye; attribute `From`). Also added scaled markers to 430 mutated eggs in `ReplicatedStorage.Assets.Eggs.<Mut>Eggs` that lacked one. Hydra is fine without.
+- Held animals at true size: `ReplicatedStorage.Hatching.HatchConfig` HELD_MAX 14 -> math.huge (a held Dragon is 45 studs).
+- Music 80% -> 50% (`StarterPlayerScripts.MusicPlayer` VOLUME).
+**Next:** Jacob checks the held giants feel OK
+**Blockers / questions:** none
+
 ## 2026-11-12 18:00 CT · pigeon-claude
 **Done:** Most Rebirths leaderboard removed (pigeon). Removed the board, its 2 SurfaceGuis, its entry in `ServerScriptService.Leaderboards`, and the Rebirths player-list column (player list now shows Strength + Cash). Most Animals is centred on the left (x -509). The `LB_Rebirths_v1` data store is left alone. Play-tested: the 3 boards fill, no new errors. Saved.
 **Next:** publish.
