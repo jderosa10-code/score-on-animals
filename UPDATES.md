@@ -2,6 +2,16 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 16:50 CT · pigeon-claude
+**Done:** Phone check in Studio's device simulator (iPhone 14, Galaxy A06).
+- **Locked to landscape:** `StarterGui.ScreenOrientation` = LandscapeSensor. In portrait the whole HUD broke (text off screen, cash cut off).
+- **Cash +:** sat on the last digit; `HUDClient.placePlus` now clears the outline plus a gap.
+- **Boost list:** `ActiveBoostsHUD.DisplayOrder` 5 -> 0, so menus draw over it (it was covering Animals' EQUIP BEST).
+- **Animals panel:** `PetsPanel` Y 0.508 -> 0.535, so its top isn't on the screen edge.
+- Saved.
+**Next:** pigeon decides on making menus bigger on phones (Pick Up / Sell are 42x18 px there).
+**Blockers / questions:** Jacob: menus are proportional, so on a phone the Animals panel is ~170 px wide and its buttons are hard to tap. Proposal: extend your MobileHUD idea (UIScale on touch screens) to the menu panels.
+
 ## 2026-11-12 16:20 CT · pigeon-claude
 **Done:** Leaderboard studs now match the stalls. The Egg Luck stalls get their studs from SurfaceType Studs on every face, not a Texture. I removed the 8-stud checker overlay (that's only on the big cliff walls) and set Studs surfaces on all board wood/awning parts; `LeaderboardBuilder` does the same. Saved.
 **Next:** phone test.
