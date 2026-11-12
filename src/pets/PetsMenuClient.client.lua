@@ -33,6 +33,25 @@ end
 
 local placed = {}
 local cards = {}
+-- "9/10" next to the title: animals on your plot / how many your base holds (GameConfig.BaseSlots)
+local countLabel = panel:FindFirstChild("TopBar") and panel.TopBar:FindFirstChild("CountLabel")
+local function myPlot() return workspace:FindFirstChild("Plots") and workspace.Plots:FindFirstChild(player:GetAttribute("Plot") or "") end
+local function updateCount()
+	if not countLabel then return end
+	local plot = myPlot()
+	countLabel.Text = #placed .. "/" .. G.BaseSlots(plot and plot:GetAttribute("Level") or 0)
+end
+local hooked
+local function hookPlot()
+	local plot = myPlot()
+	if plot and plot ~= hooked then
+		hooked = plot
+		plot:GetAttributeChangedSignal("Level"):Connect(updateCount)
+	end
+	updateCount()
+end
+player:GetAttributeChangedSignal("Plot"):Connect(hookPlot)
+task.defer(hookPlot)
 local function render()
 	for _, c in cards do c:Destroy() end
 	table.clear(cards)
@@ -65,6 +84,7 @@ local function render()
 		table.insert(cards, card)
 	end
 	if empty then empty.Visible = #sorted == 0 end
+	updateCount()
 end
 
 Remotes.Sync.OnClientEvent:Connect(function(d)

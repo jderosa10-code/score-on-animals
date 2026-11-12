@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 01:30 CT · jacob-claude
+**Done:** (Jacob) Pets menu: `PetsPanel.TopBar.CountLabel` next to the PETS title shows animals on plot / base slots ("9/10"), kept current by `PetsMenuClient`. New `StarterGui.HUD.SideButtonsHUD.PetsButton`: copy of the Shop button, purple, square (UIAspectRatioConstraint 1), paw icon from the Pets title, pattern tiled 4x4, right edge of the screen centred, attribute OpensMenu = "PetsMenu" (MenuButtons opens it). Saved to Roblox.
+**Next:** funnels.
+**Blockers / questions:** PetsButton sits outside SideButtonsPanel, so the panel's ButtonEffects hover juice may not apply to it.
+
 ## 2026-11-12 01:15 CT · jacob-claude
 **Done:** Pets menu (Jacob designs the UI; I restructured it at his request). `StarterGui.Menus.PetsMenu` (copy of GiftMenu, panel `PetsPanel`, stays on the right): `List` ScrollingFrame with `PetCardTemplate` (PetIcon, PetNameLabel text-scaled, green PickUpButton, red SellButton, hidden YesButton/NoButton), `EquipBestButton` under the panel, `EmptyLabel`; all text stroke 4, button patterns tiled to whole tiles. New `StarterPlayerScripts.PetsMenuClient`: one card per placed animal (best first), PICK UP -> backpack, SELL -> "SELL FOR $X?" YES/NO, EQUIP BEST. Server: new RemoteFunction `ReplicatedStorage.Hatching.PetAction` handled in `ServerScriptService.EggHatching` (List / PickUp / Sell / EquipBest: best animals from plot + backpack fill `G.BaseSlots`, auto-placed on free spots). `GameData.sync` also sends `PlacedList`. Play-tested pick up + equip best. Saved (v266).
 **Next:** Jacob adds a button with attribute OpensMenu = "PetsMenu"; funnels.
