@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 22:00 CT · jacob-claude
+**Done:** Hatch times now go 5 s (Hamster) to 6 h (Dragon) (Jacob): `GameConfig.HatchMax` 21600; Rare ~1.5-10 min, Epic ~11-30 min, Legendary ~30-75 min, Mythic ~1.3-2 h, Divine ~3-4 h, Secret 5.3-6 h. Patch timer shows H:MM:SS past an hour (`EggHatching`). Saved.
+**Next:** funnels.
+**Blockers / questions:** none.
+
 ## 2026-11-12 02:30 CT · pigeon-claude
 **Done:** pigeon: the Puffin "expands" while walking (video) and "find out if any others are having this". New edit-time audit skins every animal's mesh with its Idle/Walk (EditableMesh bone weights) and measures how much each skin edge stretches vs rest (edges under 0.02 studs ignored). 213 checked: 141 fine, 72 stretch somewhere, 30 over 1.4x (worst Minotaur, Harpy, Cerberus). **Not caused by the rig fix:** the 97 re-rigged animals stretch exactly the same on their backed-up originals (Fenrir got better); it's the pack's own skins/clips (e.g. Puffin's wing bones also pull 820 head verts). Auto-fix per clip: find the bone whose motion stretches the most, halve it (Idle: then stop it if still bad; Walk: never below 50% so legs don't slide), repeat until no edge > 1.3x. 42 clips changed and republished (ids in `G.AnimalAnims`, list in `_studio_src/fix_clip_ids.txt`); originals in `ServerStorage.Restyle.Clips_BeforeStretchFix`. All 42 load and play in Studio.
 **Still stretching (walk):** Archaeopteryx, Cerberus, Griffin, Harpy, Jackalope, Microraptor, Minotaur, Simurgh, Tanuki, Tiger, Tortoise: their skins need re-weighting (Blender + re-import), not just calmer clips.

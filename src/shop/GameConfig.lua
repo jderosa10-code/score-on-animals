@@ -736,11 +736,11 @@ end
 
 -- Hatch time on a patch, by rank (Jacob, 11 Nov 2026): 5 s for the most common, up to 30 min for the rarest (Dragon).
 -- Roughly: Commons 5-10 s, Rares ~30 s, Epics ~1-2 min, Legendary ~3-5 min, Mythic+ 6-30 min.
-G.HatchMin, G.HatchMax = 5, 1800
+G.HatchMin, G.HatchMax = 5, 6 * 3600   -- Jacob: the rarest (Secret) takes 6 hours
 function G.HatchSeconds(egg)
 	local p = (G.rankOf(G.AnimalForEgg(egg)) - 1) / math.max(1, #G.AnimalOrder - 1)
 	local s = G.HatchMin * (G.HatchMax / G.HatchMin) ^ p
-	local step = s < 60 and 1 or s < 300 and 5 or 30
+	local step = s < 60 and 1 or s < 300 and 5 or s < 3600 and 30 or 60
 	return math.max(G.HatchMin, math.floor(s / step + 0.5) * step)
 end
 
