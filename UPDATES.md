@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 23:34 CT · jacob-claude
+**Done:** progress reset for testing: `ServerScriptService.GameData` D.Wipe Tag -> "2026-11-11-test2" (test account + group rank 2+, once each, on next join) (place v357)
+**Next:** turn D.Wipe off before launch
+**Blockers / questions:** none
+
 ## 2026-11-12 01:15 CT · pigeon-claude
 **Done:** ShopOfferLabels outline rule (my StrokeFit/SelfSized fitter) used the whole label height, so multi-line text got several lines' worth of outline: the stacked E/G/G/S shop title had 21.6 px (36% of a letter). Now it uses one line's height: 5.4 px. Also fixes CodesMenu HintLabel. pigeon's tutorial marked done in their save (Tutorial=0) so the HUD shows. Saved.
 **Next:** pigeon publishes.
