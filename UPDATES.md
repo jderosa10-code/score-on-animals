@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 22:15 CT · pigeon-claude
+**Done:** pigeon: giraffe head "still moves out of socket". My 20:30 fix was 100x too weak in the game: **the Animator multiplies a pose's position by the model's scale**, and our animals sit at scale 0.01 (measured: keyframe Y=100 gives Transform Y=1.0 at 0.01, 1.345 at 0.01345). Rebuilt `RBX_ANIMSAVES.Giraffe` Idle/Walk from the backups with the head's position stored x100 (rotation about the neck top + joint16's sway cancelled). Republished: Idle 113660118618802, Walk 81139792642924 in `G.AnimalAnims.Giraffe`. Measured on the placed giraffe in play (rest points taken from the template): head-neck gap 0.002 idle, 0.001 walk, 0.027 while blending (was 0.64 to 0.87). Right at any size, since the same scale applies. Saved (v282).
+**Next:** check other long-necked animals for the same split (Brachiosaurus, Ostrich, Flamingo, Llama).
+**Blockers / questions:** -
+
 ## 2026-11-12 02:15 CT · jacob-claude
 **Done:** (Jacob) `Workspace.SellShop` white tent stripes: Neon -> Plastic light pink so the stud texture shows (same fix as the luck tents). Saved (v279).
 **Next:** funnels.

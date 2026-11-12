@@ -226,7 +226,7 @@ G.AnimalAnims = {
 	Garuda = {Idle = "rbxassetid://122621830147500", Walk = "rbxassetid://100441225769165"},
 	Gecko = {Idle = "rbxassetid://140528767877342", Walk = "rbxassetid://119747917221675"},
 	GiantSquid = {Idle = "rbxassetid://91376939615640"},
-	Giraffe = {Idle = "rbxassetid://97974641204452", Walk = "rbxassetid://79615460297606"},   -- v2: head turns on the top of the neck
+	Giraffe = {Idle = "rbxassetid://113660118618802", Walk = "rbxassetid://81139792642924"},   -- v3: head turns on the top of the neck (pose positions stored x100: the Animator scales them by the model's 0.01 scale)
 	Giraffe2 = {Idle = "rbxassetid://102240811978890", Walk = "rbxassetid://75890265327644"},
 	Goat = {Idle = "rbxassetid://83396649946181", Walk = "rbxassetid://90926853125842"},
 	GoblinShark = {Idle = "rbxassetid://120821664904125"},
