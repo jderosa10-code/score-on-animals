@@ -415,13 +415,14 @@ function G.packLift(pr, level, xp, barbellLevel, strength)
 	local b = G.Barbells[math.clamp(barbellLevel or 1, 1, #G.Barbells)]
 	level = level or 1
 	xp = (xp or 0) + pr.LiftMinutes * 60 / G.RepSeconds * b.Power
-	local ups = 0
+	local ups, gained = 0, 0
 	while xp >= G.LiftXP(level) and ups < 100000 do
 		xp -= G.LiftXP(level); level += 1; ups += 1
+		gained += G.StrengthGain(level)
 	end
-	local least = math.ceil(math.max(pr.StrengthMin or 0, (pr.StrengthPct or 0) * (strength or 0)) / G.StrengthPerLevel)
-	if ups < least then level += least - ups; ups = least end
-	return ups * G.StrengthPerLevel, level, xp
+	local least = math.max(pr.StrengthMin or 0, (pr.StrengthPct or 0) * (strength or 0))
+	while gained < least and ups < 100000 do level += 1; ups += 1; gained += G.StrengthGain(level) end
+	return gained, level, xp
 end
 -- VIP (pigeon-claude, 11 Nov 2026): its own perks, so it isn't just the 2x Cash pass again (the two stack: 3x).
 -- The old one-time $1M skipped most of the barbells for a new player; now it's 2 h of your income (at least $25K).
@@ -464,8 +465,13 @@ function G.commas(n)
 	return (out:gsub("^,", ""))
 end
 
--- Lifting levels: each rep gives XP = the barbell's Power; every level up gives StrengthPerLevel Strength.
-G.StrengthPerLevel = 5
+-- Lifting levels: each rep gives XP = the barbell's Power; every level up gives G.StrengthGain(new level) Strength.
+-- Jacob (11 Nov 2026): more per level as you go: 5 early, ~15 at level 100, ~26 at 150, ~45 at 200, ~130 at 300.
+G.StrengthPerLevel = 5        -- the starting gain
+G.StrengthGrowth = 1.011      -- x per level
+function G.StrengthGain(level)
+	return math.max(G.StrengthPerLevel, math.floor(G.StrengthPerLevel * G.StrengthGrowth ^ (level or 1) + 0.5))
+end
 function G.LiftXP(level)   -- XP needed to go from this level to the next
 	return math.floor(10 * level ^ 1.25)
 end
@@ -699,6 +705,16 @@ function G.EggOdds(name)
 	if n < 10 then return math.floor(n + 0.5) end
 	local mag = 10 ^ (math.floor(math.log10(n)) - 1)
 	return math.floor(n / mag + 0.5) * mag
+end
+
+-- Hatch time on a patch, by rank (Jacob, 11 Nov 2026): 5 s for the most common, up to 30 min for the rarest (Dragon).
+-- Roughly: Commons 5-10 s, Rares ~30 s, Epics ~1-2 min, Legendary ~3-5 min, Mythic+ 6-30 min.
+G.HatchMin, G.HatchMax = 5, 1800
+function G.HatchSeconds(egg)
+	local p = (G.rankOf(G.AnimalForEgg(egg)) - 1) / math.max(1, #G.AnimalOrder - 1)
+	local s = G.HatchMin * (G.HatchMax / G.HatchMin) ^ p
+	local step = s < 60 and 1 or s < 300 and 5 or 30
+	return math.max(G.HatchMin, math.floor(s / step + 0.5) * step)
 end
 
 -- Luck slides the egg roll up the ranks: at luck 1 you get the most common animals; as luck grows

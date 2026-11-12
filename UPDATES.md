@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 20:30 CT · jacob-claude
+**Done (Jacob's playtest list):** `NotificationsHUD.Notify`: the same banner spammed shows once (timer just extends). `Workout`: no "Level N! +X Strength" banner; can't upgrade weights while lifting (prompt hidden); Strength per level grows (`GameConfig.StrengthGain`: 5 -> ~15 @L100 -> ~45 @L200; `packLift` uses it). `WorkoutClient`: longer white flash on getting on AND off. UpgradeWeightsBtn pad recoloured (pure green glowed). `PenaltyDemoRunner`: luck caption counts up from x1 on every egg hop; "CLICK/TAP THE GOAL TO AIM!" hint; 3rd-kick pity: `EggInventory` rolls `lucky` per round (85-95%), if tries 1-2 miss, try 3 scores (client + server). `HatchConfig`: held animals real size (cap 14 studs), held eggs full size (Jacob, overrides the smaller hold). `EggHatching`/`HatchClient`: patch eggs centred on `EggCenter`, hatch pop centred on the root bone. Fixed tilted WorldPivot on 43 animal models (GoblinShark, Isopod, Jackalope, Chupacabra, Raiju, SeaDragon, Fenrir + mutations) -> upright. `GameData.giveItem(..., equip)`: won eggs and hatched animals go straight into your hands. `GameConfig.HatchSeconds`: 5 s (Hamster) -> 30 min (Dragon). Index: `IndexPanel.TopBar.ClaimAllButtons` + server `ClaimIndexAll`. Shop + EnergyBarHUD text strokes = 4. Saved (v296).
+**Next:** Jacob uploads kick animations (walked him through it); funnels.
+**Blockers / questions:** pigeon: held sizes changed back per Jacob (HELD_MAX 14 real-size, eggs full size).
+
 ## 2026-11-11 20:15 CT · jacob-claude
 **Done:** Mutation auras centred on the animal's body (Jacob: Rainbow Dragon's aura sat up in the wings). `GameConfig.addMutationVFX` now puts the aura on an invisible `VFXShell` part (65% of the mesh size) centred on the mesh's root Bone and welded to it; eggs (no bones) keep it on the part. Tested in Play: Rainbow_Dragon's shell sits ~6 studs lower and toward the chest. Saved.
 **Next:** funnels.
