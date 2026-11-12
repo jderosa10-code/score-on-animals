@@ -1,3 +1,4 @@
+-- REMOVED from the game 2026-11-11 (pigeon: "remove loading screen pls"). Kept inactive in ServerStorage.Restyle.LoadingScreen; move it back to ReplicatedFirst to use it.
 -- LoadingScreen (pigeon-claude, 11 Nov 2026). ReplicatedFirst, so it shows before anything else has loaded.
 -- The screen itself is the LoadingGui under this script, made of real frames (StarterGui would load too late
 -- to cover the join). This script only shows it, animates it and fills the bar from real loading progress:

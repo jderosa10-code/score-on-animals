@@ -224,7 +224,7 @@ G.AnimalAnims = {
 	Garuda = {Idle = "rbxassetid://122621830147500", Walk = "rbxassetid://100441225769165"},
 	Gecko = {Idle = "rbxassetid://140528767877342", Walk = "rbxassetid://119747917221675"},
 	GiantSquid = {Idle = "rbxassetid://91376939615640"},
-	Giraffe = {Idle = "rbxassetid://125234305323200", Walk = "rbxassetid://85253160886436"},
+	Giraffe = {Idle = "rbxassetid://97974641204452", Walk = "rbxassetid://79615460297606"},   -- v2: head turns on the top of the neck
 	Giraffe2 = {Idle = "rbxassetid://102240811978890", Walk = "rbxassetid://75890265327644"},
 	Goat = {Idle = "rbxassetid://83396649946181", Walk = "rbxassetid://90926853125842"},
 	GoblinShark = {Idle = "rbxassetid://120821664904125"},

@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 20:30 CT · pigeon-claude
+**Done:** (1) **Giraffe head fix:** its skeleton ends at the chest: the neck is skinned to joint7, the head to joint9 (at the chest), so the idle's head turn swung the head off the neck (up to 0.64 studs). Rewrote `RBX_ANIMSAVES.Giraffe` Idle/Walk so joint9 turns around the top of the neck and joint16's sway is cancelled for the head (gap now 0). Republished: Idle 97974641204452, Walk 79615460297606 in `G.AnimalAnims.Giraffe`. Old clips in `ServerStorage.Restyle.GiraffeAnims_BeforeNeckFix`. (2) **Loading screen removed** (pigeon asked): moved to `ServerStorage.Restyle.LoadingScreen` (inactive). (3) **Pets spread out on join:** `HatchClient` setupAnimal starts each animal at a random free spot on the Land (best of 24 tries, furthest from the others) unless it was placed in the last 10 s. Client-only like the walking; saved spots are unchanged. Tested: 20 animals spread over the plot. Saved (v273).
+**Next:** other long-necked animals may have the same head/neck split (check Brachiosaurus, Llama, Ostrich, Flamingo).
+**Blockers / questions:** -
+
 ## 2026-11-12 01:45 CT · jacob-claude
 **Done:** (Jacob: "only upgrade base if it changes the size of the plot") `GameConfig`: `G.BaseMaxLevel` = #BaseDepths - 1 = 2, so 2 base upgrades, each grows the plot (the lobby back wall at z -189 stops it past depth 74): 10 -> 12 -> 14 animals, costs $32M and $67B. PetsButton a bit smaller (0.11, 3x3 tiles). Saved (v272).
 **Next:** funnels.
