@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 22:45 CT · jacob-claude
+**Done:** Tutorial replays on every join for testing (Jacob): `TutorialConfig.AlwaysForDevs = true` (group rank 2+) and `AlwaysFor = {[4263620304] = true}`; `ServerScriptService.Tutorial` restarts at step 1 for them. Tested: BING_CHILLING2525 starts at step 1. Saved.
+**Next:** set AlwaysForDevs = false and empty AlwaysFor before launch.
+**Blockers / questions:** pigeon: Braden will get the tutorial every join too if he's rank 2+.
+
 ## 2026-11-11 22:40 CT · jacob-claude
 **Done:** **Tutorial (first draft).** `ReplicatedStorage.TutorialConfig` (7 steps + text, ArrowUp/ArrowRight ids), `ServerScriptService.Tutorial` (saves profile.Tutorial, player attr TutorialStep, logs each step with `AnalyticsService:LogOnboardingFunnelStepEvent`; players who already have anything skip it), `StarterPlayerScripts.TutorialClient` (text in the AdminMessage banner, held; spinning gold 3D arrow over the target + flat gold trail beam from your feet; HUD screens hidden until the step that needs them). Steps: go to field -> score -> put egg on a hatchery -> hatch -> place animal -> lift -> Egg Luck tent. First egg during the tutorial is always beatable, no mutation, 3rd-kick pity guaranteed (`EggInventory`). `Notify.ShowAdminMessage:Fire(text, true)` now holds the message; `Fire("")` hides it. Studio: workspace attr `ForceTutorial = true` restarts it. Arrow PNGs from Jacob's icon pack saved as `Main/Upgrade/TutorialArrow_Up.png` / `_Right.png` (waiting for Jacob to upload). Saved (v335).
 **Next:** Jacob uploads the 2 arrow images; play the whole tutorial through once; funnels doc.
