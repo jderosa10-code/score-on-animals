@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 02:20 CT · pigeon-claude
+**Done:** Shop egg cards: the egg pictures are ~20% bigger than the originals and pop slightly past their boxes (Icon 1.12x, sitting a bit high). Boxes are 83% size, still below the panel's top edge and clear of the buttons. Saved.
+**Next:** pigeon publishes.
+**Blockers / questions:** none.
+
 ## 2026-11-11 23:50 CT · jacob-claude
 **Done:** Jacob's new sounds moved from Workspace into `SoundService`: `UIHover` + `UIClick` (replace the old ones, every ButtonEffects button uses them), `UIOpen` (every menu via `HUD.SideButtonsHUD.MenuButtons`, popups via new `StarterPlayerScripts.PopupOpenSound`; ShopJuice's own open sound removed so it doesn't double), `ScreenWoosh` (penalty screenFade, lift flash in `WorkoutClient`, day/night fade in `DayNightClient`) · tutorial: energy bar shows while lifting, its BoostButton1-3 / AddButton (Robux) hidden (`WorkoutClient` showBar) (place v362)
 **Next:** Jacob playtests sounds
