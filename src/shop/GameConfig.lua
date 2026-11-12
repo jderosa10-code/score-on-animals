@@ -17,6 +17,7 @@ function G.luckAt(level) return G.LuckTop ^ (math.clamp(level, 0, G.LuckMaxLevel
 -- 100 s at the start, growing to 20,000 s for the last level
 local LUCK_COST = {}
 function G.luckCost(level)
+	if level == 0 then return 0 end   -- (Jacob, 11 Nov 2026) the first Egg Luck level is free
 	if LUCK_COST[level] then return LUCK_COST[level] end
 	local inc = G.IncomeAtRank(G.rollCentre(G.luckAt(level)))
 	local n = inc * 100 * 200 ^ (math.clamp(level, 0, G.LuckMaxLevel - 1) / (G.LuckMaxLevel - 1))

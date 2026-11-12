@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 00:00 CT · jacob-claude
+**Done:** First Egg Luck level is free (`GameConfig.luckCost(0) = 0`; the shop button says FREE; tutorial step 7 says "Your first Egg Luck is FREE! Press BUY 1"). New players start with $500 (`GameData` defaults Cash 500). Tested: BuyLuck at level 0 cost $0. Saved.
+**Next:** publish + friend test.
+**Blockers / questions:** none.
+
 ## 2026-11-11 23:55 CT · jacob-claude
 **Done:** Tutorial onboarding funnel, 14 steps (`TutorialConfig.Funnel`): Joined, Walked onto field, Scored first egg, Held egg, Put egg on hatchery, Egg ready, Hatched animal, Held animal, Placed animal, Started lifting, Strength level up, Stopped lifting, Opened Egg Luck, Tutorial complete. `ServerScriptService.Tutorial.mark()` logs each once per player, forward only (`profile.TutorialFunnel`); step ends are marked by the server (`TC.StepDone`), in-between moments reported by `TutorialClient` (`remote:FireServer("mark", key)`). Tested in Studio: "joined" + "field" fired. Saved.
 **Next:** publish; check Creator Hub > Analytics > Funnels > View Events after a live run.
