@@ -374,7 +374,17 @@ do
 	local on
 	-- open = the ScreenGui is on AND its panel is showing (MenuButtons closes a menu by hiding the panel,
 	-- the ScreenGui stays enabled)
-	local function rootOf(g) for _, c in g:GetChildren() do if c:IsA("GuiObject") then return c end end end
+	-- the menu's own panel ("...Panel"), not effect layers scripts add later (ShopJuice's full-screen JuiceFX kept the blur on)
+	local function rootOf(g)
+		local first
+		for _, c in g:GetChildren() do
+			if c:IsA("GuiObject") then
+				if c.Name:sub(-5) == "Panel" then return c end
+				first = first or c
+			end
+		end
+		return first
+	end
 	local function update()
 		local any = false
 		for _, folder in {menus, popups} do

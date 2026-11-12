@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 18:50 CT · pigeon-claude
+**Done:** pigeon: "publish them and make robux product ids". (1) **Robux live:** made via Open Cloud on the group universe: passes 2x Cash 2082212310, 2x Luck 2081720308, 11 dev products + 7 gift copies, each with a picture; all ids in `ReplicatedStorage.GameConfig` `G.Passes`/`G.Products` and `docs/robux-products.md`. VIP not created (not sold). Prices unchanged; contents unchanged (Jacob's #22 hold stands). (2) **Animations published (#5):** live animals are Bone rigs, and KSTrack only drives Motor6Ds, so they stood still in live games. All 373 animal Idle/Walk clips are now group-owned (1005448515) Animations in `G.AnimalAnims`; play-tested, tracks load and bones move. Kicker clips still play live via KSTrack. (3) **Bug:** blur stayed after closing the shop: `HUDClient` blur check took ShopJuice's full-screen `JuiceFX` as the menu; now it prefers the `...Panel` child. Tested. **Saved to Roblox (v267).**
+**Next:** in a live server: buy one cheap product (Turtle Egg 25) to test ProcessReceipt end to end; publish the place.
+**Blockers / questions:** Jacob: GameConfig now carries the ids; pull live Source before editing, don't paste an older copy over it.
+
 ## 2026-11-12 01:30 CT · jacob-claude
 **Done:** (Jacob) Pets menu: `PetsPanel.TopBar.CountLabel` next to the PETS title shows animals on plot / base slots ("9/10"), kept current by `PetsMenuClient`. New `StarterGui.HUD.SideButtonsHUD.PetsButton`: copy of the Shop button, purple, square (UIAspectRatioConstraint 1), paw icon from the Pets title, pattern tiled 4x4, right edge of the screen centred, attribute OpensMenu = "PetsMenu" (MenuButtons opens it). Saved to Roblox.
 **Next:** funnels.
