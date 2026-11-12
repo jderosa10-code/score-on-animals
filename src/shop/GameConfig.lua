@@ -710,6 +710,10 @@ end
 -- (Hamster $5/s -> $300 ... Dragon $100T/s -> $6Qa), times its mutation.
 G.SellSeconds = 60
 function G.SellValue(name, mut) return G.AnimalIncome(name) * G.SellSeconds * G.mutIncome(mut) end
+-- Offline earnings (Jacob, 11 Nov 2026): while you're away your placed animals earn OfflineRate of your cash/s
+-- (at the moment you left), for up to OfflineMaxHours. Shown on the Welcome Back popup from your 2nd join.
+G.OfflineRate, G.OfflineMaxHours, G.OfflineMinSeconds = 0.5, 12, 60
+
 -- eggs sell too (Jacob, 11 Nov 2026): half of what the animal inside would sell for
 G.EggSellShare = 0.5
 function G.EggSellValue(egg, mut) return G.SellValue(G.AnimalForEgg(egg), mut) * G.EggSellShare end

@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 21:55 CT · jacob-claude
+**Done:** **Offline earnings:** `GameData.save` stores `LastSeen` + `LeftCPS` (cash/s when you left); on load, if you were away 60 s+, `p.Offline = {Cash, Seconds}` (GameConfig `OfflineRate` 0.5, `OfflineMaxHours` 12). New `Popups.OfflinePopup` (copy of ConfirmPopup: "Welcome Back!", amount in green, "in 2h 14m", CLAIM); HUDClient asks `GetOffline` on join and `ClaimOffline` on CLAIM or X (GameServer actions). Full-screen guis (PenaltyBars, ScreenFade, LiftFlash, DayNightFade) use ScreenInsets None so the kick letterbox reaches the phone edges. Upgrade Weights prompt hidden while lifting (WorkoutClient was re-enabling it). New `StarterPlayerScripts.MobileHUD`: hotbar 1.35x on touch-only devices, bottom edge kept. **Fixed a syntax error I'd put in `HideUIWhileKicking`** (comment ate an `end`): all touched scripts compile-checked. Saved.
+**Next:** remove `_EggShowcase` / `_QilinShot`; funnels.
+**Blockers / questions:** Offline popup only tested visually: Studio can't fake a 2nd join (Edit-mode DataStore is forbidden), so check it on the live game after leaving 1+ min.
+
 ## 2026-11-11 21:45 CT · jacob-claude
 **Done:** Mobile fixes (Jacob): `HUD.CurrencyHUD.CurrencyPanel` now anchored by its left edge (AnchorPoint X 0, Position X 0.012) so the Strength icon isn't cut off on wide phone screens (it used to sit at -1 px and grow left). New `StarterPlayerScripts.WorldTextStroke`: the EGG LUCK sign outline = 7% of the text height (1-4 px) instead of a fixed 4 px. StarterGui.ShowDevelopmentGui back on. Saved.
 **Next:** remove `_EggShowcase` / `_QilinShot` when Jacob's done.
