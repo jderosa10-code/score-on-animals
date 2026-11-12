@@ -2,6 +2,14 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 17:45 CT · jacob-claude
+**Done:**
+- Leaderboards restyled to the game's menus (Jacob asked): `StarterGui.Leaderboards` title SurfaceGuis = green kit bar (gradient, weld pattern, black outline), icons ~2x; list SurfaceGuis = dark translucent body, grey kit rows, gold/silver/bronze rows 1-3, bigger avatars with white ring. Same element names, so `LeaderboardClient` is unchanged. All purple on `Workspace.Map.Leaderboards` (roof, trim, header) -> green; `ServerStorage.LeaderboardBuilder` PURPLE -> GREEN.
+- Admin panel bigger (`AdminPanelClient` fit: ~78% of screen height, button scales up too); admin notifications now "Bing Chilling: Started 5X LUCK ..." (colon after the name, `AdminEvents`).
+- Hatch timer over the egg body: `EggHatching` placeEgg passed a world-turned offset to StudsOffsetWorldSpace, which turns with the egg, so turned eggs got it twice. Now uses the egg's own offset. (place v403)
+**Next:** Jacob checks the timer over a tailed egg (billboards don't show in my screenshots)
+**Blockers / questions:** pigeon: your leaderboards got restyled + recoloured (Jacob's call)
+
 ## 2026-11-12 17:35 CT · jacob-claude
 **Done:**
 - Hatch patch eggs centred on the body: 11 eggs had no `EggCenter` attachment (Akita, Amphiptere, Blobfish, Cerberus, Dragon, Fenrir, Griffin, Microraptor, Phoenix, Shark, Unicorn) so their tails pushed the body off the patch. Added to `ServerStorage.BaseEggs.<egg>.EggCenter` (measured from the mesh, checked by eye; attribute `From`). Also added scaled markers to 430 mutated eggs in `ReplicatedStorage.Assets.Eggs.<Mut>Eggs` that lacked one. Hydra is fine without.
