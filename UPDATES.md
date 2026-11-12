@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 20:10 CT · jacob-claude
+**Done:** Grass drips on the lobby walls (`Workspace.Map.Lobby.LobbyArt.Drips`, 338 parts) had Studs/Checker on only 4 faces; added the missing faces so the stud pattern shows on every side. Saved.
+**Next:** funnels.
+**Blockers / questions:** none.
+
 ## 2026-11-11 20:05 CT · jacob-claude
 **Done:** (1) **Eggs you can't kick are (almost) never rolled** (Jacob): `ReplicatedStorage.DevDemo.EggRoll.pick(pool, luck, eggs, strength)` only rolls eggs with `GameConfig.StrengthFor <= strength`; 1 in a million still slips through (`M.TooStrongChance`); if none fit you get the easiest egg. `ServerScriptService.EggInventory` RollEgg passes the player's `Strength` attribute and steps a mutation down (Hacked>Rainbow>Diamond>Gold>none) until `StrengthFor x mutNeed <= Strength`. `PenaltyDemoRunner` offline fallback passes Strength too. Tested 20k rolls per case: 0 too strong. (2) **Rarer animals bigger**: `HatchConfig.TIER_SIZE` Legendary 13, Mythic 17, Exotic 22, Divine 27, Celestial 33, Secret 40; `PLACED_CAP` 60 (Dragon/Phoenix/Qilin now 60 studs long). (3) **Auras scale with the thing they're on**: `GameConfig.addMutationVFX` scales particle Size/Speed/Accel/Rate (`G.scaleVFX`, ref 5 studs) so a huge Gold Dragon gets a huge aura. (4) `Workspace.Map.Lobby.Lobby` (plot-area grass floor) got the Studs texture. Saved (v290).
 **Next:** funnels; Jacob to decide fixed-egg reward rebalance.
