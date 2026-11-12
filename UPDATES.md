@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 23:55 CT · jacob-claude
+**Done:** Tutorial onboarding funnel, 14 steps (`TutorialConfig.Funnel`): Joined, Walked onto field, Scored first egg, Held egg, Put egg on hatchery, Egg ready, Hatched animal, Held animal, Placed animal, Started lifting, Strength level up, Stopped lifting, Opened Egg Luck, Tutorial complete. `ServerScriptService.Tutorial.mark()` logs each once per player, forward only (`profile.TutorialFunnel`); step ends are marked by the server (`TC.StepDone`), in-between moments reported by `TutorialClient` (`remote:FireServer("mark", key)`). Tested in Studio: "joined" + "field" fired. Saved.
+**Next:** publish; check Creator Hub > Analytics > Funnels > View Events after a live run.
+**Blockers / questions:** Funnel events only send from published servers.
+
 ## 2026-11-12 00:20 CT · pigeon-claude
 **Done:**
 - **Big pets stuck:** the Simurgh (radius ~42 on a 51x40 plot) had no room to roam, so it flicked Walk->Idle every frame, which restarted its idle. HatchClient now uses `w.roam` (edge margin capped at 30% of the plot) and stays idle when the target is under 2 studs away. Backup: `ServerStorage.Restyle.HatchClient_before_roamfix`.
