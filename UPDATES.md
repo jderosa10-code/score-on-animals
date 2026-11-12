@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 23:00 CT · jacob-claude
+**Done:** Video mode for Jacob's test account (4263620304): `GameData.D.MaxFor` sets LuckLevel 40 (x150) and Strength 18700 on every join; tutorial off for him (`TutorialConfig.Off`, AlwaysForDevs false, AlwaysFor empty). Tested in Play: luck 150, strength 18700, TutorialStep 0. Saved.
+**Next:** empty `D.MaxFor` and `TutorialConfig.Off` after the video.
+**Blockers / questions:** pigeon: the dev-team "tutorial every join" is off right now.
+
 ## 2026-11-11 22:58 CT · jacob-claude
 **Done:** Tutorial tweaks (Jacob): no arrow over the target; the trail is now gold ">" chevrons (LuckiestGuy, black stroke 8) flat on the ground, flowing toward the target (`Workspace.TutorialTrail`, client-only); arrow-image ids removed from `TutorialConfig`. Lift step = lift until your first strength level up ("Lift weights until you level up to get stronger!"); done text says "plot" instead of "zoo". Admin message drops 13% lower while lifting so the STOP button doesn't cover it. Wipe re-armed for Jacob's test account only (`GameData.D.Wipe` Tag "2026-11-11-tutorial", MinGroupRank off) — tested: $0 / 10 Strength, step 1. Saved (v338).
 **Next:** Jacob runs the full tutorial.
