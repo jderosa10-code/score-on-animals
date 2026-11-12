@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 22:50 CT · jacob-claude
+**Done:** Tutorial steps no longer skip for players who already own stuff (Jacob jumped straight to "lift weights"): `TutorialClient` snapshots egg/animal counts, busy hatcheries and PlacedCount when each step starts and only counts what changes during the step; step 4's arrow points at the hatchery you used in step 3. Saved (v337).
+**Next:** Jacob replays the tutorial.
+**Blockers / questions:** none.
+
 ## 2026-11-11 22:45 CT · jacob-claude
 **Done:** Tutorial replays on every join for testing (Jacob): `TutorialConfig.AlwaysForDevs = true` (group rank 2+) and `AlwaysFor = {[4263620304] = true}`; `ServerScriptService.Tutorial` restarts at step 1 for them. Tested: BING_CHILLING2525 starts at step 1. Saved.
 **Next:** set AlwaysForDevs = false and empty AlwaysFor before launch.
