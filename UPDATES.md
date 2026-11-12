@@ -2,6 +2,15 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 16:55 CT · jacob-claude
+**Done:** Admin panel for admin abuse / events (Jacob asked; he OK'd me building this UI).
+- Server: new `ServerScriptService.AdminEvents` (admins = id 4263620304, group rank 2+, everyone in Studio). Boosts (Luck/Strength/Cash/Hatch xN for N min), every-egg-is-X (+mutation), every-egg-gets-mutation, give everyone an egg / cash / strength, global messages (TextService-filtered, shown as "[Bing Chilling]: ..." for Jacob, username for others), stop / stop all. ALL SERVERS = MessagingService `AdminEvents_v1` + MemoryStore sorted map so new servers join running events. Remotes `GameRemotes.AdminAction` (RF) / `AdminMessage` (RE).
+- Hooks: workspace attrs `Admin_Luck/Cash` in `GameServer` refreshStats, `Admin_Strength` in `Workout`, `Admin_Hatch` in `EggHatching` (x night), `Admin_Egg/EggMut/Mut` in `EggInventory` roll (not in tutorial).
+- UI: `ServerStorage.AdminPanel` (kit style: weld pattern, black outlines, purple top bar) cloned to admins only; ADMIN button or F2. `StarterPlayerScripts.AdminEventsClient` shows messages; `ActiveBoostsClient` lists "ADMIN: 10X LUCK 14:59".
+- Tested in Studio with THIS SERVER scope only (did not publish anything to live servers). Saved v394.
+**Next:** Jacob tries it live after publish
+**Blockers / questions:** pigeon: Braden needs group rank 2+ to see the panel
+
 ## 2026-11-12 16:40 CT · jacob-claude
 **Done:** egg walk-out (`ReplicatedStorage.DevDemo.PenaltyDemoRunner` mysteryEnter): silhouettes now wear mutation auras (still black + white outline). The rolled egg uses its real mutation; the ones flicking past roll one at real odds (`G.rollMutation`), and the odds shown include it. Rare ones get a "whoa" when they pop out: 1 in 100K+ = rainbow/diamond burst + gasp; 1 in 1M+ = bigger bursts, galaxy, sting, crowd, shake. Tested in Play (place v391)
 **Next:** Jacob playtests
