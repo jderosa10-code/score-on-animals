@@ -20,17 +20,29 @@ local empty = panel:FindFirstChild("EmptyLabel")
 template.Visible = false
 for _, c in list:GetChildren() do if c:GetAttribute("Preview") then c:Destroy() end end   -- the editor's sample cards
 
--- scrolling: the cards are sized by their aspect ratio, so the canvas height is set from the layout
--- (a fraction of the list's window, so the menu's UIScale doesn't matter). Checked every frame while
--- open, because the pop-in tween and the card animations change sizes over several frames.
+-- scrolling: the cards are sized by their aspect ratio, so the canvas height is set here: from the cards'
+-- real on-screen top and bottom, nudging the canvas each frame until it matches (this way the kit's
+-- UIScales don't matter). Checked every frame while open, because the pop-in tween and the card
+-- animations change sizes over several frames.
 list.AutomaticCanvasSize = Enum.AutomaticSize.None
-local layout = list:WaitForChild("UIListLayout")
 local function fitCanvas()
-	local h = list.AbsoluteWindowSize.Y
-	if h < 1 then return end
-	local pad = list:FindFirstChildOfClass("UIPadding")
-	local extra = pad and (pad.PaddingTop.Offset + pad.PaddingBottom.Offset) or 0
-	list.CanvasSize = UDim2.new(0, 0, (layout.AbsoluteContentSize.Y + extra) / h, 0)
+	local top, bottom
+	for _, c in list:GetChildren() do
+		if c:IsA("GuiObject") and c.Visible then
+			local y0, y1 = c.AbsolutePosition.Y, c.AbsolutePosition.Y + c.AbsoluteSize.Y
+			top = top and math.min(top, y0) or y0
+			bottom = bottom and math.max(bottom, y1) or y1
+		end
+	end
+	local have = list.AbsoluteCanvasSize.Y
+	if have < 1 then return end
+	local need = top and (bottom - top + 12) or 0   -- the cards plus the list's top and bottom padding
+	need = math.max(need, list.AbsoluteWindowSize.Y)   -- never smaller than the window
+	if math.abs(need - have) > 1 then
+		local cur = list.CanvasSize
+		local scale = (cur.Y.Scale > 0 and cur.Y.Scale or 1) * need / have
+		list.CanvasSize = UDim2.new(0, 0, scale, 0)
+	end
 end
 RunService.Heartbeat:Connect(function()
 	if menu.Enabled and panel.Visible then fitCanvas() end

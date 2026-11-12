@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 01:58 CT · jacob-claude
+**Done:** (Jacob) Animals menu: scrolling fixed (`PetsMenuClient` sizes the `List` canvas from the cards each frame; AutomaticCanvasSize was stuck). Title is now "ANIMALS" at the top of `TopBar`, `CountLabel` ("10/12") centred under it. Cards tighter (aspect 2.75, padding 4). Transitions: picked-up / sold cards shrink away and the rest slide up; SELL squeezes PICK UP/SELL shut and pops YES/NO open (and back on NO). `PetsButton` got an "Animals" label and hides while the menu is open. No blur for this menu: `HUDClient` blur skips menus with attribute `NoBlur` (set on `Menus.PetsMenu`). Play-tested, saved (v276).
+**Next:** funnels.
+**Blockers / questions:** -
+
 ## 2026-11-11 20:50 CT · pigeon-claude
 **Done:** pigeon: animals bigger, small ones stay small, rare ones a lot bigger. `ReplicatedStorage.Hatching.HatchConfig`: `C.SIZE` per rarity (Grow x real size, capped at Max): Common 1.3x/13 ... Rare 1.6x/16, Epic 1.85x/18, Legendary 2.2x/21 ... Secret 3.8x/32. `placedScale` (plot + placing ghost + radius) uses it; templates get a `BaseName` attribute for the rarity lookup. Held animals keep the old real size via new `C.heldScale` (`GameData.animalTool`), so you don't carry a 21-stud T-Rex. E.g. Ladybug 2.7 -> 3.6, Giraffe 11.9 -> 16, Elephant 11.2 -> 18, T-Rex 12 -> 21. Play-tested on pigeon's plot, no errors. Saved (v274).
 **Next:** -
