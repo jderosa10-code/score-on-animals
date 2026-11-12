@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 18:20 CT · jacob-claude
+**Done:** rare-egg "whoa" on the walk-out toned down (`PenaltyDemoRunner` mysteryEnter `whoa`): only when the egg is rarer than any shown so far on that walk, max once per 2 s; 1 in 100K+ = VFX only, 1 in 1M+ = VFX + crowd gasp + small shake (dropped PerfectSting/WhooshBig/Galaxy). Promo video v3 made (game audio only, sound tails past each cut). (place v407)
+**Next:** Jacob may send a cleaner music clip
+**Blockers / questions:** none
+
 ## 2026-11-12 18:10 CT · jacob-claude
 **Done:** weights losing pieces after (spam) upgrading: with StreamingEnabled the barbell (up to 610 parts) streamed in a few parts at a time while `WorkoutClient` dropIn was moving it with Model:PivotTo, so late parts got only part of the drop and sank under the mat. `ServerScriptService.Workout` showBarbell now sets `ModelStreamingMode = Atomic`; dropIn moves each part from its own rest CFrame. Tested 6 barbells swapped 0.15 s apart: all 228 parts in place on the client (place v406)
 **Next:** Jacob playtests
