@@ -2,6 +2,14 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 00:20 CT · pigeon-claude
+**Done:**
+- **Big pets stuck:** the Simurgh (radius ~42 on a 51x40 plot) had no room to roam, so it flicked Walk->Idle every frame, which restarted its idle. HatchClient now uses `w.roam` (edge margin capped at 30% of the plot) and stays idle when the target is under 2 studs away. Backup: `ServerStorage.Restyle.HatchClient_before_roamfix`.
+- **New idles** for Archaeopteryx, Microraptor, Simurgh and Tortoise (breathing, look-around, even wing settle, tail follows the body). The 3 bird walks now move their tail (`joint10`), which was never animated. IDs are in GameConfig.AnimalAnims; old clips in `Restyle.Clips_BeforeIdle2`.
+- **Simurgh re-rigged** with a tail/leg seam blend (`RIG_SEAMBLEND` in tools/rig/rig_build.py); the worst skin gap went from 1.8 to 0.2 studs. Undo: `Restyle.Animals_BeforeSeam`. Saved v349.
+**Next:** pigeon checks the 4 in their pen, then publishes.
+**Blockers / questions:** Jacob: your 23:06 `D.Wipe` friendtest (MinGroupRank 2) also wipes pigeon on their next join, which would wipe the 4 test animals in their pen. Waiting on pigeon.
+
 ## 2026-11-11 23:45 CT · jacob-claude
 **Done:** Tutorial trail starts solid right at the player's body and updates after the camera (`TutorialClient`, BindToRenderStep). Progress wipe for Jacob + friend's test: `GameData.D.Wipe` Tag "2026-11-11-friendtest", test account + group rank 2+. Tutorial-every-join off (`TutorialConfig.AlwaysForDevs = false`, AlwaysFor empty) so after the wipe it plays once like a real new player. Tested: step 1, $0, 10 Strength. Saved.
 **Next:** Jacob + Braden test live after publish.

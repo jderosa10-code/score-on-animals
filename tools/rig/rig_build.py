@@ -451,6 +451,39 @@ for e in data:
                         d = {sk["root"]: 1.0 - w, leg: w}
                 W[v.index] = d
         rep["skirtPieces"] = hit
+    # SEAM BLEND (2026-11-12, the Simurgh's tail plumes tore away from its thighs, up to 1.8 studs in the pen):
+    # the clean step keeps a bone's parent/children only, so sibling bones that touch (tail vs legs, both
+    # children of the hips) meet at a hard seam. RIG_SEAMBLEND is JSON {"<Name>": {"a": [bones], "b": [bones],
+    # "band": 0.06}}: within band*span of the other side, a vertex shares its weight with the nearest
+    # other-side bone (50/50 right at the seam, fading to its own bone at the band's edge), on both sides.
+    sb = json.loads(os.environ.get("RIG_SEAMBLEND", "{}")).get(e["name"])
+    if sb:
+        band = sb.get("band", 0.06) * span
+        sideA, sideB = set(sb["a"]), set(sb["b"])
+        domv = [max(d, key=d.get) if d else None for d in W]
+        kds = {}
+        for side in ("a", "b"):
+            idx = [i for i, dn in enumerate(domv) if dn in (sideA if side == "a" else sideB)]
+            kd = KDTree(len(idx))
+            for i in idx: kd.insert(me.vertices[i].co, i)
+            kd.balance(); kds[side] = (kd, len(idx))
+        blended = 0
+        newW = {}
+        for i, dn in enumerate(domv):
+            mine = "a" if dn in sideA else ("b" if dn in sideB else None)
+            if not mine: continue
+            kd, cnt = kds["b" if mine == "a" else "a"]
+            if cnt == 0: continue
+            co, j, dist = kd.find(me.vertices[i].co)
+            if dist >= band: continue
+            u = smoothstep(0, 1, dist / band)
+            own = 0.5 + 0.5 * u
+            other = domv[j]
+            d = {n: w * own for n, w in W[i].items()}
+            d[other] = d.get(other, 0) + (1 - own)
+            newW[i] = d; blended += 1
+        for i, d in newW.items(): W[i] = d
+        rep["seamBlended"] = blended
     if os.environ.get("RIG_AUDIT") == "1":
         print("AUDIT", e["name"], "changed", len(decor), json.dumps(decor))
         bm.free(); continue
