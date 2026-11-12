@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 18:10 CT · jacob-claude
+**Done:** weights losing pieces after (spam) upgrading: with StreamingEnabled the barbell (up to 610 parts) streamed in a few parts at a time while `WorkoutClient` dropIn was moving it with Model:PivotTo, so late parts got only part of the drop and sank under the mat. `ServerScriptService.Workout` showBarbell now sets `ModelStreamingMode = Atomic`; dropIn moves each part from its own rest CFrame. Tested 6 barbells swapped 0.15 s apart: all 228 parts in place on the client (place v406)
+**Next:** Jacob playtests
+**Blockers / questions:** none
+
 ## 2026-11-12 18:00 CT · jacob-claude
 **Done:**
 - Held sizes (Jacob picked): held animal = its placed size on the plot (`HatchConfig.heldScale` = placedScale); held egg = its goal size in the penalty (`heldEggScale(part, name)` = EggKeeper.BASE_HEIGHT x style size). Patch eggs unchanged.
