@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 00:42 CT · jacob-claude
+**Done:** (Jacob) Strength-10 ball a bit faster: `GameConfig` BallSlow 18 -> 22 studs/s. Ball speed display deleted (`Workspace.BallSpeedDisplay`, `StarterPlayerScripts.BallSpeedDisplayClient`). Saved to Roblox (v262).
+**Next:** funnels.
+**Blockers / questions:** -
+
 ## 2026-11-12 00:35 CT · jacob-claude
 **Done:** (Jacob) `StarterGui.HUD.CurrencyHUD.CurrencyPanel.Stats.CashLabel` moved up under Strength (y 0.6, `AddCashButton` too) and made 3x wide so TextScaled fits by height: long numbers no longer shrink. `HUDClient` cash shows commas below $1B, short from $1B ($1.8T). `WorkoutClient`: white screen flash when you start lifting. Ball: `GameConfig` BallSlow/Fast 18/420 studs/s, arc 9/0.2 (Strength 10 = ~4 s lob, top = ~0.2 s rocket); `PenaltyDemoRunner` near-goal slow-mo now fades out with strength so strong shots stay fast. New dev display `Workspace.BallSpeedDisplay` (east of the map, 5 lanes: Strength 10/100/1K/5K/18.7K over the 74-stud penalty distance) animated by `StarterPlayerScripts.BallSpeedDisplayClient` from the live GameConfig numbers. Play-tested; saved to Roblox (v261).
 **Next:** funnels.
