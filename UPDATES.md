@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 00:40 CT · pigeon-claude
+**Done:** pigeon: "put those weights in the game, don't make them the main weights, off to the side so I can look, and make good VFX". The 16 barbell v2 concepts (`models/items/barbells_v2/`, one per GameConfig barbell, same names/order) are in **`Workspace.BarbellShowcase`**: a showroom floor just outside the west wall at (-700, 6, -100), two rows of 8 with name signs, nothing in the game uses them. Uploaded as group-owned Model assets via Open Cloud (FBX), inserted, scaled 0.01, coloured from `colours.json` by part name (`__<Material>`), glow parts Neon. Effects: new edit-time `ServerStorage.BarbellV2VFX` (themed per weight from `Assets.VFX`, hosts around each head, locked to the model; none on Copper/Red, ramping to Star Light). Saved (v308).
+**Next:** pigeon to look and say yes/no; if yes, swap them into `ServerStorage.Barbells` (GripHeight/Height attributes needed).
+**Blockers / questions:** -
+
 ## 2026-11-12 00:10 CT · pigeon-claude
 **Done:** (1) **Text outlines in the real game** (pigeon: "a big stroke around it", worse on a small window). Two causes: the 55 `SelfSized` labels left the kit's stroke scaling, so their UIStrokes were frozen pixel widths; and 4 strokes (the Starter Pack `Caption`s, `EggPacks.TitleText`) were in **StrokeSizingMode ScaledSize** with Thickness 4, which is 4x the label's size = solid black pills. `ShopOfferLabels` now sets each SelfSized/StrokeFit label's outline to 9% of its drawn text height (the kit's own median), FixedSize mode. Captions tagged SelfSized; `EggPacks.TitleText` and `TimingResult.Result/Shadow` tagged `StrokeFit` (outline only). The 4 bad strokes fixed in StarterGui too. Tested with the shop shrunk to 45%. (2) **Gift menu** refills whenever its panel opens (it stays Enabled between opens). In pigeon's live screenshot the egg prices were the kit's "12" placeholders and the gift cards "Player Name", so the live servers are running an **older published version**: needs a publish. (3) **Held eggs smaller:** `HELD_EGG_MAX` 3.5 (pigeon asked twice; Jacob had set full size). Saved (v305).
 **Next:** pigeon to publish; barbell concepts going into Studio as a showcase off to the side (not the real weights).
