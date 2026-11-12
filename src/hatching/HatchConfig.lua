@@ -7,7 +7,9 @@ local C = {}
 C.HATCH_SECONDS = 5     -- every egg for now
 C.EGG_HEIGHT = 3.6      -- egg size sitting on a patch
 C.HELD_SIZE = 2.6       -- animal size in your hand (longest side)
-C.PLACED_MAX = 12       -- in your hand: the animal's real size, but none longer than this
+-- (pigeon, 11 Nov 2026) held over your head in both hands, a little smaller than real:
+C.HELD_MAX = 6          -- animals: 80% of real size, none longer than this
+C.HELD_EGG_MAX = 5      -- eggs: none longer than this (the egg models are 5 to 18 studs)
 C.FX_POP = 2.0          -- seconds after "Hatch" that the egg bursts (HatchClient's animation)
 C.FX_TOTAL = 3.6        -- seconds after "Hatch" that the animal lands in your Backpack
 
@@ -50,41 +52,66 @@ local function rarityOf(tmpl)
 		local ok, m = pcall(function() return require(RS:WaitForChild("DevDemo"):WaitForChild("EggRoll")) end)
 		EggRoll = ok and m or false
 	end
-	if not EggRoll then return "Common" end
 	local name = tmpl:GetAttribute("BaseName")
 	if not name then   -- older copies: "<mut>_<name>" or just the name
 		local base = RS:FindFirstChild("BaseAnimals")
 		name = (base and base:FindFirstChild(tmpl.Name)) and tmpl.Name or tmpl.Name:match("^[^_]+_(.+)$") or tmpl.Name
 	end
-	return EggRoll.rarityOf(name) or "Common"
+	-- GameConfig.AnimalRarity is the real tier list (EggRoll's older table didn't know most animals, so
+	-- nearly everything came out "Common" and a Dragon was corgi-sized)
+	local ok, G = pcall(require, RS:WaitForChild("GameConfig"))
+	local r = ok and G.AnimalRarity and G.AnimalRarity[name]
+	if r then return r end
+	return EggRoll and EggRoll.rarityOf(name) or "Common"
 end
+
+-- (Jacob, 11 Nov 2026: "the Dragon should be huge", like Throw Food for Animals) Placed size comes from the
+-- rarity, not the model: each tier has a target size (cube root of the model's box volume, so a winged
+-- dragon isn't judged by its wingspan), stepping up ~1.25x a tier: Common ~hamster to corgi, Secret 40-70
+-- studs long. Inside a tier, bigger animals stay a bit bigger (x0.5 .. x1.6 around the tier's median).
+-- Nothing gets longer than PLACED_CAP. Big ones can stick out past the fences, like in Throw Food.
+C.TIER_SIZE = {Common = 4.5, Uncommon = 5.2, Rare = 6.5, Epic = 9, Legendary = 13, Mythic = 17, Exotic = 22,
+	Divine = 27, Celestial = 33, Secret = 40, Admin = 13}
+C.TIER_MEDIAN = {Common = 2.72, Uncommon = 2.85, Rare = 2.99, Epic = 5.36, Legendary = 11.19, Mythic = 5.47,
+	Exotic = 8.28, Divine = 5.82, Celestial = 8.28, Secret = 13.03, Admin = 11.19}   -- the models' own sizes per tier
+C.PLACED_CAP = 60
 
 -- scale factor for a placed animal, and the radius it takes up on the Land
 function C.placedScale(tmpl)
 	local s = C.mesh(tmpl).Size
-	local z = C.SIZE[rarityOf(tmpl)] or C.SIZE.Common
-	local k = math.min(z.Grow, z.Max / math.max(s.X, s.Y, s.Z))
+	local tier = rarityOf(tmpl)
+	local gm = (s.X * s.Y * s.Z) ^ (1 / 3)
+	local target = (C.TIER_SIZE[tier] or 4.5) * math.clamp((gm / (C.TIER_MEDIAN[tier] or gm)) ^ 0.6, 0.5, 1.6)
+	local k = math.min(target / gm, C.PLACED_CAP / math.max(s.X, s.Y, s.Z))
 	return k, 0.5 * math.max(s.X, s.Z) * k
 end
 
--- scale factor for the animal in your hand (its real size, none longer than PLACED_MAX)
+-- scale factor for the animal held over your head
 function C.heldScale(tmpl)
 	local s = C.mesh(tmpl).Size
-	return math.min(1, C.PLACED_MAX / math.max(s.X, s.Y, s.Z))
+	return math.min(0.8, C.HELD_MAX / math.max(s.X, s.Y, s.Z))
+end
+
+-- scale factor for an egg (a single part) held over your head
+function C.heldEggScale(part)
+	local s = part.Size
+	return math.min(1, C.HELD_EGG_MAX / math.max(s.X, s.Y, s.Z))
 end
 
 function C.land(plot)
 	return plot and plot:FindFirstChild("Land")
 end
 
--- inside the Land and not on top of another placed animal
-function C.canPlace(plot, pos, radius)
+-- (Jacob, 11 Nov 2026) you can place anywhere on your Land: animals may stand close together or overlap;
+-- the only limit is how many your base holds (GameConfig.BaseSlots, checked by the callers).
+-- spread = true (Equip Best's auto-placing) also keeps it fully on the Land and off other animals.
+function C.canPlace(plot, pos, radius, spread)
 	local land = C.land(plot)
 	if not land then return false end
 	local lp = land.CFrame:PointToObjectSpace(pos)
-	local r = radius * 0.9
+	local r = spread and radius * 0.9 or 0
 	if math.abs(lp.X) + r > land.Size.X / 2 or math.abs(lp.Z) + r > land.Size.Z / 2 then return false end
-	local f = plot:FindFirstChild("Animals")
+	local f = spread and plot:FindFirstChild("Animals")
 	if f then
 		for _, other in f:GetChildren() do
 			local p = other:GetPivot().Position

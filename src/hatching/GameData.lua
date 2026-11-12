@@ -66,11 +66,28 @@ local function holdInFront(tool, body, onGround)
 		w.Name = "HoldWeld"
 		w.Part0 = hrp
 		w.Part1 = body
-		-- eggs: bottom about hand height; animals: feet on the ground. Just past your reach, facing your way.
-		local hum = char:FindFirstChildOfClass("Humanoid")
-		local floor = -((hum and hum.HipHeight or 0) + hrp.Size.Y / 2)
-		if hum and hum.RigType == Enum.HumanoidRigType.R6 then floor = -(hrp.Size.Y / 2 + 2) end
-		w.C0 = CFrame.new(0, (onGround and floor or -0.6) + sz.Y / 2, -(sz.Z / 2 + 1.8))
+		-- (pigeon, 11 Nov 2026) eggs and animals are held up over your head in both hands
+		-- (StarterPlayerScripts.HoldOverhead raises the arms). The bottom sits where the raised hands reach,
+		-- worked out from this avatar's own shoulders and arm lengths, and never below the top of the head.
+		local function relY(p) return hrp.CFrame:PointToObjectSpace(p).Y end
+		local head = char:FindFirstChild("Head")
+		local headTop = head and (relY(head.Position) + head.Size.Y / 2) or 2.5
+		local hands = headTop + 1
+		local sh = char:FindFirstChild("RightShoulder", true) or char:FindFirstChild("Right Shoulder", true)
+		-- classic rigs have Motor6D joints; newer avatars have AnimationConstraints (joint = Attachment0)
+		local shoulderPos = sh and ((sh:IsA("Motor6D") and sh.Part0 and (sh.Part0.CFrame * sh.C0).Position)
+			or (sh:IsA("AnimationConstraint") and sh.Attachment0 and sh.Attachment0.WorldPosition))
+		if shoulderPos then
+			local shoulderY = relY(shoulderPos)
+			local len = 0
+			for _, n in {"RightUpperArm", "RightLowerArm", "RightHand"} do
+				local p = char:FindFirstChild(n)
+				if p then len += p.Size.Y end
+			end
+			if len == 0 then local arm = char:FindFirstChild("Right Arm"); len = arm and arm.Size.Y - 0.5 or 1.5 end
+			hands = shoulderY + len * 0.75     -- raised arms lean in and bend a little (measured on a blocky R15: hands end ~0.75 of arm length up)
+		end
+		w.C0 = CFrame.new(0, math.max(hands, headTop + 0.3) + sz.Y / 2 - 0.15, 0)
 		w.Parent = body
 	end)
 	tool.Unequipped:Connect(function()
@@ -85,7 +102,8 @@ local function eggTool(name, mut)
 	local tool = newTool(G.mutLabel(mut, name .. " Egg"))
 	tool:SetAttribute("EggName", name)
 	tool:SetAttribute("Mutation", mut)
-	local egg = src:Clone()   -- full size (Jacob)
+	local egg = src:Clone()
+	egg.Size = egg.Size * C.heldEggScale(egg)   -- held over your head, so a bit smaller (pigeon)
 	egg.Name = "Egg"
 	G.addMutationVFX(egg, mut)
 	egg.Parent = tool
