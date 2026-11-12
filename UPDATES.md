@@ -2,6 +2,15 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 00:50 CT · pigeon-claude
+**Done:** Shop polish (pigeon asked; Jacob, this touches your ShopMenu, backup in `ServerStorage.Restyle.ShopMenu_before_polish`):
+- **Section titles** (Exclusive / Special / Cash Packs): GradientFlow was dimming them (FlowFillBrightness 0.9, FlowContrast 0.35). They now carry `FlowContrast=0` and `FlowFillBrightness=1` attributes.
+- **Egg names:** straight, same box on every card, outline 5% of text height (`StrokeShare` attribute, read by ShopOfferLabels).
+- **Prices:** left-aligned, right next to the Robux symbol on all 8 buy buttons.
+- **ShopJuice:** no more stacked sounds (ButtonEffects' UIHover/UIClick play alone). The open sound is now SoundLibrary.OpenFrameSound. The X no longer spins 90 degrees on hover.
+- Play-tested, saved v354.
+**Next:** pigeon publishes.
+
 ## 2026-11-12 00:00 CT · jacob-claude
 **Done:** First Egg Luck level is free (`GameConfig.luckCost(0) = 0`; the shop button says FREE; tutorial step 7 says "Your first Egg Luck is FREE! Press BUY 1"). New players start with $500 (`GameData` defaults Cash 500). Tested: BuyLuck at level 0 cost $0. Saved.
 **Next:** publish + friend test.
