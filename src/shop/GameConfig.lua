@@ -615,14 +615,44 @@ function G.mutEggModel(name, mut)
 end
 -- the mutation's aura (ReplicatedStorage.Assets.VFX.Mutations.<mut>) on a part: its emitters fill the part,
 -- its Attachment sits in the middle. Safe to call twice.
+-- The auras are made for a ~G.VFXRefSize-stud thing; on anything bigger (huge placed Dragons etc.) the particles,
+-- their speed and rate grow with it (G.scaleVFX), so a big animal gets a big aura.
+G.VFXRefSize = 5
+local function scaleSeq(seq, f)
+	local kp = {}
+	for _, k in seq.Keypoints do table.insert(kp, NumberSequenceKeypoint.new(k.Time, math.min(k.Value * f, 100), math.min(k.Envelope * f, 100))) end
+	return NumberSequence.new(kp)
+end
+function G.scaleVFX(root, f)
+	if f == 1 then return end
+	local list = root:GetDescendants()
+	table.insert(list, root)
+	for _, d in list do
+		if d:IsA("ParticleEmitter") then
+			d.Size = scaleSeq(d.Size, f)
+			d.Speed = NumberRange.new(d.Speed.Min * f, d.Speed.Max * f)
+			d.Acceleration *= f
+			d.Rate *= math.min(f, 3)
+		elseif d:IsA("Attachment") then
+			d.Position *= f
+		elseif d:IsA("Light") then
+			d.Range = math.min(d.Range * f, 60)
+		elseif d:IsA("Beam") then
+			d.Width0 *= f; d.Width1 *= f
+		end
+	end
+end
 function G.addMutationVFX(part, mut)
 	if not (mut and part and part:IsA("BasePart")) or part:GetAttribute("MutVFX") == mut then return end
 	local v = game:GetService("ReplicatedStorage"):FindFirstChild("Assets")
 	v = v and v:FindFirstChild("VFX") and v.VFX:FindFirstChild("Mutations") and v.VFX.Mutations:FindFirstChild(mut)
 	if not v then return end
+	local s = part.Size
+	local f = math.max(1, (s.X * s.Y * s.Z) ^ (1 / 3) / G.VFXRefSize)
 	for _, c in v:GetChildren() do
 		local k = c:Clone()
 		k:SetAttribute("MutVFXPart", true)
+		G.scaleVFX(k, f)
 		k.Parent = part
 	end
 	part:SetAttribute("MutVFX", mut)
