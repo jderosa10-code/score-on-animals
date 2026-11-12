@@ -168,6 +168,7 @@ function K.applyOne(model, name)
 			e.Acceleration = e.Acceleration * v
 			e.Rate = s.rate or e.Rate
 			e.Enabled = true
+			e.LockedToPart = true   -- particles ride with the bar (loose ones hung in the air when it moved and looked like a second weight)
 			if s.color then e.Color = ColorSequence.new(s.color) end
 			for prop, val in s.props or {} do e[prop] = val end
 			if s.centre then   -- big glows and rays: from the middle of the plate

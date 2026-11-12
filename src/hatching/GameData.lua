@@ -87,7 +87,10 @@ local function holdInFront(tool, body, onGround)
 			if len == 0 then local arm = char:FindFirstChild("Right Arm"); len = arm and arm.Size.Y - 0.5 or 1.5 end
 			hands = shoulderY + len * 0.75     -- raised arms lean in and bend a little (measured on a blocky R15: hands end ~0.75 of arm length up)
 		end
-		w.C0 = CFrame.new(0, math.max(hands, headTop + 0.3) + sz.Y / 2 - 0.15, 0)
+		-- egg models face their -X: turn them so the face looks forward, the way you do (animals already face forward)
+		local turn = tool:GetAttribute("EggName") and CFrame.Angles(0, math.rad(-90), 0) or CFrame.identity
+		-- with short arms it simply rests on the head
+		w.C0 = CFrame.new(0, math.max(hands, headTop - 0.1) + sz.Y / 2 - 0.15, 0) * turn
 		w.Parent = body
 	end)
 	tool.Unequipped:Connect(function()
@@ -103,7 +106,14 @@ local function eggTool(name, mut)
 	tool:SetAttribute("EggName", name)
 	tool:SetAttribute("Mutation", mut)
 	local egg = src:Clone()
-	egg.Size = egg.Size * C.heldEggScale(egg)   -- held over your head, so a bit smaller (pigeon)
+	local k = C.heldEggScale(egg)
+	egg.Size = egg.Size * k
+	if k ~= 1 then   -- keep the stud texture and attachments in step with the size
+		for _, d in egg:GetDescendants() do
+			if d:IsA("Texture") then d.StudsPerTileU *= k; d.StudsPerTileV *= k
+			elseif d:IsA("Attachment") then d.Position *= k end
+		end
+	end
 	egg.Name = "Egg"
 	G.addMutationVFX(egg, mut)
 	egg.Parent = tool
@@ -145,6 +155,7 @@ local function buildTool(player, item)
 	if not t then return end
 	t:SetAttribute("ItemId", item.Id)
 	t.Parent = bp
+	return t
 end
 
 function D.rebuildTools(player)
@@ -184,15 +195,28 @@ function D.sync(player)
 end
 
 ------------------------------------------------------------------ items
-function D.giveItem(player, kind, name, toolDelay, mutation)
+-- equip = true: put it straight in your hands (Jacob: a won egg or a fresh hatch is equipped automatically)
+local function equipTool(player, t)
+	local hum = t and player.Character and player.Character:FindFirstChildOfClass("Humanoid")
+	if hum and hum.Health > 0 and not player:GetAttribute("Lifting") then hum:EquipTool(t) end
+end
+function D.giveItem(player, kind, name, toolDelay, mutation, equip)
 	local p = profiles[player]
 	if not p then return end
 	local item = {Id = p.NextId, Type = kind, Name = name, Mutation = mutation}
 	p.NextId += 1
 	table.insert(p.Items, item)
 	if kind == "Animal" then p.Index[name] = true end
-	if toolDelay then task.delay(toolDelay, function() if player.Parent then buildTool(player, item) end end)
-	else buildTool(player, item) end
+	if toolDelay then
+		task.delay(toolDelay, function()
+			if not player.Parent then return end
+			local t = buildTool(player, item)
+			if equip then equipTool(player, t) end
+		end)
+	else
+		local t = buildTool(player, item)
+		if equip then task.delay(0.4, function() if t and t.Parent then equipTool(player, t) end end) end
+	end
 	D.sync(player)
 	return item
 end
