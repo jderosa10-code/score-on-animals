@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 03:30 CT · pigeon-claude
+**Done:** Rebuilt the skins of the 11 animals that still stretched (pigeon: "rebuild them"). Cause was my rig pipeline: bone heat fails on the faceted (loose-face) pack meshes and on tiny meshes, and failed vertices were pinned 100% to the nearest bone. `tools/rig/rig_build.py` with RIG_CLEAN=1: heat on a welded, scaled-up copy, weights copied back; each vertex keeps only its main bone + parent/children; where heat still fails, nearest-bone seeds blended across the welded surface. pigeon imported the FBXs; swapped in (with 56 mutation models), old ones in `ServerStorage.Restyle.Animals_BeforeCleanSkin`. Measured on the full original clips (stretched edges, old -> new skin): Harpy 428/374 -> 0/0, Cerberus walk 96 -> 2, Jackalope walk 48 -> 2, Tanuki 12/42 -> 0/2, Simurgh idle 36 -> 0, Griffin 27/43 -> 6/10, Tiger 14/26 -> 12/4. Full clips restored where they no longer stretch (Harpy Idle+Walk, Cerberus Walk, Tanuki Idle+Walk, Simurgh Idle; original ids in `G.AnimalAnims`). Tortoise's new skin was worse (28 -> 64): old skin kept, new one in `...Animals_BeforeCleanSkin.Rejected`. All 22 clips of the 11 play in a play test, no errors.
+**Still stretch a little (toned clips):** Archaeopteryx walk 18, Microraptor walk 40, Minotaur walk 72, Simurgh walk 16 stretched edges (skin isn't the cause there; same numbers on both skins).
+**Blockers / questions:** pigeon to save/publish (my save tool is offline).
+
 ## 2026-11-11 22:20 CT · jacob-claude
 **Done:** Lifting 1.35x faster: `GameConfig.LiftSpeed` scales `G.LiftClock` (reps, animation and server rep check all follow; Robux lift packs scale too). Placed animal sizes: `HatchConfig.TIER_SIZE` up to Secret 60, in-tier spread now follows the model's own size (`TIER_SPREAD` 1, x0.3-2) so small rare creatures stay smaller, `PLACED_CAP` 100 (e.g. Mythic 16-92 studs, Secret 77-100). Lobby wall textures world-aligned: every Checker/Studs texture under `Workspace.Map.Lobby` got OffsetStudsU/V so the 4-stud checker lines up across drips, GrassCap fronts/tops, dirt walls and floor (grid x=4k, y=4k+2, z=4k+1; UV convention measured on a probe part). Saved (v331).
 **Next:** funnels; remove `_EggShowcase` / `_QilinShot`.
