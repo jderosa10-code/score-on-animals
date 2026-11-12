@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 23:35 CT · jacob-claude
+**Done:** PERFECT/GREAT timing boost (x1.25 / x1.1) now flies from the result word into Strength, which pops and shows the boosted kick (`ReplicatedStorage.DevDemo.PenaltyDemoRunner` flyMult) · night hatch 2.5x -> **5x** (`ServerScriptService.DayNight`) · new `ServerScriptService.PlotNameTags`: owner headshot + name billboard over each owned plot (`Workspace.Plots.PlotN.NameTagAnchor.PlotNameTag`; stroke scales in `StarterPlayerScripts.WorldTextStroke`) · eggs hop ~20% faster out of the tunnel (`EggKeeper:hop` new `opts.pace`) · fixed the ball rolling back out of the net after a goal · 3 misses: confetti + big spinning egg bounce, fade to black, you respawn on your plot (place v355)
+**Next:** whatever Jacob playtests next
+**Blockers / questions:** none
+
 ## 2026-11-12 00:50 CT · pigeon-claude
 **Done:** Shop polish (pigeon asked; Jacob, this touches your ShopMenu, backup in `ServerStorage.Restyle.ShopMenu_before_polish`):
 - **Section titles** (Exclusive / Special / Cash Packs): GradientFlow was dimming them (FlowFillBrightness 0.9, FlowContrast 0.35). They now carry `FlowContrast=0` and `FlowFillBrightness=1` attributes.
