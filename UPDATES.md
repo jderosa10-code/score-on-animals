@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 16:15 CT · jacob-claude
+**Done:** SellMenu on phones: the scroll bar covered the right side of the SELL buttons. `StarterGui.Menus.SellMenu.SellPanel.Backdrop.List` VerticalScrollBarInset = ScrollBar, `List.Rows` width 0.977 -> 0.95 (left edge unchanged) so the buttons clear the bar (place v389)
+**Next:** Jacob checks on phone
+**Blockers / questions:** none
+
 ## 2026-11-12 16:10 CT · jacob-claude
 **Done:** saves always hit the egg: aiming high at an egg you're too weak for, the ball sailed over the egg's dive and stopped short of the net. `ReplicatedStorage.DevDemo.PenaltyDemoRunner` flyShot has a new `o.home` (saves only): over the second half of the flight the ball bends into the egg. Tested with Strength 3 aimed at the top corner: ball met the egg (place v388)
 **Next:** Jacob playtests
