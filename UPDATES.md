@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 16:10 CT · jacob-claude
+**Done:** saves always hit the egg: aiming high at an egg you're too weak for, the ball sailed over the egg's dive and stopped short of the net. `ReplicatedStorage.DevDemo.PenaltyDemoRunner` flyShot has a new `o.home` (saves only): over the second half of the flight the ball bends into the egg. Tested with Strength 3 aimed at the top corner: ball met the egg (place v388)
+**Next:** Jacob playtests
+**Blockers / questions:** none
+
 ## 2026-11-12 16:50 CT · pigeon-claude
 **Done:** Phone check in Studio's device simulator (iPhone 14, Galaxy A06).
 - **Locked to landscape:** `StarterGui.ScreenOrientation` = LandscapeSensor. In portrait the whole HUD broke (text off screen, cash cut off).
