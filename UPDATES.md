@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 16:20 CT · pigeon-claude
+**Done:** Leaderboard studs now match the stalls. The Egg Luck stalls get their studs from SurfaceType Studs on every face, not a Texture. I removed the 8-stud checker overlay (that's only on the big cliff walls) and set Studs surfaces on all board wood/awning parts; `LeaderboardBuilder` does the same. Saved.
+**Next:** phone test.
+**Blockers / questions:** none.
+
 ## 2026-11-12 16:00 CT · pigeon-claude
 **Done:** Leaderboard boards rebuilt from Parts (pigeon: the stud texture was stretched and the roof was disconnected). Mesh textures stretch across the whole face; Parts tile the map's stud texture 1:1. New builder `ServerStorage.LeaderboardBuilder` (`build(cframe)`): posts, frame, header, a top beam, a sloped striped roof resting on it, and trim hanging from the roof edge. The old mesh template moved to `ServerStorage.Restyle.LeaderboardBoard_mesh_old`. Also fixed the Studio edit camera, which was stuck Scriptable from my screenshot tool. Saved v383.
 **Next:** phone test.
