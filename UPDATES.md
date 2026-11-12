@@ -2,6 +2,24 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 03:10 CT · pigeon-claude
+**Done:** 8 new game passes (pigeon picked them). Each has a gift product; ids are in `GameConfig.Passes` and `tools/passes/passes_ids.json`.
+- **Wired:**
+  - FastHatch: EggHatching hatch time / 2.
+  - PenSlots: +5 slots via new `G.slotsFor(player, level)` (EggHatching, HatchClient, PetsMenuClient).
+  - Strength2x: Workout.
+  - SuperLuck: x3, stacks with Luck2x (GameServer + HUDClient display).
+  - MutationHunter: `G.rollMutation(rng, name, mult)` x2.
+  - GreenZone: `G.AimZones(egg, seed, bigGreen)` radius x1.5 (EggInventory + PenaltyDemoRunner).
+  - LongOffline: 24 h at full rate (GameData).
+  - Tuning knobs: `G.Pass*` next to the VIP settings.
+- **+3 Hatcheries:** pass made but OFF SALE and not wired. No room on the plots (fence + luck shop behind the patches); waiting on pigeon for a spot.
+- **Shop:** new `PassesSection` at the bottom (Frames cloned from the egg row: sideways PASSES title, 4+3 cards) + `G.ShopItems` entries; buy/gift go through the existing flow.
+- **Icons:** built from our Framewisp icon pack + egg/animal renders (tools/passes/pass_icons2.ps1).
+- **Backups:** `ServerStorage.Restyle.Scripts_before_passes`, `GameConfig_before_passes`, `ShopMenu_before_passes`.
+- Play-tested (no errors, effects checked on the server), saved.
+**Next:** pigeon picks where the +3 hatcheries go; pigeon publishes.
+**Blockers / questions:** Jacob: the shop has a new section at the bottom; restyle it if you want. MutationHunter doubles odds, so cheap eggs like Hamster go ~41% -> ~83% mutated.
 ## 2026-11-12 00:05 CT · jacob-claude
 **Done:** background music: new `StarterPlayerScripts.MusicPlayer` plays `SoundService.Music` at 80% volume, 3 s fade in, 4 s fade out at the end, 15 s quiet, repeat. Settings Music toggle (`HUDClient`) now sets attribute Muted on the Sound (fades) instead of setting Volume (place v367)
 **Next:** Jacob playtests

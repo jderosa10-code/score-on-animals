@@ -1,0 +1,42 @@
+﻿{
+    "FastHatch":  {
+                      "Price":  199,
+                      "GiftId":  3730580902,
+                      "Id":  2082302416
+                  },
+    "Strength2x":  {
+                       "Price":  249,
+                       "GiftId":  3730581519,
+                       "Id":  2081768388
+                   },
+    "LongOffline":  {
+                        "Price":  149,
+                        "GiftId":  3730581593,
+                        "Id":  2081930383
+                    },
+    "SuperLuck":  {
+                      "Price":  499,
+                      "GiftId":  3730581541,
+                      "Id":  2081738380
+                  },
+    "MutationHunter":  {
+                           "Price":  299,
+                           "GiftId":  3730581562,
+                           "Id":  2082254379
+                       },
+    "PenSlots":  {
+                     "Price":  199,
+                     "GiftId":  3730581488,
+                     "Id":  2083184408
+                 },
+    "GreenZone":  {
+                      "Price":  149,
+                      "GiftId":  3730581576,
+                      "Id":  2082938383
+                  },
+    "Hatcheries3":  {
+                        "Price":  149,
+                        "GiftId":  3730581501,
+                        "Id":  2081354407
+                    }
+}
