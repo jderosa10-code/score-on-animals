@@ -1,6 +1,6 @@
 -- Animals menu (Jacob's StarterGui.Menus.PetsMenu): one card per animal on your plot, best first.
 -- PICK UP = back to your backpack, SELL = asks YES / NO first, EQUIP BEST = your best animals fill the plot.
--- Opened by HUD.SideButtonsHUD.PetsButton (attribute OpensMenu = "PetsMenu"), which hides while the menu is open.
+-- Opened by HUD.AnimalsButtonHUD.AnimalsButtonPanel.PetsButton (attribute OpensMenu = "PetsMenu"), which hides while the menu is open.
 -- Server: ServerScriptService.EggHatching (Hatching.PetAction). Lives in StarterPlayer.StarterPlayerScripts.
 local Players = game:GetService("Players")
 local RS = game:GetService("ReplicatedStorage")
@@ -49,7 +49,8 @@ RunService.Heartbeat:Connect(function()
 end)
 
 -- the Animals button hides while this menu is open
-local openBtn = pg:WaitForChild("HUD"):WaitForChild("SideButtonsHUD"):FindFirstChild("PetsButton")
+-- (HUD.AnimalsButtonHUD: its own copy of the side buttons' kit, so it gets the same hover effects)
+local openBtn = pg:WaitForChild("HUD"):WaitForChild("AnimalsButtonHUD"):WaitForChild("AnimalsButtonPanel"):WaitForChild("PetsButton")
 local function syncButton()
 	if openBtn then openBtn.Visible = not (menu.Enabled and panel.Visible) end
 end
