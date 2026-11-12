@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 22:58 CT · jacob-claude
+**Done:** Tutorial tweaks (Jacob): no arrow over the target; the trail is now gold ">" chevrons (LuckiestGuy, black stroke 8) flat on the ground, flowing toward the target (`Workspace.TutorialTrail`, client-only); arrow-image ids removed from `TutorialConfig`. Lift step = lift until your first strength level up ("Lift weights until you level up to get stronger!"); done text says "plot" instead of "zoo". Admin message drops 13% lower while lifting so the STOP button doesn't cover it. Wipe re-armed for Jacob's test account only (`GameData.D.Wipe` Tag "2026-11-11-tutorial", MinGroupRank off) — tested: $0 / 10 Strength, step 1. Saved (v338).
+**Next:** Jacob runs the full tutorial.
+**Blockers / questions:** none.
+
 ## 2026-11-11 22:50 CT · jacob-claude
 **Done:** Tutorial steps no longer skip for players who already own stuff (Jacob jumped straight to "lift weights"): `TutorialClient` snapshots egg/animal counts, busy hatcheries and PlacedCount when each step starts and only counts what changes during the step; step 4's arrow points at the hatchery you used in step 3. Saved (v337).
 **Next:** Jacob replays the tutorial.
