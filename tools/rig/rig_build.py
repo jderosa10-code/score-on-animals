@@ -424,6 +424,33 @@ for e in data:
                 print("DEBUG lo", [round(c, 2) for c in pc["lo"]], "hi", [round(c, 2) for c in pc["hi"]], "corners", pc["corners"], "hostvol/vol", round(host["vol"] / pc["vol"], 1), "nearest", ds)
         for v in pc["vs"]: W[v.index] = dict(new)
     rep["decorations"] = decor
+    # SKIRTS (2026-11-12, the Minotaur's loincloth stretched up to 6x on its walk): heat weighted the cloth
+    # to both thighs (and the hand hanging next to it), so it tore between the legs. RIG_SKIRT is JSON
+    # {"<Name>": {"box": [[lo xyz], [hi xyz]], "root": "Hips", "legs": ["LeftUpLeg", "RightUpLeg"], "max": 0.35}}
+    # in Blender world coords: every piece inside the box follows the root; below the hip joint the hem
+    # follows the nearer leg up to "max", fading to nothing at the middle so the front can't split.
+    sk = json.loads(os.environ.get("RIG_SKIRT", "{}")).get(e["name"])
+    if sk:
+        blo, bhi = Vector(sk["box"][0]), Vector(sk["box"][1])
+        legs = [l for l in sk["legs"] if l in head]
+        hipz = sum(head[l].z for l in legs) / len(legs)
+        cx = sum(head[l].x for l in legs) / len(legs)
+        half = max(abs(head[l].x - cx) for l in legs) or 1e-3
+        hit = 0
+        for pc in pieces:
+            if not all(blo[i] - eps <= pc["lo"][i] and pc["hi"][i] <= bhi[i] + eps for i in range(3)): continue
+            hit += 1
+            for v in pc["vs"]:
+                d = {sk["root"]: 1.0}
+                if v.co.z < hipz:
+                    down = min(1.0, (hipz - v.co.z) / max(hipz - pc["lo"].z, 1e-3))
+                    side = min(1.0, abs(v.co.x - cx) / half)
+                    w = sk.get("max", 0.35) * smoothstep(0, 1, down) * smoothstep(0, 1, side)
+                    if w > 1e-3:
+                        leg = min(legs, key=lambda l: abs(head[l].x - v.co.x))
+                        d = {sk["root"]: 1.0 - w, leg: w}
+                W[v.index] = d
+        rep["skirtPieces"] = hit
     if os.environ.get("RIG_AUDIT") == "1":
         print("AUDIT", e["name"], "changed", len(decor), json.dumps(decor))
         bm.free(); continue

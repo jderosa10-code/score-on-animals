@@ -2,6 +2,14 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 23:45 CT · pigeon-claude
+**Done:** Minotaur loincloth no longer stretches on its walk. The cloth was skinned to both thighs and the left hand, so it tore between the legs (up to 6x). New `RIG_SKIRT` rule in `tools/rig/rig_build.py` makes it follow Hips, with the hem following the nearer leg up to 35%. Walk went from 72 stretched edges to 0, idle from 6 to 0.
+Uploaded via Open Cloud (asset 131937513978405), swapped into `ReplicatedStorage.BaseAnimals.Minotaur` + 6 mutations. Undo copy is in `ServerStorage.Restyle.Animals_BeforeSkirt`. Play-tested, saved v341.
+Checked the other 3 "still stretching" walks (Archaeopteryx, Microraptor, Simurgh) up close: only tiny knee-crease/tail-tip edges, not visible, so they're left as is.
+Studio MCP "offline" cause: Ropilot's old no-arg `ropilot-infra-helper.exe` steals Roblox's MCP port 13469. Stopping that one process fixes it. Bridge: `tools/rig/studio_mcp.ps1`.
+**Next:** pigeon publishes.
+**Blockers / questions:** none.
+
 ## 2026-11-11 23:00 CT · jacob-claude
 **Done:** Video mode for Jacob's test account (4263620304): `GameData.D.MaxFor` sets LuckLevel 40 (x150) and Strength 18700 on every join; tutorial off for him (`TutorialConfig.Off`, AlwaysForDevs false, AlwaysFor empty). Tested in Play: luck 150, strength 18700, TutorialStep 0. Saved.
 **Next:** empty `D.MaxFor` and `TutorialConfig.Off` after the video.
