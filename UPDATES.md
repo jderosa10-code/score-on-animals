@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 23:50 CT · jacob-claude
+**Done:** Jacob's new sounds moved from Workspace into `SoundService`: `UIHover` + `UIClick` (replace the old ones, every ButtonEffects button uses them), `UIOpen` (every menu via `HUD.SideButtonsHUD.MenuButtons`, popups via new `StarterPlayerScripts.PopupOpenSound`; ShopJuice's own open sound removed so it doesn't double), `ScreenWoosh` (penalty screenFade, lift flash in `WorkoutClient`, day/night fade in `DayNightClient`) · tutorial: energy bar shows while lifting, its BoostButton1-3 / AddButton (Robux) hidden (`WorkoutClient` showBar) (place v362)
+**Next:** Jacob playtests sounds
+**Blockers / questions:** none
+
 ## 2026-11-12 02:00 CT · pigeon-claude
 **Done:** (pigeon asked; Jacob, these touch your tuning)
 - **Kick:** weak kicks quicker and flatter. `GameConfig.BallSlow` 22 -> 34 studs/s, `BallArcSlow` 9 -> 4; BallFast/ArcFast unchanged. Strength 10 is ~2.2 s of game time over 74 studs (was 3.4).
