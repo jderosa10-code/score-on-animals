@@ -649,11 +649,33 @@ function G.addMutationVFX(part, mut)
 	if not v then return end
 	local s = part.Size
 	local f = math.max(1, (s.X * s.Y * s.Z) ^ (1 / 3) / G.VFXRefSize)
+	-- animals: the mesh box includes wings and tails, so centre the aura on the body (the root Bone) in an
+	-- invisible VFXShell welded to the mesh, 65% of the mesh's size. Eggs (no bones) keep it on the part itself.
+	local host = part
+	local root = part:FindFirstChildWhichIsA("Bone")
+	if root then
+		local old = part:FindFirstChild("VFXShell")
+		if old then old:Destroy() end
+		host = Instance.new("Part")
+		host.Name = "VFXShell"
+		host.Transparency = 1
+		host.CanCollide, host.CanQuery, host.CanTouch, host.Massless = false, false, false, true
+		host.Anchored = false   -- rides on the weld, so it follows the mesh when held or moved
+		host.Size = Vector3.new(math.max(1, s.X * 0.65), math.max(1, s.Y * 0.65), math.max(1, s.Z * 0.65))
+		host.CFrame = part.CFrame.Rotation + root.WorldPosition
+		local w = Instance.new("WeldConstraint")
+		w.Part0, w.Part1 = part, host
+		w.Parent = host
+		host:SetAttribute("MutVFXPart", true)
+		host.Parent = part
+	else
+		for _, c in part:GetChildren() do if c:GetAttribute("MutVFXPart") then c:Destroy() end end
+	end
 	for _, c in v:GetChildren() do
 		local k = c:Clone()
 		k:SetAttribute("MutVFXPart", true)
 		G.scaleVFX(k, f)
-		k.Parent = part
+		k.Parent = host
 	end
 	part:SetAttribute("MutVFX", mut)
 end
