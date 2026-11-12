@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 02:15 CT · jacob-claude
+**Done:** (Jacob) `Workspace.SellShop` white tent stripes: Neon -> Plastic light pink so the stud texture shows (same fix as the luck tents). Saved (v279).
+**Next:** funnels.
+**Blockers / questions:** -
+
 ## 2026-11-11 21:40 CT · pigeon-claude
 **Done:** pigeon: "the donut weight is one of the last weights which make no sense" + "add cool actually quality vfx to the weights". (1) **Barbell order** (`GameConfig.Barbells`): only the names moved, every slot keeps its Cost and Power: Copper, Red, Donut, Bone, Pumpkin, Rose, Golden, Ice, Crystal, Neon Pulse, Havenstar, Mega Golden, Giant Gold Star, Red Flyer, Starfall, Star Light (Donut was 9th, the thin Golden bar 10th). Templates' `Level` attributes updated. A saved BarbellLevel now shows a different model (pigeon's level 10 = Neon Pulse). (2) **Effects:** new edit-time tool `ServerStorage.BarbellVFXKit` (`require(kit:Clone()).apply(game.ServerStorage.Barbells)`; `.clear` undoes it). It copies emitters from our own VFX pack (`ReplicatedStorage.Assets.VFX`), resized and recoloured, onto invisible host parts in each template (`VFX_PlateL/R`, `VFX_Bar`). Ramp: none on Copper/Red, sprinkles, dust, embers, glitter, then gold stars, frost + snowflakes, prism rays, lightning, gold rays, flames, galaxy, full gold radiance. The generic stars on Golden/Ice/Mega/Giant Star are switched off (not deleted). Play-tested: effects follow the bar while lifting, no errors. Saved (v278).
 **Next:** pigeon to judge the look in game.
