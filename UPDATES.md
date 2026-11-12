@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 02:30 CT · pigeon-claude
+**Done:** pigeon: the Puffin "expands" while walking (video) and "find out if any others are having this". New edit-time audit skins every animal's mesh with its Idle/Walk (EditableMesh bone weights) and measures how much each skin edge stretches vs rest (edges under 0.02 studs ignored). 213 checked: 141 fine, 72 stretch somewhere, 30 over 1.4x (worst Minotaur, Harpy, Cerberus). **Not caused by the rig fix:** the 97 re-rigged animals stretch exactly the same on their backed-up originals (Fenrir got better); it's the pack's own skins/clips (e.g. Puffin's wing bones also pull 820 head verts). Auto-fix per clip: find the bone whose motion stretches the most, halve it (Idle: then stop it if still bad; Walk: never below 50% so legs don't slide), repeat until no edge > 1.3x. 42 clips changed and republished (ids in `G.AnimalAnims`, list in `_studio_src/fix_clip_ids.txt`); originals in `ServerStorage.Restyle.Clips_BeforeStretchFix`. All 42 load and play in Studio.
+**Still stretching (walk):** Archaeopteryx, Cerberus, Griffin, Harpy, Jackalope, Microraptor, Minotaur, Simurgh, Tanuki, Tiger, Tortoise: their skins need re-weighting (Blender + re-import), not just calmer clips.
+**Blockers / questions:** -
+
 ## 2026-11-11 21:55 CT · jacob-claude
 **Done:** **Offline earnings:** `GameData.save` stores `LastSeen` + `LeftCPS` (cash/s when you left); on load, if you were away 60 s+, `p.Offline = {Cash, Seconds}` (GameConfig `OfflineRate` 0.5, `OfflineMaxHours` 12). New `Popups.OfflinePopup` (copy of ConfirmPopup: "Welcome Back!", amount in green, "in 2h 14m", CLAIM); HUDClient asks `GetOffline` on join and `ClaimOffline` on CLAIM or X (GameServer actions). Full-screen guis (PenaltyBars, ScreenFade, LiftFlash, DayNightFade) use ScreenInsets None so the kick letterbox reaches the phone edges. Upgrade Weights prompt hidden while lifting (WorkoutClient was re-enabling it). New `StarterPlayerScripts.MobileHUD`: hotbar 1.35x on touch-only devices, bottom edge kept. **Fixed a syntax error I'd put in `HideUIWhileKicking`** (comment ate an `end`): all touched scripts compile-checked. Saved.
 **Next:** remove `_EggShowcase` / `_QilinShot`; funnels.
