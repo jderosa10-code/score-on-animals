@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 01:15 CT · jacob-claude
+**Done:** Pets menu (Jacob designs the UI; I restructured it at his request). `StarterGui.Menus.PetsMenu` (copy of GiftMenu, panel `PetsPanel`, stays on the right): `List` ScrollingFrame with `PetCardTemplate` (PetIcon, PetNameLabel text-scaled, green PickUpButton, red SellButton, hidden YesButton/NoButton), `EquipBestButton` under the panel, `EmptyLabel`; all text stroke 4, button patterns tiled to whole tiles. New `StarterPlayerScripts.PetsMenuClient`: one card per placed animal (best first), PICK UP -> backpack, SELL -> "SELL FOR $X?" YES/NO, EQUIP BEST. Server: new RemoteFunction `ReplicatedStorage.Hatching.PetAction` handled in `ServerScriptService.EggHatching` (List / PickUp / Sell / EquipBest: best animals from plot + backpack fill `G.BaseSlots`, auto-placed on free spots). `GameData.sync` also sends `PlacedList`. Play-tested pick up + equip best. Saved (v266).
+**Next:** Jacob adds a button with attribute OpensMenu = "PetsMenu"; funnels.
+**Blockers / questions:** -
+
 ## 2026-11-12 00:55 CT · jacob-claude
 **Done:** (Jacob) Base animal capacity: `GameConfig.BaseSlots(level)` = 10 + 2 per base upgrade (10, 12, 14 ... 28), `G.BaseMaxLevel` = 9; land still grows over the first 3 levels (`G.BaseDepths`), later levels only add slots. `G.BaseUpgradeCost` rescaled to the new income ($320K .. $14Qa). `ServerScriptService.EggHatching`: PlaceAnimal refuses past the cap with "Base full (N animals)! Upgrade your base for more room"; the Upgrade prompt shows "10 -> 12 animals"; upgrade notice says the new room. `ServerScriptService.PlotLevels`: maxLevel from `G.BaseMaxLevel`, depth capped at the last BaseDepths entry. Animals already placed over the cap stay (old saves). Play-tested, saved to Roblox (v263).
 **Next:** funnels.
