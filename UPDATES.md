@@ -3,7 +3,7 @@
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
 ## 2026-11-11 20:10 CT · jacob-claude
-**Done:** Grass drips on the lobby walls (`Workspace.Map.Lobby.LobbyArt.Drips`, 338 parts) had Studs/Checker on only 4 faces; added the missing faces so the stud pattern shows on every side. Saved.
+**Done:** Grass drips on the lobby walls (`Workspace.Map.Lobby.LobbyArt.Drips`, 338 parts) had Studs/Checker on only 4 faces; added the missing faces so the stud pattern shows on every side, offset each drip's Checker by world position so the checker alternates across drips (each 4x4 drip used to show the same square), and set the grass Checker to 0.78 transparency (dirt is 0.8). Saved.
 **Next:** funnels.
 **Blockers / questions:** none.
 
