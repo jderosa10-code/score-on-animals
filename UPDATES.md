@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 18:00 CT · pigeon-claude
+**Done:** Most Rebirths leaderboard removed (pigeon). Removed the board, its 2 SurfaceGuis, its entry in `ServerScriptService.Leaderboards`, and the Rebirths player-list column (player list now shows Strength + Cash). Most Animals is centred on the left (x -509). The `LB_Rebirths_v1` data store is left alone. Play-tested: the 3 boards fill, no new errors. Saved.
+**Next:** publish.
+**Blockers / questions:** none.
+
 ## 2026-11-12 17:45 CT · pigeon-claude
 **Done:** Admin panel hidden on phones (pigeon: nobody needs it there; its ADMIN button covered the Animals menu). `MobileMenus` switches `PlayerGui.AdminPanel` off on phones; your script and `ServerStorage.AdminPanel` are untouched. Tested: hidden on the phone sim, shown on PC, PC menus at 1.00x. Saved.
 **Next:** publish, then a real-phone check.
