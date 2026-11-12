@@ -2,6 +2,14 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 18:00 CT · jacob-claude
+**Done:**
+- Held sizes (Jacob picked): held animal = its placed size on the plot (`HatchConfig.heldScale` = placedScale); held egg = its goal size in the penalty (`heldEggScale(part, name)` = EggKeeper.BASE_HEIGHT x style size). Patch eggs unchanged.
+- Leaderboards: gold `HeaderTrim` bar removed (boards + `LeaderboardBuilder`); each `<Key>List.Rows` is now a ScrollingFrame, rows 66 px with 14 px gaps.
+- Admin: timed Strength gifts (`strengthGrant`): +N for M minutes, stack, each ends on its own (ACTIVE tab rows, MemoryStore `grant_<id>`). workspace `Admin_StrengthBonus` = total; Strength attribute = saved + bonus in `GameServer`, `Workout`, `AdminEvents`; `EggInventory` kick check adds it. Panel Give tab: minutes box + GIVE FOR TIME. Bottom-right list shows "ADMIN: +N STRENGTH". (place v405)
+**Next:** Jacob playtests
+**Blockers / questions:** pigeon: anything new that sets the Strength attribute should add `workspace:GetAttribute("Admin_StrengthBonus")`
+
 ## 2026-11-12 17:45 CT · jacob-claude
 **Done:**
 - Leaderboards restyled to the game's menus (Jacob asked): `StarterGui.Leaderboards` title SurfaceGuis = green kit bar (gradient, weld pattern, black outline), icons ~2x; list SurfaceGuis = dark translucent body, grey kit rows, gold/silver/bronze rows 1-3, bigger avatars with white ring. Same element names, so `LeaderboardClient` is unchanged. All purple on `Workspace.Map.Leaderboards` (roof, trim, header) -> green; `ServerStorage.LeaderboardBuilder` PURPLE -> GREEN.
