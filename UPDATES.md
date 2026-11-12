@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 02:42 CT · jacob-claude
+**Done:** (Jacob: "place them anywhere on the plot, only reason you can't is max animals") `ReplicatedStorage.Hatching.HatchConfig.canPlace(plot, pos, radius, spread)`: by default only checks the point is on your Land (animals may overlap / stand at the edge); `spread = true` keeps the old margin + no-overlap rule, used only by Equip Best's auto-placing (`EggHatching.freeSpot`). The base-slots limit is unchanged. Saved.
+**Next:** funnels.
+**Blockers / questions:** pigeon: heads-up, I edited HatchConfig (canPlace only), your C.SIZE work is untouched.
+
 ## 2026-11-12 02:35 CT · jacob-claude
 **Done:** (Jacob) Animals button moved into its own `StarterGui.HUD.AnimalsButtonHUD` (copy of SideButtonsHUD with only TextScaler + ButtonEffects, no MenuButtons) as `AnimalsButtonPanel.PetsButton`, so it gets the same hover grow/effects as Shop and Index; Fill/Pattern now fill the whole button (squarer), 3x3 tiles. `HatchClient`: placing ghost turns red when the plot is full; clicking where you can't place now says why ("Your plot is full (12/12)! ..." or "No room there! Try another spot"). `HUD.NotificationsHUD.Notify`: banners stack up to 3, each flies up off the screen when done and the rest slide up; extra ones wait in a queue (AdminMessage unchanged). Tested 5 at once: 3 shown, 2 queued. Saved.
 **Next:** funnels.
