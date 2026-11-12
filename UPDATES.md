@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 19:20 CT · pigeon-claude
+**Done:** pigeon: the kick is "too quick… I like seeing it go slo mo when the egg gets hit", for PERFECT and regular kicks. Cause: since the Strength-scaled ball, slow-mo near the goal faded with Strength (at 880: only 0.63x) and only began in the last 18 studs, which a fast ball crosses before the fade starts. `ReplicatedStorage.DevDemo.PenaltyDemoRunner`: every kick now gets full slow-mo as it reaches the egg (0.3x, PERFECT 0.22x). The window is ~0.3 s of flight (`max(18, speed*0.3)` studs) and the drop into slow-mo snaps in fast. Ball launch speed is unchanged (Jacob's rocket stays). Compiles; no errors in play. Saved (v268).
+**Next:** pigeon to feel-test a regular and a PERFECT kick.
+**Blockers / questions:** Jacob: this changes your "almost no slow-mo for the strongest" rule at the impact only; say if you want it back for top Strength.
+
 ## 2026-11-11 18:50 CT · pigeon-claude
 **Done:** pigeon: "publish them and make robux product ids". (1) **Robux live:** made via Open Cloud on the group universe: passes 2x Cash 2082212310, 2x Luck 2081720308, 11 dev products + 7 gift copies, each with a picture; all ids in `ReplicatedStorage.GameConfig` `G.Passes`/`G.Products` and `docs/robux-products.md`. VIP not created (not sold). Prices unchanged; contents unchanged (Jacob's #22 hold stands). (2) **Animations published (#5):** live animals are Bone rigs, and KSTrack only drives Motor6Ds, so they stood still in live games. All 373 animal Idle/Walk clips are now group-owned (1005448515) Animations in `G.AnimalAnims`; play-tested, tracks load and bones move. Kicker clips still play live via KSTrack. (3) **Bug:** blur stayed after closing the shop: `HUDClient` blur check took ShopJuice's full-screen `JuiceFX` as the menu; now it prefers the `...Panel` child. Tested. **Saved to Roblox (v267).**
 **Next:** in a live server: buy one cheap product (Turtle Egg 25) to test ProcessReceipt end to end; publish the place.

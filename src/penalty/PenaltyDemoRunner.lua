@@ -88,7 +88,8 @@ RunService.Heartbeat:Connect(function(dt)
 	gameSpeed += (gameSpeedTarget - gameSpeed) * math.min(1, dt * 10)
 	if math.abs(gameSpeed - gameSpeedTarget) < 0.003 then gameSpeed = gameSpeedTarget end
 	local want = targetScale * gameSpeed * DBG()
-	curScale += (want - curScale) * math.min(1, dt * 7)
+	-- dropping into slow motion snaps in fast (a rocket shot would reach the egg before a slow fade); speeding back up eases
+	curScale += (want - curScale) * math.min(1, dt * (want < curScale and 18 or 7))
 	if DBG() ~= 1 then curScale = want end
 	local cur = frozen() and 0.02 * DBG() or curScale
 	EggKeeper.timeScale = cur
@@ -185,7 +186,9 @@ local function load(id) local a = Instance.new("Animation"); a.AnimationId = id;
 -- ServerStorage.RBX_ANIMSAVES.KickerRigR15, copied here as KickerAnimsR15 by ServerScriptService.PenaltyDemo
 local isR15 = hum.RigType == Enum.HumanoidRigType.R15
 local KA6 = isR15 and A.KickerAnimsR15 or A.KickerAnimsR6
-local function loadKS(name) return load(KSP:RegisterKeyframeSequence(KA6[name])) end
+-- the kick clips are unpublished KeyframeSequences: a real track in Studio, ReplicatedStorage.KSTrack in a live game
+local KSTrack = require(RS:WaitForChild("KSTrack"))
+local function loadKS(name) return KSTrack.load(animator, rig, KA6[name]) end
 local tIdle = isR15 and load("rbxassetid://507766666") or load("rbxassetid://180435571"); tIdle.Looped = true; tIdle.Priority = Enum.AnimationPriority.Idle        -- R6 default idle
 local tWalk = isR15 and load("rbxassetid://507777826") or load("rbxassetid://180426354"); tWalk.Looped = true; tWalk.Priority = Enum.AnimationPriority.Movement    -- R6 default walk
 local tCheer = isR15 and load("rbxassetid://507770677") or load("rbxassetid://129423030"); tCheer.Priority = Enum.AnimationPriority.Action                         -- R6 default cheer
@@ -345,6 +348,7 @@ local aimShot = function() return nil end             -- slow motion + click the
 local clearAim = function() end
 -- this round: the egg (the server rolls it), the aim-zone seed, which try, and the shot that scored
 local roundEgg, roundSeed, tryNo, scoreShot = nil, 0, 1, nil
+local roundMut = nil          -- this round's mutation (Gold / Diamond / Rainbow) or nil, rolled by the server
 local aimZones = nil          -- this shot's green/red zones (GameConfig.AimZones), shown while aiming
 local hideZones = function() end   -- removes the zones at the strike; your aim marker stays
 local showCaption = function() end -- big text in the TimingResult style: showCaption(key, text, colour, y, height)
@@ -1068,7 +1072,7 @@ local function shoot(egg, target, willSave, perfect, zone)
 	local kickStrength = 100
 	if isClient and roundEgg then
 		kickStrength = myStrength() * (G.ZoneStrength[zone] or 1) * (aimZones and G.aimMult(aimZones, target.X, target.Y) or 1)
-		willSave = kickStrength < G.StrengthFor(roundEgg)
+		willSave = kickStrength < G.StrengthFor(roundEgg) * G.mutNeed(roundMut)
 		scoreShot = {zone = zone, x = target.X, y = target.Y, try = tryNo}
 	end
 	local hitPos, hitNet, dir = netHit(releaseSpot, world)
@@ -1107,9 +1111,10 @@ local function shoot(egg, target, willSave, perfect, zone)
 		if a >= 0.24 and not cut and camShot ~= "ball" then
 			camShot = "ball"; camFov = perfect and 36 or 42
 		end
-		-- slow motion near the goal: full for weak kicks, almost none for the strongest so they stay a rocket
-		if targetScale == 1 and (world - p).Magnitude < 18 then
-			targetScale = (isClient and roundEgg) and (SLOWMO + (1 - SLOWMO) * G.strengthT(kickStrength) ^ 1.5) or SLOWMO
+		-- slow motion as the ball reaches the egg, for every kick (pigeon: "I like seeing it go slo mo when the egg gets hit").
+		-- Strength still sets how fast the ball leaves the boot; the window is ~0.3 s of flight so rockets slow down in time too.
+		if targetScale == 1 and (world - p).Magnitude < math.max(18, speed * 0.3) then
+			targetScale = perfect and SLOWMO * 0.73 or SLOWMO
 		end
 		if not cut and a > 0.5 then cut = true; camShot = "save"; camFov = 44 end      -- cut to the goal-side camera for the dive
 		return (willSave or blast) and a > 0.6 and touchingEgg(egg, p)
@@ -1280,7 +1285,7 @@ local function claimEgg(egg)
 		local ER = require(RS.DevDemo.EggRoll)
 		local r = ER.rarityOf(roundEgg, A.Eggs)
 		local hex = ER.Colors and ER.Colors[r] and ER.Colors[r][1]
-		showCaption("got", roundEgg .. " Egg", hex and Color3.fromHex(hex) or Color3.new(1, 1, 1), 0.17, 0.085)
+		showCaption("got", G.mutLabel(roundMut, roundEgg .. " Egg"), hex and Color3.fromHex(hex) or Color3.new(1, 1, 1), 0.17, 0.085)
 		local found = _G.SOA_IndexFound and _G.SOA_IndexFound(G.AnimalForEgg(roundEgg))
 		if not found then showCaption("new", "NEW!", Color3.fromRGB(255, 225, 50), 0.245, 0.06) end
 		task.wait(0.8)
@@ -1514,8 +1519,8 @@ local function mysteryEnter(egg, winner)
 	sfx("WhooshBig", 0.4, 1.3)
 	fovPunch(6)
 	local winEgg = A.Eggs:FindFirstChild(winner)
-	showOdds(EggRoll.oddsText(EggRoll.chance(winner, ROSTER, folder:GetAttribute("Luck") or 1, A.Eggs)), EggRoll.rarityOf(winner, A.Eggs), true,
-		winner, winEgg and winEgg:GetAttribute("Mutation"))
+	showOdds(EggRoll.oddsText(EggRoll.chance(winner, ROSTER, myLuck(), A.Eggs) * G.mutChance(roundMut)), EggRoll.rarityOf(winner, A.Eggs), true,
+		winner, roundMut or (winEgg and winEgg:GetAttribute("Mutation")))
 	burst("Mystery", keeper, nil, 0.8, 0.8)
 	burst("Diamond", keeper, nil, 0.6)
 	burst("Poof", keeper, nil, 0.9)
@@ -1538,8 +1543,8 @@ local function playEgg()
 	local name, seed
 	local rollRF = isClient and RS.DevDemo:FindFirstChild("RollEgg")
 	if rollRF then
-		local ok, n, s = pcall(function() return rollRF:InvokeServer() end)
-		if ok and n and A.Eggs:FindFirstChild(n) then name, seed = n, s end
+		local ok, n, s, mu = pcall(function() return rollRF:InvokeServer() end)
+		if ok and n and A.Eggs:FindFirstChild(n) then name, seed, roundMut = n, s, mu else roundMut = nil end
 	end
 	name = name or EggRoll.pick(ROSTER, myLuck(), A.Eggs)
 	roundEgg, roundSeed, scoreShot = name, tonumber(seed) or math.random(1, 1e8), nil
@@ -1549,7 +1554,7 @@ local function playEgg()
 		name = EggRoll.play{gui = rollGui, eggs = A.Eggs, pool = ROSTER, force = name,
 			kickPower = myStrength(), character = rig, playerName = player and player.DisplayName, sfx = sfx}
 	end
-	local tmpl = A.Eggs:FindFirstChild(name)
+	local tmpl = (roundMut and G.mutEggModel(name, roundMut)) or A.Eggs:FindFirstChild(name)   -- a Gold egg looks gold
 	if not tmpl then return end
 	targetScale = 1
 	resetBall()
@@ -1572,6 +1577,7 @@ local function playEgg()
 	if isClient then showCaption("luck", luckText(myLuck()), Color3.fromRGB(255, 215, 60), 0.09, 0.075) end
 	if rollGui then enterEgg(egg) else mysteryEnter(egg, name) end
 	hideCaption("luck", 0.4)
+	G.addMutationVFX(egg.part, roundMut)   -- once it's revealed, a mutated egg wears its aura
 	egg:idle()
 	sfx("Whistle", 0.5)
 	task.wait(0.3)
