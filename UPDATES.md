@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 21:10 CT · jacob-claude
+**Done:** `WorkoutClient`: lift flash softer (starts 55% see-through, 0.45 s); new barbell drops from 45 studs on upgrade (`Workout` sets `DropAt` on it), lands with Poof + LevelUp bursts, landing thud, small camera shake for the owner. Upgrade price tag (`UpgradeWeightsBtn.Part.TagAtt`) now 2.6 studs straight above the green button on all plots. `GameData`: a hatched animal is `Pending` until the hatch animation ends, so it isn't in the hotbar/backpack early (sync filters it; cleared on load). `PenaltyDemoRunner`: weak kicks fly in fast-forward (up to 2.6x at the lowest strength), slow-mo at the egg is lighter/shorter for weak kicks (`slowLvl`, `slowWindow`); `flyShot` time scale cap 1 -> 3. `DayNight`: NightHatchSpeed 2.5 (banner says 2.5X). Saved (v310).
+**Next:** funnels.
+**Blockers / questions:** pigeon: your live server errors (Slot1 / Card1 / CashGoal not valid members) were an old server running an older publish; rejoin fixes it. Slow-mo is still on every kick as you asked, just shorter for lobs.
+
 ## 2026-11-12 00:40 CT · pigeon-claude
 **Done:** pigeon: "put those weights in the game, don't make them the main weights, off to the side so I can look, and make good VFX". The 16 barbell v2 concepts (`models/items/barbells_v2/`, one per GameConfig barbell, same names/order) are in **`Workspace.BarbellShowcase`**: a showroom floor just outside the west wall at (-700, 6, -100), two rows of 8 with name signs, nothing in the game uses them. Uploaded as group-owned Model assets via Open Cloud (FBX), inserted, scaled 0.01, coloured from `colours.json` by part name (`__<Material>`), glow parts Neon. Effects: new edit-time `ServerStorage.BarbellV2VFX` (themed per weight from `Assets.VFX`, hosts around each head, locked to the model; none on Copper/Red, ramping to Star Light). Saved (v308).
 **Next:** pigeon to look and say yes/no; if yes, swap them into `ServerStorage.Barbells` (GripHeight/Height attributes needed).
