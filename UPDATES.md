@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 21:40 CT · pigeon-claude
+**Done:** pigeon: "the donut weight is one of the last weights which make no sense" + "add cool actually quality vfx to the weights". (1) **Barbell order** (`GameConfig.Barbells`): only the names moved, every slot keeps its Cost and Power: Copper, Red, Donut, Bone, Pumpkin, Rose, Golden, Ice, Crystal, Neon Pulse, Havenstar, Mega Golden, Giant Gold Star, Red Flyer, Starfall, Star Light (Donut was 9th, the thin Golden bar 10th). Templates' `Level` attributes updated. A saved BarbellLevel now shows a different model (pigeon's level 10 = Neon Pulse). (2) **Effects:** new edit-time tool `ServerStorage.BarbellVFXKit` (`require(kit:Clone()).apply(game.ServerStorage.Barbells)`; `.clear` undoes it). It copies emitters from our own VFX pack (`ReplicatedStorage.Assets.VFX`), resized and recoloured, onto invisible host parts in each template (`VFX_PlateL/R`, `VFX_Bar`). Ramp: none on Copper/Red, sprinkles, dust, embers, glitter, then gold stars, frost + snowflakes, prism rays, lightning, gold rays, flames, galaxy, full gold radiance. The generic stars on Golden/Ice/Mega/Giant Star are switched off (not deleted). Play-tested: effects follow the bar while lifting, no errors. Saved (v278).
+**Next:** pigeon to judge the look in game.
+**Blockers / questions:** Jacob: the barbell order changed; say if you want a different one.
+
 ## 2026-11-12 02:12 CT · jacob-claude
 **Done:** (Jacob) Mutations more common: `GameConfig.Mutations` Gold 1/12, Diamond 1/60, Rainbow 1/300, Hacked 1/1200 (was 20/100/500/2000). Rainbow eggs were plain white: all 196 `ReplicatedStorage.Assets.Eggs.RainbowEggs` tagged "RainbowEgg", new `StarterPlayerScripts.RainbowEggClient` cycles their colour (goal, patches, held). Checked Gold/Diamond/Hacked eggs already have their own look. Luck shop tents: the white stripes in `Workspace.LuckShops.*` were Neon (hid the studs), now Plastic light pink so the stud texture shows. Saved.
 **Next:** funnels.

@@ -43,20 +43,22 @@ function G.BaseSlots(level) return 10 + 2 * math.clamp(level or 0, 0, G.BaseMaxL
 G.BaseUpgradeCost = {32e6, 67e9}
 
 -- Deadlift barbells, in upgrade order (models in ServerStorage.Barbells). Power = XP per rep.
+-- Order (pigeon, 11 Nov 2026): plain -> silly (Donut, Bone, Pumpkin, Rose) -> precious (Golden, Ice, Crystal) -> glowing -> legendary.
+-- Only the names moved: every slot kept its Cost and Power. Effects: ServerStorage.BarbellVFXKit.
 -- Costs scaled with the per-animal income (Jacob, 11 Nov 2026): barbell k is bought with the animals
 -- about k/16 of the way up the ranks, and costs about as many seconds of their income as before.
 G.Barbells = {
 	{Name = "Copper Barbell", Cost = 0, Power = 1},
 	{Name = "Red Barbell", Cost = 1700, Power = 2},
-	{Name = "Crystal Barbell", Cost = 21e3, Power = 4},
-	{Name = "Rose Barbell", Cost = 470e3, Power = 7},
+	{Name = "Donut Barbell", Cost = 21e3, Power = 4},
+	{Name = "Bone Barbell", Cost = 470e3, Power = 7},
 	{Name = "Pumpkin Barbell", Cost = 9.2e6, Power = 12},
-	{Name = "Havenstar Barbell", Cost = 170e6, Power = 20},
-	{Name = "Neon Pulse", Cost = 1.4e9, Power = 35},
-	{Name = "Bone Barbell", Cost = 23e9, Power = 60},
-	{Name = "Donut Barbell", Cost = 370e9, Power = 100},
-	{Name = "Golden Barbell", Cost = 6e12, Power = 160},
-	{Name = "Ice Barbell", Cost = 44e12, Power = 250},
+	{Name = "Rose Barbell", Cost = 170e6, Power = 20},
+	{Name = "Golden Barbell", Cost = 1.4e9, Power = 35},
+	{Name = "Ice Barbell", Cost = 23e9, Power = 60},
+	{Name = "Crystal Barbell", Cost = 370e9, Power = 100},
+	{Name = "Neon Pulse", Cost = 6e12, Power = 160},
+	{Name = "Havenstar Barbell", Cost = 44e12, Power = 250},
 	{Name = "Mega Golden Barbell", Cost = 720e12, Power = 400},
 	{Name = "Giant Gold Star Barbell", Cost = 4.2e15, Power = 650},
 	{Name = "Red Flyer", Cost = 70e15, Power = 1000},
