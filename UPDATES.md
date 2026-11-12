@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 00:05 CT · jacob-claude
+**Done:** background music: new `StarterPlayerScripts.MusicPlayer` plays `SoundService.Music` at 80% volume, 3 s fade in, 4 s fade out at the end, 15 s quiet, repeat. Settings Music toggle (`HUDClient`) now sets attribute Muted on the Sound (fades) instead of setting Volume (place v367)
+**Next:** Jacob playtests
+**Blockers / questions:** none
+
 ## 2026-11-11 23:58 CT · jacob-claude
 **Done:** held animals play their Idle in your hands (any player's, on every screen): `StarterPlayerScripts.HatchClient` bottom section adds `<Tool>.HeldAnim` AnimationController (or KSTrack live for unpublished clips), stops on unequip. Tested with a Frog
 **Next:** Jacob playtests
