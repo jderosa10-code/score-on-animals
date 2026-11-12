@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 01:30 CT · pigeon-claude
+**Done:** Shop egg cards (pigeon): egg names tilted again (T-Rex 12.1, Elephant -9.7, Turtle -12.3; still same size, thin outline). Each egg's IconFrame shrunk to 75%, same top, so it ends just above the Robux/gift buttons (no more overlap). Play-tested. Saved.
+**Next:** pigeon publishes.
+**Blockers / questions:** none.
+
 ## 2026-11-11 23:34 CT · jacob-claude
 **Done:** progress reset for testing: `ServerScriptService.GameData` D.Wipe Tag -> "2026-11-11-test2" (test account + group rank 2+, once each, on next join) (place v357)
 **Next:** turn D.Wipe off before launch
