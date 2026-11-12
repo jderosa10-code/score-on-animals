@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 00:55 CT · jacob-claude
+**Done:** (Jacob) Base animal capacity: `GameConfig.BaseSlots(level)` = 10 + 2 per base upgrade (10, 12, 14 ... 28), `G.BaseMaxLevel` = 9; land still grows over the first 3 levels (`G.BaseDepths`), later levels only add slots. `G.BaseUpgradeCost` rescaled to the new income ($320K .. $14Qa). `ServerScriptService.EggHatching`: PlaceAnimal refuses past the cap with "Base full (N animals)! Upgrade your base for more room"; the Upgrade prompt shows "10 -> 12 animals"; upgrade notice says the new room. `ServerScriptService.PlotLevels`: maxLevel from `G.BaseMaxLevel`, depth capped at the last BaseDepths entry. Animals already placed over the cap stay (old saves). Play-tested, saved to Roblox (v263).
+**Next:** funnels.
+**Blockers / questions:** -
+
 ## 2026-11-12 00:42 CT · jacob-claude
 **Done:** (Jacob) Strength-10 ball a bit faster: `GameConfig` BallSlow 18 -> 22 studs/s. Ball speed display deleted (`Workspace.BallSpeedDisplay`, `StarterPlayerScripts.BallSpeedDisplayClient`). Saved to Roblox (v262).
 **Next:** funnels.
