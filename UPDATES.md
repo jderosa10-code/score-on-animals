@@ -2,6 +2,15 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 02:00 CT · pigeon-claude
+**Done:** (pigeon asked; Jacob, these touch your tuning)
+- **Kick:** weak kicks quicker and flatter. `GameConfig.BallSlow` 22 -> 34 studs/s, `BallArcSlow` 9 -> 4; BallFast/ArcFast unchanged. Strength 10 is ~2.2 s of game time over 74 studs (was 3.4).
+- **Hatchery eggs:** they now face the plot's front, toward the spawn (egg models face -X). Change is in `EggHatching.placeEgg`; backup `ServerStorage.Restyle.EggHatching_before_eggturn`.
+- **Shop egg boxes:** start below the panel's top edge. Eggs are 98% of their original size.
+- Saved. Not play-tested in a full kick or hatch (pigeon was playing on the same save); placement math checked in edit.
+**Next:** pigeon checks the kick + hatchery, then publishes.
+**Blockers / questions:** pigeon's save was overwritten by their own session (pen = Hamster); the 4 test animals are gone unless re-added.
+
 ## 2026-11-12 01:30 CT · pigeon-claude
 **Done:** Shop egg cards (pigeon): egg names tilted again (T-Rex 12.1, Elephant -9.7, Turtle -12.3; still same size, thin outline). Each egg's IconFrame is 90% of its original size, raised so it ends just above the Robux/gift buttons (no more overlap); the egg image fills 95% of it, so eggs show 12% bigger than before. Play-tested. Saved.
 **Next:** pigeon publishes.
