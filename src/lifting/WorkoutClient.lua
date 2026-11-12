@@ -188,9 +188,14 @@ local function refreshBar()
 	progress.Text = G.commas(xp) .. "/" .. G.commas(need)
 	fill.Size = UDim2.fromScale(math.clamp(xp / need, 0, 1), 1)
 end
+-- STOP button at the top while you lift (HUD.StopLiftHUD, a copy of the Shop button)
+local stopGui = hud:WaitForChild("StopLiftHUD", 5)
+local stopBtn = stopGui and stopGui:FindFirstChild("StopButton")
+if stopBtn then stopBtn.Activated:Connect(function() Lift:FireServer("stop") end) end
 local wasHotbar
 local function showBar()
 	local lifting = player:GetAttribute("Lifting") ~= nil and not player:GetAttribute("InPenalty")
+	if stopGui then stopGui.Enabled = lifting end
 	if lifting and not barGui.Enabled then
 		wasHotbar = hotbar.Enabled
 		hotbar.Enabled = false
@@ -206,3 +211,23 @@ player:GetAttributeChangedSignal("LiftLevel"):Connect(refreshBar)
 player:GetAttributeChangedSignal("LiftXP"):Connect(refreshBar)
 barGui.Enabled = false
 showBar()
+
+-- keep your own body on the lift spot (pigeon-claude, 11 Nov 2026): you're held by WalkSpeed 0, not anchored,
+-- and the lift pose moving the hips made the body slide back a little every rep
+do
+	local pin
+	RunService.Stepped:Connect(function()
+		local char = player.Character
+		local hrp = char and char:FindFirstChild("HumanoidRootPart")
+		local started = player:GetAttribute("LiftStart") or 0
+		-- wait a moment after starting, so the server's move onto the mat has arrived first
+		if not (hrp and player:GetAttribute("Lifting")) or workspace:GetServerTimeNow() - started < 0.35 then pin = nil; return end
+		pin = pin or hrp.CFrame
+		local p = hrp.Position
+		if Vector3.new(p.X - pin.X, 0, p.Z - pin.Z).Magnitude > 0.01 then
+			hrp.CFrame = CFrame.new(pin.X, p.Y, pin.Z) * pin.Rotation
+			local v = hrp.AssemblyLinearVelocity
+			hrp.AssemblyLinearVelocity = Vector3.new(0, v.Y, 0)
+		end
+	end)
+end

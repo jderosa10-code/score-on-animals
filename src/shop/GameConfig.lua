@@ -29,6 +29,7 @@ end
 function G.rebirthCash(r) return 25000 * 3 ^ r end
 function G.rebirthAnimals(r) return 3 + 2 * r end
 G.RebirthCashBonus = 0.5     -- +50% cash per rebirth
+G.BaseWalkSpeed = 24         -- (pigeon, 11 Nov 2026) everyone walks faster than Roblox's 16
 G.RebirthSpeed = 2           -- +2 walk speed per rebirth
 G.RebirthLuck = 0.5          -- +0.5 luck per rebirth
 

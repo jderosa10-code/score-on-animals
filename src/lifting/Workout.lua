@@ -113,7 +113,7 @@ local function stop(player)
 		local hum = char:FindFirstChildOfClass("Humanoid")
 		if hum then
 			local p = D.get(player)
-			hum.WalkSpeed = 16 + (p and p.Rebirths or 0) * G.RebirthSpeed
+			hum.WalkSpeed = G.BaseWalkSpeed + (p and p.Rebirths or 0) * G.RebirthSpeed
 			hum.JumpPower, hum.AutoRotate = 50, true
 		end
 		local zone = plot and plot:FindFirstChild("WorkoutZone")

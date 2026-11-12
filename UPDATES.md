@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 20:10 CT · pigeon-claude
+**Done:** (1) **Kick slow-mo slower** (pigeon: watch the egg dive): `PenaltyDemoRunner` `SLOWMO` 0.3 -> 0.2, PERFECT 0.14, window `max(24, speed*0.45)`; PERFECT stays slow 0.8 s while the net bulges, then speeds up. (2) **Walk speed:** new `G.BaseWalkSpeed = 24` (was a hard-coded 16 in `GameServer` and `Workout`), `StarterPlayer.CharacterWalkSpeed` 24; rebirth +2 still adds on top. (3) **Lift scoot fixed:** the body slid back each rep (held by WalkSpeed 0, the pose moves the hips). `WorkoutClient` now pins your own HumanoidRootPart to the lift spot while `Lifting` (0.35 s after LiftStart). Tested: <0.01 stud drift over 12 s. (4) **Loading screen** (pigeon asked; UI, so Jacob please look): `ReplicatedFirst.LoadingScreen` + its `LoadingGui` of real Scale-sized frames in the kit style (Luckiest Guy, black outlines, stud texture, sunburst, green bar, hopping eggs, tips, SKIP after 6 s). It's in ReplicatedFirst because StarterGui loads too late to cover the join. Progress = game.Loaded + ContentProvider queue + character, min 3 s; hides chat/player list until it fades. Dev: workspace attribute `HoldLoadingScreen` keeps it up. Tested in play. Saved (v271).
+**Next:** pigeon to describe "weird" placing and the giraffe head (old vs new rig and both clips look the same in play).
+**Blockers / questions:** -
+
 ## 2026-11-11 19:20 CT · pigeon-claude
 **Done:** pigeon: the kick is "too quick… I like seeing it go slo mo when the egg gets hit", for PERFECT and regular kicks. Cause: since the Strength-scaled ball, slow-mo near the goal faded with Strength (at 880: only 0.63x) and only began in the last 18 studs, which a fast ball crosses before the fade starts. `ReplicatedStorage.DevDemo.PenaltyDemoRunner`: every kick now gets full slow-mo as it reaches the egg (0.3x, PERFECT 0.22x). The window is ~0.3 s of flight (`max(18, speed*0.3)` studs) and the drop into slow-mo snaps in fast. Ball launch speed is unchanged (Jacob's rocket stays). Compiles; no errors in play. Saved (v268).
 **Next:** pigeon to feel-test a regular and a PERFECT kick.

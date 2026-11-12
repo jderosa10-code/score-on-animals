@@ -37,7 +37,7 @@ for _, p in ipairs(workspace:GetChildren()) do
 end
 local KICK_GROUND = A:GetAttribute("KickGround") or (kickArea and (kickArea.Position.Y + kickArea.Size.Y / 2)) or GOAL_GROUND
 local KICK_FRONT = A:GetAttribute("KickFront") or (kickArea and (kickArea.Position.Z + kickArea.Size.Z / 2)) or (ORIGIN.Z + 13.5)   -- edge facing the goal
-local SLOWMO = 0.3
+local SLOWMO = 0.2      -- slow motion as the ball reaches the egg (pigeon: slower, to watch the egg dive for it)
 local goal = {cf = CFrame.lookAt(ORIGIN + Vector3.new(0, 0, GOAL_Z + 0.9), ORIGIN), width = 19.8, height = 10}
 local SPOT = Vector3.new(ORIGIN.X, KICK_GROUND + 0.9, KICK_FRONT - 3.5)   -- the ball, near the front of the kick area
 local BALL_SPEED = 75                            -- studs per second (before slow motion)
@@ -1113,8 +1113,8 @@ local function shoot(egg, target, willSave, perfect, zone)
 		end
 		-- slow motion as the ball reaches the egg, for every kick (pigeon: "I like seeing it go slo mo when the egg gets hit").
 		-- Strength still sets how fast the ball leaves the boot; the window is ~0.3 s of flight so rockets slow down in time too.
-		if targetScale == 1 and (world - p).Magnitude < math.max(18, speed * 0.3) then
-			targetScale = perfect and SLOWMO * 0.73 or SLOWMO
+		if targetScale == 1 and (world - p).Magnitude < math.max(24, speed * 0.45) then
+			targetScale = perfect and SLOWMO * 0.7 or SLOWMO
 		end
 		if not cut and a > 0.5 then cut = true; camShot = "save"; camFov = 44 end      -- cut to the goal-side camera for the dive
 		return (willSave or blast) and a > 0.6 and touchingEgg(egg, p)
@@ -1186,7 +1186,9 @@ local function shoot(egg, target, willSave, perfect, zone)
 	pos = fly(pos, endPos, (endPos - pos).Magnitude / speed, 0)
 	hitStop(0.05)
 	camShot = "net"                          -- cut to the goal as the net takes it
-	targetScale = 1; camFov = blast and 42 or 46
+	camFov = blast and 42 or 46
+	-- PERFECT: stay in slow motion while the net bulges and the egg's save fails, then back to speed
+	if perfect then task.delay(0.8, function() targetScale = 1 end) else targetScale = 1 end
 	burst("Confetti", ballPart, nil, perfect and 1.2 or 0.9)
 	sfx("ConfettiPop", 0.7, 1, 0.02)
 	sfx("NetHit", 0.9, 0.7)

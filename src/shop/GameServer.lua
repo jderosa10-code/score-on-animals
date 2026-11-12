@@ -52,7 +52,7 @@ local function refreshStats(player)
 	player:SetAttribute("CashPerSec", income * mult)
 	player:SetAttribute("PlacedCount", #p.Placed)
 	local hum = player.Character and player.Character:FindFirstChildOfClass("Humanoid")
-	if hum and not player:GetAttribute("InPenalty") and not player:GetAttribute("Lifting") then hum.WalkSpeed = 16 + p.Rebirths * G.RebirthSpeed end
+	if hum and not player:GetAttribute("InPenalty") and not player:GetAttribute("Lifting") then hum.WalkSpeed = G.BaseWalkSpeed + p.Rebirths * G.RebirthSpeed end
 	player:SetAttribute("LuckCost", p.LuckLevel < G.LuckMaxLevel and G.luckCost(p.LuckLevel) or -1)
 	player:SetAttribute("RebirthCash", G.rebirthCash(p.Rebirths))
 	player:SetAttribute("RebirthAnimals", G.rebirthAnimals(p.Rebirths))
