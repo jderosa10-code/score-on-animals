@@ -596,14 +596,29 @@ G.Mutations = {
 }
 G.MutationInfo = {}
 for _, m in G.Mutations do G.MutationInfo[m.Name] = m end
--- the server rolls this once per egg (rarest first); returns a mutation name or nil
-function G.rollMutation(rng)
+-- (Jacob, 11 Nov 2026) much more common on the low-end animals: x MutLowBoost on the most common animal,
+-- easing down to x1 by the rarest (so a Hamster egg is Gold about 1 in 3, a Dragon egg still 1 in 12).
+G.MutLowBoost = 4
+function G.mutBoost(name)
+	if not name then return 1 end
+	local p = (G.rankOf(G.AnimalForEgg(name)) - 1) / math.max(1, #G.AnimalOrder - 1)
+	return 1 + (G.MutLowBoost - 1) * (1 - p) ^ 2
+end
+-- 1 in N for this mutation on this egg / animal
+function G.mutChanceFor(mut, name)
+	local m = mut and G.MutationInfo[mut]
+	if not m then return 1 end
+	return m.Chance / G.mutBoost(name)
+end
+-- the server rolls this once per egg (rarest first); returns a mutation name or nil. name = the egg (optional)
+function G.rollMutation(rng, name)
 	local r = rng and rng:NextNumber() or math.random()
+	local boost = G.mutBoost(name)
 	local acc = 0
 	for i = #G.Mutations, 1, -1 do
 		local m = G.Mutations[i]
 		if m.Chance > 0 then
-			acc += 1 / m.Chance
+			acc += boost / m.Chance
 			if r < acc then return m.Name end
 		end
 	end
@@ -695,6 +710,14 @@ end
 -- (Hamster $5/s -> $300 ... Dragon $100T/s -> $6Qa), times its mutation.
 G.SellSeconds = 60
 function G.SellValue(name, mut) return G.AnimalIncome(name) * G.SellSeconds * G.mutIncome(mut) end
+-- eggs sell too (Jacob, 11 Nov 2026): half of what the animal inside would sell for
+G.EggSellShare = 0.5
+function G.EggSellValue(egg, mut) return G.SellValue(G.AnimalForEgg(egg), mut) * G.EggSellShare end
+function G.ItemSellValue(item) return item.Type == "Egg" and G.EggSellValue(item.Name, item.Mutation) or G.SellValue(item.Name, item.Mutation) end
+
+-- sea animals float a little above the ground when placed (Jacob): HatchConfig.placedCFrame lifts these
+G.Swimmers = {}
+for _, n in string.split("Angelfish Anglerfish Archerfish Barracuda Blobfish BlueWhale Boxfish Butterflyfish CoralGoby Cowfish Cuttlefish Fangtooth GiantSquid GoblinShark Goldfish GreatWhite Hawkfish Jellyfish Kraken KrakenKing Leviathan Lionfish Mandarinfish MantisShrimp Megalodon MoorishIdol Mosasaurus Nautilus Octopus Plesiosaur Pufferfish Sailfish SeaDragon SeaTurtle Seahorse Shark Stingray Surgeonfish Swordfish Trumpetfish Tuna Whale Wobbegong Wrasse", " ") do G.Swimmers[n] = true end
 
 -- The "1/N" shown for each egg is a set number per animal (Jacob, 11 Nov 2026): it never changes with luck.
 -- 1/2 for the most common, up to 1/10,000,000 for the rarest, rounded to 2 digits.
