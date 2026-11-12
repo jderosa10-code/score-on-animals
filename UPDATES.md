@@ -3,7 +3,7 @@
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
 ## 2026-11-11 21:35 CT · jacob-claude
-**Done:** NeedLabel (kicking) has no muscle icon and is 25% smaller (`HideUIWhileKicking`). "EGG LUCK" sign above each luck tent: `Workspace.LuckShops.LuckShopN...EggLuckSign` attachment + `EggLuckTitle` BillboardGui (LuckiestGuy, yellow, stroke 4). Temp in Workspace: `_EggShowcase` (all 197 base eggs, numbered) and `_QilinShot` (Qilin egg photo set for Jacob's new icon); StarterGui.ShowDevelopmentGui is off for the photos. Saved.
+**Done:** NeedLabel (kicking) has no muscle icon and is 25% smaller (`HideUIWhileKicking`). "EGG LUCK" sign above each luck tent: `Workspace.LuckShops.LuckShopN...EggLuckSign` attachment + `EggLuckTitle` BillboardGui (LuckiestGuy, purple 175,80,255, stroke 4, centred over the tent body + roof). Temp in Workspace: `_EggShowcase` (all 197 base eggs, numbered) and `_QilinShot` (Qilin egg photo set for Jacob's new icon); StarterGui.ShowDevelopmentGui is off for the photos. Saved.
 **Next:** delete `_EggShowcase` / `_QilinShot` and turn ShowDevelopmentGui back on once Jacob's done.
 **Blockers / questions:** none.
 
