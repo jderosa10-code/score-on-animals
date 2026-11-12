@@ -347,8 +347,10 @@ function G.aimMult(zones, x, y)
 	return m
 end
 -- Ball: little lob at 10 strength, a bullet at the top. t = 0..1 along the strength scale.
-G.BallSlow, G.BallFast = 22, 230          -- studs per second
-G.BallArcSlow, G.BallArcFast = 7, 0.3     -- studs of arc
+-- (Jacob, 11 Nov 2026) Strength 10 = a slow high lob (~4 s over the 74-stud penalty), the top = a rocket (~0.2 s).
+-- Workspace.BallSpeedDisplay shows these side by side.
+G.BallSlow, G.BallFast = 18, 420          -- studs per second
+G.BallArcSlow, G.BallArcFast = 9, 0.2     -- studs of arc
 function G.strengthT(s) return math.clamp(math.log(math.max(s, 1) / G.StartStrength) / math.log(G.TopStrength / G.StartStrength), 0, 1) end
 function G.ballSpeed(s) return G.BallSlow * (G.BallFast / G.BallSlow) ^ G.strengthT(s) end
 function G.ballArc(s) local t = G.strengthT(s) return G.BallArcSlow + (G.BallArcFast - G.BallArcSlow) * t end

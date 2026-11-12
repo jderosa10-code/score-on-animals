@@ -64,7 +64,9 @@ do
 		plus.Position = UDim2.new(x / sw, 0, plus.Position.Y.Scale, plus.Position.Y.Offset)
 	end
 	local function render()
-		cash.Text = "$" .. G.commas(player:GetAttribute("Cash") or 0)
+		-- full number with commas up to the millions, then short from 1B (Jacob: $1.5T, not $1,517,002,276,932)
+		local c = player:GetAttribute("Cash") or 0
+		cash.Text = "$" .. (c >= 1e9 and G.short(c) or G.commas(c))
 		local fb = stats:FindFirstChild("FriendBoostLabel")   -- Jacob swapped this for StrengthLable; kept in case it comes back
 		if fb then fb.Text = "Friends: +" .. math.floor((player:GetAttribute("FriendBonus") or 0) * 100 + 0.5) .. "%" end
 		task.defer(placePlus)

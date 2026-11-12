@@ -1107,7 +1107,10 @@ local function shoot(egg, target, willSave, perfect, zone)
 		if a >= 0.24 and not cut and camShot ~= "ball" then
 			camShot = "ball"; camFov = perfect and 36 or 42
 		end
-		if targetScale == 1 and (world - p).Magnitude < 18 then targetScale = SLOWMO end
+		-- slow motion near the goal: full for weak kicks, almost none for the strongest so they stay a rocket
+		if targetScale == 1 and (world - p).Magnitude < 18 then
+			targetScale = (isClient and roundEgg) and (SLOWMO + (1 - SLOWMO) * G.strengthT(kickStrength) ^ 1.5) or SLOWMO
+		end
 		if not cut and a > 0.5 then cut = true; camShot = "save"; camFov = 44 end      -- cut to the goal-side camera for the dive
 		return (willSave or blast) and a > 0.6 and touchingEgg(egg, p)
 	end)

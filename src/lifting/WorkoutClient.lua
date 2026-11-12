@@ -125,8 +125,24 @@ RunService.Stepped:Connect(function()
 	end
 end)
 
+-- white flash when you start lifting (Jacob, 11 Nov 2026)
+local wasLifting = player:GetAttribute("Lifting") ~= nil
+local function flashWhite()
+	local gui = Instance.new("ScreenGui")
+	gui.Name = "LiftFlash"; gui.IgnoreGuiInset = true; gui.DisplayOrder = 100; gui.ResetOnSpawn = false
+	local f = Instance.new("Frame")
+	f.Size = UDim2.fromScale(1, 1); f.BackgroundColor3 = Color3.new(1, 1, 1); f.BorderSizePixel = 0
+	f.BackgroundTransparency = 0.05; f.Parent = gui
+	gui.Parent = player:WaitForChild("PlayerGui")
+	game:GetService("TweenService"):Create(f, TweenInfo.new(0.55, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 1}):Play()
+	game:GetService("Debris"):AddItem(gui, 0.7)
+end
+
 -- pause Roblox's default Animate while you lift (it would fight the pose), resume after
 local function onLifting()
+	local now = player:GetAttribute("Lifting") ~= nil
+	if now and not wasLifting then flashWhite() end
+	wasLifting = now
 	local char = player.Character
 	local animate = char and char:FindFirstChild("Animate")
 	local hum = char and char:FindFirstChildOfClass("Humanoid")

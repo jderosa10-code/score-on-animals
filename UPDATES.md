@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 00:35 CT · jacob-claude
+**Done:** (Jacob) `StarterGui.HUD.CurrencyHUD.CurrencyPanel.Stats.CashLabel` moved up under Strength (y 0.6, `AddCashButton` too) and made 3x wide so TextScaled fits by height: long numbers no longer shrink. `HUDClient` cash shows commas below $1B, short from $1B ($1.8T). `WorkoutClient`: white screen flash when you start lifting. Ball: `GameConfig` BallSlow/Fast 18/420 studs/s, arc 9/0.2 (Strength 10 = ~4 s lob, top = ~0.2 s rocket); `PenaltyDemoRunner` near-goal slow-mo now fades out with strength so strong shots stay fast. New dev display `Workspace.BallSpeedDisplay` (east of the map, 5 lanes: Strength 10/100/1K/5K/18.7K over the 74-stud penalty distance) animated by `StarterPlayerScripts.BallSpeedDisplayClient` from the live GameConfig numbers. Play-tested; saved to Roblox (v261).
+**Next:** funnels.
+**Blockers / questions:** BallSpeedDisplay is dev-only (attribute DevOnly): remove before launch.
+
 ## 2026-11-11 23:58 CT · jacob-claude
 **Done:** (1) The income/barbell rescale from 22:15 was lost in Studio (place closed unsaved) and is back in, then **saved to Roblox (v259)**. (2) Luck (Jacob: "luck maxed but I only got an Emu"): `GameConfig` luck now multiplies per level, `G.luckAt(level)` = 150^(level/40): 40 levels, x1 .. x150, maxed shop rolls centre on the Dragon (was +0.25/level, max x6 = rank ~77). `G.luckCost` priced from the income at the rank your luck rolls ($500 .. ~$930Qa). `G.LuckPerLevel` removed; `GameServer.refreshStats` and `HUDClient` luck row use `G.luckAt`; luck shown as whole numbers from x10. Play-tested: Jacob's save (level 20) shows x12 > x14, $34B; no errors.
 **Next:** funnels (planned), fixed-egg reward rebalance (Jacob deciding).
