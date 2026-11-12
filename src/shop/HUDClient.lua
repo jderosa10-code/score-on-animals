@@ -298,12 +298,21 @@ do
 		info.RewardBox.Title.Text = "Reward: $" .. G.short(income(selected) * G.IndexRewardSeconds)
 		claimSpot:SetAttribute("CanClaim", found == true and not data.IndexClaimed[selected])
 	end
+	local claimAll = panel.TopBar:FindFirstChild("ClaimAllButtons")   -- Claim All in the top bar
 	local function render()
 		for _, c in cards do
 			c.card.NameLabel.Text = data.Index[c.name] and c.name or "???"
 			setIcon(c.card.Icon, c.name, data.Index[c.name])
 		end
+		if claimAll then
+			local any = false
+			for name in data.Index do if not data.IndexClaimed[name] then any = true break end end
+			claimAll:SetAttribute("CanClaim", any)
+		end
 		renderInfo()
+	end
+	if claimAll then
+		claimAll:WaitForChild("ClaimButton").Activated:Connect(function() act("ClaimIndexAll") end)
 	end
 	for _, c in cards do
 		c.card.Activated:Connect(function() selected = c.name; renderInfo() end)
@@ -390,7 +399,8 @@ do
 		for _, folder in {menus, popups} do
 			for _, g in folder:GetChildren() do
 				local r = g:IsA("ScreenGui") and rootOf(g)
-				if r and g.Enabled and r.Visible then any = true end
+				-- menus with NoBlur = true (the Animals menu, Jacob) leave the world sharp
+				if r and g.Enabled and r.Visible and not g:GetAttribute("NoBlur") then any = true end
 			end
 		end
 		if any == on then return end
@@ -588,6 +598,7 @@ do
 		end
 	end
 	gm:GetPropertyChangedSignal("Enabled"):Connect(fill)
+	panel:GetPropertyChangedSignal("Visible"):Connect(function() if panel.Visible then fill() end end)   -- the menu stays Enabled between opens
 	gm:GetAttributeChangedSignal("OpenedFrom"):Connect(fill)
 	Players.PlayerAdded:Connect(fill)
 	Players.PlayerRemoving:Connect(function() task.defer(fill) end)

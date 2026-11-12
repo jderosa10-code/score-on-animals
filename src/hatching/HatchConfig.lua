@@ -7,9 +7,10 @@ local C = {}
 C.HATCH_SECONDS = 5     -- every egg for now
 C.EGG_HEIGHT = 3.6      -- egg size sitting on a patch
 C.HELD_SIZE = 2.6       -- animal size in your hand (longest side)
--- (pigeon, 11 Nov 2026) held over your head in both hands, a little smaller than real:
-C.HELD_MAX = 6          -- animals: 80% of real size, none longer than this
-C.HELD_EGG_MAX = 5      -- eggs: none longer than this (the egg models are 5 to 18 studs)
+-- (pigeon, 11 Nov 2026) held over your head in both hands.
+-- (Jacob, 11 Nov 2026) at their normal size: animals at real size (only the giant ones capped), eggs full size.
+C.HELD_MAX = 14         -- animals: real size, none longer than this (Dragon is 45 studs real)
+C.HELD_EGG_MAX = 3.5    -- eggs held over your head: none longer than this (pigeon, 11 Nov: full size was "too big")
 C.FX_POP = 2.0          -- seconds after "Hatch" that the egg bursts (HatchClient's animation)
 C.FX_TOTAL = 3.6        -- seconds after "Hatch" that the animal lands in your Backpack
 
@@ -89,7 +90,7 @@ end
 -- scale factor for the animal held over your head
 function C.heldScale(tmpl)
 	local s = C.mesh(tmpl).Size
-	return math.min(0.8, C.HELD_MAX / math.max(s.X, s.Y, s.Z))
+	return math.min(1, C.HELD_MAX / math.max(s.X, s.Y, s.Z))
 end
 
 -- scale factor for an egg (a single part) held over your head

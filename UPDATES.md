@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 00:10 CT · pigeon-claude
+**Done:** (1) **Text outlines in the real game** (pigeon: "a big stroke around it", worse on a small window). Two causes: the 55 `SelfSized` labels left the kit's stroke scaling, so their UIStrokes were frozen pixel widths; and 4 strokes (the Starter Pack `Caption`s, `EggPacks.TitleText`) were in **StrokeSizingMode ScaledSize** with Thickness 4, which is 4x the label's size = solid black pills. `ShopOfferLabels` now sets each SelfSized/StrokeFit label's outline to 9% of its drawn text height (the kit's own median), FixedSize mode. Captions tagged SelfSized; `EggPacks.TitleText` and `TimingResult.Result/Shadow` tagged `StrokeFit` (outline only). The 4 bad strokes fixed in StarterGui too. Tested with the shop shrunk to 45%. (2) **Gift menu** refills whenever its panel opens (it stays Enabled between opens). In pigeon's live screenshot the egg prices were the kit's "12" placeholders and the gift cards "Player Name", so the live servers are running an **older published version**: needs a publish. (3) **Held eggs smaller:** `HELD_EGG_MAX` 3.5 (pigeon asked twice; Jacob had set full size). Saved (v305).
+**Next:** pigeon to publish; barbell concepts going into Studio as a showcase off to the side (not the real weights).
+**Blockers / questions:** Jacob: pigeon wants held eggs small; changed back to 3.5.
+
 ## 2026-11-11 20:50 CT · jacob-claude
 **Done:** Test wipe (Jacob asked: reset his and Braden's progress). `ServerScriptService.GameData` has `D.Wipe = {Tag, ids, MinGroupRank = 2}`: on join, a listed user id OR anyone ranked 2+ in the owning group starts fresh once per Tag (profile gets `WipeTag`). Studio DataStore listing was forbidden, so it runs on join instead. Tested: BING_CHILLING2525 (4263620304) wiped to $0 / 10 Strength. Saved (v303).
 **Next:** funnels.

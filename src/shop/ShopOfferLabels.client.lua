@@ -75,10 +75,33 @@ end
 
 -- labels tagged SelfSized in StarterGui (prices and texts the scripts rewrite) fill their box. A Studio tool resets
 -- TextScaled on Framewisp menus in edit, so it's switched on here; the kit's TextScaler leaves untagged labels alone.
+-- Their outlines follow the text too (pigeon: in the real game the text got "a big stroke around it", worse on a
+-- small window). These labels left the kit's stroke scaling, so a fixed pixel outline swallowed small text.
+-- Now the outline is a share of the drawn text's height, the same share the kit's own labels use.
+local STROKE = 0.09
+local function fitStroke(l)
+	local h = l.TextBounds.Y
+	if h <= 0 then return end
+	for _, st in l:GetChildren() do
+		if st:IsA("UIStroke") and st.ApplyStrokeMode == Enum.ApplyStrokeMode.Contextual then
+			-- pixels, not "ScaledSize" (there a Thickness of 1 = the label's whole size: the black pills)
+			st.StrokeSizingMode = Enum.StrokeSizingMode.FixedSize
+			st.Thickness = math.max(1, h * STROKE)
+		end
+	end
+end
 local function selfSize(l)
+	if l:IsA("TextLabel") and l:GetAttribute("StrokeFit") and not l:GetAttribute("SelfSized") then   -- outline only
+		l:GetPropertyChangedSignal("TextBounds"):Connect(function() fitStroke(l) end)
+		fitStroke(l)
+		return
+	end
 	if not (l:IsA("TextLabel") and l:GetAttribute("SelfSized")) then return end
 	l.TextScaled = true
 	l:GetPropertyChangedSignal("TextScaled"):Connect(function() if not l.TextScaled then l.TextScaled = true end end)
+	l:GetPropertyChangedSignal("TextBounds"):Connect(function() fitStroke(l) end)
+	l.ChildAdded:Connect(function() task.defer(fitStroke, l) end)
+	fitStroke(l)
 end
 for _, d in gui:GetDescendants() do selfSize(d) end
 gui.DescendantAdded:Connect(selfSize)
