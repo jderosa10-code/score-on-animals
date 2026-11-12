@@ -65,7 +65,8 @@ G.Barbells = {
 	{Name = "Starfall Dumbbell", Cost = 280e15, Power = 1600},
 	{Name = "Star Light Dumbbell", Cost = 3.1e18, Power = 2500},
 }
-G.RepSeconds = 2.1   -- one deadlift rep
+G.RepSeconds = 2.1   -- one deadlift rep (at LiftSpeed 1)
+G.LiftSpeed = 1.35   -- (Jacob, 11 Nov 2026) lifting runs this much faster: a rep every ~1.55 s; the animation speeds up with it
 -- Lift boost (the tap mini-game, StarterGui.HUD.LiftTapHUD): hitting a tap target makes your reps run this
 -- much faster for a few seconds. The server takes one boost per LiftBoostMinGap at most.
 G.LiftBoostSpeed, G.LiftBoostSeconds, G.LiftBoostMinGap = 1.75, 3.2, 1.0
@@ -75,7 +76,7 @@ function G.LiftClock(player, now)
 	local t = now - (player:GetAttribute("LiftStart") or now)
 	local b = player:GetAttribute("LiftBoost")
 	if typeof(b) == "Vector3" then t += b.X + (G.LiftBoostSpeed - 1) * math.clamp(t - b.Y, 0, math.max(0, b.Z - b.Y)) end
-	return t
+	return t * G.LiftSpeed
 end
 -- is this player's boost running now, and how many seconds are left
 function G.LiftBoosted(player, now)
@@ -414,7 +415,7 @@ end
 function G.packLift(pr, level, xp, barbellLevel, strength)
 	local b = G.Barbells[math.clamp(barbellLevel or 1, 1, #G.Barbells)]
 	level = level or 1
-	xp = (xp or 0) + pr.LiftMinutes * 60 / G.RepSeconds * b.Power
+	xp = (xp or 0) + pr.LiftMinutes * 60 * G.LiftSpeed / G.RepSeconds * b.Power
 	local ups, gained = 0, 0
 	while xp >= G.LiftXP(level) and ups < 100000 do
 		xp -= G.LiftXP(level); level += 1; ups += 1

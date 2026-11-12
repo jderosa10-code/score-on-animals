@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 22:20 CT · jacob-claude
+**Done:** Lifting 1.35x faster: `GameConfig.LiftSpeed` scales `G.LiftClock` (reps, animation and server rep check all follow; Robux lift packs scale too). Placed animal sizes: `HatchConfig.TIER_SIZE` up to Secret 60, in-tier spread now follows the model's own size (`TIER_SPREAD` 1, x0.3-2) so small rare creatures stay smaller, `PLACED_CAP` 100 (e.g. Mythic 16-92 studs, Secret 77-100). Lobby wall textures world-aligned: every Checker/Studs texture under `Workspace.Map.Lobby` got OffsetStudsU/V so the 4-stud checker lines up across drips, GrassCap fronts/tops, dirt walls and floor (grid x=4k, y=4k+2, z=4k+1; UV convention measured on a probe part). Saved (v331).
+**Next:** funnels; remove `_EggShowcase` / `_QilinShot`.
+**Blockers / questions:** none.
+
 ## 2026-11-11 22:10 CT · jacob-claude
 **Done:** "Need" label only appears once the egg is revealed (`PenaltyDemoRunner` sets NeedStrength after mysteryEnter). Held eggs are true size again: `HatchConfig.HELD_EGG_MAX = math.huge` (Jacob, overrides the 3.5 cap). Weight upgrade sounds play flat via SoundService (BarPop + WhooshBig on buy, BallLand + Cymbal + ConfettiPop on landing) in `WorkoutClient`. Offline earnings verified end to end in Studio (popup showed $48M for a faked 2h14m via Studio-only workspace attr `DebugOfflineAway`, now cleared); `GameData` prints "offline check" on every join for live debugging. Saved (v329).
 **Next:** funnels.
