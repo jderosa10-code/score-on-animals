@@ -579,11 +579,12 @@ function G.ballArc(s) local t = G.strengthT(s) return G.BallArcSlow + (G.BallArc
 -- Chance = 1 in N per roll. Income = cash/s and sell price multiplier. Need = how much more Strength the egg takes.
 -- Inverted is event-only (Chance 0) until an event turns it on (Jacob: every other mutation rolls).
 G.Mutations = {
-	{Name = "Gold", Chance = 20, Income = 2, Need = 1.25, Color = Color3.fromRGB(255, 205, 40)},
-	{Name = "Diamond", Chance = 100, Income = 3, Need = 1.5, Color = Color3.fromRGB(110, 220, 255)},
-	{Name = "Rainbow", Chance = 500, Income = 5, Need = 2, Color = nil},   -- nil = rainbow text
+	-- a bit more common (Jacob, 11 Nov 2026): was 1 in 20 / 100 / 500 / 2000
+	{Name = "Gold", Chance = 12, Income = 2, Need = 1.25, Color = Color3.fromRGB(255, 205, 40)},
+	{Name = "Diamond", Chance = 60, Income = 3, Need = 1.5, Color = Color3.fromRGB(110, 220, 255)},
+	{Name = "Rainbow", Chance = 300, Income = 5, Need = 2, Color = nil},   -- nil = rainbow text
 	{Name = "Inverted", Chance = 0, Income = 4, Need = 1.75, Color = Color3.fromRGB(200, 200, 200)},
-	{Name = "Hacked", Chance = 2000, Income = 8, Need = 2.5, Color = Color3.fromRGB(80, 255, 80)},
+	{Name = "Hacked", Chance = 1200, Income = 8, Need = 2.5, Color = Color3.fromRGB(80, 255, 80)},
 }
 G.MutationInfo = {}
 for _, m in G.Mutations do G.MutationInfo[m.Name] = m end

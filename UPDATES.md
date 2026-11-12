@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 02:12 CT · jacob-claude
+**Done:** (Jacob) Mutations more common: `GameConfig.Mutations` Gold 1/12, Diamond 1/60, Rainbow 1/300, Hacked 1/1200 (was 20/100/500/2000). Rainbow eggs were plain white: all 196 `ReplicatedStorage.Assets.Eggs.RainbowEggs` tagged "RainbowEgg", new `StarterPlayerScripts.RainbowEggClient` cycles their colour (goal, patches, held). Checked Gold/Diamond/Hacked eggs already have their own look. Luck shop tents: the white stripes in `Workspace.LuckShops.*` were Neon (hid the studs), now Plastic light pink so the stud texture shows. Saved.
+**Next:** funnels.
+**Blockers / questions:** -
+
 ## 2026-11-12 01:58 CT · jacob-claude
 **Done:** (Jacob) Animals menu: scrolling fixed (`PetsMenuClient` sizes the `List` canvas from the cards each frame; AutomaticCanvasSize was stuck). Title is now "ANIMALS" at the top of `TopBar`, `CountLabel` ("10/12") centred under it. Cards tighter (aspect 2.75, padding 4). Transitions: picked-up / sold cards shrink away and the rest slide up; SELL squeezes PICK UP/SELL shut and pops YES/NO open (and back on NO). `PetsButton` got an "Animals" label and hides while the menu is open. No blur for this menu: `HUDClient` blur skips menus with attribute `NoBlur` (set on `Menus.PetsMenu`). Play-tested, saved (v276).
 **Next:** funnels.
