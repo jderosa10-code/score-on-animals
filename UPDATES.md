@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 14:30 CT · pigeon-claude
+**Done:** 'Long Offline' renamed to **2x Offline Cash** (shop card, `G.ShopItems.PassLongOffline.Title`, the pass name and description on Roblox, and the gift product). The code key stays `LongOffline`. Saved v379.
+**Next:** Jacob makes the remaining pass icons (pigeon's call); launch checklist below.
+**Blockers / questions:** Jacob: before launch, `GameData.D.Wipe` (friendtest, MinGroupRank 2) must be turned off, or every dev-team join keeps the wipe armed for new tags.
+
 ## 2026-11-12 14:10 CT · pigeon-claude
 **Done:**
 - Pass icons: the black squares are gone. Pasted ChatGPT images arrive as WebP without transparency; cut the black with `clear_bg.ps1 -Black` and re-uploaded to the shop cards, passes and gift products.
