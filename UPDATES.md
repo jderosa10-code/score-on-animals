@@ -2,6 +2,14 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 17:30 CT · pigeon-claude
+**Done:** Bigger menus on phones (pigeon OK'd).
+- **How:** new `StarterPlayerScripts.MobileMenus`. On touch screens under 600 px tall, each Menus/Popups panel gets a `k_mobile` channel on its `FW_Scale` (up to 1.3x). It waits for the open animation to settle, caps the zoom to what fits, and slides the panel back on screen. PC and tablets are untouched; the frames themselves don't change.
+- **Galaxy A06 results:** Shop, Index, Rebirth, Daily, Sell, Upgrades, Codes and Gift at 1.30x, Settings 1.28x, Animals 1.19x, all fully on screen. Five menus that ran a few px off the top now fit too.
+- Studio testing: workspace attribute `ForceMobileUI` = true (removed before saving). Saved.
+**Next:** pigeon checks on a real phone after publishing.
+**Blockers / questions:** Jacob: `PlayerGui.AdminPanel.AdminPanelClient:245` errors on join (attempt to index boolean with 'ActiveList'), and its ADMIN button sits over the Animals menu title on phones.
+
 ## 2026-11-12 16:55 CT · jacob-claude
 **Done:** Admin panel for admin abuse / events (Jacob asked; he OK'd me building this UI).
 - Server: new `ServerScriptService.AdminEvents` (admins = id 4263620304, group rank 2+, everyone in Studio). Boosts (Luck/Strength/Cash/Hatch xN for N min), every-egg-is-X (+mutation), every-egg-gets-mutation, give everyone an egg / cash / strength, global messages (TextService-filtered, shown as "[Bing Chilling]: ..." for Jacob, username for others), stop / stop all. ALL SERVERS = MessagingService `AdminEvents_v1` + MemoryStore sorted map so new servers join running events. Remotes `GameRemotes.AdminAction` (RF) / `AdminMessage` (RE).
