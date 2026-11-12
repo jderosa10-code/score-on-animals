@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 23:30 CT · jacob-claude
+**Done:** Tutorial v4 (Jacob): ground trail uses his arrow image (rotated -90, gold) starting at your body; text "penalty kick"; tutorial text 1.2x (UIScale on AdminMessage) and at y 0.27 while lifting so STOP doesn't cover it; energy bar and LiftTapHUD hidden for the whole tutorial (only STOP stays); after the first level up the arrow bounces on STOP and the text says "Click STOP" (step 6 ends when you stop); world arrow over a hatching egg sits above the egg + timer. First tutorial penalty can't fail (PenaltyDemoRunner willSave=false and EggInventory accepts while TutorialStep 1-2). New codes in `GameConfig.Codes`: FREEEGG (Axolotl egg), STRONG ($25K + 100 Strength; GameServer Redeem now supports Strength). Tested: both codes redeem. Saved.
+**Next:** Jacob adds the codes to the game description.
+**Blockers / questions:** none.
+
 ## 2026-11-11 23:15 CT · jacob-claude
 **Done:** Tutorial v3 (Jacob): his arrow image `rbxassetid://117926794026113` (`TutorialConfig.Arrow`, white down triangle tinted gold) bounces over the spot to go (camera-facing plate in `Workspace.TutorialTrail`) and over the screen button to press (`PlayerGui.TutorialPointer`, positioned relative to its ScreenGui): hotbar slot of your egg/animal when you're not holding it, the luck BUY button when the Egg Luck menu is open. `TutorialClient.guide()` gives exact text per situation (hold egg -> walk to hatchery and press E / tap Place Egg -> wait for READY -> press E to Hatch -> hold animal -> click plot -> walk onto weights -> keep lifting -> walk into Egg Luck tent -> press BUY / earn $X). Step 7 ends on buying luck or 6 s with the menu open. Video mode off (`D.MaxFor` empty, `TutorialConfig.Off` empty), tutorial-every-join back on, wipe re-armed for Jacob's test account (Tag tutorial3). Saved.
 **Next:** Jacob plays it through.

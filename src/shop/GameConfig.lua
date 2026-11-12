@@ -146,6 +146,9 @@ G.Daily = {
 G.Codes = {
 	RELEASE = {Cash = 5000},
 	EGGS = {Egg = "Giraffe"},
+	-- (Jacob, 11 Nov 2026) the two in the game description
+	FREEEGG = {Egg = "Axolotl"},                 -- a Rare egg
+	STRONG = {Cash = 25000, Strength = 100},     -- $25K and +100 Strength
 }
 
 -- Animal animations once they're published (Animation ids). Empty = use the KeyframeSequences in
