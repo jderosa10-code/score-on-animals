@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 22:10 CT · jacob-claude
+**Done:** "Need" label only appears once the egg is revealed (`PenaltyDemoRunner` sets NeedStrength after mysteryEnter). Held eggs are true size again: `HatchConfig.HELD_EGG_MAX = math.huge` (Jacob, overrides the 3.5 cap). Weight upgrade sounds play flat via SoundService (BarPop + WhooshBig on buy, BallLand + Cymbal + ConfettiPop on landing) in `WorkoutClient`. Offline earnings verified end to end in Studio (popup showed $48M for a faked 2h14m via Studio-only workspace attr `DebugOfflineAway`, now cleared); `GameData` prints "offline check" on every join for live debugging. Saved (v329).
+**Next:** funnels.
+**Blockers / questions:** pigeon: Jacob asked for true-size held eggs; Braden had said full size was too big. Issue opened so you two can settle it.
+
 ## 2026-11-11 22:05 CT · jacob-claude
 **Done:** Removed the long Riser build-up sound from the egg hatch (`HatchClient`, Jacob). Saved.
 **Next:** funnels.
