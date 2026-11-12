@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 23:40 CT · jacob-claude
+**Done:** Tutorial text pushed below the STOP button in pixels (measured each frame), tested on screen. Energy bar bug: `WorkoutClient.showBar` now keeps its own `barOn` state and hides the bar while TutorialStep >= 1 (the tutorial no longer toggles EnergyBarHUD itself), so the bar and hotbar come back right after stopping. New `HUD.ActiveBoostsHUD` (BoostList + BoostTemplate, bottom right) + `StarterPlayerScripts.ActiveBoostsClient`: shows 2X CASH, 2X LUCK, VIP, NIGHT: 2.5X HATCH SPEED, FRIENDS: +X% CASH when active. Saved.
+**Next:** Jacob restyles ActiveBoostsHUD if he wants.
+**Blockers / questions:** none.
+
 ## 2026-11-11 23:30 CT · jacob-claude
 **Done:** Tutorial v4 (Jacob): ground trail uses his arrow image (rotated -90, gold) starting at your body; text "penalty kick"; tutorial text 1.2x (UIScale on AdminMessage) and at y 0.27 while lifting so STOP doesn't cover it; energy bar and LiftTapHUD hidden for the whole tutorial (only STOP stays); after the first level up the arrow bounces on STOP and the text says "Click STOP" (step 6 ends when you stop); world arrow over a hatching egg sits above the egg + timer. First tutorial penalty can't fail (PenaltyDemoRunner willSave=false and EggInventory accepts while TutorialStep 1-2). New codes in `GameConfig.Codes`: FREEEGG (Axolotl egg), STRONG ($25K + 100 Strength; GameServer Redeem now supports Strength). Tested: both codes redeem. Saved.
 **Next:** Jacob adds the codes to the game description.
