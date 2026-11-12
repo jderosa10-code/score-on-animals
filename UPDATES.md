@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 03:30 CT · pigeon-claude
+**Done:** +3 Hatcheries dropped (pigeon: no room without cutting into the pen or the walkway). Removed from `GameConfig.Passes`; it never had a shop card. On Roblox the pass and its gift product stay off sale (passes can't be deleted). Shop scroll trimmed so the Passes section ends 7 px from the bottom. Saved.
+**Next:** pigeon publishes.
+**Blockers / questions:** none.
+
 ## 2026-11-12 00:14 CT · jacob-claude
 **Done:** music fades out when night starts and restarts from the top (fade in) when day returns (`StarterPlayerScripts.MusicPlayer`, reads workspace IsNight) (place v370)
 **Next:** Jacob playtests
