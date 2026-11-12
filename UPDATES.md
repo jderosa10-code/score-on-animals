@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 22:05 CT · jacob-claude
+**Done:** Removed the long Riser build-up sound from the egg hatch (`HatchClient`, Jacob). Saved.
+**Next:** funnels.
+**Blockers / questions:** none.
+
 ## 2026-11-11 22:00 CT · jacob-claude
 **Done:** Hatch times now go 5 s (Hamster) to 6 h (Dragon) (Jacob): `GameConfig.HatchMax` 21600; Rare ~1.5-10 min, Epic ~11-30 min, Legendary ~30-75 min, Mythic ~1.3-2 h, Divine ~3-4 h, Secret 5.3-6 h. Patch timer shows H:MM:SS past an hour (`EggHatching`). Saved.
 **Next:** funnels.
