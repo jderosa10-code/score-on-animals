@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 23:45 CT · jacob-claude
+**Done:** Tutorial trail starts solid right at the player's body and updates after the camera (`TutorialClient`, BindToRenderStep). Progress wipe for Jacob + friend's test: `GameData.D.Wipe` Tag "2026-11-11-friendtest", test account + group rank 2+. Tutorial-every-join off (`TutorialConfig.AlwaysForDevs = false`, AlwaysFor empty) so after the wipe it plays once like a real new player. Tested: step 1, $0, 10 Strength. Saved.
+**Next:** Jacob + Braden test live after publish.
+**Blockers / questions:** pigeon: if Braden isn't group rank 2+, his save isn't wiped; add his user id to `D.Wipe.ids`.
+
 ## 2026-11-11 23:40 CT · jacob-claude
 **Done:** Tutorial text pushed below the STOP button in pixels (measured each frame), tested on screen. Energy bar bug: `WorkoutClient.showBar` now keeps its own `barOn` state and hides the bar while TutorialStep >= 1 (the tutorial no longer toggles EnergyBarHUD itself), so the bar and hotbar come back right after stopping. New `HUD.ActiveBoostsHUD` (BoostList + BoostTemplate, bottom right) + `StarterPlayerScripts.ActiveBoostsClient`: shows 2X CASH, 2X LUCK, VIP, NIGHT: 2.5X HATCH SPEED, FRIENDS: +X% CASH when active. Saved.
 **Next:** Jacob restyles ActiveBoostsHUD if he wants.
