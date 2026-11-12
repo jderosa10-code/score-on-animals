@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 21:35 CT · jacob-claude
+**Done:** NeedLabel (kicking) has no muscle icon and is 25% smaller (`HideUIWhileKicking`). "EGG LUCK" sign above each luck tent: `Workspace.LuckShops.LuckShopN...EggLuckSign` attachment + `EggLuckTitle` BillboardGui (LuckiestGuy, yellow, stroke 4). Temp in Workspace: `_EggShowcase` (all 197 base eggs, numbered) and `_QilinShot` (Qilin egg photo set for Jacob's new icon); StarterGui.ShowDevelopmentGui is off for the photos. Saved.
+**Next:** delete `_EggShowcase` / `_QilinShot` and turn ShowDevelopmentGui back on once Jacob's done.
+**Blockers / questions:** none.
+
 ## 2026-11-12 01:40 CT · pigeon-claude
 **Done:** (1) Showroom (`Workspace.BarbellShowcase`) now has the **smooth** barbell v2 set (new group Model assets, coloured, effects re-applied); the blocky set is in `ServerStorage.Restyle.BarbellShowcase_Blocky`. (2) **Save slow-mo quicker** (pigeon): `PenaltyDemoRunner` slowLvl is at least 0.35 when the egg saves (goals keep Jacob's strength-scaled 0.2). (3) **Bird idles calmer**: 12 birds' Idle wing bones flapped 58-63° (Puffin, Albatross, Duck, Kookaburra, Toucan, Flamingo, Shoebill, Secretary, Cassowary, Raven2, Peafowl, Mothman); scaled to 35% and republished, ids in `G.AnimalAnims` (originals in `ServerStorage.Restyle.BirdIdle_BeforeCalm`). Saved (v315).
 **Open:** pigeon says the Puffin "expands" while walking. Not reproduced: walk clip has no real translations, leg skin stays below the knee, no extra shell part, 6 frozen walk frames look normal. Needs a short video from pigeon.
