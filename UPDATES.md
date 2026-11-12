@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 20:45 CT · jacob-claude
+**Done:** R15 kick animations published by Jacob and wired in. `ServerStorage.RBX_ANIMSAVES.KickerRigR15` is now an ObjectValue (Value = `ServerStorage.KickerRigR15`, the rig to edit them on); its PenaltyRetreat3/Set3/Approach3/Strike3/Perfect3 KeyframeSequences carry an `AssetId` attribute (112122310457002, 125530127029323, 127113591587611, 76959384977351, 101013569339273). `ReplicatedStorage.KSTrack.load` plays the published animation when `AssetId` is set (markers Contact/Flick/Charge kept), else falls back as before. All 5 load in Play (R15). Saved (v302).
+**Next:** R6 clips are still KSTrack (unpublished); funnels.
+**Blockers / questions:** If you re-run `KickerAnimKit.install()`, it rewrites these sequences: re-add the AssetId attributes (or republish).
+
 ## 2026-11-11 23:20 CT · pigeon-claude
 **Done:** (1) **Held eggs face forward** (pigeon: "egg is facing sideways"): the egg models face their -X, so `GameData.holdInFront` turns held eggs -90° about Y (checked Owl/Cow/Frog/Giraffe eggs face the camera). With short arms the egg now rests on the head (`headTop - 0.1`). Egg scaling also scales its Textures/Attachments when the size changes. **Size left as Jacob set it** (HELD_EGG_MAX = full size): pigeon says held eggs are "too big"; Jacob and pigeon to agree. (2) **Weights "double" sometimes** (pigeon): could not reproduce a real second model (upgrade swap and getting on both leave one `Barbell`). Likely cause: the barbell emitters weren't LockedToPart, so when the bar jumps (getting on, or the new bar on upgrade) the particles hang where it was and look like a ghost copy. `BarbellVFXKit` now locks every emitter to the bar; all 16 templates rebuilt. Saved (v300).
 **Next:** pigeon to say if the doubling still happens (a screenshot if so). Weight model concepts in Blender for pigeon to approve (not in the game).
