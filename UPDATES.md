@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-11 21:15 CT · jacob-claude
+**Done:** `CodesMenu.CodesPanel.HintLabel` now reads "FOLLOW Stud Works Co on roblox to get EXCLUSIVE codes" (group that owns the game; SelfSized). `Workout`: stopping a lift puts you 7 studs off the mat (was 2.5) and there's a 2.5 s cooldown before you can start again. Saved.
+**Next:** Jacob publishes `RBX_ANIMSAVES.KickerRigR15.Celebrate`, then I set its AssetId.
+**Blockers / questions:** none.
+
 ## 2026-11-11 21:10 CT · jacob-claude
 **Done:** `WorkoutClient`: lift flash softer (starts 55% see-through, 0.45 s); new barbell drops from 45 studs on upgrade (`Workout` sets `DropAt` on it), lands with Poof + LevelUp bursts, landing thud, small camera shake for the owner. Upgrade price tag (`UpgradeWeightsBtn.Part.TagAtt`) now 2.6 studs straight above the green button on all plots. `GameData`: a hatched animal is `Pending` until the hatch animation ends, so it isn't in the hotbar/backpack early (sync filters it; cleared on load). `PenaltyDemoRunner`: weak kicks fly in fast-forward (up to 2.6x at the lowest strength), slow-mo at the egg is lighter/shorter for weak kicks (`slowLvl`, `slowWindow`); `flyShot` time scale cap 1 -> 3. `DayNight`: NightHatchSpeed 2.5 (banner says 2.5X). Saved (v310).
 **Next:** funnels.
