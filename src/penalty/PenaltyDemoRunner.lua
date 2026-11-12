@@ -128,7 +128,7 @@ local function fly(from, to, dur, arc, onStep)
 		ballTo(pos)
 		if onStep and onStep(pos, a) then return pos, true end
 		if a >= 1 then return pos, false end
-		local dt = step() * math.min(1, EggKeeper.timeScale / math.max(gameSpeed * DBG(), 1e-4))
+		local dt = step() * math.min(3, EggKeeper.timeScale / math.max(gameSpeed * DBG(), 1e-4))   -- (up to 3x: weak kicks fly in fast-forward)
 		ballRot = CFrame.fromAxisAngle(axis.Unit, spin * dt) * ballRot
 		t += dt
 	end
@@ -349,6 +349,7 @@ local clearAim = function() end
 -- this round: the egg (the server rolls it), the aim-zone seed, which try, and the shot that scored
 local roundEgg, roundSeed, tryNo, scoreShot = nil, 0, 1, nil
 local roundMut = nil          -- this round's mutation (Gold / Diamond / Rainbow) or nil, rolled by the server
+local roundLucky = nil        -- server says: if the first 2 kicks miss, the 3rd goes in (ServerScriptService.EggInventory)
 local aimZones = nil          -- this shot's green/red zones (GameConfig.AimZones), shown while aiming
 local hideZones = function() end   -- removes the zones at the strike; your aim marker stays
 local showCaption = function() end -- big text in the TimingResult style: showCaption(key, text, colour, y, height)
@@ -631,6 +632,10 @@ if isClient then
 		camShot = "aim"; camFov = 30
 		crowd("aim")
 		setBars(0)
+		showCaption("aimhint", UIS.TouchEnabled and not UIS.MouseEnabled and "TAP THE GOAL TO AIM!" or "CLICK THE GOAL TO AIM!",
+			Color3.new(1, 1, 1), 0.86, 0.075)
+		showCaption("aimhint2", 'HINT: CLICK THE <font color="#3CE65A">GREEN</font>', Color3.new(1, 1, 1), 0.925, 0.05)
+		if caps.aimhint2 then caps.aimhint2.RichText = true end
 		sfx("WhooshBig", 0.35, 0.6)
 		local chosen
 		local con = UIS.InputBegan:Connect(function(i, gp)
@@ -656,6 +661,8 @@ if isClient then
 			RunService.RenderStepped:Wait()
 		end
 		con:Disconnect()
+		hideCaption("aimhint")
+		hideCaption("aimhint2")
 		-- locked: the target goes solid and stays; the game speeds back up
 		bb.Enabled = true
 		img.ImageTransparency = 0
@@ -1073,6 +1080,7 @@ local function shoot(egg, target, willSave, perfect, zone)
 	if isClient and roundEgg then
 		kickStrength = myStrength() * (G.ZoneStrength[zone] or 1) * (aimZones and G.aimMult(aimZones, target.X, target.Y) or 1)
 		willSave = kickStrength < G.StrengthFor(roundEgg) * G.mutNeed(roundMut)
+		if tryNo == 3 and roundLucky then willSave = false end   -- missed twice: this one goes in
 		scoreShot = {zone = zone, x = target.X, y = target.Y, try = tryNo}
 	end
 	local hitPos, hitNet, dir = netHit(releaseSpot, world)
@@ -1098,6 +1106,14 @@ local function shoot(egg, target, willSave, perfect, zone)
 	sfx(perfect and "WhooshBig" or "Whoosh", perfect and 0.8 or 0.55, perfect and 0.9 or 1.15)
 	ballTrail.Enabled = true
 	local flight = (world - releaseSpot).Magnitude / speed
+	-- (Jacob, 11 Nov 2026) a weak kick is a slow lob: run time faster on the way in so it doesn't drag,
+	-- up to 2.6x at the lowest strength, normal speed at the top. The slow-mo at the egg is shorter and lighter for weak kicks.
+	local st = (isClient and roundEgg) and G.strengthT(kickStrength) or 1
+	targetScale = 1 + 1.6 * (1 - st)
+	local slowed = false
+	local slowLvl = (perfect and SLOWMO * 0.7 or SLOWMO) + (0.45 - SLOWMO) * (1 - st)
+	if willSave then slowLvl = math.max(slowLvl, 0.35) end   -- (pigeon) the egg saving it plays a bit quicker than a goal
+	local slowWindow = math.max(speed * 0.3, 24 * st)
 	egg.atBall, egg.holdAtBall = false, blast
 	-- a save is decided by strength, so the egg always gets there (however far the shot is from it)
 	local reach0 = egg.stats.reach
@@ -1113,8 +1129,9 @@ local function shoot(egg, target, willSave, perfect, zone)
 		end
 		-- slow motion as the ball reaches the egg, for every kick (pigeon: "I like seeing it go slo mo when the egg gets hit").
 		-- Strength still sets how fast the ball leaves the boot; the window is ~0.3 s of flight so rockets slow down in time too.
-		if targetScale == 1 and (world - p).Magnitude < math.max(24, speed * 0.45) then
-			targetScale = perfect and SLOWMO * 0.7 or SLOWMO
+		if not slowed and (world - p).Magnitude < slowWindow then
+			slowed = true
+			targetScale = slowLvl
 		end
 		if not cut and a > 0.5 then cut = true; camShot = "save"; camFov = 44 end      -- cut to the goal-side camera for the dive
 		return (willSave or blast) and a > 0.6 and touchingEgg(egg, p)
@@ -1545,10 +1562,10 @@ local function playEgg()
 	local name, seed
 	local rollRF = isClient and RS.DevDemo:FindFirstChild("RollEgg")
 	if rollRF then
-		local ok, n, s, mu = pcall(function() return rollRF:InvokeServer() end)
-		if ok and n and A.Eggs:FindFirstChild(n) then name, seed, roundMut = n, s, mu else roundMut = nil end
+		local ok, n, s, mu, lk = pcall(function() return rollRF:InvokeServer() end)
+		if ok and n and A.Eggs:FindFirstChild(n) then name, seed, roundMut, roundLucky = n, s, mu, lk else roundMut, roundLucky = nil, nil end
 	end
-	name = name or EggRoll.pick(ROSTER, myLuck(), A.Eggs)
+	name = name or EggRoll.pick(ROSTER, myLuck(), A.Eggs, player and player:GetAttribute("Strength") or nil)
 	roundEgg, roundSeed, scoreShot = name, tonumber(seed) or math.random(1, 1e8), nil
 	folder:SetAttribute("RolledEgg", name)
 	if rollGui then
@@ -1565,8 +1582,17 @@ local function playEgg()
 	setRig(BALL_POS, 0)
 	local stats = table.clone(STYLE[name] or EggKeeper.Styles[name] or {})
 	local egg = EggKeeper.new(tmpl, stats, goal, folder)
+	-- your luck at the top counts up from x1 a bit on every hop while the egg walks out (Jacob)
+	local luckTarget, luckShown = myLuck(), 1
+	local function bumpLuck(final)
+		if not isClient or luckShown >= luckTarget then return end
+		luckShown = final and luckTarget or math.min(luckTarget, luckShown + math.max((luckTarget - 1) / 6, 0.01))
+		showCaption("luck", luckText(luckShown), Color3.fromRGB(255, 215, 60), 0.09, 0.075)
+		sfx("BarPop", 0.3, 0.9 + 0.5 * (luckShown - 1) / math.max(luckTarget - 1, 1e-3))
+	end
 	egg.onLand = function(e, strength)
 		strength = strength or 0.5
+		bumpLuck(false)
 		eggDust(e, math.clamp(0.25 + strength * 0.15, 0.25, 0.75))
 		if strength >= 2 then
 			sfx("BallLand", 0.5, 0.75 + math.random() * 0.1)
@@ -1576,8 +1602,9 @@ local function playEgg()
 		if strength >= 2 then shake(0.4, 0.2) end      -- the egg crashing down after a dive
 	end
 	-- your luck at the top while the egg walks out
-	if isClient then showCaption("luck", luckText(myLuck()), Color3.fromRGB(255, 215, 60), 0.09, 0.075) end
+	if isClient then showCaption("luck", luckText(luckShown), Color3.fromRGB(255, 215, 60), 0.09, 0.075) end
 	if rollGui then enterEgg(egg) else mysteryEnter(egg, name) end
+	if isClient and luckShown < luckTarget then bumpLuck(true); task.wait(0.5) end
 	hideCaption("luck", 0.4)
 	G.addMutationVFX(egg.part, roundMut)   -- once it's revealed, a mutated egg wears its aura
 	egg:idle()

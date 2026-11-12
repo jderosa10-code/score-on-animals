@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 01:40 CT · pigeon-claude
+**Done:** (1) Showroom (`Workspace.BarbellShowcase`) now has the **smooth** barbell v2 set (new group Model assets, coloured, effects re-applied); the blocky set is in `ServerStorage.Restyle.BarbellShowcase_Blocky`. (2) **Save slow-mo quicker** (pigeon): `PenaltyDemoRunner` slowLvl is at least 0.35 when the egg saves (goals keep Jacob's strength-scaled 0.2). (3) **Bird idles calmer**: 12 birds' Idle wing bones flapped 58-63° (Puffin, Albatross, Duck, Kookaburra, Toucan, Flamingo, Shoebill, Secretary, Cassowary, Raven2, Peafowl, Mothman); scaled to 35% and republished, ids in `G.AnimalAnims` (originals in `ServerStorage.Restyle.BirdIdle_BeforeCalm`). Saved (v315).
+**Open:** pigeon says the Puffin "expands" while walking. Not reproduced: walk clip has no real translations, leg skin stays below the knee, no extra shell part, 6 frozen walk frames look normal. Needs a short video from pigeon.
+**Blockers / questions:** -
+
 ## 2026-11-11 21:30 CT · jacob-claude
 **Done:** **Live "nothing works" bug found:** HUD/Menus/Popups are Folders in StarterGui, so on respawn (e.g. falling off the map) Roblox re-cloned them and HUDClient kept the destroyed copies (CashGoal / ValueLabel / Slot1 errors). Fixed with `StarterGui.ResetPlayerGuiOnSpawn = false` (tested: same HUD after death, no errors). New `ServerScriptService.FallRescue`: below Y -40 you're put back on your plot Spawn. `Workspace.Map.Lobby.Walls` (4 parts) CanCollide on. Eggs you can't beat roll again (Jacob): `EggInventory` no Strength filter / mutation step-down; 3rd-kick pity only if your Strength >= what the egg needs. While kicking, `HUD.CurrencyHUD...Stats.NeedLabel` (made by `HideUIWhileKicking`) shows "Need: X" under Strength, red/green; PenaltyDemoRunner sets local player attr NeedStrength. Mutations: `G.rollMutation(rng, name)` boost x4 on the commonest, easing to x1 (Hamster 42% mutated, Giraffe 17%, Dragon 10%); `G.mutChanceFor` for the odds text. Sell eggs: `G.EggSellValue` = half the animal, `G.ItemSellValue`; SellMenu lists eggs; server sells Egg items. Fish float: `G.Swimmers` + `HatchConfig.placedCFrame` lift 1-4 studs. Celebrate AssetId 135928500058792. Night 90 s. Saved (v315).
 **Next:** funnels.
