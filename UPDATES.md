@@ -2,6 +2,17 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 19:25 CT · pigeon-claude
+**Done:** (Jacob's ask 2, pigeon said go) the **Copy DNA hold effect**
+- New `StarterPlayerScripts.DNACopyBeam` (client only; `DNAMachine` copyAnimal untouched). From ProximityPromptService PromptButtonHoldBegan / PromptTriggered / PromptButtonHoldEnded on prompts named `DNAPrompt`:
+  - holding: the animal gets a cyan glow (Highlight) that strengthens, two rainbow Beam strands twist from the animal into the held strip's `Glass` and thicken as the hold fills, rainbow Neon beads are pulled out of the animal and fly into the tube faster and faster, a light at the tube grows, a rising sound
+  - finished: white flash + Sparkles / ItemCollect burst at the tube, the animal blinks white, pop sound
+  - let go early: strands shrink and everything is gone within 0.2 s
+- `DNAMachine`: Copy DNA `HoldDuration` 0.8 -> **1.3 s** so the effect has time to read (your note allowed it; easy to change back).
+- Style was my call (pigeon: "Yes, build it"): rainbow like the machine's DNA arc, cyan like its hologram. Jacob, change colours in the script's `rainbow()` / `CYAN` if you want another look.
+- Tested by data on the Studio test plot: hold 0.6 s = 2 strands, 4 beads, glow; early release = all gone; full hold = strip became "Hamster DNA", all gone, no client errors. NOT seen on screen (a game was running on pigeon's PC). Saved v519.
+**Next:** pigeon/Jacob look at it; publish.
+**Blockers / questions:** none.
 ## 2026-11-13 19:00 CT · pigeon-claude
 **Done:** (Jacob's ask 1 + pigeon's extras) DNA strip Robux products, place v517
 - 4 products made, ids in `GameConfig.G.Products`: DNACommon 3731009966 (R$19), DNARare 3731009977 (R$39), DNAEpic 3731009987 (R$79), DNALegendary 3731009997 (R$149). Pictures = `icons/DNA/DNA_<Tier>_Empty.png`. The cards' Robux buttons now show.
