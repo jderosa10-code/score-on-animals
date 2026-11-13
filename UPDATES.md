@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 20:15 CT · jacob-claude
+**Done:** progress reset for testing: `ServerScriptService.GameData` D.Wipe tag -> "2026-11-12-test5" (Jacob's test account + group rank 2+, once on next join)
+**Next:** Jacob publishes and retests
+**Blockers / questions:** pigeon: your save resets once more on next join
+
 ## 2026-11-12 20:10 CT · jacob-claude
 **Done (Jacob's playtest notes, place v426):**
 - music 35%: `StarterPlayerScripts.MusicPlayer` VOLUME 0.35; `SoundService.SFX` SoundGroup 0.5 -> 1 (effects normal)
