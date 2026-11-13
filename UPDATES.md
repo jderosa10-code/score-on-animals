@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 16:16 CT · jacob-claude
+**Done:** DNA strips are now Jacob's toolbox test tube: `ServerStorage.DNATube` (Glass / Liquid / Cap, scaled to 2.2 studs; was Workspace."test tube"), built into the tool by `GameData` dnaTool: no liquid until it copies DNA, glass tinted for Rare / Epic / Legendary (UsePartColor on the union). Tube weld texture uses new `MaterialService.WeldTube` (StudsPerTile 0.3; Weld itself unchanged). 8 icons (4 tiers x empty/filled, navy stroke) in `icons/DNA/`, made with new `tools/icons/matte_icons.py` (magenta + green shots so the glass stays see-through). Saved v501
+**Next:** upload the icons and use them on the DNA shop cards + hotbar if Jacob wants; Robux products still need the scope
+**Blockers / questions:** none
+
 ## 2026-11-13 16:10 CT · pigeon-claude
 **Done:** (pigeon asked) **Auto Kick game pass**, place v499
 - Pass `Auto Kick` 2089526606 (R$399), gift product 3730986707. `GameConfig`: `G.Passes.AutoKick`, `G.ShopItems.PassAutoKick`, `G.AutoKickCap = 50`, `G.AutoKeepNames`, `G.autoKeepText`. Icon = the pack's shoe (image 116923902569341), placeholder until real art.
