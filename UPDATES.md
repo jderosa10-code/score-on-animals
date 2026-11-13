@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 08:00 CT · jacob-claude
+**Done:** (Jacob ran my command-bar script in Studio, since the Studio connection is down) `StarterPlayer.StarterPlayerScripts.MobileMenus`: menus now fit and stay below Roblox's top buttons on phones (Sell menu overlap, Animals menu Equip Best cutoff). New `StarterPlayer.StarterPlayerScripts.EggPreload`: downloads every egg mesh/texture right after joining, so eggs walking out aren't invisible with only VFX showing on phones
+**Next:** Jacob saves + publishes; then phone UI pass for other cut-off icons/menus (needs screenshots), post-tutorial goal chain for minutes 5-10
+**Blockers / questions:** Studio connection still down (Anthropic connector outage)
+
 ## 2026-11-13 07:55 CT · jacob-claude
 **Done:** read the onboarding funnel since ads started (last 1 day, 129 users): 89% walk onto the field, 55% finish the tutorial, 52% reach 5 min, then only 28% reach 10 min and 13% reach 20 min. Biggest problem = minutes 5-10 after the tutorial. Other leaks: 11% leave before walking to the field, ~10% while waiting for the first hatch, ~10% before the first strength level-up
 **Next:** when Studio reconnects: mobile Animals/Sell menu fixes, phone UI pass, preload eggs before the walk-out (eggs missing, VFX showing), then a post-tutorial goal chain for minutes 5-10
