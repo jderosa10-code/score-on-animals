@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 20:55 CT · jacob-claude
+**Done:** random admin boosts in the live game: Studio playtests share MessagingService/MemoryStore with live, and in Studio everyone is admin, so any ALL SERVERS press in a test reached real players. `ServerScriptService.AdminEvents` send() now forces THIS SERVER when RunService:IsStudio(), and Studio servers skip the MemoryStore catch-up (place v436)
+**Next:** Jacob publishes, then Stop All on live
+**Blockers / questions:** pigeon: did you (or pigeon-claude) press admin panel buttons tonight? See issue
+
 ## 2026-11-12 20:50 CT · jacob-claude
 **Done:** tutorial-complete message waited until the next kick: closing Egg Luck only hides `UpgradesPanel` (UpgradesMenu stays Enabled). `StarterPlayerScripts.TutorialClient` now waits for Enabled AND panel visible to end (place v435)
 **Next:** Jacob publishes + retests the tutorial end
