@@ -2,6 +2,16 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 18:30 CT · pigeon-claude
+**Done:** (pigeon asked) effects + Robux skip for the **DNA COPY MACHINE**, place v512. Jacob: your copy rules, timers and shop are unchanged.
+- New `StarterPlayerScripts.DNAMachineFX` (client only, per player): a cyan **hologram** of the animal you're copying stands in the tube (ForceField + Highlight, plays its Idle, spins, flickers), 22% size at the start, growing to full as the copy runs. It is always a miniature fitted to the tube (2.6 x 4.4 studs), so a Blue Whale fits like a Hamster. Scan line while copying; the tube's own emitters (all were off) switch on; collect = flash + Confetti/Poof/LevelUp burst; ready = green beam into the sky + green light.
+- Idle: the DNA arc pieces wave, the sign light slowly changes colour, a hum (asset 9114330786). All sounds are 3D at the machine: full inside 10 studs, silent past 48.
+- Sign: `GuiPart.BillboardGui.Amount.Progress` bar (real instance) fills while copying.
+- **Skip Timer for Robux:** `DNASkipPrompt` on the Collect pad, shown to you while your copy runs, with the price. Reuses the Skip Hatch Timer products by time left (`G.skipHatchFor`). `DNAMachine` skipCopy + `_G.SOA_DNASkip`; `GameServer.grantProduct` checks player attribute `SkipDNA` first; `EggHatching` clears it for egg skips.
+- `DNAMachine` patches (4, in place): attributes `DNACopyAnimal` / `DNACopyMut` / `DNATotal`, `Copy.Total` saved at insert, server-wide message for a mutated or Legendary-strip copy, the skip above. Machine attribute `TubeFloor`. Backups of the 4 touched scripts: `.rbxm` files on pigeon's PC.
+- Tested by data in Studio (real flow: strip, copy an Elephant, insert, rejoin, skip grant, collect): hologram made and sized, bar, prompt price, emitters, beam, collect clears everything, no client errors. **NOT seen on screen** (Studio wasn't drawing: a game was running on pigeon's PC), and the real Robux prompt wasn't clicked.
+**Next:** pigeon looks at it in Studio; publish.
+**Blockers / questions:** none.
 ## 2026-11-13 17:18 CT · jacob-claude
 **Done:** new `ServerScriptService.DNATestPlot` (STUDIO ONLY, returns in live servers): on Play one empty plot gets fake owner 1 and 6 test animals (Lion, Elephant, TRex, Gold Lion, Dragon, Rainbow Phoenix) with Copy DNA prompts, for testing DNA strips alone. Off: Workspace attribute DNATestPlot = false. Tested. Saved
 **Next:** Jacob tests the DNA strips + tutorial
