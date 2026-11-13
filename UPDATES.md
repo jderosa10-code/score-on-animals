@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 21:00 CT · jacob-claude
+**Done:** barbell pieces in odd spots / stuck in the ground after upgrading and lifting at the same moment: the drop-in animation and the lift both moved the new barbell, and the lift grabbed its rest spot mid-fall. `StarterPlayerScripts.WorkoutClient` now marks a dropping barbell (`dropping[bar]`) and the lift leaves it alone until it lands (place v437)
+**Next:** Jacob publishes + retests upgrade-while-lifting
+**Blockers / questions:** none
+
 ## 2026-11-12 20:55 CT · jacob-claude
 **Done:** random admin boosts in the live game: Studio playtests share MessagingService/MemoryStore with live, and in Studio everyone is admin, so any ALL SERVERS press in a test reached real players. `ServerScriptService.AdminEvents` send() now forces THIS SERVER when RunService:IsStudio(), and Studio servers skip the MemoryStore catch-up (place v436)
 **Next:** Jacob publishes, then Stop All on live
