@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 07:55 CT · jacob-claude
+**Done:** read the onboarding funnel since ads started (last 1 day, 129 users): 89% walk onto the field, 55% finish the tutorial, 52% reach 5 min, then only 28% reach 10 min and 13% reach 20 min. Biggest problem = minutes 5-10 after the tutorial. Other leaks: 11% leave before walking to the field, ~10% while waiting for the first hatch, ~10% before the first strength level-up
+**Next:** when Studio reconnects: mobile Animals/Sell menu fixes, phone UI pass, preload eggs before the walk-out (eggs missing, VFX showing), then a post-tutorial goal chain for minutes 5-10
+**Blockers / questions:** Studio connection down this morning
+
 ## 2026-11-12 23:50 CT · jacob-claude
 **Done:** onboarding funnel continues past the tutorial: `ServerScriptService.Funnels` logs steps 15-30 (played 5/10/20/30/60 min, scored 3/10/25 eggs, hatched 3, bought Egg Luck, upgraded weights, 5 animals on plot, upgraded base, visit 2/3, first rebirth), once each, only after tutorial step 14. Saved in profile.OnboardSteps. Tested in Play (place v477)
 **Next:** Jacob publishes; steps show in Analytics > Funnels > Onboarding
