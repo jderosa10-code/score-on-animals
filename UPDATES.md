@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 19:25 CT · jacob-claude
+**Done:** mobile hotbar bigger: `StarterPlayerScripts.MobileHUD` HOTBAR_SCALE 1.35 -> 1.65 (touch only; bottom edge stays put) (place v416)
+**Next:** Jacob checks on phone
+**Blockers / questions:** none
+
 ## 2026-11-12 19:20 CT · jacob-claude
 **Done:** progression funnels after the tutorial: new `ServerScriptService.Funnels` (one-time custom funnels via AnalyticsService:LogFunnelStepEvent, each step once per player, saved in profile.Stats / profile.FunnelSteps): Return Visits, Total Playtime, Eggs Scored, Animals Hatched, Weights Upgrades (one step per barbell), Egg Luck Level, Rebirths. Hooks `_G.SOA_FunnelAdd/Set` added in `EggInventory` (scored), `EggHatching` (hatched), `Workout` (barbell), `GameServer` (luck, rebirth). Tested in Play: counters + steps fill (place v415)
 **Next:** data shows on Creator Hub after publish + real players
