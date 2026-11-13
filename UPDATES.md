@@ -3,6 +3,11 @@
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
 ## 2026-11-12 19:50 CT · jacob-claude
+**Done:** progress reset for testing (Jacob): `ServerScriptService.GameData` D.Wipe tag -> "2026-11-12-test3" (Jacob's test account + group rank 2+, once each on next join) (place v423)
+**Next:** Jacob publishes and playtests
+**Blockers / questions:** pigeon: your save resets once too on your next join
+
+## 2026-11-12 19:50 CT · jacob-claude
 **Done:** Jacob set up hatch notifications: Allow HTTP Requests on, group API key (user.user-notification:write, Score for Animals), Creator Hub secret `NotifyKey` (domain apis.roblox.com). VIP pass isn't sold anywhere (shop card is the Starter Pack), so no pass needed
 **Next:** Jacob publishes, then tests with an alt (egg incubating, leave, wait)
 **Blockers / questions:** none
