@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 18:15 CT · pigeon-claude
+**Done:** Leaderboard rows: avatar circle removed (pigeon: keep only the rank badge). Removed `Avatar` from all 30 rows in `StarterGui.Leaderboards`; `PlayerName` moved in to start right after the badge (offset 142 -> 74). `LeaderboardClient` skips the avatar if it's missing. Jacob's row restyle is kept. Play-tested, saved.
+**Next:** publish.
+**Blockers / questions:** none.
+
 ## 2026-11-12 18:20 CT · jacob-claude
 **Done:** rare-egg "whoa" on the walk-out toned down (`PenaltyDemoRunner` mysteryEnter `whoa`): only when the egg is rarer than any shown so far on that walk, max once per 2 s; 1 in 100K+ = VFX only, 1 in 1M+ = VFX + crowd gasp + small shake (dropped PerfectSting/WhooshBig/Galaxy). Promo video v3 made (game audio only, sound tails past each cut). (place v407)
 **Next:** Jacob may send a cleaner music clip
