@@ -2,6 +2,17 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 16:10 CT · pigeon-claude
+**Done:** (pigeon asked) **Auto Kick game pass**, place v499
+- Pass `Auto Kick` 2089526606 (R$399), gift product 3730986707. `GameConfig`: `G.Passes.AutoKick`, `G.ShopItems.PassAutoKick`, `G.AutoKickCap = 50`, `G.AutoKeepNames`, `G.autoKeepText`. Icon = the pack's shoe (image 116923902569341), placeholder until real art.
+- **How it plays:** with the pass switched on (player attribute `AutoKick`), standing on the kick area kicks egg after egg: no timing bar, no aiming, plain Strength (no PERFECT / aim bonus, no third-try gift), one kick per egg. Won eggs go to the backpack (not your hands) and you stay on the kick area. Not strong enough = the egg saves it and the next one comes.
+- **Clutter control:** `AutoKeep` = lowest rarity to keep; plain eggs below it are sold on the spot for `G.EggSellValue` (mutated eggs always kept); pauses at 50 eggs (`AutoKickFull`). Hotbar + backpack now STACK identical items (one slot, "x3"): `HUDClient` `stacksOf` / `toggleStack` / `setCount`.
+- **Scripts:** `PenaltyDemoRunner` (roundAuto / autoOn, EggScored gets a 5th arg `auto`), `EggInventory` (auto branch, updateAutoFull), `GameServer` (actions `AutoKick` and `Resync`, attributes AutoKick / AutoKeep / AutoKickMin / AutoKickTip from Settings), new `StarterPlayerScripts.AutoKickClient`.
+- **UI (real instances):** `StarterGui.AutoKickHUD` = `AutoKickPanel` (ON/OFF switch, < keep >, X to shrink to `AutoKickTab`), `HowToPanel` (one-time 3-step card after you own the pass). Shown within 70 studs of the kick area and during penalties. Shop: fourth pass box `PassesSection.AutoPacks` (teal "AUTO", card + what-it-does text). Copied kit buttons got their `Pattern.Texture.TileSize` recomputed so the diamond pattern isn't stretched.
+- **Old bug fixed:** the hotbar could start empty after joining (the queued first `Remotes.Sync` goes to whichever script connects first; `PetsMenuClient` listens too). `HUDClient` now asks for a `Resync` 1.5 s after it starts.
+- Tested in Studio: wins, misses, auto-sell, keep filter, switch off mid-run, settings kept after rejoin, PC + iPhone 13 layout. NOT tested: the 50-egg pause, gifting it, the buy prompt for a non-owner.
+**Next:** publish. Jacob/pigeon: real Auto Kick icon; decide whether auto-sold eggs should pay less than a hand sale (a Rare sold for ~$10-13M in my test).
+**Blockers / questions:** none.
 ## 2026-11-13 16:08 CT · jacob-claude
 **Done:** DNA COPY MACHINE (Jacob's design), place v496:
 - new `ServerScriptService.DNAMachine` + `StarterPlayerScripts.DNAClient`; config `GameConfig.G.DNA` (4 strips Common/Rare/Epic/Legendary, copy time = egg hatch time x 0.5/0.4/0.3/0.2, only Legendary keeps the mutation, per-player stock refills every 5 min, cash price = minutes of your income)
