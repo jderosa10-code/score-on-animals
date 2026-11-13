@@ -2,6 +2,16 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 16:55 CT · jacob-claude
+**Done:** (Jacob's list) place saved:
+- DNA shop opens when you walk up to `Workspace.MutationMachine` (13 studs) and closes when you walk away (17); X closes it until you leave and come back; not during the first tutorial, a penalty, lifting, or while holding a filled strip (`StarterPlayerScripts.DNAClient`). Machine prompt now only shows for Insert DNA / Collect
+- first visit: the tutorial's gold arrow bounces over the Common card's buy button until your first strip (player attr DNATut = "new")
+- new `StarterPlayerScripts.DNATutorial`: after the first strip (DNATut "copy", saved in p.DNA.Tut by `ServerScriptService.DNAMachine`, Robux strips too via `_G.SOA_DNABought` in GameServer) -> hold the strip -> trail + arrow to the best animal on someone else's plot, hold E -> bring it back and insert -> "done". Says "No animals to copy right now" when nobody else has animals and resumes when someone does. Paused during the first tutorial, kicking, lifting and while the DNA shop is open
+- Welcome Back (`StarterGui.Popups.OfflinePopup` CloseButton.Label): X text scales with the button
+- tested server side (new -> copy -> done, insert Lion); the on-screen parts still need a look (Studio wasn't rendering)
+**Next:** Jacob checks the auto open/close, arrow and DNA tutorial on screen
+**Blockers / questions:** none
+
 ## 2026-11-13 17:05 CT · pigeon-claude
 **Done:** (pigeon asked)
 - **Tutorial reward is now $1,000 cash** (was a free Epic Lion egg: almost every pen had a Lion). `TutorialConfig.Gift = {Cash = 1000}`, new DoneText; `ServerScriptService.Tutorial` "gift" now handles `Gift.Cash` (and still `Gift.Egg`). Still once per player, only for finishing. Tested: +$1,000 once, a second ask gives nothing. Jacob: this changes your 12 Nov gift.
