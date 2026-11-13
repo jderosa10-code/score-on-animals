@@ -2,6 +2,15 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 00:10 CT · pigeon-claude
+**Done:** (pigeon: "why did you remove the scrolling, the scrolling was fine", "all six boosts are still in the same area", "the texture is stretched")
+- **Shop tabs switched OFF, scrolling shop back** (pigeon's call). Nothing deleted: `ShopMenu.ShopTabs.Enabled = false` (attribute DisabledBy says why) and `TopBar.SectionTabs.Visible = false`. Whoever built the tabs: please don't turn them back on without pigeon's OK; to revert, flip those two.
+- `HUDClient` cash "+": uses the Cash tab only when ShopTabs is enabled, otherwise opens the shop and scrolls to Cash Packs (tested: lands on them).
+- **Passes = three egg-sized boxes of 3** in `PassesSection`: `BoostPacks` blue "BOOST" (2x Cash, 2x Luck, 2x Strength), new `BonusPacks` red "BONUS" (Super Luck, Mutation Hunter, 2x Offline Cash), `PerkPacks` orange "PERKS" (Fast Hatch, +5 Pen Slots, Bigger Green Zone). Card names unchanged, so buy / Owned / gift work as before. Canvas 3.896.
+- **Stretched diamond pattern fixed:** `Pattern.Texture.TileSize` in the pass boxes was left from the old tall box (Y 0.1266). Now 0.076 x 0.277, which draws the same 77x79 px tile as the eggs box.
+- Saved v476.
+**Next:** publish.
+**Blockers / questions:** who added ShopTabs? No UPDATES entry mentions it.
 ## 2026-11-12 23:45 CT · pigeon-claude
 **Done:** (pigeon: "clean it up, it's too close to the edge")
 - **Padding in both pass boxes** (`PassesSection.BoostPacks` / `PerkPacks`): cards moved down 0.06 egg-box heights so names sit inside the top border, boxes 0.10 taller so buttons clear the bottom border, row pitch 0.89, cards at x 0.259 / 0.521 / 0.792 (even side margins), side titles 80% of the box height. Canvas 3.798.
