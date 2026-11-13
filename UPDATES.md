@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 19:50 CT · jacob-claude
+**Done:** "egg finished hatching" notifications: new `ServerScriptService.HatchNotifications`. On leave, the earliest incubating egg goes in MemoryStore sorted map `HatchNotify_v1` (sort = ReadyAt); any live server claims due entries and POSTs Open Cloud `cloud/v2/users/{id}/notifications` (string 4bc6024f-..., param eggName, falls back to no params). Rejoining cancels. Tested the queue/claim in Play (place v419)
+**Next:** Jacob: turn on Allow HTTP Requests, make an API key with notification write access, save it as Secret `NotifyKey` (apis.roblox.com), publish
+**Blockers / questions:** script does nothing until the `NotifyKey` secret exists (key is never in the repo or scripts)
+
 ## 2026-11-12 19:35 CT · jacob-claude
 **Done:** notifications opt-in popup on a player's 5th egg placed: `ServerScriptService.EggHatching` counts `profile.Stats.EggsPlaced` and fires new `ReplicatedStorage.GameRemotes.NotifyOptIn`; new `StarterPlayerScripts.NotifyOptInClient` runs CanPromptOptInAsync -> PromptOptIn (place v418)
 **Next:** "egg finished hatching" experience notification once Jacob sends the notification string id (Open Cloud package + MemoryStore queue so a live server sends it after the player leaves)
