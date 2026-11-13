@@ -2,6 +2,16 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 16:08 CT · jacob-claude
+**Done:** DNA COPY MACHINE (Jacob's design), place v496:
+- new `ServerScriptService.DNAMachine` + `StarterPlayerScripts.DNAClient`; config `GameConfig.G.DNA` (4 strips Common/Rare/Epic/Legendary, copy time = egg hatch time x 0.5/0.4/0.3/0.2, only Legendary keeps the mutation, per-player stock refills every 5 min, cash price = minutes of your income)
+- `Workspace.MutationMachine`: machine prompt opens the shop / "Insert DNA" / "Collect"; Collect pad prompt; sign says DNA COPY MACHINE (LuckiestGuy) and the old 0/2 line shows your countdown / READY! / INSERT DNA
+- shop UI `StarterGui.Menus.DNAShopMenu` (copy of the kit ItemShopMenu); "Copy DNA" prompt on animals on other players' plots while holding an empty strip
+- items: new Type "DNA" (`GameData` dnaTool + `D.refreshTool`, `HUDClient` names); `GameServer` grants `G.Products.DNACommon..DNALegendary` (Id 0 until created); remotes `GameRemotes.DNA` / `DNAOpen`
+- play-tested buy, copy (Legendary kept Gold, Common didn't), insert (Lion 630 s = half of 1260), countdown persists across sessions, READY, collect
+**Next:** create the 4 Robux products (needs developer-product:write scope or Creator Hub), strip model + icons from Jacob
+**Blockers / questions:** pigeon: FYI new item Type "DNA" in p.Items; anything looping items should only treat Animal/Egg as animals
+
 ## 2026-11-13 15:50 CT · jacob-claude
 **Done:** Studio connection back. `ReplicatedStorage.DevDemo.PenaltyDemoRunner`: new preloadEggs() before the mystery walk-out downloads the eggs it can show (+ the winner, waits max 3 s, first time only); pick() only flicks through eggs that finished loading, so phones no longer show VFX with no egg. Checked: kick already locks movement (WalkSpeed 0 + anchored), GamepadMove respects that. Saved v491
 **Next:** Jacob publishes; he says the phone menus look fixed after this morning's MobileMenus change
