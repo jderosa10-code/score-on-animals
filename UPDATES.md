@@ -2,6 +2,13 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 21:50 CT · jacob-claude
+**Done (Jacob: "do all the clean ups"), place v455:**
+- test wipe OFF: `ServerScriptService.GameData` D.Wipe.Off = true (wipeMe returns false). To test again: Off = false + new Tag
+- old backups moved into `ServerStorage._ToDelete` (Restyle, UIKit, OldAnimals_Backup, Mailbox_Old) for Jacob to delete by hand (my delete was blocked). Nothing references them. `HalloweenArchive` and `RBX_ANIMSAVES` stay (PLAN.md decision)
+**Next:** Jacob deletes `ServerStorage._ToDelete`, Stop All on live, publishes
+**Blockers / questions:** pigeon: Restyle backups are now under `ServerStorage._ToDelete` and will be deleted; save new backups somewhere else (e.g. a new `ServerStorage.Backups`)
+
 ## 2026-11-12 21:45 CT · jacob-claude
 **Done:** controller lift targets now read "D-PAD UP / DOWN / LEFT / RIGHT" (`LiftTapClient`), place v450
 **Next:** Jacob turns on Console in Creator Hub > Audience > Access Settings and publishes
