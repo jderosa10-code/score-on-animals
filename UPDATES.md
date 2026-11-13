@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 20:20 CT · jacob-claude
+**Done:** tutorial text vanished for Braden: admin event messages share the AdminMessage banner and clear it after a few seconds. `StarterPlayerScripts.TutorialClient` now re-shows the step text when the banner gets hidden. Tested in Play (place v428)
+**Next:** Jacob publishes
+**Blockers / questions:** none
+
 ## 2026-11-12 20:15 CT · jacob-claude
 **Done:** progress reset for testing: `ServerScriptService.GameData` D.Wipe tag -> "2026-11-12-test5" (Jacob's test account + group rank 2+, once on next join)
 **Next:** Jacob publishes and retests
