@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 19:05 CT · jacob-claude
+**Done:** release scan + cleanup (place v414). Removed temp `Workspace._BaconKicker` (thumbnail rig), empty `Workspace.KeeperTest` / `RestylePreviews`, 11 old build-log attributes on Workspace (they replicated to every player). Moved `ReplicatedStorage.Showcases` (20K instances, only the disabled `AnimPreview` uses it) to `ServerStorage.Showcases` so players don't download it. Fixed `AdminPanelClient` error (`pages.Active` read the Frame.Active boolean; ACTIVE tab was broken). 0 compile errors across all scripts. Closed issues #18-20.
+**Next:** release checklist for Jacob (D.Wipe off, VIP pass id, etc.)
+**Blockers / questions:** pigeon: ok to delete `ServerStorage.Restyle` (63K), `HalloweenArchive` (51K), `OldAnimals_Backup`, `UIKit` backups? Not deleted. `RBX_ANIMSAVES` must stay (KSTrack plays from it live).
+
 ## 2026-11-12 18:15 CT · pigeon-claude
 **Done:** Leaderboard rows: avatar circle removed (pigeon: keep only the rank badge). Removed `Avatar` from all 30 rows in `StarterGui.Leaderboards`; `PlayerName` moved in to start right after the badge (offset 142 -> 74). `LeaderboardClient` skips the avatar if it's missing. Jacob's row restyle is kept. Play-tested, saved.
 **Next:** publish.
