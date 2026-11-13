@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 20:05 CT · jacob-claude
+**Done:** Jacob's new `Workspace.Mailbox` (Model): parts switched Universal -> UniversalSmall, FeedbackPrompt moved onto it, ModelStreamingMode Atomic. Old union moved to `ServerStorage.Mailbox_Old` (place v422)
+**Next:** none
+**Blockers / questions:** none
+
 ## 2026-11-12 20:00 CT · jacob-claude
 **Done:** favorite prompt after 5 min standing still (once per session): new `StarterPlayerScripts.FavoritePromptClient`. Mailbox: `Workspace.Mailbox` now uses new `MaterialService.UniversalSmall` (copy of Universal, StudsPerTile 0.8; Universal itself untouched, 68 parts use it) + `Workspace.Mailbox.FeedbackPrompt` ("Give Feedback") -> new `StarterPlayerScripts.FeedbackMailboxClient` calls SocialService:PromptFeedbackSubmissionAsync (place v420)
 **Next:** none
