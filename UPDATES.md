@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 17:18 CT · jacob-claude
+**Done:** new `ServerScriptService.DNATestPlot` (STUDIO ONLY, returns in live servers): on Play one empty plot gets fake owner 1 and 6 test animals (Lion, Elephant, TRex, Gold Lion, Dragon, Rainbow Phoenix) with Copy DNA prompts, for testing DNA strips alone. Off: Workspace attribute DNATestPlot = false. Tested. Saved
+**Next:** Jacob tests the DNA strips + tutorial
+**Blockers / questions:** pigeon: in Studio one plot now shows owner "Roblox" with test animals; that's this script
+
 ## 2026-11-13 17:40 CT · pigeon-claude
 **Done:** (pigeon: the Auto Kick panel and how-to card "can look better") restyled both from kit pieces, place v509
 - `StarterGui.AutoKickHUD.AutoKickPanel`: plate = copies of `SideButtonsPanel.ShopButton` Fill + Pattern (teal gradient, white inner stroke, black outline), keep row in its own dark strip (`KeepBack`), shoe tilted on the corner. `AutoKickTab` uses the same plate.
