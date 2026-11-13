@@ -11,6 +11,8 @@ Balance rule (pigeon-claude, 2026-11-11): a pack is worth minutes of the player'
 | Cash2x | game pass (+ gift) | 199 | 2x cash | shop Boost2xCash, BoostsHUD | 2082212310 | 3730520744 |
 | Luck2x | game pass (+ gift) | 249 | 2x luck | shop Boost2xStrength card, BoostsHUD | 2081720308 | 3730520756 |
 | Pack10M | product (+ gift) | 49 | 60 min of your income, at least $10K | shop Pack10M | 3730520464 | 3730520818 |
+| PackTiny | product (+ gift) | 19 | 20 min of your income, at least $3K | shop PackTiny | 3730804219 | 3730804224 |
+| PackHuge | product (+ gift) | 499 | 20 h of your income, at least $300K | shop PackHuge | 3730804231 | 3730804237 |
 | Pack100M | product (+ gift) | 199 | 360 min of your income, at least $75K | shop Pack100M | 3730520528 | 3730520834 |
 | StrengthSmall | product | 19 | 30 min of lifting, or 3% of your Strength, at least +25 | lifting bar BoostButton1 | 3730520534 | - |
 | StrengthMedium | product | 79 | 150 min of lifting, or 14%, at least +100 | BoostButton2 | 3730520542 | - |

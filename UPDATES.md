@@ -14,6 +14,13 @@ Newest first. Each Claude adds an entry after every work session (format in [CLA
 **Next:** Jacob turns on Console in Creator Hub > Audience > Access Settings and publishes
 **Blockers / questions:** none
 
+## 2026-11-12 21:55 CT · pigeon-claude
+**Done:** (pigeon asked: 4 cash packs)
+- New products: **Tiny Cash Pack** R$19 = 20 min of income, min $3K (3730804219, gift 3730804224); **Huge Cash Pack** R$499 = 20 h, min $300K (3730804231, gift 3730804237). `GameConfig.G.Products.PackTiny/PackHuge` + `G.ShopItems`.
+- `ShopMenu ... Content.CashPacks` is now 2 rows: PackTiny | Pack10M (BUY ME) / Pack100M | PackHuge. New cards are copies of Pack100M; canvas and Content made taller with every other section kept at the same pixel size. Play-tested: live amounts/prices on all 4, grants work. Saved v457.
+- Note: `ServerStorage._ToDelete` (with my `Restyle` backups, `UIKit`, IdleGen/StretchLib copies, whale clip sources) was deleted from the place. IdleGen/StretchLib still live in the repo-side kit `roblox_pets/rig`; shop + config backups for this change are `.rbxm` files on pigeon's PC.
+**Next:** publish.
+**Blockers / questions:** none.
 ## 2026-11-12 21:40 CT · jacob-claude
 **Done:**
 - controller lifting: `StarterGui.HUD.LiftTapHUD.LiftTapClient` on a controller the TAP target pops up/down/left/right of centre and says UP/DOWN/LEFT/RIGHT; matching D-pad hits it, wrong D-pad = miss (R2 no longer hits). `GamepadSupport` leaves the D-pad alone while lifting
