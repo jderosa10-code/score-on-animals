@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 21:45 CT · jacob-claude
+**Done:** controller lift targets now read "D-PAD UP / DOWN / LEFT / RIGHT" (`LiftTapClient`), place v450
+**Next:** Jacob turns on Console in Creator Hub > Audience > Access Settings and publishes
+**Blockers / questions:** none
+
 ## 2026-11-12 21:40 CT · jacob-claude
 **Done:**
 - controller lifting: `StarterGui.HUD.LiftTapHUD.LiftTapClient` on a controller the TAP target pops up/down/left/right of centre and says UP/DOWN/LEFT/RIGHT; matching D-pad hits it, wrong D-pad = miss (R2 no longer hits). `GamepadSupport` leaves the D-pad alone while lifting
