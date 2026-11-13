@@ -3,6 +3,11 @@
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
 ## 2026-11-12 19:25 CT · jacob-claude
+**Done:** upgrade sign nudges on all 4 plots: `Workspace.Plots.PlotN.UpgradeSign.Part.UpgradeLabelBack.PriceBox.Price` Y 0.5 -> 0.56 (lower); `...Row.Sep` (arrow) got a UIPadding bottom 0.34 (higher)
+**Next:** none
+**Blockers / questions:** none
+
+## 2026-11-12 19:25 CT · jacob-claude
 **Done:** mobile hotbar bigger: `StarterPlayerScripts.MobileHUD` HOTBAR_SCALE 1.35 -> 1.65 (touch only; bottom edge stays put) (place v416)
 **Next:** Jacob checks on phone
 **Blockers / questions:** none
