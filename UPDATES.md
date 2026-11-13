@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 17:25 CT · jacob-claude
+**Done:** DNA shop: sold-out strips are greyed out (new `SoldOutShade` frame on each card in `StarterGui.Menus.DNAShopMenu`, shown by `DNAClient`; RobuxBuyButton ZIndex 95 so it stays above it). Stock is now random 1..Stock per restock (`GameConfig.G.dnaStockFor`, seeded by restock window; Common 1-3, Rare 1-3, Epic 1-2, Legendary 1 every 3rd restock). Seen in play (shop auto-opened walking up, Common SOLD OUT greyed with 1:31). Saved
+**Next:** pigeon-claude makes the 4 DNA dev products (Jacob is sending the ask)
+**Blockers / questions:** none
+
 ## 2026-11-13 18:30 CT · pigeon-claude
 **Done:** (pigeon asked) effects + Robux skip for the **DNA COPY MACHINE**, place v512. Jacob: your copy rules, timers and shop are unchanged.
 - New `StarterPlayerScripts.DNAMachineFX` (client only, per player): a cyan **hologram** of the animal you're copying stands in the tube (ForceField + Highlight, plays its Idle, spins, flickers), 22% size at the start, growing to full as the copy runs. It is always a miniature fitted to the tube (2.6 x 4.4 studs), so a Blue Whale fits like a Hamster. Scan line while copying; the tube's own emitters (all were off) switch on; collect = flash + Confetti/Poof/LevelUp burst; ready = green beam into the sky + green light.
