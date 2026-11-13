@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 17:00 CT · jacob-claude
+**Done:** DNA copies are claimed by walking onto the green pad `Workspace.MutationMachine.Collect` (server Touched in `DNAMachine`, no Collect prompt any more). Its text is per player (`DNAClient`): EMPTY / "LION 7:25" / "CLAIM LION". Tested: countdown, CLAIM, stepped on -> got the Lion, back to EMPTY. Saved
+**Next:** Jacob checks the on-screen DNA parts and publishes
+**Blockers / questions:** none
+
 ## 2026-11-13 16:55 CT · jacob-claude
 **Done:** (Jacob's list) place saved:
 - DNA shop opens when you walk up to `Workspace.MutationMachine` (13 studs) and closes when you walk away (17); X closes it until you leave and come back; not during the first tutorial, a penalty, lifting, or while holding a filled strip (`StarterPlayerScripts.DNAClient`). Machine prompt now only shows for Insert DNA / Collect
