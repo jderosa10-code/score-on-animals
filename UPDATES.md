@@ -2,6 +2,13 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 23:45 CT · pigeon-claude
+**Done:** (pigeon: "clean it up, it's too close to the edge")
+- **Padding in both pass boxes** (`PassesSection.BoostPacks` / `PerkPacks`): cards moved down 0.06 egg-box heights so names sit inside the top border, boxes 0.10 taller so buttons clear the bottom border, row pitch 0.89, cards at x 0.259 / 0.521 / 0.792 (even side margins), side titles 80% of the box height. Canvas 3.798.
+- **`ShopMenu.ShopJuice` patch for the new tabs:** its pop-in only ran on scroll, so with `ShopTabs` (no scrolling) a box hidden at open stayed at its 0.55 start scale (the Perks tab showed at half size). Now it skips hidden boxes and rechecks when a box becomes visible or moves. All four tabs checked: every box reaches scale 1.
+- I did not touch `ShopTabs` or `SectionTabs` (not mine; whoever is building the tabs: Boosts / Perks tabs work with these boxes).
+**Next:** publish.
+**Blockers / questions:** none.
 ## 2026-11-12 22:40 CT · jacob-claude
 **Done:** `Workspace.MutationMachine.GuiPart.BillboardGui.TextLabel` text -> "DNA COPY MACHINE" (place v464). StarterGui.ShowDevelopmentGui is off for Jacob's screenshots (editor only)
 **Next:** unhide UI when Jacob is done
