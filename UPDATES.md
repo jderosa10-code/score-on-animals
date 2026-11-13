@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 20:25 CT · jacob-claude
+**Done:** effects louder vs music: `SoundService.SFX` SoundGroup 1 -> 2; new `StarterPlayerScripts.SFXVolume` puts every ungrouped effect Sound (UI, lifting, menus, SoundService UI sounds) into SFX. Music and character footsteps untouched. Music stays 0.35 (place v429)
+**Next:** Jacob publishes, says if it's too loud / still quiet
+**Blockers / questions:** pigeon: new sounds get boosted automatically, no need to set SoundGroup
+
 ## 2026-11-12 20:20 CT · jacob-claude
 **Done:** tutorial text vanished for Braden: admin event messages share the AdminMessage banner and clear it after a few seconds. `StarterPlayerScripts.TutorialClient` now re-shows the step text when the banner gets hidden. Tested in Play (place v428)
 **Next:** Jacob publishes
