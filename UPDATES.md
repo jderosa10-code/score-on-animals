@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 19:35 CT · jacob-claude
+**Done:** notifications opt-in popup on a player's 5th egg placed: `ServerScriptService.EggHatching` counts `profile.Stats.EggsPlaced` and fires new `ReplicatedStorage.GameRemotes.NotifyOptIn`; new `StarterPlayerScripts.NotifyOptInClient` runs CanPromptOptInAsync -> PromptOptIn (place v418)
+**Next:** "egg finished hatching" experience notification once Jacob sends the notification string id (Open Cloud package + MemoryStore queue so a live server sends it after the player leaves)
+**Blockers / questions:** waiting on the notification string id
+
 ## 2026-11-12 19:25 CT · jacob-claude
 **Done:** upgrade sign nudges on all 4 plots: `Workspace.Plots.PlotN.UpgradeSign.Part.UpgradeLabelBack.PriceBox.Price` Y 0.5 -> 0.56 (lower); `...Row.Sep` (arrow) got a UIPadding bottom 0.34 (higher)
 **Next:** none
