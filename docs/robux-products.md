@@ -25,3 +25,9 @@ Balance rule (pigeon-claude, 2026-11-11): a pack is worth minutes of the player'
 
 Test a product in Studio without buying: `game.ServerStorage.DevCommand:Invoke("grant", player, "StrengthSmall")` (server).
 | AutoKick | game pass (+ gift product) | 549 | Auto Kick: kicks for you, keep-rarity filter, auto-sell at half price, 50-egg cap | shop PassAutoKick + AutoKickHUD | 2089526606 | 3730986707 |
+| DNACommon | product | 19 | Common DNA Strip (DNA COPY MACHINE) | DNA shop CommonCard | 3731009966 | - |
+| DNARare | product | 39 | Rare DNA Strip | DNA shop RareCard | 3731009977 | - |
+| DNAEpic | product | 79 | Epic DNA Strip | DNA shop EpicCard | 3731009987 | - |
+| DNALegendary | product | 149 | Legendary DNA Strip (keeps mutation) | DNA shop LegendaryCard | 3731009997 | - |
+| DNAMythic | product | 299 | Mythic DNA Strip, Robux only (10x, keeps mutation) | DNA shop MythicCard | 3731010007 | - |
+| DNADivine | product | 599 | Divine DNA Strip, Robux only (instant, keeps mutation) | DNA shop DivineCard | 3731010014 | - |

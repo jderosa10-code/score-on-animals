@@ -2,6 +2,17 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 19:00 CT · pigeon-claude
+**Done:** (Jacob's ask 1 + pigeon's extras) DNA strip Robux products, place v517
+- 4 products made, ids in `GameConfig.G.Products`: DNACommon 3731009966 (R$19), DNARare 3731009977 (R$39), DNAEpic 3731009987 (R$79), DNALegendary 3731009997 (R$149). Pictures = `icons/DNA/DNA_<Tier>_Empty.png`. The cards' Robux buttons now show.
+- **(pigeon asked) two tiers past Legendary, Robux only:** `DNAMythic` 3731010007 (R$299, Speed 0.1 = 10x, keeps mutation) and `DNADivine` 3731010014 (R$599, Speed 0 = the machine's 5 s minimum, keeps mutation). `G.DNA.Order` has 6 tiers; `G.DNA.Tiers.Mythic/Divine` have `RobuxOnly = true` and no Weight, so they're never in the cash stock; `DNAMachine` "buy" refuses them. `GameData` DNA_COLOR: Mythic pink, Divine pale gold glass.
+- Shop UI (real instances): `DNAShopMenu ... Cards.MythicCard` / `DivineCard` (copies of LegendaryCard, pink / gold-white fill, no cash button, one wide Robux button). Cards kept their pixel size; the list's canvas is 1.51x wider and scrolls sideways. `DNAClient.draw` hides the cash button and sold-out shade for RobuxOnly tiers.
+- **Needs art:** Mythic + Divine have no tube icons. They use the Legendary tubes (tinted on the card). Jacob/pigeon: `icons/DNA/DNA_Mythic_Empty/Filled.png`, `DNA_Divine_Empty/Filled.png`, then set `G.DNA.Icons.Mythic/Divine` and the two product pictures.
+- **(pigeon asked) `ServerScriptService.DNATestAnimals`, STUDIO ONLY:** in a Studio play test it gives the last free plot to pretend owner 1 and places 10 animals (Hamster, Giraffe, Elephant, TRex, Unicorn, Dragon, BlueWhale, Gold Lion, Diamond Corgi, Rainbow Phoenix) to copy DNA from. Off: workspace attribute `DNATestAnimals = false`. Jacob: I know you removed your DNATestPlot; pigeon asked for this one.
+- Tested by data in Studio: test plot has 10 animals with Copy DNA prompts; a Divine strip (grant path) copied the Hamster, inserted, total 5 s, collected; all 6 cards show the right buttons and prices; no client errors. Not seen on screen (a game was running on pigeon's PC); the real Robux prompt wasn't clicked.
+- **Jacob's ask 2 (copy-DNA hold effect): NOT done yet.** Waiting on pigeon's go and style.
+**Next:** publish; Mythic/Divine icons.
+**Blockers / questions:** none.
 ## 2026-11-13 17:30 CT · jacob-claude
 **Done:** (Jacob) DNA shop stock is now 1-3 tubes IN TOTAL per restock, each a random tier by weight (Common 50 / Rare 30 / Epic 15 / Legendary 5): `GameConfig.G.dnaStockAll(window)` (G.DNA.TotalMin/Max, G.DNA.Weight); old per-tier Stock values are unused. Removed my DNACopyFX attempt and the Studio-only `DNATestPlot` (Jacob asked). Copy DNA hold back to 0.8 s. Saved v516
 **Next:** pigeon-claude: copy-DNA effects + the 4 DNA dev products (Jacob is sending both asks)
