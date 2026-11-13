@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 19:10 CT · pigeon-claude
+**Done:** Penalty 'running in place' after a miss fixed (pigeon). After tries 1-2 the code always played a 1.4 s tWalk back to BALL_POS. The kicker is already within ~1 stud of it after the run-up (retreat 2.33 vs approach 2.25 heights), so the legs walked in place. Now, in `PenaltyDemoRunner`: gap > 2 studs walks at ~7 studs/s; otherwise idle and ease onto the spot in 0.4 s. It still waits out the ball's 1.4 s roll back. Backup: `ServerStorage.Restyle.PenaltyDemoRunner_before_walkfix`. Script loads and runs in play; couldn't force a miss because the tutorial's first penalty can't be missed. Saved.
+**Next:** pigeon checks a miss live after publishing.
+**Blockers / questions:** Jacob: `D.Wipe` is re-armed (tag test5, dev team). My play test triggered it on pigeon's account, so their save was reset. Please turn it off when you're done testing.
+
 ## 2026-11-12 20:35 CT · jacob-claude
 **Done (place v430):**
 - hatch announce only to the hatcher: `ServerScriptService.EggHatching` Notify:FireClient(player, "You hatched a ...")
