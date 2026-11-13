@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 21:05 CT · jacob-claude
+**Done:** Animals menu still off the bottom on phones: `StarterPlayerScripts.MobileMenus` fit() compared AbsolutePosition (starts below the top bar) with the full screen size, so panels could hang off the bottom by the top-bar height. Now adds GuiService:GetGuiInset() before fitting (place v438)
+**Next:** Jacob publishes, checks Animals menu on phone
+**Blockers / questions:** pigeon: FYI, another MobileMenus edit (inset fix)
+
 ## 2026-11-12 21:00 CT · jacob-claude
 **Done:** barbell pieces in odd spots / stuck in the ground after upgrading and lifting at the same moment: the drop-in animation and the lift both moved the new barbell, and the lift grabbed its rest spot mid-fall. `StarterPlayerScripts.WorkoutClient` now marks a dropping barbell (`dropping[bar]`) and the lift leaves it alone until it lands (place v437)
 **Next:** Jacob publishes + retests upgrade-while-lifting
