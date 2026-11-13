@@ -2,6 +2,14 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 21:30 CT · jacob-claude
+**Done:** controller / console support (place v440):
+- new `StarterPlayerScripts.GamepadSupport`: D-pad left Shop / up Index / right Animals / down pointer; menus open with Roblox's gamepad cursor; B closes menus; `_G.SOA_UsingGamepad()`
+- `HUDClient` L1/R1 cycle hotbar; `HatchClient` controller places at screen centre with R2, Y turns; `LiftTapClient` R2 hits the TAP target; `PenaltyDemoRunner` R2/A kicks, either stick moves the aim, R2/A locks it (gamepad captions)
+- X = prompts (Roblox default), A = jump/stop lifting
+**Next:** Jacob tests with a controller (Studio Device Emulator or Xbox controller on PC), turns on Console in Game Settings
+**Blockers / questions:** not tested with a real controller yet
+
 ## 2026-11-12 21:15 CT · pigeon-claude
 **Done:** (pigeon asked)
 - **Skip Hatch Timer dev products** (7, priced by time left): <=1 min R$5 (3730798447), <=5 min R$15 (3730798457), <=20 min R$29 (3730798464), <=1 h R$59 (3730798473), <=2 h R$99 (3730798478), <=4 h R$149 (3730798487), <=6 h R$199 (3730798493). `GameConfig.G.Products.SkipHatch1..7` + `G.skipHatchFor(secondsLeft)`; none under 15 s left.
