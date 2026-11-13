@@ -25,6 +25,7 @@ Newest first. Each Claude adds an entry after every work session (format in [CLA
 - **`SpecialPacks` section removed.** Its two passes are now cards in the grid with the SAME names (`Boost2xCash`, `Boost2xStrength`), so `G.ShopItems`, buy, Owned and gifting work unchanged. Icons = our pack's 2x cash / 2x luck art (135475047076501, 131949817803782).
 - **Cash Packs** widened to the egg box's width (0.9728, centred 0.4864), cards 16% bigger. Canvas 3.744 -> 3.625.
 - Play-tested on PC and iPhone 13 landscape (two full pass rows fit on a phone); gift menu opens from the new cards. Backup of the old shop: `ShopMenu_v468_before_fable.rbxm` on pigeon's PC. Saved v470.
+- **Then split into two boxes** (pigeon: one purple box read as 'nothing changed'): `PassesSection.BoostPacks` (blue, title BOOSTS, 2 rows: 2x Cash, 2x Luck, Super Luck / 2x Strength, 2x Offline Cash, Mutation Hunter) and `PassesSection.PerkPacks` (orange, title PERKS, 1 row = exact egg-box size: Fast Hatch, +5 Pen Slots, Bigger Green Zone). `PassPacks` no longer exists. Fill gradients recoloured, egg Art hidden in both. Canvas 3.691. Saved v473.
 - Jacob: `StarterGui.README` still lists SpecialPacks; it's gone.
 **Next:** publish.
 **Blockers / questions:** none.
