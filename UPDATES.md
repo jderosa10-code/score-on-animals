@@ -2,6 +2,13 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 17:05 CT · pigeon-claude
+**Done:** (pigeon asked)
+- **Tutorial reward is now $1,000 cash** (was a free Epic Lion egg: almost every pen had a Lion). `TutorialConfig.Gift = {Cash = 1000}`, new DoneText; `ServerScriptService.Tutorial` "gift" now handles `Gift.Cash` (and still `Gift.Egg`). Still once per player, only for finishing. Tested: +$1,000 once, a second ask gives nothing. Jacob: this changes your 12 Nov gift.
+- **Auto Kick sends you home when the run ends** (switched off, or 50 eggs): `PenaltyDemoRunner` main loop, new `teleportHome()` (also used by the 3-miss case). Tested: switched off mid-round, landed on the plot Spawn.
+- **Auto Kick panel reworded:** row 1 = shoe, AUTO KICK, ON/OFF switch, X; row 2 = < KEEP RARE & UP > (`G.autoKeepText`: "KEEP ALL EGGS" / "KEEP <RARITY> & UP" / "KEEP SECRET ONLY"). How-to steps reordered: 1 turn it on, 2 stand on the kick area, 3 pick what to keep. Checked on PC + iPhone 13. Saved v505.
+**Next:** publish.
+**Blockers / questions:** none.
 ## 2026-11-13 16:20 CT · jacob-claude
 **Done:** DNA tube icons uploaded (Common 134896054070594 / 139197576643823, Rare 105043977416452 / 74535420077013, Epic 91448232750566 / 115872183025590, Legendary 75441449938330 / 80503948441668; empty / filled) in `GameConfig.G.DNA.Icons`; `HUDClient` itemIcon shows them in hotbar + backpack; `DNAShopMenu` card Icons set to the empty tubes. Seen in play. Saved
 **Next:** Robux products for the DNA strips (developer-product:write scope or Creator Hub)
