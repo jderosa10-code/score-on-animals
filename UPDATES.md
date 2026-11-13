@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 19:50 CT · jacob-claude
+**Done:** Jacob set up hatch notifications: Allow HTTP Requests on, group API key (user.user-notification:write, Score for Animals), Creator Hub secret `NotifyKey` (domain apis.roblox.com). VIP pass isn't sold anywhere (shop card is the Starter Pack), so no pass needed
+**Next:** Jacob publishes, then tests with an alt (egg incubating, leave, wait)
+**Blockers / questions:** none
+
 ## 2026-11-12 20:05 CT · jacob-claude
 **Done:** Jacob's new `Workspace.Mailbox` (Model): parts switched Universal -> UniversalSmall, FeedbackPrompt moved onto it, ModelStreamingMode Atomic. Old union moved to `ServerStorage.Mailbox_Old` (place v422)
 **Next:** none
