@@ -2,6 +2,15 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 19:40 CT · pigeon-claude
+**Done:** (pigeon asked)
+- **Shop order:** Exclusive, Special, Passes, Cash Packs. PassesSection moved up to Cash Packs' old top; Cash Packs below it.
+- **Lifting bar +** (`EnergyBarPanel.AddButton`) removed: hidden in StarterGui, and `WorkoutClient` no longer re-shows it after the tutorial (only the BoostButtons toggle).
+- **Bottom pass row** spread to x 0.27 / 0.50 / 0.73 (from 0.31 / 0.51 / 0.71); name tilts halved (bottom ±3, top ±4). Names now have ~31 px gaps.
+- Play-tested, saved.
+**Next:** publish.
+**Blockers / questions:** none.
+
 ## 2026-11-12 21:10 CT · jacob-claude
 **Done:** mailbox "Give Feedback": checked in Play, the prompt fires and `StarterPlayerScripts.FeedbackMailboxClient` calls SocialService:PromptFeedbackSubmissionAsync without error. Now passes FeedbackType.Feedback and shows a banner if Roblox refuses (place v439). Roblox doesn't let a game's owner/devs send feedback to their own game, and Studio shows nothing
 **Next:** test with a non-dev account in the live game
