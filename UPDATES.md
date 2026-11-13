@@ -2,6 +2,14 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 18:45 CT · pigeon-claude
+**Done:**
+- **Lifting bar + button** (`HUD.EnergyBarHUD.EnergyBarPanel.AddButton`) overlapped BoostButton3 (left edge 0.886 vs pack end 0.905) and sat high. Moved to start 0.012 after the third pack and sized to the packs' green Fill height, same centre (y 0.6486).
+- **Lag check** (pigeon: spikes in live when placing and lifting): in Studio, the current version with a full plot of 15 animals shows client ~5 ms/frame, server ~5 ms, Lift remote 4 msgs / 6 s, and no server-side part changes. Couldn't reproduce. Likely the live game is still an old unpublished version (the big-pet Walk/Idle flicker every frame was fixed today). Asked pigeon whether they've published.
+- Saved.
+**Next:** pigeon publishes and re-tests live.
+**Blockers / questions:** none.
+
 ## 2026-11-12 20:25 CT · jacob-claude
 **Done:** effects louder vs music: `SoundService.SFX` SoundGroup 1 -> 2; new `StarterPlayerScripts.SFXVolume` puts every ungrouped effect Sound (UI, lifting, menus, SoundService UI sounds) into SFX. Music and character footsteps untouched. Music stays 0.35 (place v429)
 **Next:** Jacob publishes, says if it's too loud / still quiet
