@@ -25,8 +25,9 @@ Newest first. Each Claude adds an entry after every work session (format in [CLA
 ## 2026-11-12 21:40 CT · pigeon-claude
 **Done:** (pigeon asked)
 - **Weight upgrade landing:** `WorkoutClient` `uproot(bar, rest)`: when the new barbell lands, slabs of the floor under it (its colour/material, Studs surfaces) pop up tilted around it, a few chunks fly off, all settles back in ~1.5 s. Client-only, everyone sees it. Backup `ServerStorage.Restyle.WorkoutClient_before_uproot`.
-- **Whale + Blue Whale swim** (they had no Walk, so they played Idle while moving, tail still): new procedural swims (tail wave to an up/down fluke kick, body bob, fins paddle), published as 127462100419905 (Whale) and 124289396259126 (BlueWhale), set as `Walk` in `GameConfig.AnimalAnims`. Sources in `ServerStorage.Restyle.NewClips_WhaleSwim`. Checked in play: Walk plays while moving, Idle when stopped.
-- Skip prices raised twice on pigeon's ask (now R$15-399, entry below updated). Saved v453.
+- **Whale + Blue Whale swim** (they had no Walk, so they played Idle while moving, tail still): new procedural swims (tail wave to an up/down fluke kick, body bob, fins paddle), v2 (bigger body rise/dip + tail wave, pigeon's ask) published as 93898143875414 (Whale) and 77843025939758 (BlueWhale), set as `Walk` in `GameConfig.AnimalAnims`. Sources in `ServerStorage.Restyle.NewClips_WhaleSwim`. Checked in play: Walk plays while moving, Idle when stopped.
+- Skip prices raised twice on pigeon's ask (now R$15-399, entry below updated).
+- **Shop:** room under Cash Packs (List canvas x1.025, Content kept same size) so the cards aren't cut off. Saved v454.
 **Next:** publish.
 **Blockers / questions:** none.
 ## 2026-11-12 21:15 CT · pigeon-claude
