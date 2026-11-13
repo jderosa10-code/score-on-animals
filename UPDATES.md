@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 22:40 CT · jacob-claude
+**Done:** `Workspace.MutationMachine.GuiPart.BillboardGui.TextLabel` text -> "DNA COPY MACHINE" (place v464). StarterGui.ShowDevelopmentGui is off for Jacob's screenshots (editor only)
+**Next:** unhide UI when Jacob is done
+**Blockers / questions:** none
+
 ## 2026-11-12 21:50 CT · jacob-claude
 **Done (Jacob: "do all the clean ups"), place v455:**
 - test wipe OFF: `ServerScriptService.GameData` D.Wipe.Off = true (wipeMe returns false). To test again: Off = false + new Tag
