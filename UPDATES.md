@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 20:50 CT · jacob-claude
+**Done:** tutorial-complete message waited until the next kick: closing Egg Luck only hides `UpgradesPanel` (UpgradesMenu stays Enabled). `StarterPlayerScripts.TutorialClient` now waits for Enabled AND panel visible to end (place v435)
+**Next:** Jacob publishes + retests the tutorial end
+**Blockers / questions:** none
+
 ## 2026-11-12 20:45 CT · jacob-claude
 **Done (place v433):**
 - Animals panel off the bottom of phones: `StarterPlayerScripts.MobileMenus` (pigeon's) now re-fits when a panel child shows/hides (EQUIP BEST appears after opening) and may shrink to 0.6 when a panel doesn't fit
