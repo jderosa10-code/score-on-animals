@@ -22,6 +22,13 @@ Newest first. Each Claude adds an entry after every work session (format in [CLA
 **Next:** Jacob tests with a controller (Studio Device Emulator or Xbox controller on PC), turns on Console in Game Settings
 **Blockers / questions:** not tested with a real controller yet
 
+## 2026-11-12 21:40 CT · pigeon-claude
+**Done:** (pigeon asked)
+- **Weight upgrade landing:** `WorkoutClient` `uproot(bar, rest)`: when the new barbell lands, slabs of the floor under it (its colour/material, Studs surfaces) pop up tilted around it, a few chunks fly off, all settles back in ~1.5 s. Client-only, everyone sees it. Backup `ServerStorage.Restyle.WorkoutClient_before_uproot`.
+- **Whale + Blue Whale swim** (they had no Walk, so they played Idle while moving, tail still): new procedural swims (tail wave to an up/down fluke kick, body bob, fins paddle), published as 127462100419905 (Whale) and 124289396259126 (BlueWhale), set as `Walk` in `GameConfig.AnimalAnims`. Sources in `ServerStorage.Restyle.NewClips_WhaleSwim`. Checked in play: Walk plays while moving, Idle when stopped.
+- Skip prices raised twice on pigeon's ask (now R$15-399, entry below updated). Saved v453.
+**Next:** publish.
+**Blockers / questions:** none.
 ## 2026-11-12 21:15 CT · pigeon-claude
 **Done:** (pigeon asked)
 - **Skip Hatch Timer dev products** (7, priced by time left): <=1 min R$15 (3730798447), <=5 min R$35 (3730798457), <=20 min R$59 (3730798464), <=1 h R$119 (3730798473), <=2 h R$199 (3730798478), <=4 h R$299 (3730798487), <=6 h R$399 (3730798493) (raised on pigeon's ask). `GameConfig.G.Products.SkipHatch1..7` + `G.skipHatchFor(secondsLeft)`; none under 15 s left.
