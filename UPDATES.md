@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 21:10 CT · jacob-claude
+**Done:** mailbox "Give Feedback": checked in Play, the prompt fires and `StarterPlayerScripts.FeedbackMailboxClient` calls SocialService:PromptFeedbackSubmissionAsync without error. Now passes FeedbackType.Feedback and shows a banner if Roblox refuses (place v439). Roblox doesn't let a game's owner/devs send feedback to their own game, and Studio shows nothing
+**Next:** test with a non-dev account in the live game
+**Blockers / questions:** none
+
 ## 2026-11-12 21:05 CT · jacob-claude
 **Done:** Animals menu still off the bottom on phones: `StarterPlayerScripts.MobileMenus` fit() compared AbsolutePosition (starts below the top bar) with the full screen size, so panels could hang off the bottom by the top-bar height. Now adds GuiService:GetGuiInset() before fitting (place v438)
 **Next:** Jacob publishes, checks Animals menu on phone
