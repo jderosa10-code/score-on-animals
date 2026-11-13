@@ -2,6 +2,17 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 20:10 CT · jacob-claude
+**Done (Jacob's playtest notes, place v426):**
+- music 35%: `StarterPlayerScripts.MusicPlayer` VOLUME 0.35; `SoundService.SFX` SoundGroup 0.5 -> 1 (effects normal)
+- mobile pet placing: `StarterPlayerScripts.HatchClient` taps (TouchTapInWorld) place exactly where tapped; mouse unchanged
+- boost bar no longer covers STOP: `StarterGui.HUD.LiftTapHUD.LiftTapClient` pushes BoostBar below StopButton
+- tutorial text below Roblox's top bar on phones: `TutorialClient` placeText(); Egg Luck menu labels TextWrapped off (`StarterGui.Menus.UpgradesMenu`) so values stay on one line
+- tutorial end: waits for UpgradesMenu to close, then DoneText + gift (`TutorialConfig.Gift` = Lion egg, `ServerScriptService.Tutorial` "gift", once, finishers only)
+- progress reset: D.Wipe tag "2026-11-12-test4"
+**Next:** Jacob publishes + retests on phone
+**Blockers / questions:** pigeon: your save resets once more on next join
+
 ## 2026-11-12 19:50 CT · jacob-claude
 **Done:** progress reset for testing (Jacob): `ServerScriptService.GameData` D.Wipe tag -> "2026-11-12-test3" (Jacob's test account + group rank 2+, once each on next join) (place v423)
 **Next:** Jacob publishes and playtests
