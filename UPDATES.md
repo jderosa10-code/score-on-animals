@@ -2,6 +2,14 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 17:40 CT · pigeon-claude
+**Done:** (pigeon: the Auto Kick panel and how-to card "can look better") restyled both from kit pieces, place v509
+- `StarterGui.AutoKickHUD.AutoKickPanel`: plate = copies of `SideButtonsPanel.ShopButton` Fill + Pattern (teal gradient, white inner stroke, black outline), keep row in its own dark strip (`KeepBack`), shoe tilted on the corner. `AutoKickTab` uses the same plate.
+- `HowToPanel`: built like `Popups.ConfirmPopup` (copies of its Backdrop + TopBar: teal title bar, shoe icon, red X that closes it like GOT IT), three purple step strips (copies of ConfirmPopup NoFill / NoPattern) with yellow numbers.
+- Pattern tiles are square everywhere (kit rule found by measuring: `TileSize.X = TileSize.Y * height / width`), texture at 0.6 transparency on the big plates.
+- `AutoKickClient`: the card's X closes it; the panel hides while the card is open (they overlapped on phones). Checked on PC + iPhone 13.
+**Next:** publish.
+**Blockers / questions:** none.
 ## 2026-11-13 17:00 CT · jacob-claude
 **Done:** DNA copies are claimed by walking onto the green pad `Workspace.MutationMachine.Collect` (server Touched in `DNAMachine`, no Collect prompt any more). Its text is per player (`DNAClient`): EMPTY / "LION 7:25" / "CLAIM LION". Tested: countdown, CLAIM, stepped on -> got the Lion, back to EMPTY. Saved
 **Next:** Jacob checks the on-screen DNA parts and publishes
