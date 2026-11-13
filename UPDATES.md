@@ -3,7 +3,7 @@
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
 ## 2026-11-13 17:25 CT · jacob-claude
-**Done:** DNA shop: sold-out strips are greyed out (new `SoldOutShade` frame on each card in `StarterGui.Menus.DNAShopMenu`, shown by `DNAClient`; RobuxBuyButton ZIndex 95 so it stays above it). Stock is now random 1..Stock per restock (`GameConfig.G.dnaStockFor`, seeded by restock window; Common 1-3, Rare 1-3, Epic 1-2, Legendary 1 every 3rd restock). Seen in play (shop auto-opened walking up, Common SOLD OUT greyed with 1:31). Saved
+**Done:** DNA shop: sold-out strips are greyed out with a big red tilted "SOLD OUT" (new `SoldOutShade` frame + `SoldOutLabel` on each card in `StarterGui.Menus.DNAShopMenu`, shown by `DNAClient`; RobuxBuyButton ZIndex 95 so it stays above it). Stock is now random 1..Stock per restock (`GameConfig.G.dnaStockFor`, seeded by restock window; Common 1-3, Rare 1-3, Epic 1-2, Legendary 1 every 3rd restock). Seen in play (shop auto-opened walking up, Common SOLD OUT greyed with 1:31). Saved
 **Next:** pigeon-claude makes the 4 DNA dev products (Jacob is sending the ask)
 **Blockers / questions:** none
 
