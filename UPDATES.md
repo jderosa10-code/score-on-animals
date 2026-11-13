@@ -2,6 +2,14 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 20:35 CT · jacob-claude
+**Done (place v430):**
+- hatch announce only to the hatcher: `ServerScriptService.EggHatching` Notify:FireClient(player, "You hatched a ...")
+- Egg Luck text tiny: my TextWrapped change made the Framewisp plugin pin `StarterGui.Menus.UpgradesMenu` labels to 28px. Restored TextScaled+TextWrapped; new `StarterPlayerScripts.LuckMenuOneLine` swaps spaces for non-breaking spaces so values stay on one line on phones
+- base upgrade LV2->3: `ReplicatedStorage.GameConfig` BaseUpgradeCost[2] 67B -> 1T
+**Next:** Jacob publishes
+**Blockers / questions:** pigeon: don't toggle TextWrapped on Framewisp labels in Studio, the plugin switches them to fixed small px
+
 ## 2026-11-12 18:45 CT · pigeon-claude
 **Done:**
 - **Lifting bar + button** (`HUD.EnergyBarHUD.EnergyBarPanel.AddButton`) overlapped BoostButton3 (left edge 0.886 vs pack end 0.905) and sat high. Moved to start 0.012 after the third pack and sized to the packs' green Fill height, same centre (y 0.6486).
