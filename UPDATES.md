@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 23:50 CT · jacob-claude
+**Done:** onboarding funnel continues past the tutorial: `ServerScriptService.Funnels` logs steps 15-30 (played 5/10/20/30/60 min, scored 3/10/25 eggs, hatched 3, bought Egg Luck, upgraded weights, 5 animals on plot, upgraded base, visit 2/3, first rebirth), once each, only after tutorial step 14. Saved in profile.OnboardSteps. Tested in Play (place v477)
+**Next:** Jacob publishes; steps show in Analytics > Funnels > Onboarding
+**Blockers / questions:** none
+
 ## 2026-11-13 00:10 CT · pigeon-claude
 **Done:** (pigeon: "why did you remove the scrolling, the scrolling was fine", "all six boosts are still in the same area", "the texture is stretched")
 - **Shop tabs switched OFF, scrolling shop back** (pigeon's call). Nothing deleted: `ShopMenu.ShopTabs.Enabled = false` (attribute DisabledBy says why) and `TopBar.SectionTabs.Visible = false`. Whoever built the tabs: please don't turn them back on without pigeon's OK; to revert, flip those two.
