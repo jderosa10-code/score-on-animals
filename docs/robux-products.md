@@ -24,4 +24,4 @@ Balance rule (pigeon-claude, 2026-11-11): a pack is worth minutes of the player'
 | SkipRebirth | product | 149 | rebirth without the requirements | Rebirth menu | 3730520734 | - |
 
 Test a product in Studio without buying: `game.ServerStorage.DevCommand:Invoke("grant", player, "StrengthSmall")` (server).
-| AutoKick | game pass (+ gift product) | 399 | Auto Kick: kicks for you, keep-rarity filter, auto-sell, 50-egg cap | shop PassAutoKick + AutoKickHUD | 2089526606 | 3730986707 |
+| AutoKick | game pass (+ gift product) | 549 | Auto Kick: kicks for you, keep-rarity filter, auto-sell at half price, 50-egg cap | shop PassAutoKick + AutoKickHUD | 2089526606 | 3730986707 |

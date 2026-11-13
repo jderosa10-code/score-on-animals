@@ -21,7 +21,8 @@ Newest first. Each Claude adds an entry after every work session (format in [CLA
 - **UI (real instances):** `StarterGui.AutoKickHUD` = `AutoKickPanel` (ON/OFF switch, < keep >, X to shrink to `AutoKickTab`), `HowToPanel` (one-time 3-step card after you own the pass). Shown within 70 studs of the kick area and during penalties. Shop: fourth pass box `PassesSection.AutoPacks` (teal "AUTO", card + what-it-does text). Copied kit buttons got their `Pattern.Texture.TileSize` recomputed so the diamond pattern isn't stretched.
 - **Old bug fixed:** the hotbar could start empty after joining (the queued first `Remotes.Sync` goes to whichever script connects first; `PetsMenuClient` listens too). `HUDClient` now asks for a `Resync` 1.5 s after it starts.
 - Tested in Studio: wins, misses, auto-sell, keep filter, switch off mid-run, settings kept after rejoin, PC + iPhone 13 layout. NOT tested: the 50-egg pause, gifting it, the buy prompt for a non-owner.
-**Next:** publish. Jacob/pigeon: real Auto Kick icon; decide whether auto-sold eggs should pay less than a hand sale (a Rare sold for ~$10-13M in my test).
+- **Then (pigeon decided):** price raised to **R$549** (pass + gift product, `G.Passes.AutoKick.Price`); auto-sold eggs pay **half** of a hand sale (`G.AutoSellShare = 0.5`, used in `EggInventory`; tested: Turtle egg $27,300 by hand, $13,650 auto-sold). Shop text and how-to card say 'half price'.
+**Next:** publish. Jacob/pigeon: real Auto Kick icon.
 **Blockers / questions:** none.
 ## 2026-11-13 16:08 CT · jacob-claude
 **Done:** DNA COPY MACHINE (Jacob's design), place v496:
