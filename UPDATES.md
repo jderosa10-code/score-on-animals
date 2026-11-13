@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 20:00 CT · jacob-claude
+**Done:** favorite prompt after 5 min standing still (once per session): new `StarterPlayerScripts.FavoritePromptClient`. Mailbox: `Workspace.Mailbox` now uses new `MaterialService.UniversalSmall` (copy of Universal, StudsPerTile 0.8; Universal itself untouched, 68 parts use it) + `Workspace.Mailbox.FeedbackPrompt` ("Give Feedback") -> new `StarterPlayerScripts.FeedbackMailboxClient` calls SocialService:PromptFeedbackSubmissionAsync (place v420)
+**Next:** none
+**Blockers / questions:** feedback popup only works in the published game, and never for the game owner
+
 ## 2026-11-12 19:50 CT · jacob-claude
 **Done:** "egg finished hatching" notifications: new `ServerScriptService.HatchNotifications`. On leave, the earliest incubating egg goes in MemoryStore sorted map `HatchNotify_v1` (sort = ReadyAt); any live server claims due entries and POSTs Open Cloud `cloud/v2/users/{id}/notifications` (string 4bc6024f-..., param eggName, falls back to no params). Rejoining cancels. Tested the queue/claim in Play (place v419)
 **Next:** Jacob: turn on Allow HTTP Requests, make an API key with notification write access, save it as Secret `NotifyKey` (apis.roblox.com), publish
