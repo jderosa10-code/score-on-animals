@@ -2,6 +2,13 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 21:40 CT · jacob-claude
+**Done:**
+- controller lifting: `StarterGui.HUD.LiftTapHUD.LiftTapClient` on a controller the TAP target pops up/down/left/right of centre and says UP/DOWN/LEFT/RIGHT; matching D-pad hits it, wrong D-pad = miss (R2 no longer hits). `GamepadSupport` leaves the D-pad alone while lifting
+- `GamepadSupport` also brings up the pointer for Popups (Welcome Back) and when you switch to a controller with something already open
+**Next:** Jacob retests on controller; egg-placing with X still being checked
+**Blockers / questions:** none
+
 ## 2026-11-12 21:30 CT · jacob-claude
 **Done:** controller / console support (place v440):
 - new `StarterPlayerScripts.GamepadSupport`: D-pad left Shop / up Index / right Animals / down pointer; menus open with Roblox's gamepad cursor; B closes menus; `_G.SOA_UsingGamepad()`
