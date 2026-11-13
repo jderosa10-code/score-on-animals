@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-12 19:20 CT · jacob-claude
+**Done:** progression funnels after the tutorial: new `ServerScriptService.Funnels` (one-time custom funnels via AnalyticsService:LogFunnelStepEvent, each step once per player, saved in profile.Stats / profile.FunnelSteps): Return Visits, Total Playtime, Eggs Scored, Animals Hatched, Weights Upgrades (one step per barbell), Egg Luck Level, Rebirths. Hooks `_G.SOA_FunnelAdd/Set` added in `EggInventory` (scored), `EggHatching` (hatched), `Workout` (barbell), `GameServer` (luck, rebirth). Tested in Play: counters + steps fill (place v415)
+**Next:** data shows on Creator Hub after publish + real players
+**Blockers / questions:** none
+
 ## 2026-11-12 19:05 CT · jacob-claude
 **Done:** release scan + cleanup (place v414). Removed temp `Workspace._BaconKicker` (thumbnail rig), empty `Workspace.KeeperTest` / `RestylePreviews`, 11 old build-log attributes on Workspace (they replicated to every player). Moved `ReplicatedStorage.Showcases` (20K instances, only the disabled `AnimPreview` uses it) to `ServerStorage.Showcases` so players don't download it. Fixed `AdminPanelClient` error (`pages.Active` read the Frame.Active boolean; ACTIVE tab was broken). 0 compile errors across all scripts. Closed issues #18-20.
 **Next:** release checklist for Jacob (D.Wipe off, VIP pass id, etc.)
