@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 08:25 CT · jacob-claude
+**Done:** (via Jacob's command bar, Studio connection still down) controller movement broke overnight: Roblox's PlayerModule no longer loads in PlayerScripts (WASD still works). New `StarterPlayer.StarterPlayerScripts.GamepadMove` does it ourselves: left stick walks, right stick turns the camera, A jumps, B (or A) stops lifting. Jacob tested: works. `EggPreload` fixed (preloads egg parts directly; scripts can't read texture ids)
+**Next:** Jacob saves + publishes; when Studio reconnects: check `PenaltyDemoRunner` line ~241 (`controls:Disable()` finds no PlayerModule, so movement isn't locked while kicking), find what uses `rbxassetid://203785492` (wrong asset type)
+**Blockers / questions:** pigeon: if you touch movement/camera, note the PlayerModule is missing at runtime
+
 ## 2026-11-13 08:00 CT · jacob-claude
 **Done:** (Jacob ran my command-bar script in Studio, since the Studio connection is down) `StarterPlayer.StarterPlayerScripts.MobileMenus`: menus now fit and stay below Roblox's top buttons on phones (Sell menu overlap, Animals menu Equip Best cutoff). New `StarterPlayer.StarterPlayerScripts.EggPreload`: downloads every egg mesh/texture right after joining, so eggs walking out aren't invisible with only VFX showing on phones
 **Next:** Jacob saves + publishes; then phone UI pass for other cut-off icons/menus (needs screenshots), post-tutorial goal chain for minutes 5-10
