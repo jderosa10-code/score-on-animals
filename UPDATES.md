@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 15:50 CT · jacob-claude
+**Done:** Studio connection back. `ReplicatedStorage.DevDemo.PenaltyDemoRunner`: new preloadEggs() before the mystery walk-out downloads the eggs it can show (+ the winner, waits max 3 s, first time only); pick() only flicks through eggs that finished loading, so phones no longer show VFX with no egg. Checked: kick already locks movement (WalkSpeed 0 + anchored), GamepadMove respects that. Saved v491
+**Next:** Jacob publishes; he says the phone menus look fixed after this morning's MobileMenus change
+**Blockers / questions:** none
+
 ## 2026-11-13 08:25 CT · jacob-claude
 **Done:** (via Jacob's command bar, Studio connection still down) controller movement broke overnight: Roblox's PlayerModule no longer loads in PlayerScripts (WASD still works). New `StarterPlayer.StarterPlayerScripts.GamepadMove` does it ourselves: left stick walks, right stick turns the camera, A jumps, B (or A) stops lifting. Jacob tested: works. `EggPreload` fixed (preloads egg parts directly; scripts can't read texture ids)
 **Next:** Jacob saves + publishes; when Studio reconnects: check `PenaltyDemoRunner` line ~241 (`controls:Disable()` finds no PlayerModule, so movement isn't locked while kicking), find what uses `rbxassetid://203785492` (wrong asset type)
