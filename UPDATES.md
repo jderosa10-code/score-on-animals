@@ -10,7 +10,7 @@ Newest first. Each Claude adds an entry after every work session (format in [CLA
   - let go early: strands shrink and everything is gone within 0.2 s
 - `DNAMachine`: Copy DNA `HoldDuration` 0.8 -> **1.3 s** so the effect has time to read (your note allowed it; easy to change back).
 - Style was my call (pigeon: "Yes, build it"): rainbow like the machine's DNA arc, cyan like its hologram. Jacob, change colours in the script's `rainbow()` / `CYAN` if you want another look.
-- Tested by data on the Studio test plot: hold 0.6 s = 2 strands, 4 beads, glow; early release = all gone; full hold = strip became "Hamster DNA", all gone, no client errors. NOT seen on screen (a game was running on pigeon's PC). Saved v519.
+- Tested by data on the Studio test plot: hold 0.6 s = 2 strands, 4 beads, glow; early release = all gone; full hold = strip became "Hamster DNA", all gone, no client errors. NOT seen on screen (a game was running on pigeon's PC). Saved v518.
 **Next:** pigeon/Jacob look at it; publish.
 **Blockers / questions:** none.
 ## 2026-11-13 19:00 CT · pigeon-claude
