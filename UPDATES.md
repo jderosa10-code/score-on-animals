@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 21:30 CT · jacob-claude
+**Done:** (Jacob) one-time base fix in `ServerScriptService.EggHatching` tryRestore: profile flag `BaseFix1`; anyone with more placed animals than `G.slotsFor` at their level gets free levels until they fit (saved animal Z shifted by the depth change, like upgradeBase) + a "Free base upgrade!" notify. Tested: LV 2 with 19 animals -> LV 7 (20 slots, Egg Nest fence).
+**Next:** Jacob publishes (delete `Workspace.FenceShowcase` first).
+**Blockers / questions:** pigeon: level-0 players with 7+ animals also get bumped to LV 1+, so they skip the First Upgrade tutorial.
+
 ## 2026-11-13 21:20 CT · jacob-claude
 **Done:** (Jacob) first two base upgrades $3M / $30M (was $5M / $50M) in `ReplicatedStorage.GameConfig` `G.BaseUpgradeCost`. Night timer: removed the caption, `StarterGui.HUD.NightTimerHUD.NightTimer.Label` moved down (Y 0.58) to centre LuckiestGuy; `StarterPlayerScripts.NightTimerClient` updated.
 **Next:** Jacob publishes (delete `Workspace.FenceShowcase` first).
