@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 16:20 CT · jacob-claude
+**Done:** (Jacob) BUY THE EGG YOU MISSED: miss a Rare-or-better egg -> `StarterGui.BuyEggPopup` (copy of the Welcome Back popup, shorter, top of screen) for 12 s with the egg + BUY R$xx. `ReplicatedStorage.BuyEggOffer` (client), called non-blocking from `PenaltyDemoRunner` after a miss. `EggInventory` remembers the missed egg (`_G.SOA_BuyMissedEgg`), `GameServer` receipt (`pr.BuyMissed`) gives it (fallback: random egg of that rarity). `GameConfig`: G.BuyMissedSeconds/MinRank, G.buyMissedRank/Product, 8 products BuyMissedRare..Secret (25/49/99/149/199/299/399/499, mutated = +1 tier). (A kick-again version was built first and removed.) Saved v657.
+**Next:** the 8 developer products need creating (Ids are 0, so nothing shows yet).
+**Blockers / questions:** Open Cloud scope `developer-product:write` isn't granted for the Assistant, so I couldn't create them.
+
 ## 2026-11-14 16:10 CT · jacob-claude
 **Done:** (Jacob) a copy of the disco ball in `Workspace.DiscoBall` (placed in front of his Studio camera, for him to move). Spins via `StarterPlayerScripts.DiscoBallClient`. Saved v650.
 **Next:** -
