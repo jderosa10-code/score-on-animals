@@ -2,6 +2,14 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 12:00 CT · jacob-claude
+**Done:**
+- (Jacob) Hatch push notification: still ONE per leave, now timed for when MOST eggs are ready (more than half), not the first. Sends with no egg name first ("Your eggs are ready!"), falls back to {eggName} if the Creator Hub string still has it. `ServerScriptService.HatchNotifications`. Jacob edits the string in Creator Hub > Notifications > Creations > Edit.
+- Tutorial step 7 (Egg Luck): closing the menu without buying now says "Go back into the Egg Luck tent and get your FREE Egg Luck!" with the arrows back to the tent; the arrow no longer points at a closed menu; it only skips ahead without buying if you can't afford it. `StarterPlayerScripts.TutorialClient`.
+- Tutorial text vanishing: other scripts share the admin banner; TutorialClient now re-shows its text if the banner shows anything else or is hidden (twice a second max), and `HUD.NotificationsHUD.Notify` fades the banner back in if new text arrives mid fade-out. Saved.
+**Next:** Jacob publishes + edits the notification string.
+**Blockers / questions:** Creator Hub shows 44 opted in but 0 notification impressions in 28 days, so none have been delivered yet (NotifyKey secret exists, HTTP on). Worth checking Error Reports for "HatchNotifications:" warnings. Tutorial changes not playtested (a playtest would trigger Jacob's wipe).
+
 ## 2026-11-14 11:40 CT · jacob-claude
 **Done:**
 - (Jacob) Reset ONLY Jacob's save: `ServerScriptService.GameData` `D.Wipe` on, Tag "2026-11-14-jacob1", ids = {Jacob}, MinGroupRank = math.huge (no one else, not pigeon). Happens once on his next join (Studio or live).
