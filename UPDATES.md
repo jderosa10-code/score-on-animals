@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 23:58 CT · jacob-claude
+**Done:** (Jacob) 1 kick per egg instead of 3. New `ReplicatedStorage.GameConfig` `G.KickTries = 1`; `ReplicatedStorage.DevDemo.PenaltyDemoRunner` kick loop + lucky check and `ServerScriptService.EggInventory` pity use it. The lucky gift (85-95% of rounds when strong enough, always in tutorial / LUCKY EGG) now applies to that one kick.
+**Next:** Jacob decides if the lucky gift should stay on the single kick.
+**Blockers / questions:** pigeon: this changes the core loop (Jacob's call). PenaltyKick funnel steps for kick 2/3 will now be empty.
+
 ## 2026-11-13 23:41 CT · jacob-claude
 **Done:** Fixed 2 of the 3 live error reports.
 - "AnimationTrack limit of 64 exceeded": every equip of a held animal loaded a NEW idle track on `<Tool>.HeldAnim` (on every screen). `StarterPlayerScripts.HatchClient` idleFor now loads once per tool and reuses it (`toolIdle`, freed on Destroying); setupAnimal can't run twice for one model (`settingUp`). Tested: 70 equips, 1 track playing, no warning.
