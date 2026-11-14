@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 21:55 CT · jacob-claude
+**Done:** (Jacob) animal count on the Animals button: `StarterGui.HUD.AnimalsButtonHUD.AnimalsButtonPanel.PetsButton.CountBadge` (LuckiestGuy, tilted 15°, top-right) + `StarterPlayerScripts.AnimalsCountBadge` (PlacedCount / `G.slotsFor` at plot Level, red when full). Saved v554.
+**Next:** Jacob publishes (delete `Workspace.FenceShowcase` first).
+**Blockers / questions:** none
+
 ## 2026-11-13 21:45 CT · jacob-claude
 **Done:** (Jacob) DNA shop SOLD OUT fix: `StarterGui.Menus.DNAShopMenu` cards had different child ZIndexes (Epic's went past the shade's fixed 180), so each card's `SoldOutShade` is now above all its siblings and `RobuxBuyButton` above the shade. UpgradeSign moved by the front gate on all 4 plots (copied Jacob's Plot1 spot); `ServerScriptService.PlotLevels` no longer moves it. Upgrade touch: `EggHatching` sets plot attr `UpgradedAt`; new `StarterPlayerScripts.BaseUpgradeFX` (LevelUp bursts around the fence, Confetti at the sign, LevelUpSound + ConfettiPop for the owner). `StarterPlayerScripts.DNAMachineFX`: hum ~60% quieter, one-shots at half volume. Saved v553.
 **Next:** Jacob publishes (delete `Workspace.FenceShowcase` first).
