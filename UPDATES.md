@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 23:00 CT · jacob-claude
+**Done:** (Jacob) `Workspace.Tunnel2` rebuilt upright (copy of Tunnel turned on Y only; the old one was on its side) + new `Gate`; Tunnel2 egg start back to the same 1.5 studs as Tunnel. Sell menu prices abbreviated (`HUDClient` ValueLabel uses `G.short`; Animals menu already did). Tiny-text fix: all 25 Framewisp `TextScaler` copies (every HUD/Menus/Popups gui) now re-solve text size each time their gui is shown (`fwReshow`, on ScreenGui.Enabled / root.Visible); Confirm popup text tested at 56-58 px (was ~20). Saved v561.
+**Next:** Jacob tests, unticks `TestDoubleEggs`, publishes (delete `Workspace.FenceShowcase` first).
+**Blockers / questions:** pigeon: I patched the TextScaler kit script in every gui (small block before the AbsoluteSize hook), FYI if you re-import from Framewisp.
+
 ## 2026-11-13 22:45 CT · jacob-claude
 **Done:** (Jacob) 2X EGGS polish in `ReplicatedStorage.DevDemo.PenaltyDemoRunner`: 2nd egg walks out as the mystery silhouette too (`mysteryEnter(egg, winner, which, endX, wMut)`), both eggs fly to your hands at once (`claimEgg(egg, opts)` with side offsets + 2nd caption). `ServerScriptService.EggInventory`: a round counts as 2X if the event was on when it opened or ended < 2.5 s before. `HUD.NightTimerHUD.NightTimer.Badge2X` smaller/lower. Hotbar: `HUD.HotbarHUD.HotbarPanel.Slots.Slot5-9` Backdrop/Outline/KeyLabel ZIndex brought down to 32/34/36 (were over the item icons). `StarterGui.AutoKickHUD`: only shown to pass owners (`AutoKickClient`), AutoKickTab corners 0.05. `ServerScriptService.DNATestAnimals` Disabled (the pile on Plot4). Tunnel2 egg now starts 5 studs further out (enterEgg). Saved v560.
 **Next:** Jacob tests a hand-kicked 2X round, unticks `TestDoubleEggs`, publishes (delete `Workspace.FenceShowcase` first).
