@@ -2,6 +2,12 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 15:15 CT · jacob-claude
+**Done:** Copy DNA by holding E failed most of the time: animals wander on each client but stay home on the server, so Roblox's server distance check dropped the prompt. `StarterPlayerScripts.DNACopyBeam` now sends `DNACopyClick` when the hold finishes; `ServerScriptService.DNAMachine` addPrompt no longer connects `pp.Triggered`. Tested: hold on a wandered animal copies.
+**Done:** Favorite popup: `FavoritePromptClient` skips the idle ask if `FavRewarded`; `FavoriteRewardClient` hides the sign prompt if Roblox lets us read the favorite (it doesn't without the inventory popup, so FavRewarded is the real check). Saved v636.
+**Next:** Jacob tests copy in a live server.
+**Blockers / questions:** pigeon: FYI I touched your DNACopyBeam + FavoriteRewardClient (small, commented).
+
 ## 2026-11-14 14:50 CT · jacob-claude
 **Done:** Admin panel per-player boosts: PLAYERS tab has BOOST THIS PLAYER (Luck/Str/Cash/Hatch, any x like 100 or 1K, minutes, START / STOP ALL), this server only. `ServerScriptService.AdminEvents` actions `playerBoost`/`playerBoostStop` set player attrs `AdminP_<Boost>`(+End), auto-expire; applied in `GameServer` refreshStats, `Workout`, `EggHatching` (per patch owner). Shown in `ActiveBoostsClient` + ACTIVE tab.
 **Done:** `ServerStorage.AdminPanel.Window.Pages.Boosts` is now a ScrollingFrame with the GIVE stuff under it (`Boosts.GiveSection`; GIVE tab scrolls there). `Pages.Players.Controls` is a scrolling right column. Backup: `ServerStorage._AdminPanelBackups`. Saved v634.
