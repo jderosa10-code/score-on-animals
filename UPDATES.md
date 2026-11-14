@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 12:15 CT · jacob-claude
+**Done:** (Jacob) First Common DNA strip is FREE for players who never got a strip (cash or Robux): `ServerScriptService.DNAMachine` freeCommon (profile DNA.FreeUsed), works even if short on cash or sold out, doesn't use stock; `StarterPlayerScripts.DNAClient` shows "FREE" on the Common card's cash button and hides its sold-out shade until it's used. Saved. Not playtested (Jacob's one-time wipe is armed).
+**Next:** publish.
+**Blockers / questions:** none
+
 ## 2026-11-14 12:10 CT · jacob-claude
 **Done:** (Jacob) Long top-banner messages (tutorial lines) wrap onto two lines when wider than 3/4 of the screen: `HUD.NotificationsHUD.Notify` (AdminMessage only) widens the label to ~half the text, top-aligns it, wraps; line 1 stays where the single line was, line 2 goes below (never up under Roblox's top bar). `TutorialClient.placeText` reads the top-aligned text top. Short messages unchanged. Checked the look in Studio. Saved v615.
 **Next:** publish.
