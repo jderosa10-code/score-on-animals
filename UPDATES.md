@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 18:55 CT · jacob-claude
+**Done:** (Jacob: Roblox "egg hatched" notifications not arriving) `ServerScriptService.HatchNotifications`: Open Cloud body now uses the docs' snake_case names (message_id, string_value, join_experience.launch_data, analytics_data); it sent camelCase before. `EggHatching`: the opt-in popup now also fires every 10th egg placed (was only the 5th, once ever). Couldn't send a test myself (Assistant lacks user.user-notification:write). Saved
+**Next:** publish, then Jacob tests: place an egg with a long timer, leave, wait; if still nothing, check Creator Hub Error Report for "HatchNotifications: <code>"
+**Blockers / questions:** none
+
 ## 2026-11-13 18:45 CT · jacob-claude
 **Done:** (Jacob: eggs closer to your luck level more often) `GameConfig` G.LuckBelow / G.LuckAbove 14 / 3.5 -> **7 / 3** (used by `G.rollWeight` -> EggRoll.pick + the odds text). Measured at luck x3 / x10 / x40: rolls within 5 ranks of your centre 46/34/39% -> 67/57/59%; 20+ ranks below 18/21/17% -> 3/5/3%. Saved. Also checked Jacob's tilted GoblinShark: upright in current Studio (the earlier WorldPivot fix), so the live game just needs a publish
 **Next:** publish
