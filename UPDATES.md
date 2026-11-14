@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 00:30 CT · jacob-claude
+**Done:** (Jacob, from the playtime funnel: 38% leave between 2 and 5 min) **LUCKY EGG**: `ServerScriptService.EggInventory` RollEgg gives a new player (3-9 eggs scored, once: profile.LuckyEggDone set when it's scored; never in tutorial / Auto Kick) an egg one rarity tier above their usual that their Strength can beat, no mutation, 3rd kick guaranteed. Player attr `LuckyEgg` during the round; `ReplicatedStorage.DevDemo.PenaltyDemoRunner` shows a rainbow "LUCKY EGG!" with Rainbow/Sparkles bursts, PerfectSting + crowd gasp. Tested: Legendary-tier account got Mythic eggs (Pegasus, Stymphalian). Saved v577.
+**Next:** Jacob publishes; watch Total Playtime 2->5 min.
+**Blockers / questions:** none
+
 ## 2026-11-14 00:30 CT · pigeon-claude
 **Done:** (pigeon) New idles for the 2 animals whose Idle never moved (every keyframe the same pose; audit of all 375 clips found only these): **Hamster** 104448805747512 (breathing, sniff nods, looks left/right with a head tilt, 3.2 s) and **Owl** 91895929253217 (owl head swivel ±75° with tilt, slow breathing, 4.4 s). Code-built, sources in `ServerStorage.RBX_ANIMSAVES.Hamster.Idle_v2` / `.Owl.Idle_v2`, set in `GameConfig.AnimalAnims`. Checked in play: Hamster on Plot1 plays it and moves its head; Owl clip turns the head 60° at joint6. Saved v575.
 **Next:** pigeon/Jacob publish. Kangaroo + Seal still reuse their Idle as a walk (no walk clip in the pack).
