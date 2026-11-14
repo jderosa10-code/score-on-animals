@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 00:29 CT · jacob-claude
+**Done:** (Jacob: the plot next to it keeps opening it) DNA shop walk-up range: opens within 10 studs, closes past 13 (was 13 / 17), `StarterPlayerScripts.DNAClient` OPEN_R / CLOSE_R. Pre-publish check: playtest clean, no test flags on.
+**Next:** Jacob publishes.
+**Blockers / questions:** barbell star particles use a texture by another creator that our game can't load (rbxassetid://100081129411640) - they don't show; swap for our own if wanted.
+
 ## 2026-11-14 00:12 CT · jacob-claude
 **Done:** (Jacob: first 4-5 base upgrades way too expensive) `ReplicatedStorage.GameConfig` `G.BaseUpgradeCost` first 5: $50K, $500K, $5M, $50M, $1B (were $3M, $30M, $500M, $3.5B, $25B). Rest unchanged ($180B onward). Also looked into "sign always says $30M": in Studio every sign shows the right price; waiting on Jacob's screenshot.
 **Next:** Jacob decides if the $1B -> $180B jump needs smoothing.
