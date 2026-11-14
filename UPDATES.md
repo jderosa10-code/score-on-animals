@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 01:00 CT · jacob-claude
+**Done:** (Jacob) Index: grey claim buttons say why (`HUDClient` lockText): NOT FOUND / CLAIMED on the info card, ALL CLAIMED / NONE YET on Claim All. **Index bonus rewards**: `GameConfig.indexBonus(animal)` - every 3rd Rare+ animal of each rarity (44 of 213) also gives a timed boost, kinds rotate Strength (lifting gain) / Luck / Cash, size+time by rarity (Rare 1.5x 5m ... Secret 3x 30m), same kind stacks time (max 60 min). `GameServer`: claimIndex / claimIndexAll call addBoost -> profile.Boosts, player attrs Boost_<Kind> + Boost_<Kind>End, expire loop, restored on join; refreshStats multiplies Luck/Cash, `Workout` multiplies Strength gain. `ActiveBoostsClient` rows "INDEX: 1.5X LUCK 19:58". Info card shows "+ 1.5X STRENGTH 5M" (RewardBox.BonusLabel). Studio DevCommand indexUnclaim("bonus"). Tested: 3 bonus claims -> 1.5x Luck + 1.5x Cash rows, $/s 214B -> 321B. Saved v581.
+**Next:** Jacob publishes.
+**Blockers / questions:** none
+
 ## 2026-11-14 00:45 CT · jacob-claude
 **Done:** (Jacob) **Index Claim tutorial**: new `StarterPlayerScripts.IndexTutorial` - first time a player has 3+ unclaimed Index rewards (after the first tutorial; waits for penalty / lifting / BaseTut offer / DNA copy tut): banner text + gold arrow pointing at the INDEX side button, then at CLAIM ALL once the Index is open; ends when they claim (Settings.IndexTut via the "Setting" action; `GameServer` sets player attr IndexTut on join). `HUDClient` exposes `_G.SOA_IndexUnclaimed()`. **Tutorial text in front of menus**: `StarterGui.HUD.NotificationsHUD.DisplayOrder` 0 -> 70 (menus 0-1, popups 50/60, fades 98+), so every tutorial / banner shows over open GUIs and the blur. Studio DevCommand: `indexUnclaim`, `setting`. Tested the full flow. Saved v579.
 **Next:** Jacob publishes.
