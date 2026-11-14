@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 00:12 CT · jacob-claude
+**Done:** (Jacob: first 4-5 base upgrades way too expensive) `ReplicatedStorage.GameConfig` `G.BaseUpgradeCost` first 5: $50K, $500K, $5M, $50M, $1B (were $3M, $30M, $500M, $3.5B, $25B). Rest unchanged ($180B onward). Also looked into "sign always says $30M": in Studio every sign shows the right price; waiting on Jacob's screenshot.
+**Next:** Jacob decides if the $1B -> $180B jump needs smoothing.
+**Blockers / questions:** none
+
 ## 2026-11-14 00:08 CT · jacob-claude
 **Done:** (Jacob: "Need $1.1Qa" while showing $1.1Qa) `ReplicatedStorage.GameConfig` `G.short` no longer rounds up: 2 decimals under 10 ($1.08Qa), 1 under 100, cut off. `G.short(n, true)` rounds up; used in the "Need $..." messages (`EggHatching`, `GameServer`, `Workout`, `DNAMachine`). Checked 15 values.
 **Next:** Jacob publishes.
