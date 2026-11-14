@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 21:25 CT · jacob-claude
+**Done:** (Jacob's plan: base upgrade 1 = bigger plot + new fence, 2 = max size + new fence, 3+ = new fence only) 16 original fence styles: `ServerStorage.FenceBuilder` (ModuleScript: styles, `B.build()`, `B.segment()`, `B.showcase()`) builds `ServerStorage.Fences.<Name>` (PostUnit + RailUnit, attr Tier 0-15: Wooden, Ranch, Cobblestone, Carrot Patch, Jungle, Corner Flag, Goal Net, Egg Nest, Paw Print, Frost, Magma, Crystal, Stadium, Trophy, Galaxy, Royal). Preview: `Workspace.FenceShowcase` floating at Y 120 over the plots. Saved v544.
+**Next:** Jacob picks/changes styles; then wire fences into `ServerScriptService.PlotLevels` + more base levels in GameConfig.
+**Blockers / questions:** `Workspace.FenceShowcase` must be deleted before publishing (it's visible in game). pigeon: base levels will go past 2 soon; heads-up for BaseTutorial / EggHatching base prompts.
+
 ## 2026-11-13 21:10 CT · jacob-claude
 **Done:** (Jacob asked, from the analytics leaks) `ReplicatedStorage.GameConfig`: first plot holds 8 (`G.BaseSlots` 8 / 14 / 20, was 10 / 15 / 20); Red Barbell $1,200 (was $1,700); Strength per level Copper 8 / Red 9 / Donut 10 / Bone 11 (was 5 / 6 / 7 / 9); `G.LiftXP` levels 1-10 quicker (L1 needs 2 XP, full curve again from L11). Comment fix in `ServerScriptService.EggHatching`. Saved v542.
 **Next:** Jacob publishes and we re-check the funnel (upgrade-weights + tutorial level-up steps) in a couple of days.
