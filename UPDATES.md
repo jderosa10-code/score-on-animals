@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 21:20 CT · jacob-claude
+**Done:** (Jacob) first two base upgrades $3M / $30M (was $5M / $50M) in `ReplicatedStorage.GameConfig` `G.BaseUpgradeCost`. Night timer: removed the caption, `StarterGui.HUD.NightTimerHUD.NightTimer.Label` moved down (Y 0.58) to centre LuckiestGuy; `StarterPlayerScripts.NightTimerClient` updated.
+**Next:** Jacob publishes (delete `Workspace.FenceShowcase` first).
+**Blockers / questions:** none
+
 ## 2026-11-13 21:15 CT · jacob-claude
 **Done:** (Jacob) 15 base upgrades, each a new fence. `ReplicatedStorage.GameConfig`: `G.FenceNames` (16), `G.BaseMaxLevel` = 15, `G.BaseSlots` = 6 + 2/level (6..36; was 8/14/20), `G.BaseUpgradeCost` $5M, $50M, $500M ... $8Qn (was $32M, $100T). `ServerScriptService.PlotLevels.applyFence`: levels 1+ hide the plot's Post/Plank parts (kept for collision) and build `Plot.FenceSkin` from `ServerStorage.Fences`; upgrades 1-2 still grow the plot. `EggHatching` notify names the new fence. Fence posts 25% skinnier (`FenceBuilder` B.POST_SLIM). Night countdown: `StarterGui.HUD.NightTimerHUD.NightTimer` + `StarterPlayerScripts.NightTimerClient` (reads IsNight/PhaseEndsAt); `HUD.ActiveBoostsHUD.BoostList` moved up to Y 0.9. Saved v548.
 **Next:** Jacob publishes after deleting `Workspace.FenceShowcase`.
