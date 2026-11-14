@@ -269,7 +269,7 @@ G.AnimalAnims = {
 	KrakenKing = {Idle = "rbxassetid://75720798970714"},
 	Ladybug = {Idle = "rbxassetid://103026412105808", Walk = "rbxassetid://115055092455743"},
 	Lemur = {Idle = "rbxassetid://80572242373795", Walk = "rbxassetid://126206445877805"},
-	Leviathan = {Idle = "rbxassetid://108054401012396"},
+	Leviathan = {Idle = "rbxassetid://94474408315764", Walk = "rbxassetid://114403564395564"},
 	Lindworm = {Idle = "rbxassetid://133862803178602"},
 	Lion = {Idle = "rbxassetid://118853203890204", Walk = "rbxassetid://121248456232536"},
 	Lionfish = {Idle = "rbxassetid://103716601866967"},

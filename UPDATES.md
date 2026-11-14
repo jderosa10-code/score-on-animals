@@ -2,6 +2,10 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 01:45 CT · pigeon-claude
+**Done:** (pigeon) **Leviathan** swims like an eel now: new Idle 94474408315764 (slow slither, 2.6 s) + Walk 114403564395564 (faster, 1.3 s): a side-to-side wave from head to tail, tail sweeps ~2.4-3 studs; sources `ServerStorage.RBX_ANIMSAVES.Leviathan`. **Tanuki eyes**: both eyeballs were skinned to `L/R_Shoulder`, so they swung with the arms and sank into the face. Fixed rig (eyes moved to `root`, arms untouched) = `ROBLOX IMPORT\Rig_Tanuki.fbx` (`tools/rig/fix_eye_weights.py`), **not in the game yet**: needs Import 3D, then the mesh goes onto the base + 5 mutation Tanukis. New skin audit `ServerStorage.PigeonSkinAudit` (+ `tools/rig/skin_audit.lua`): finds loose pieces tied to a limb bone but sitting above it. All 213 animals run: 20 flagged; seen so far: Gargoyle horns swing with its wings (same bug); Mothman = normal wing flap. T-Rex: in Studio its head follows the body when the spine turns (checked in play + captures); pigeon saw it broken on a live server = older published version. Saved v598.
+**Next:** pigeon imports Rig_Tanuki.fbx; go through the other flagged animals by eye; publish.
+**Blockers / questions:** none
 ## 2026-11-14 00:29 CT · jacob-claude
 **Done:** (Jacob: the plot next to it keeps opening it) DNA shop walk-up range: opens within 10 studs, closes past 13 (was 13 / 17), `StarterPlayerScripts.DNAClient` OPEN_R / CLOSE_R. Pre-publish check: playtest clean, no test flags on.
 **Next:** Jacob publishes.
