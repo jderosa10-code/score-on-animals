@@ -103,7 +103,8 @@ Remote.OnClientEvent:Connect(function(what, a, b, c, d, e)
 		content.MessageLabel.Text = string.upper((from and from.DisplayName or "Someone") .. " wants to give you")
 		local al = content:FindFirstChild("AnimalLabel")
 		if al then
-			al.Text = string.upper(label or "an animal")
+			-- (pigeon, 14 Nov) the rarity sits right after the name: "RAINBOW LION (EPIC)"
+			al.Text = string.upper((label or "an animal") .. (rarity and (" (" .. rarity .. ")") or ""))
 			al.TextColor3 = COLORS[rarity] or Color3.fromRGB(255, 210, 60)
 		end
 		panel.Visible = true

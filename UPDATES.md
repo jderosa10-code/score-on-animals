@@ -2,6 +2,10 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 13:02 CT · pigeon-claude
+**Done:** (pigeon) Gift popup shows the animal's rarity right after its name, e.g. "RAINBOW LION (EPIC)" (GiftClient; GiftPopup...AnimalLabel.TextWrapped on so long names go to 2 lines). Checked a short and the longest name on screen. Trading has no logic yet, so it'll need the same when Jacob builds it. Saved.
+**Next:** publish.
+**Blockers / questions:** none
 ## 2026-11-14 12:48 CT · pigeon-claude
 **Done:**
 - (pigeon) Favorite reward: favorite the game once = a random **Rare** animal + cash (at least $5K, or 10 min of your income if more, via GameConfig.packCash). Once per account (profile.FavoriteRewarded). ServerScriptService.FavoriteReward, StarterPlayerScripts.FavoriteRewardClient, GameRemotes.FavoriteReward, plus a 2nd prompt on Workspace.GroupSign board: FavoritePrompt ("Favorite", F / gamepad Y, sits under Join). It claims from any confirmed favorite prompt, so Jacob's idle FavoritePromptClient ask pays out too. Likes can't be checked by any Roblox API, so "like" is only asked for.
