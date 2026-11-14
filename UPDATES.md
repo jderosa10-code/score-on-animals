@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 23:40 CT · jacob-claude
+**Done:** (Jacob) 2X EGGS start: quick black screen flash (Tunnel2 appears while it's dark; skipped mid-penalty) + a gold-text / purple banner, both in `StarterPlayerScripts.DoubleEggsClient`. `StarterGui.HUD.NotificationsHUD.Notify`: `ShowBanner:Fire(text, {text = Color3, fill = Color3})` colours a banner (old calls unchanged). Removed the plain 2X notify from `ServerScriptService.DayNight`. Saved v568.
+**Next:** Jacob publishes.
+**Blockers / questions:** none
+
 ## 2026-11-13 23:30 CT · jacob-claude
 **Done:** (Jacob) Admin panel: **2X EGGS** button on BOOSTS (`ServerStorage.AdminPanel.Window.Pages.Boosts.DoubleEggsButton`, uses the MINUTES box) -> `ServerScriptService.AdminEvents` kind `doubleEggs` (workspace `Admin_DoubleEggsEnd`, a new one replaces the old; stop/stopAll/ACTIVE row "2X EGGS"; MemoryStore key doubleEggs). `ServerScriptService.DayNight` now resolves DoubleEggs = daily 30 s OR admin event OR Studio TestDoubleEggs. New **PLAYERS** tab (`Window.Tabs.PlayersTab`, `Pages.Players`): pick someone in this server, give cash / strength / the egg picked on EGGS / a DNA strip (action `giveTo`, this server only, they get a message). Phones: hotbar `KeyNum` 28% smaller (`HUDClient`); `StarterPlayerScripts.MobileCurrencyScale` makes `HUD.CurrencyHUD.CurrencyPanel` 1.15x via the kit's FW_Scale channel ("mobile"), anchored top-left so it never moves up or left. Tested (Studio, this-server only; Studio never sends ALL SERVERS). Saved v566.
 **Next:** Jacob publishes.
