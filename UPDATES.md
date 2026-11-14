@@ -2,6 +2,13 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 14:50 CT · jacob-claude
+**Done:**
+- (Jacob) Save wipe OFF again (`GameData` D.Wipe.Off = true).
+- (Jacob: phone took ~5 tries to copy DNA) `StarterPlayerScripts.DNACopyBeam`: on touch screens, touching an animal's "Copy DNA" prompt button now starts the same automatic copy as a tap (no holding needed); letting go no longer cancels a tap-copy (fx.isClick). PC unchanged. Saved v633. Not tested on a phone.
+**Next:** publish.
+**Blockers / questions:** pigeon: small change in your DNACopyBeam (FYI).
+
 ## 2026-11-14 14:31 CT · pigeon-claude
 **Done:**
 - **Live bug, heads-up Jacob:** the error report shows `TutorialClient:234: attempt to call a nil value` **33,131 times since 12:03 PM** on V613 (every frame, in a RenderStep callback). Step 7's check (Egg Luck) calls `luckMenuOpen()`, but that local function is defined further down (line ~299), so it was nil there. Fixed: `local luckMenuOpen` declared before `DONE`, the later `local function` became `function luckMenuOpen()` (same body). Compiles; no tutorial errors in a Studio play.
