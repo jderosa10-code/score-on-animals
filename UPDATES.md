@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 15:35 CT · jacob-claude
+**Done:** (Jacob) black outline only on YOUR placed animals: `StarterPlayerScripts.HatchClient` setupAnimal adds the Highlight only when the plot owner is you. Other players' animals have none (DNACopyBeam still adds its glow to copyable ones). Also helps the 31-Highlight limit. Saved v641.
+**Next:** Jacob picks which events to build (list in chat: weekly rotation + map-changing admin events).
+**Blockers / questions:** none
+
 ## 2026-11-14 15:25 CT · jacob-claude
 **Done:** Admin panel GIVE ANIMAL (no hatching): `Pages.Eggs.GiveAnimalButton` (everyone, action `giveAnimal`) and `Pages.Players.Controls.GiveAnimalButton` (one player, giveTo `give="animal"`). Uses the egg + mutation picked on EGGS (`G.AnimalForEgg`). Server: `ServerScriptService.AdminEvents`. Tested, saved v637.
 **Next:** -
