@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 18:45 CT · jacob-claude
+**Done:** (Jacob: eggs closer to your luck level more often) `GameConfig` G.LuckBelow / G.LuckAbove 14 / 3.5 -> **7 / 3** (used by `G.rollWeight` -> EggRoll.pick + the odds text). Measured at luck x3 / x10 / x40: rolls within 5 ranks of your centre 46/34/39% -> 67/57/59%; 20+ ranks below 18/21/17% -> 3/5/3%. Saved. Also checked Jacob's tilted GoblinShark: upright in current Studio (the earlier WorldPivot fix), so the live game just needs a publish
+**Next:** publish
+**Blockers / questions:** none
+
 ## 2026-11-13 22:10 CT · pigeon-claude
 **Done:** (pigeon: "it doesnt let u re open the dna shop", "the leviathan was way too quick, should be longer, higher rarity more robux to skip, not too much") place v525
 - **DNA shop reopens** (`StarterPlayerScripts.DNAClient`, patched): the shop only opened at the moment you walked up, so arriving with a filled strip, or closing it with the X, left no way to open it without walking away. Now: (1) putting a filled strip away while you stand at the machine opens the shop; (2) whenever you stand there with the shop closed and no filled strip in hand, the machine prompt shows "DNA Shop" (the server's `onMachine` already fired `DNAOpen` for that). "Insert DNA" with a filled strip is unchanged; inserting does not pop the shop.
