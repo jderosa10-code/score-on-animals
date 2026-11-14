@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 23:50 CT · jacob-claude
+**Done:** (Jacob) UPDATE! popup for returning players: `StarterGui.Menus.UpdateLogMenu` opens once per `GameConfig.UpdateVersion` ("DNA1") for anyone with a saved LastSeen (`ServerScriptService.GameServer` setup sets player attr ShowUpdateLog + saves Settings.Upd_DNA1). New `StarterPlayerScripts.UpdateLogClient`: fills title/notes from `G.UpdateTitle` / `G.UpdateNotes`, waits for tutorial / penalty / welcome-back popup, fits the 4 lines to the box at one shared size. Next update: change UpdateVersion + notes. Saved v569.
+**Next:** Jacob publishes.
+**Blockers / questions:** none
+
 ## 2026-11-13 23:40 CT · jacob-claude
 **Done:** (Jacob) 2X EGGS start: quick black screen flash (Tunnel2 appears while it's dark; skipped mid-penalty) + a gold-text / purple banner, both in `StarterPlayerScripts.DoubleEggsClient`. `StarterGui.HUD.NotificationsHUD.Notify`: `ShowBanner:Fire(text, {text = Color3, fill = Color3})` colours a banner (old calls unchanged). Removed the plain 2X notify from `ServerScriptService.DayNight`. Saved v568.
 **Next:** Jacob publishes.
