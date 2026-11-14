@@ -2,6 +2,13 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 01:00 CT · jacob-claude
+**Done:**
+- Funnel review (last 7 days, 651 players): tutorial 58% finish; 10 -> 20 min loses 50%; 5 -> 10 eggs keeps 31% (biggest drop); Red -> Donut barbell 35%; Crystal -> Neon Pulse 3 of 31; luck 20 -> 30: 1 of 36; return visit 2 -> 3: 19%; Base Upgrade Tutorial 12/13; DNA shop opened 12, bought 4 (all 4 finished a copy).
+- (Jacob) Barbell prices, `ReplicatedStorage.GameConfig` `G.Barbells`: Donut 21K -> 8K, Neon Pulse 6T -> 2T, Havenstar 44T -> 20T. No hardcoded prices in the UI.
+**Next:** publish, then re-check the funnels in a few days (1-kick eggs may hit the 5 -> 10 eggs step).
+**Blockers / questions:** none
+
 ## 2026-11-14 00:58 CT · jacob-claude
 **Done:**
 - (Jacob) Black outline on YOUR plot's fence only, on your screen: new `StarterPlayerScripts.OwnFenceOutline` (a Highlight in the Camera on `Plot.FenceSkin`; at level 0 it moves the plain Post/Plank parts into a client-only `Plot.FenceOutline` Model so they can be outlined; follows upgrades + streaming). `BaseUpgradeFX` also looks in FenceOutline for posts. Checked in play: on Plot1's FenceSkin, no errors (couldn't screenshot the play view).
