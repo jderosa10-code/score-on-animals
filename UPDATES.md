@@ -2,6 +2,14 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 19:25 CT · jacob-claude
+**Done:** (Jacob: laggy on mobile when equipping pets) On PC equipping costs nothing measurable (60 fps, equip frame 17 ms), so it's GPU on phones: holding an animal on mobile instantly makes the placement ghost, a 2nd full-size see-through copy with a Highlight and all mutation particles.
+- `StarterPlayerScripts.HatchClient` makeGhost: strips ParticleEmitters / lights / beams / trails / sounds / highlights / AnimationController / scripts from the ghost copy (all devices). On touch-only devices: ghost drawn solid (no transparency), no Highlight; a flat Neon ring under it turns green / red for free / taken. PC unchanged otherwise.
+- `StarterPlayerScripts.DNAClient`: keeps a list of DNAPrompts (DescendantAdded/Removing) instead of scanning every plot's descendants on each equip/unequip.
+- No errors in play test; NOT tested on a real phone. Saved
+**Next:** Jacob tests on his phone after publish; if still laggy: Highlights on other things, mutation VFX on the held animal
+**Blockers / questions:** none
+
 ## 2026-11-13 23:40 CT · pigeon-claude
 **Done:** (pigeon: "is all of this mobile friendly", "say rarity of dna strip in ur inventory", "those numbers are really big", "make inventory a lill bigger") phone pass in Studio's iPhone 13 emulator + hotbar, place v534
 - **Hotbar** (`StarterGui.HUD.HotbarHUD.HotbarPanel`): panel Size x1.15 (0.409 x 0.126; still clear of the jump button on phones). New plain `KeyNum` label in Slot1-9 (small number in the top-left corner); the kit's `KeyLabel` is hidden, not deleted: it was half the slot on PC and nearly the whole slot on phones (TextScaler sized it from the scaled panel, then `MobileScale` 1.65 enlarged it again). `HUDClient` switches `KeyNum.TextScaled` on at run time, because the kit's edit-time pass turns TextScaled off on labels in StarterGui. DNA strips show their rarity word on the slot (COMMON .. SECRET, colours in new `G.DNA.TagColors`), using the MutTag label.
