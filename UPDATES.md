@@ -2,6 +2,14 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 20:50 CT · pigeon-claude
+**Done:** (pigeon asked: long animals, hover to select + click, tap on mobile but not while turning the camera) **click / tap to copy DNA**, place v521
+- `StarterPlayerScripts.DNACopyBeam` (extended): while you hold an empty strip, up to 8 animals it can copy within 70 studs get a cyan outline (Highlights in `Workspace.DNACopyGlows`, client only). PC: the animal under the mouse lights up, "CLICK TO COPY DNA" follows the mouse (`StarterGui.DNAHoverTip`, real instance); a click (press + release within 8 px and 0.5 s, so camera drags don't count) starts the copy. Touch: `UserInputService.TouchTap` (Roblox's tap gesture: no drags, pinches, thumbstick or GUI) on a glowing animal; a tip line says so. You can point anywhere on the animal within 30 studs of you, so long / tall animals work.
+- The copy then runs by itself for the prompt's hold time (1.3 s) with the same beam effect; walking 14 studs away or putting the strip away cancels. Then the client fires the new RemoteEvent `GameRemotes.DNACopyClick(model)`.
+- `DNAMachine`: handler for `DNACopyClick` (placed animal on a plot, within 140 studs because animals wander per client, once a second) -> the same `copyAnimal` (owner, strip and rarity checks unchanged). The hold-E prompt still works.
+- Tested in Studio with simulated mouse input: 3 copyable animals outlined, hover lit one up + tip shown, click -> effect ran -> strip became "Tanuki DNA", outlines and tip gone; no client errors. **Not tested: the touch tap** (can't simulate touch), and not seen on screen.
+**Next:** phone test of tap-to-copy; publish.
+**Blockers / questions:** none.
 ## 2026-11-13 20:20 CT · pigeon-claude
 **Done:** (pigeon: "no robux buttons?? also why no secret option") place v520
 - **Robux buttons were never drawn.** `DNAShopMenu` uses ZIndexBehavior Sibling, and on every card `RobuxBuyButton` (ZIndex 95) and `SoldOutShade` (90) sat BELOW the card's `Background` (130), so both were hidden. Now SoldOutShade = 180 (over the whole card) and RobuxBuyButton = 190 (over the shade, so Robux still buys a sold-out strip). Jacob: your grey SOLD OUT shade shows again too. Checked with `GetGuiObjectsAtPosition`: the button's parts are above the card background.
