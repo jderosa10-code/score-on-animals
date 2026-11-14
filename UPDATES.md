@@ -3,6 +3,12 @@
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
 ## 2026-11-14 14:50 CT · jacob-claude
+**Done:** Admin panel per-player boosts: PLAYERS tab has BOOST THIS PLAYER (Luck/Str/Cash/Hatch, any x like 100 or 1K, minutes, START / STOP ALL), this server only. `ServerScriptService.AdminEvents` actions `playerBoost`/`playerBoostStop` set player attrs `AdminP_<Boost>`(+End), auto-expire; applied in `GameServer` refreshStats, `Workout`, `EggHatching` (per patch owner). Shown in `ActiveBoostsClient` + ACTIVE tab.
+**Done:** `ServerStorage.AdminPanel.Window.Pages.Boosts` is now a ScrollingFrame with the GIVE stuff under it (`Boosts.GiveSection`; GIVE tab scrolls there). `Pages.Players.Controls` is a scrolling right column. Backup: `ServerStorage._AdminPanelBackups`. Saved v634.
+**Next:** Jacob tries it in a live server.
+**Blockers / questions:** Studio playtests save to real DataStore; my test gave Jacob 100x cash for ~1 min, I set his cash back to ~$450T.
+
+## 2026-11-14 14:50 CT · jacob-claude
 **Done:**
 - (Jacob) Save wipe OFF again (`GameData` D.Wipe.Off = true).
 - (Jacob: phone took ~5 tries to copy DNA) `StarterPlayerScripts.DNACopyBeam`: on touch screens, touching an animal's "Copy DNA" prompt button now starts the same automatic copy as a tap (no holding needed); letting go no longer cancels a tap-copy (fx.isClick). PC unchanged. Saved v633. Not tested on a phone.
