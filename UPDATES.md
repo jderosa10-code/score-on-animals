@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 12:10 CT · jacob-claude
+**Done:** (Jacob) Long top-banner messages (tutorial lines) wrap onto two lines when wider than 3/4 of the screen: `HUD.NotificationsHUD.Notify` (AdminMessage only) widens the label to ~half the text, top-aligns it, wraps; line 1 stays where the single line was, line 2 goes below (never up under Roblox's top bar). `TutorialClient.placeText` reads the top-aligned text top. Short messages unchanged. Checked the look in Studio. Saved v615.
+**Next:** publish.
+**Blockers / questions:** none
+
 ## 2026-11-14 12:00 CT · jacob-claude
 **Done:**
 - (Jacob) Hatch push notification: still ONE per leave, now timed for when MOST eggs are ready (more than half), not the first. Sends with no egg name first ("Your eggs are ready!"), falls back to {eggName} if the Creator Hub string still has it. `ServerScriptService.HatchNotifications`. Jacob edits the string in Creator Hub > Notifications > Creations > Edit.
