@@ -2,6 +2,15 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 00:15 CT · pigeon-claude
+**Done:** (pigeon: hotbar "a lil bigger", "some of the text is uncentered", "trying to insert a dna thing also opens the shop") place v537
+- **Hotbar** `StarterGui.HUD.HotbarHUD.HotbarPanel`: Size now 1.3x the original (0.463 x 0.142; was 1.15x), Position Y 0.948 -> 0.94. `StarterPlayerScripts.MobileHUD` `HOTBAR_SCALE` 1.65 -> 1.52 so the phone bar keeps about the same total width (it is at the limit next to the jump button).
+- `HUDClient`: the slot word (mutation / DNA rarity) is centred on the slot's visible box (`Backdrop`), not on the slot, which sits a little left of it. A filled DNA strip is its own stack: an empty and a filled strip of the same rarity used to share one slot ("x2"), so one couldn't be picked (my stacking bug).
+- `DNAClient`: the shop is never open while a filled strip is in your hand (taking one out at the machine closes it), and inserting a strip no longer opens it. Before, inserting one of two filled strips opened the shop, because the check looked for any filled strip left in the Backpack. Putting a filled strip away still opens it, and the "DNA Shop" prompt is unchanged.
+- Tested in Studio: walk up empty-handed -> shop opens; take out filled strip -> closes, "Insert DNA"; insert -> stays closed; second strip out and away -> opens. Hotbar checked by screenshot at PC size.
+**Next:** pigeon asked for ideas (not built) for a better place for the DNA Skip Timer; publish.
+**Blockers / questions:** none.
+
 ## 2026-11-13 19:25 CT · jacob-claude
 **Done:** (Jacob: laggy on mobile when equipping pets) On PC equipping costs nothing measurable (60 fps, equip frame 17 ms), so it's GPU on phones: holding an animal on mobile instantly makes the placement ghost, a 2nd full-size see-through copy with a Highlight and all mutation particles.
 - `StarterPlayerScripts.HatchClient` makeGhost: strips ParticleEmitters / lights / beams / trails / sounds / highlights / AnimationController / scripts from the ghost copy (all devices). On touch-only devices: ghost drawn solid (no transparency), no Highlight; a flat Neon ring under it turns green / red for free / taken. PC unchanged otherwise.
