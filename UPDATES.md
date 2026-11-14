@@ -3,7 +3,7 @@
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
 ## 2026-11-14 01:15 CT · jacob-claude
-**Done:** (Jacob) Hotbar: the slot you're holding is highlighted (gold Backdrop stroke, lighter box, small pop via `HeldPop` UIScale) for every input incl. controller LB/RB (`HUDClient` markHeld, on tool equip/unequip + render). Kick area: `PenaltyDemoRunner` unequips your tool when you step on; `HUDClient` toggleItem won't equip during InPenalty and unequips when InPenalty turns on. Tested both. Saved v583.
+**Done:** (Jacob) Hotbar: the slot you're holding is highlighted (gold Backdrop stroke, lighter box, small pop via `HeldPop` UIScale) for every input incl. controller LB/RB (`HUDClient` markHeld, on tool equip/unequip + render). Kick area: `PenaltyDemoRunner` unequips your tool when you step on; `HUDClient` toggleItem won't equip during InPenalty and unequips when InPenalty turns on. Tested both. DNA shop title icon: `StarterGui.Menus.DNAShopMenu.DNAShopPanel.TopBar.Icon` is now the filled Legendary tube (rbxassetid://80503948441668, tilted -12°; the old box id is in its OldImage attribute). Saved v584.
 **Next:** Jacob publishes.
 **Blockers / questions:** none
 
