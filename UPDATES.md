@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 00:50 CT · pigeon-claude
+**Done:** (pigeon) Kangaroo and Seal get real walks (the pack had none, so they slid around playing their Idle): **Kangaroo** hop 88799151847518 (crouch, push off, ~18% of its height in the air, legs swing forward to land, 0.64 s) and **Seal** galumph 95464164737205 (chest lifts, back humps after it, flippers paddle, 0.8 s). Code-built in model space (converted per bone, so mirrored bones bend the right way); sources `ServerStorage.RBX_ANIMSAVES.Kangaroo.Walk_v1` / `.Seal.Walk_v1`; set as `Walk` in `GameConfig.AnimalAnims`. Checked in play: both load and move. Saved v581.
+**Next:** publish. Not seen on screen yet (Fortnite was running, so captures are blank): eyeball both on a plot.
+**Blockers / questions:** none
+
 ## 2026-11-14 01:00 CT · jacob-claude
 **Done:** (Jacob) Index: grey claim buttons say why (`HUDClient` lockText): NOT FOUND / CLAIMED on the info card, ALL CLAIMED / NONE YET on Claim All. **Index bonus rewards**: `GameConfig.indexBonus(animal)` - every 3rd Rare+ animal of each rarity (44 of 213) also gives a timed boost, kinds rotate Strength (lifting gain) / Luck / Cash, size+time by rarity (Rare 1.5x 5m ... Secret 3x 30m), same kind stacks time (max 60 min). `GameServer`: claimIndex / claimIndexAll call addBoost -> profile.Boosts, player attrs Boost_<Kind> + Boost_<Kind>End, expire loop, restored on join; refreshStats multiplies Luck/Cash, `Workout` multiplies Strength gain. `ActiveBoostsClient` rows "INDEX: 1.5X LUCK 19:58". Info card shows "+ 1.5X STRENGTH 5M" (RewardBox.BonusLabel). Studio DevCommand indexUnclaim("bonus"). Tested: 3 bonus claims -> 1.5x Luck + 1.5x Cash rows, $/s 214B -> 321B. Saved v581.
 **Next:** Jacob publishes.
