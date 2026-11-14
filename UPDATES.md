@@ -2,6 +2,10 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 14:26 CT · pigeon-claude
+**Done:** (pigeon) Music went silent in the day on a live server and never came back. Couldn't find the cause from the code (nothing else touches it; night / 15 s gap / Settings all tested fine), so StarterPlayerScripts.MusicPlayer now heals itself: the play loop restarts if it ever errors, and a watchdog restarts the song after 25 s of silence in the day with Music on. Each restart warns `[MusicPlayer] ...` with the full state (F9 console), so if it happens again the line tells us why. Jacob's no-music-at-night and 15 s gap are unchanged. Tested in Studio (forced 30 s of stops: watchdog restarted it). Saved.
+**Next:** publish; if anyone sees a `[MusicPlayer]` warning live, send it over.
+**Blockers / questions:** none
 ## 2026-11-14 13:02 CT · pigeon-claude
 **Done:** (pigeon) Gift popup shows the animal's rarity right after its name, e.g. "RAINBOW LION (EPIC)" (GiftClient; GiftPopup...AnimalLabel.TextWrapped on so long names go to 2 lines). Checked a short and the longest name on screen. Trading has no logic yet, so it'll need the same when Jacob builds it. Saved.
 **Next:** publish.
