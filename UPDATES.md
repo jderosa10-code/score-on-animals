@@ -2,6 +2,14 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 22:10 CT · pigeon-claude
+**Done:** (pigeon: "it doesnt let u re open the dna shop", "the leviathan was way too quick, should be longer, higher rarity more robux to skip, not too much") place v525
+- **DNA shop reopens** (`StarterPlayerScripts.DNAClient`, patched): the shop only opened at the moment you walked up, so arriving with a filled strip, or closing it with the X, left no way to open it without walking away. Now: (1) putting a filled strip away while you stand at the machine opens the shop; (2) whenever you stand there with the shop closed and no filled strip in hand, the machine prompt shows "DNA Shop" (the server's `onMachine` already fired `DNAOpen` for that). "Insert DNA" with a filled strip is unchanged; inserting does not pop the shop.
+- **No more instant strips** (`GameConfig.G.DNA.Tiers`): Divine Speed 0 -> 0.12, Secret 0 -> 0.2. Copy time = hatch time x Speed, and the Skip Timer price follows the time left (`G.skipHatchFor`), so a fresh copy costs: Common up to R$15, Rare 15-35, Epic 35-59, Legendary 59, Mythic 59 (8-19 min), Divine 119 (24-37 min), Secret 199 (64-72 min). The Fast Hatch pass still halves the time (and so can drop the skip a tier). Card texts: "DIVINE + CELESTIAL + MUTATION", "SECRET + MUTATION" (GameConfig `CopiesText` + the StatLabels); product descriptions of DNADivine / DNASecret no longer say "instantly"; `docs/robux-products.md` updated.
+- Tested in Studio by data: at the machine with a filled strip the prompt said "Insert DNA"; put away -> shop opened; closed -> prompt "DNA Shop"; a Raiju copy (Divine strip) took 907 s with Fast Hatch owned (1814 s without), skip prompt showed the R$59 tier.
+**Next:** publish.
+**Blockers / questions:** none.
+
 ## 2026-11-13 18:40 CT · jacob-claude
 **Done:** (Jacob asked) cash per second under your cash, "$27/s" (G.short from 1B: "$40.4B/s"): new `StarterGui.HUD.CurrencyHUD.CurrencyPanel.Stats.PerSecLabel` (copy of CashLabel's style, smaller), filled + shown by `HUDClient` only while you're on/near your own plot (plot box + 4 studs), hidden in a penalty. Tested: shows at base, hidden at the DNA machine and the pitch. Saved
 **Next:** publish

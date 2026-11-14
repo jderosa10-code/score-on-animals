@@ -30,5 +30,5 @@ Test a product in Studio without buying: `game.ServerStorage.DevCommand:Invoke("
 | DNAEpic | product | 79 | Epic DNA Strip | DNA shop EpicCard | 3731009987 | - |
 | DNALegendary | product | 149 | Legendary DNA Strip (keeps mutation) | DNA shop LegendaryCard | 3731009997 | - |
 | DNAMythic | product | 299 | Mythic DNA Strip, Robux only (10x, keeps mutation) | DNA shop MythicCard | 3731010007 | - |
-| DNADivine | product | 599 | Divine DNA Strip, Robux only (Divine + Celestial, instant, keeps mutation) | DNA shop DivineCard | 3731010014 | - |
-| DNASecret | product | 999 | Secret DNA Strip, Robux only (Secret animals, instant, keeps mutation) | DNA shop SecretCard | 3731015727 | - |
+| DNADivine | product | 599 | Divine DNA Strip, Robux only (Divine + Celestial, 24-37 min copy, keeps mutation) | DNA shop DivineCard | 3731010014 | - |
+| DNASecret | product | 999 | Secret DNA Strip, Robux only (Secret animals, 64-72 min copy, keeps mutation) | DNA shop SecretCard | 3731015727 | - |
