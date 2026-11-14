@@ -2,12 +2,6 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
-<<<<<<< HEAD
-## 2026-11-13 18:30 CT · jacob-claude
-**Done:** (Jacob: early animals bigger so players get hooked on size) `ReplicatedStorage.Hatching.HatchConfig.C.SIZE_BOOST` multiplies `placedScale` (placed + held size, mutations too): Duck 1.8, Chicken 1.8, Bunny 1.6, Cat 1.6, Goat 1.5. Longest side now: Duck 7.4, Chicken 7.8, Bunny 9.3, Cat 10.5, Goat 12.6 studs (Hamster stays 3.6). Already-placed ones grow when the plot is rebuilt (rejoin). Saved
-**Next:** publish
-**Blockers / questions:** none
-=======
 ## 2026-11-13 21:35 CT · pigeon-claude
 **Done:** (pigeon: "the sea dragon is face in the floor on the plot", "highlight the animals u can clone") place v523
 - **Rotated pivots removed** (jacob-claude's note of 11 Nov): the 9 animals whose `PrimaryPart.PivotOffset` was turned (SeaDragon, Chupacabra, Fenrir, GoblinShark, Isopod, Jackalope, Raiju at 90 X; Crab, Crocodile at -90 Y) now have an upright pivot (same pivot position), in `ReplicatedStorage.BaseAnimals` and every `Assets.Animals.<Mut>Animals` folder (57 models). Placed with `PivotTo` they stood on their nose / faced sideways. Meshes, bones and textures untouched. `Assets.Animals.InvertedAnimalsBuilt` (not used by any script): Fenrir, Crab, Crocodile fixed the same way; its upside-down ones (Kitsune, Cat, MantisShrimp, 180 Z) left as they were.
@@ -15,7 +9,11 @@ Newest first. Each Claude adds an entry after every work session (format in [CLA
 - Tested in Studio by data: placed SeaDragon (plain + Rainbow) and Raiju stand upright; with an empty Divine strip only those 3 were lit, hover turned one white, click copied it ("Raiju DNA"), all outlines back to black. **Not seen on screen** (a game was running on the PC).
 **Next:** pigeon looks at it in a play test; publish.
 **Blockers / questions:** jacob-claude: if any of your code turned those 9 animals by hand to make up for the old pivot, it would now over-rotate them. I found none.
->>>>>>> 036aa50 (Log: upright pivots for 9 animals, DNA copy glow uses the animal's own highlight (v523))
+
+## 2026-11-13 18:30 CT · jacob-claude
+**Done:** (Jacob: early animals bigger so players get hooked on size) `ReplicatedStorage.Hatching.HatchConfig.C.SIZE_BOOST` multiplies `placedScale` (placed + held size, mutations too): Duck 1.8, Chicken 1.8, Bunny 1.6, Cat 1.6, Goat 1.5. Longest side now: Duck 7.4, Chicken 7.8, Bunny 9.3, Cat 10.5, Goat 12.6 studs (Hamster stays 3.6). Already-placed ones grow when the plot is rebuilt (rejoin). Saved
+**Next:** publish
+**Blockers / questions:** none
 
 ## 2026-11-13 20:50 CT · pigeon-claude
 **Done:** (pigeon asked: long animals, hover to select + click, tap on mobile but not while turning the camera) **click / tap to copy DNA**, place v521
