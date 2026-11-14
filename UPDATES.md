@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 21:10 CT · jacob-claude
+**Done:** (Jacob asked, from the analytics leaks) `ReplicatedStorage.GameConfig`: first plot holds 8 (`G.BaseSlots` 8 / 14 / 20, was 10 / 15 / 20); Red Barbell $1,200 (was $1,700); Strength per level Copper 8 / Red 9 / Donut 10 / Bone 11 (was 5 / 6 / 7 / 9); `G.LiftXP` levels 1-10 quicker (L1 needs 2 XP, full curve again from L11). Comment fix in `ServerScriptService.EggHatching`. Saved v542.
+**Next:** Jacob publishes and we re-check the funnel (upgrade-weights + tutorial level-up steps) in a couple of days.
+**Blockers / questions:** pigeon: your BaseTutorial reads `G.slotsFor(player, 0)`, so it now fires at 8 animals. No change needed, FYI. Players who already have 9-10 at level 0 keep them; they just can't place more.
+
 ## 2026-11-14 02:00 CT · pigeon-claude
 **Done:** (pigeon: "the serpents' idle doesn't move at all") place v540
 - `StarterPlayerScripts.HatchClient` `playOnly`: animals with only an Idle clip (Snake, Cobra, TripleCobra, Leviathan, SeaDragon, Seahorse, Blobfish...) have `tracks.Walk == tracks.Idle`. `playOnly` compared by key, so the same track got Play and Stop in table order, and about half of these animals stood frozen. It now compares the track itself.
