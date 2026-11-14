@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 00:02 CT · jacob-claude
+**Done:** (Jacob) DNA shop stays shut while your copy is READY in the machine; it opens once you claim it on the Collect pad (if you're still there). `StarterPlayerScripts.DNAClient` walk-up loop (`hadReady`). Tested in play: ready = shut, claimed = opens, walk away = closes. `TestForceMiss` turned off (attribute removed from Workspace).
+**Next:** Jacob publishes.
+**Blockers / questions:** none
+
 ## 2026-11-13 23:57 CT · jacob-claude
 **Done:** Studio-only test switch: `Workspace` attribute `TestForceMiss` = true makes every kick get saved (`ReplicatedStorage.DevDemo.PenaltyDemoRunner`, guarded by RunService:IsStudio(), ignored live). It's ON now.
 **Next:** Jacob tests the miss flow, then unticks it.
