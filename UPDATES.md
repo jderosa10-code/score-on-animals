@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 01:15 CT · jacob-claude
+**Done:** (Jacob) Hotbar: the slot you're holding is highlighted (gold Backdrop stroke, lighter box, small pop via `HeldPop` UIScale) for every input incl. controller LB/RB (`HUDClient` markHeld, on tool equip/unequip + render). Kick area: `PenaltyDemoRunner` unequips your tool when you step on; `HUDClient` toggleItem won't equip during InPenalty and unequips when InPenalty turns on. Tested both. Saved v583.
+**Next:** Jacob publishes.
+**Blockers / questions:** none
+
 ## 2026-11-14 00:50 CT · pigeon-claude
 **Done:** (pigeon) Kangaroo and Seal get real walks (the pack had none, so they slid around playing their Idle): **Kangaroo** hop 88799151847518 (crouch, push off, ~18% of its height in the air, legs swing forward to land, 0.64 s) and **Seal** galumph 95464164737205 (chest lifts, back humps after it, flippers paddle, 0.8 s). Code-built in model space (converted per bone, so mirrored bones bend the right way); sources `ServerStorage.RBX_ANIMSAVES.Kangaroo.Walk_v1` / `.Seal.Walk_v1`; set as `Walk` in `GameConfig.AnimalAnims`. Checked in play: both load and move. Saved v581.
 **Next:** publish. Not seen on screen yet (Fortnite was running, so captures are blank): eyeball both on a plot.
