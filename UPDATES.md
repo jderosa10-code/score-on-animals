@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 10:40 CT · jacob-claude
+**Done:** Checked the DNA update's effect (funnels; daily engagement for Nov 14 isn't out yet). New players since the update (30, overnight) vs everyone before (~805): tutorial done 77% vs 57%, played 10 min 43% vs 29%, 20 min 27% vs 17%, scored 10 eggs 43% vs 27%, upgraded base 20% vs 15%. Small sample; most of it is before last night's 12:35 AM fixes (1 kick, prices).
+**Next:** re-check tomorrow with a full day (D1 retention, avg playtime).
+**Blockers / questions:** none
+
 ## 2026-11-14 02:40 CT · pigeon-claude
 **Done:** (pigeon: "fix every idle you need to fix") **Rigs:** skin audit -> looked at every flagged animal posed; 4 had pieces tied to the wrong bone: **Gargoyle** horns on its wing bones (flew up as rods in its idle), **Mammoth** tusks + **Elephant** ears on leg bones, **Caterpillar** eyes sliding. New `tools/rig/fix_pieces.py` (Blender): such a piece takes the weights of the surface it sits on; re-rigged from `rig\batch2`, uploaded via Open Cloud (no Import 3D), swapped with `rig_swap.lua` into BaseAnimals + 21 mutation models (old ones in `ServerStorage.OldAnimals_Backup`). Re-audit: Gargoyle/Mammoth/Elephant clean, Caterpillar eye drift 11% -> 7%. The other flags (Dog tail, legs, wings, Mothman) are normal limb motion, left alone. **Idles:** 13 stiff idles (bones turned only 3-7°) get a head-to-tail slither/swim wave on top of their own clip (`RBX_ANIMSAVES.<Name>.Idle_wave`): Snake, Cobra, TripleCobra, Hydra, Lindworm, Amphiptere, GreenAnaconda, Goldfish, Lionfish, Mandarinfish, Trumpetfish, Boxfish, Pufferfish (now 10-20°). **T-Rex** idle v2 98537498323742: the old clip never moved neck/jaw/head, now it looks left/right, lifts its head and snaps its jaw. All 14 play in a play test. Saved v608.
 **Next:** publish (nothing since v440 is live: the T-Rex/Tanuki pigeon saw broken were on the live server).
