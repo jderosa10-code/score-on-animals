@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 23:57 CT · jacob-claude
+**Done:** Studio-only test switch: `Workspace` attribute `TestForceMiss` = true makes every kick get saved (`ReplicatedStorage.DevDemo.PenaltyDemoRunner`, guarded by RunService:IsStudio(), ignored live). It's ON now.
+**Next:** Jacob tests the miss flow, then unticks it.
+**Blockers / questions:** none
+
 ## 2026-11-14 01:05 CT · pigeon-claude
 **Done:** (pigeon) Green aim zone now counts **x1.25** (was x1.5): `GameConfig` `G.AimGreen = 1.25` (red stays x0.5). Client prediction (`PenaltyDemoRunner`) and the server check (`EggInventory`) both use `G.aimMult`, so nothing else changed. Best kick is now Perfect + green = x1.5625, so you need ~64% of an egg's Strength (was ~53%); the top egg (18,700) needs ~12K with Perfect + green. The GreenZone pass (bigger radius x1.5) is unchanged. Checked in play: aimMult in green = 1.25. Saved v590.
 **Next:** publish.
