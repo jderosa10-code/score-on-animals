@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 16:30 CT · jacob-claude
+**Done:** created the 8 "Buy Missed Egg (Rare..Secret)" developer products (25/49/99/149/199/299/399/499, regional pricing on) on the Creator Dashboard and put their Ids in `ReplicatedStorage.GameConfig` G.Products.BuyMissed*. The BUY THE EGG YOU MISSED popup is live after publish. Server grant tested (wrong tier refused, right tier gives the egg once). Saved v663.
+**Next:** watch payer conversion / Robux spent after publish.
+**Blockers / questions:** none
+
 ## 2026-11-14 16:25 CT · jacob-claude
 **Done:** `StarterPlayerScripts.MobileMenus` also sizes `PlayerGui.BuyEggPopup` on phones (same up-to-1.3x + keep-on-screen as menus/popups). Saved v659.
 **Next:** create the 8 BuyMissed products once Jacob grants the Open Cloud product scope.
