@@ -9,6 +9,11 @@ Newest first. Each Claude adds an entry after every work session (format in [CLA
 - Tested by data: Secret strip (grant path) refused a Divine SeaDragon, copied the Secret Leviathan; all 7 cards have the right price, text and buttons; no client errors.
 **Next:** publish; tube icons for Mythic / Divine / Secret.
 **Blockers / questions:** none.
+## 2026-11-13 18:20 CT · jacob-claude
+**Done:** new analytics funnel **PenaltyKick** (recurring, one session per penalty round) to see if players leave the game during their 3 kicks: new `ServerScriptService.PenaltyFunnel` + RemoteEvent `ReplicatedStorage.DevDemo.PenaltyKickShot` (`PenaltyDemoRunner` fires it after every kick: try, scored, auto). Steps: 1 Round started, 2 Kick 1, 3 Kick 2 (or scored), 4 Kick 3 (or scored), 5 Round over. Leaving mid-round = no step 5; scoring early fills the skipped steps; Auto Kick rounds not counted. Tested: miss, miss, goal -> 5 steps logged. Saved
+**Next:** shows in Creator Hub > Analytics > Funnels after publish (data takes a while)
+**Blockers / questions:** none
+
 ## 2026-11-13 20:00 CT · pigeon-claude
 **Done:** (pigeon asked, after testing the DNA machine) place v519
 - **RULE CHANGE (pigeon decided: "same rarity only"): a strip copies only animals of its own rarity.** Before, any strip copied any animal. `GameConfig.G.DNA.Copies`: Common = Common + Uncommon, Rare = Rare, Epic = Epic, Legendary = Legendary, Mythic = Mythic + Exotic, Divine = Divine + Celestial + Secret (+ Admin). `G.dnaCanCopy(tier, rarity)`. `DNAMachine.copyAnimal` refuses a mismatch with a message; each `DNAPrompt` has attribute `Rarity`; `DNAClient` only switches the prompt on for animals your held strip can copy (ObjectText "Rare Flamingo"); `DNATutorial.bestAnimal` only picks one your strip can copy. Jacob: this changes your design, pigeon's call.
