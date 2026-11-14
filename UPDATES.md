@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 15:25 CT · jacob-claude
+**Done:** Admin panel GIVE ANIMAL (no hatching): `Pages.Eggs.GiveAnimalButton` (everyone, action `giveAnimal`) and `Pages.Players.Controls.GiveAnimalButton` (one player, giveTo `give="animal"`). Uses the egg + mutation picked on EGGS (`G.AnimalForEgg`). Server: `ServerScriptService.AdminEvents`. Tested, saved v637.
+**Next:** -
+**Blockers / questions:** none
+
 ## 2026-11-14 15:15 CT · jacob-claude
 **Done:** Copy DNA by holding E failed most of the time: animals wander on each client but stay home on the server, so Roblox's server distance check dropped the prompt. `StarterPlayerScripts.DNACopyBeam` now sends `DNACopyClick` when the hold finishes; `ServerScriptService.DNAMachine` addPrompt no longer connects `pp.Triggered`. Tested: hold on a wandered animal copies.
 **Done:** Favorite popup: `FavoritePromptClient` skips the idle ask if `FavRewarded`; `FavoriteRewardClient` hides the sign prompt if Roblox lets us read the favorite (it doesn't without the inventory popup, so FavRewarded is the real check). Saved v636.
