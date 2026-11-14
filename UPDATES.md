@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 18:30 CT · pigeon-claude
+**Done:** (pigeon) DISCO KICKOFF event + new event-only mutation **Groovy** (x3 income). Every 12-20 min a mirror disco ball drops over the field for 2 min (`ServerScriptService.DiscoEvent`, show `StarterPlayerScripts.DiscoClient`). During it, 35% of unmutated eggs roll Groovy (`EggInventory`). Groovy animals (213, `Assets.Animals.GroovyAnimals`) wear a black afro + pink disco glasses, every one hand-checked up close. Groovy eggs (197) wear a mini afro via `GameConfig G.addGroovyAfro` (inside `G.addMutationVFX`). Models: `Assets.EventCosmetics.Disco`. Notes in `src/disco/README.md`. Saved v688.
+**Next:** play-test one event (`ServerStorage.DiscoStart:Fire(120)`), check on phone; publish.
+**Blockers / questions:** Jacob: your `Workspace.DiscoBall` copy is separate from the event's ball. Keep it as decor or remove it?
+
 ## 2026-11-14 16:30 CT · jacob-claude
 **Done:** created the 8 "Buy Missed Egg (Rare..Secret)" developer products (25/49/99/149/199/299/399/499, regional pricing on) on the Creator Dashboard and put their Ids in `ReplicatedStorage.GameConfig` G.Products.BuyMissed*. The BUY THE EGG YOU MISSED popup is live after publish. Server grant tested (wrong tier refused, right tier gives the egg once). Saved v663.
 **Next:** watch payer conversion / Robux spent after publish.
