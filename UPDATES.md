@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 18:58 CT · jacob-claude
+**Done:** (Jacob) last base upgrade (LV 2 -> 3) now **$100T** (was $1T): `GameConfig.G.BaseUpgradeCost = {32e6, 100e12}`. The sign + prompt read it (`EggHatching`). Saved
+**Next:** publish
+**Blockers / questions:** none
+
 ## 2026-11-13 18:55 CT · jacob-claude
 **Done:** (Jacob: Roblox "egg hatched" notifications not arriving) `ServerScriptService.HatchNotifications`: Open Cloud body now uses the docs' snake_case names (message_id, string_value, join_experience.launch_data, analytics_data); it sent camelCase before. `EggHatching`: the opt-in popup now also fires every 10th egg placed (was only the 5th, once ever). Couldn't send a test myself (Assistant lacks user.user-notification:write). Saved
 **Next:** publish, then Jacob tests: place an egg with a long timer, leave, wait; if still nothing, check Creator Hub Error Report for "HatchNotifications: <code>"
