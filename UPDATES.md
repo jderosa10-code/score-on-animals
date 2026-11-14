@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 23:30 CT · jacob-claude
+**Done:** (Jacob) Admin panel: **2X EGGS** button on BOOSTS (`ServerStorage.AdminPanel.Window.Pages.Boosts.DoubleEggsButton`, uses the MINUTES box) -> `ServerScriptService.AdminEvents` kind `doubleEggs` (workspace `Admin_DoubleEggsEnd`, a new one replaces the old; stop/stopAll/ACTIVE row "2X EGGS"; MemoryStore key doubleEggs). `ServerScriptService.DayNight` now resolves DoubleEggs = daily 30 s OR admin event OR Studio TestDoubleEggs. New **PLAYERS** tab (`Window.Tabs.PlayersTab`, `Pages.Players`): pick someone in this server, give cash / strength / the egg picked on EGGS / a DNA strip (action `giveTo`, this server only, they get a message). Phones: hotbar `KeyNum` 28% smaller (`HUDClient`); `StarterPlayerScripts.MobileCurrencyScale` makes `HUD.CurrencyHUD.CurrencyPanel` 1.15x via the kit's FW_Scale channel ("mobile"), anchored top-left so it never moves up or left. Tested (Studio, this-server only; Studio never sends ALL SERVERS). Saved v566.
+**Next:** Jacob publishes.
+**Blockers / questions:** Studio tests save to real data: Jacob's account got the test gifts ($1M, +5 Str, Chicken Egg, Rare strip) + a few test-kick eggs.
+
 ## 2026-11-13 23:10 CT · jacob-claude
 **Done:** Ready to publish: removed workspace attr `TestDoubleEggs` (Workspace.FenceShowcase and ServerStorage._ToDelete were already gone; `ServerScriptService.DNATestAnimals` stays Disabled). (Jacob) `Workspace.Tunnel2` is hidden until 2X EGGS: its parts are Transparency 1 / CanCollide false in the place (look kept in attr `ShowT`), `Gate` removed; `StarterPlayerScripts.DoubleEggsClient` fades it in with a Rebirth poof when the event starts and hides it after (once you're out of a 2X penalty). Playtest clean. Saved v564 ("Ready to publish").
 **Next:** Jacob publishes; we watch the funnel (weights upgrade, tutorial level-up, base upgrade) over the next days.
