@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 21:45 CT · jacob-claude
+**Done:** (Jacob) DNA shop SOLD OUT fix: `StarterGui.Menus.DNAShopMenu` cards had different child ZIndexes (Epic's went past the shade's fixed 180), so each card's `SoldOutShade` is now above all its siblings and `RobuxBuyButton` above the shade. UpgradeSign moved by the front gate on all 4 plots (copied Jacob's Plot1 spot); `ServerScriptService.PlotLevels` no longer moves it. Upgrade touch: `EggHatching` sets plot attr `UpgradedAt`; new `StarterPlayerScripts.BaseUpgradeFX` (LevelUp bursts around the fence, Confetti at the sign, LevelUpSound + ConfettiPop for the owner). `StarterPlayerScripts.DNAMachineFX`: hum ~60% quieter, one-shots at half volume. Saved v553.
+**Next:** Jacob publishes (delete `Workspace.FenceShowcase` first).
+**Blockers / questions:** pigeon: I touched your DNAShopMenu ZIndexes and DNAMachineFX volumes, FYI.
+
 ## 2026-11-13 21:30 CT · jacob-claude
 **Done:** (Jacob) one-time base fix in `ServerScriptService.EggHatching` tryRestore: profile flag `BaseFix1`; anyone with more placed animals than `G.slotsFor` at their level gets free levels until they fit (saved animal Z shifted by the depth change, like upgradeBase) + a "Free base upgrade!" notify. Tested: LV 2 with 19 animals -> LV 7 (20 slots, Egg Nest fence).
 **Next:** Jacob publishes (delete `Workspace.FenceShowcase` first).
