@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 16:08 CT · jacob-claude
+**Done:** (Jacob) disco ball is silent: removed its `Music` sound from `ServerStorage.EventProps.DiscoBall`; `DiscoBallClient` only spins it now. Saved v648.
+**Next:** -
+**Blockers / questions:** none
+
 ## 2026-11-14 16:05 CT · jacob-claude
 **Done:** Disco ball from a toolbox model (Jacob's Place1) rebuilt in our game WITHOUT its scripts (an unrelated pickup-kit remote handler + a server spin loop): `ServerStorage.EventProps.DiscoBall` (mesh, 9 particle emitters, light, looped `Music`, tag `DiscoBall`). New `StarterPlayerScripts.DiscoBallClient` spins any tagged ball on each client (attr SpinDegPerSec, default 240) and plays its music. Not placed in Workspace yet (for a Disco Field event). Tested, saved v647.
 **Next:** -
