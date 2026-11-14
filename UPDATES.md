@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 00:08 CT · jacob-claude
+**Done:** (Jacob: "Need $1.1Qa" while showing $1.1Qa) `ReplicatedStorage.GameConfig` `G.short` no longer rounds up: 2 decimals under 10 ($1.08Qa), 1 under 100, cut off. `G.short(n, true)` rounds up; used in the "Need $..." messages (`EggHatching`, `GameServer`, `Workout`, `DNAMachine`). Checked 15 values.
+**Next:** Jacob publishes.
+**Blockers / questions:** pigeon: cash/prices can now show 2 decimals (e.g. $1.08Qa), a bit wider in tight labels.
+
 ## 2026-11-14 00:02 CT · jacob-claude
 **Done:** (Jacob) DNA shop stays shut while your copy is READY in the machine; it opens once you claim it on the Collect pad (if you're still there). `StarterPlayerScripts.DNAClient` walk-up loop (`hadReady`). Tested in play: ready = shut, claimed = opens, walk away = closes. `TestForceMiss` turned off (attribute removed from Workspace).
 **Next:** Jacob publishes.
