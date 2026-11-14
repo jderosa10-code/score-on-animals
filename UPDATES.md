@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 10:55 CT · jacob-claude
+**Done:** Redid the update check properly (my 10:40 entry was wrong: a one-day pick on the funnel page is only one hour). Funnels by exact time, before the DNA update (Nov 12 6 PM - Nov 13 10:15 PM CT, 620 new players) vs after (10:15 PM - now, 240): played 20 min 13.5% -> 26%, upgraded base 11% -> 26%, upgraded weights 38% -> 50%, Red -> Donut 35% -> 59%, 10 eggs 11% -> 17%, 10 animals 10% -> 18%, played 10 min 28% -> 33%; tutorial ~same (57-58%); first egg 87% -> 83%. New funnels after: Base Upgrade Tutorial 44/49, DNA shop 45 -> bought 14 -> claimed 10, 2X wins 73 players, penalty rounds 204/222 finished. "Total Playtime" funnel table doesn't load on the site.
+**Next:** check D1 retention + avg playtime tomorrow; Bone barbell (18%) and luck 5 -> 10 (4%) are the new weak spots.
+**Blockers / questions:** none
+
 ## 2026-11-14 10:40 CT · jacob-claude
 **Done:** Checked the DNA update's effect (funnels; daily engagement for Nov 14 isn't out yet). New players since the update (30, overnight) vs everyone before (~805): tutorial done 77% vs 57%, played 10 min 43% vs 29%, 20 min 27% vs 17%, scored 10 eggs 43% vs 27%, upgraded base 20% vs 15%. Small sample; most of it is before last night's 12:35 AM fixes (1 kick, prices).
 **Next:** re-check tomorrow with a full day (D1 retention, avg playtime).
