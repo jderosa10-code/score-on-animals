@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 01:35 CT · jacob-claude
+**Done:** (Jacob) Jacob's new sign by the pitch wall is now `Workspace.GroupSign` ("LIKE THE GAME / & JOIN THE GROUP / WALK UP TO JOIN", CanCollide off). New `StarterPlayerScripts.GroupSignClient`: within 10 studs it opens Roblox's join-group prompt (`GroupService:PromptJoinAsync(game.CreatorId)`), once per approach (re-arms past 16 studs), skipped for group members, during a penalty or the first tutorial. Saved.
+**Next:** Jacob publishes; test with a non-member account.
+**Blockers / questions:** none
+
 ## 2026-11-14 01:25 CT · jacob-claude
 **Done:** (Jacob, stuck at x49) Egg Luck mid-late levels cheaper: `GameConfig.luckCost` x (1 - 0.4*exp(-((level-31)/3)^2)) - 40% off at L31 (x49->x55: $690T -> $410T), ~25-30% off L29-33, full price again by L26 / L36. Still rises every level. Saved v585.
 **Next:** Jacob publishes.
