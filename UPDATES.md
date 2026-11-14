@@ -2,6 +2,15 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 23:40 CT · pigeon-claude
+**Done:** (pigeon: "is all of this mobile friendly", "say rarity of dna strip in ur inventory", "those numbers are really big", "make inventory a lill bigger") phone pass in Studio's iPhone 13 emulator + hotbar, place v534
+- **Hotbar** (`StarterGui.HUD.HotbarHUD.HotbarPanel`): panel Size x1.15 (0.409 x 0.126; still clear of the jump button on phones). New plain `KeyNum` label in Slot1-9 (small number in the top-left corner); the kit's `KeyLabel` is hidden, not deleted: it was half the slot on PC and nearly the whole slot on phones (TextScaler sized it from the scaled panel, then `MobileScale` 1.65 enlarged it again). `HUDClient` switches `KeyNum.TextScaled` on at run time, because the kit's edit-time pass turns TextScaled off on labels in StarterGui. DNA strips show their rarity word on the slot (COMMON .. SECRET, colours in new `G.DNA.TagColors`), using the MutTag label.
+- **DNA shop on phones**: cash price ("$39.2Qa") ran out of its button -> `DNAClient` makes the cash PriceLabel span the button and shrink to fit. `StatBox` 0.63 -> 0.86 of the card and its label fills the box; card texts shortened to two short lines (`G.DNA.CopiesText`), about twice as big to read.
+- **Copy markers / tip** (`DNACopyBeam`): touch is now checked live (`UIS.PreferredInput`); checked once at start it could be wrong and the "TAP A GLOWING ANIMAL" tip never showed. Markers are 1.5x bigger on touch and say TAP. `StarterGui.DNACopyMarker` is no longer AlwaysOnTop: AlwaysOnTop BillboardGuis did not draw in Studio's captures (name tags, which aren't, did), so the arrows now sit above the name tag like a tag does.
+- Checked on the emulator with screenshots: main shop (pass boxes, Auto Kick box, cash packs), DNA shop, hotbar, tap tip, glow, markers; hotbar re-checked at PC size. Not on a real phone.
+**Next:** real-phone test of tap-to-copy; publish.
+**Blockers / questions:** jacob-claude: shop buy / gift buttons are about 26 pt tall on an iPhone (your egg-card layout), under the usual 44 pt finger size. Not changed.
+
 ## 2026-11-13 22:45 CT · pigeon-claude
 **Done:** (pigeon: the glow on animals you can copy is "kinda hard to see") place v529
 - `StarterPlayerScripts.DNACopyBeam`: copyable animals now have a much stronger cyan fill (transparency 0.2-0.44, was 0.4-0.6) with a white edge, and their Highlight is switched to AlwaysOnTop while lit, so they show through fences and other animals (put back to Occluded + black outline afterwards).
