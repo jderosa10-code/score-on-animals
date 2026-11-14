@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 21:35 CT · jacob-claude
+**Done:** Fence styles now use `MaterialService.Weld` on every plastic part (`ServerStorage.FenceBuilder` B.TEXTURE); gold tones pushed orange so the colour grading doesn't turn them lime. Rebuilt `ServerStorage.Fences` + `Workspace.FenceShowcase`. Saved v545.
+**Next:** Jacob reviews the showcase; then wire fences into PlotLevels.
+**Blockers / questions:** none
+
 ## 2026-11-13 21:25 CT · jacob-claude
 **Done:** (Jacob's plan: base upgrade 1 = bigger plot + new fence, 2 = max size + new fence, 3+ = new fence only) 16 original fence styles: `ServerStorage.FenceBuilder` (ModuleScript: styles, `B.build()`, `B.segment()`, `B.showcase()`) builds `ServerStorage.Fences.<Name>` (PostUnit + RailUnit, attr Tier 0-15: Wooden, Ranch, Cobblestone, Carrot Patch, Jungle, Corner Flag, Goal Net, Egg Nest, Paw Print, Frost, Magma, Crystal, Stadium, Trophy, Galaxy, Royal). Preview: `Workspace.FenceShowcase` floating at Y 120 over the plots. Saved v544.
 **Next:** Jacob picks/changes styles; then wire fences into `ServerScriptService.PlotLevels` + more base levels in GameConfig.
