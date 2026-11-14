@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 23:58 CT · jacob-claude
+**Done:** (Jacob) Giant Squid head: its Idle swings the mantle bone `joint2` 18-62°; new `StarterPlayerScripts.SquidHeadFix` overrides it after animation each frame with a small 4° sway (all mutations). Animals spread out: `HatchClient` edge margin = min(radius*0.5, 15% of plot) (was the full radius), and `pickTarget` walks to the roomiest of 6 nearby spots. 21 animals now span X -21..20 / Z -31..31 on a 51x72 plot. Saved v570.
+**Next:** Jacob publishes.
+**Blockers / questions:** pigeon: the squid's real fix is re-exporting its Idle with joint2 still; the script covers it until then.
+
 ## 2026-11-13 23:50 CT · jacob-claude
 **Done:** (Jacob) UPDATE! popup for returning players: `StarterGui.Menus.UpdateLogMenu` opens once per `GameConfig.UpdateVersion` ("DNA1") for anyone with a saved LastSeen (`ServerScriptService.GameServer` setup sets player attr ShowUpdateLog + saves Settings.Upd_DNA1). New `StarterPlayerScripts.UpdateLogClient`: fills title/notes from `G.UpdateTitle` / `G.UpdateNotes`, waits for tutorial / penalty / welcome-back popup, fits the 4 lines to the box at one shared size. Next update: change UpdateVersion + notes. Saved v569.
 **Next:** Jacob publishes.
