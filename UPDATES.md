@@ -2,6 +2,14 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 19:40 CT · jacob-claude
+**Done:** (Jacob: opening/closing menus lags with lots of animals, worse on phones; placing too)
+- `HUDClient` menu blur (Lighting.UIBlur): phones get no blur at all; on PC it's switched fully off (Enabled false) when no menu is open (it was always on at size 0)
+- `PetsMenuClient`: cards only rebuild when the plot's animals really changed (key of ids + mutations) and only while the menu is open (a change while closed waits for the next open) - placing an animal used to rebuild every card even with the menu shut; the canvas fitter runs 0.8 s after open/change instead of every frame
+- Play-tested: blur off when closed / on with the shop; 19 cards correct after reopen. Not tested on a phone. Jacob's chat-close hitch: nothing in our scripts reacts to the chat window (only TopbarPlus), so likely Roblox's own chat. Saved
+**Next:** Jacob tests on phone after publish
+**Blockers / questions:** none
+
 ## 2026-11-14 00:15 CT · pigeon-claude
 **Done:** (pigeon: hotbar "a lil bigger", "some of the text is uncentered", "trying to insert a dna thing also opens the shop") place v537
 - **Hotbar** `StarterGui.HUD.HotbarHUD.HotbarPanel`: Size now 1.3x the original (0.463 x 0.142; was 1.15x), Position Y 0.948 -> 0.94. `StarterPlayerScripts.MobileHUD` `HOTBAR_SCALE` 1.65 -> 1.52 so the phone bar keeps about the same total width (it is at the limit next to the jump button).
