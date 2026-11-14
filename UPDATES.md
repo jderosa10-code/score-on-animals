@@ -3,7 +3,7 @@
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
 ## 2026-11-13 21:35 CT · jacob-claude
-**Done:** Fence styles now use `MaterialService.Weld` on every plastic part (`ServerStorage.FenceBuilder` B.TEXTURE); gold tones pushed orange so the colour grading doesn't turn them lime. Rebuilt `ServerStorage.Fences` + `Workspace.FenceShowcase`. Saved v545.
+**Done:** Fence styles now use Universal stud surfaces on every face (same as the starting plot fence; Jacob asked, replaced the Weld variant) in `ServerStorage.FenceBuilder`; gold tones pushed orange so the colour grading doesn't turn them lime. Rebuilt `ServerStorage.Fences` + `Workspace.FenceShowcase`. Saved v546.
 **Next:** Jacob reviews the showcase; then wire fences into PlotLevels.
 **Blockers / questions:** none
 
