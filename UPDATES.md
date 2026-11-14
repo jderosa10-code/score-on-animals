@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 16:25 CT · jacob-claude
+**Done:** `StarterPlayerScripts.MobileMenus` also sizes `PlayerGui.BuyEggPopup` on phones (same up-to-1.3x + keep-on-screen as menus/popups). Saved v659.
+**Next:** create the 8 BuyMissed products once Jacob grants the Open Cloud product scope.
+**Blockers / questions:** none
+
 ## 2026-11-14 16:20 CT · jacob-claude
 **Done:** (Jacob) BUY THE EGG YOU MISSED: miss a Rare-or-better egg -> `StarterGui.BuyEggPopup` (copy of the Welcome Back popup, shorter, top of screen) for 12 s with the egg + BUY R$xx. `ReplicatedStorage.BuyEggOffer` (client), called non-blocking from `PenaltyDemoRunner` after a miss. `EggInventory` remembers the missed egg (`_G.SOA_BuyMissedEgg`), `GameServer` receipt (`pr.BuyMissed`) gives it (fallback: random egg of that rarity). `GameConfig`: G.BuyMissedSeconds/MinRank, G.buyMissedRank/Product, 8 products BuyMissedRare..Secret (25/49/99/149/199/299/399/499, mutated = +1 tier). (A kick-again version was built first and removed.) Saved v657.
 **Next:** the 8 developer products need creating (Ids are 0, so nothing shows yet).
