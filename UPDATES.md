@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 00:50 CT · jacob-claude
+**Done:** (Jacob) Group sign uses a ProximityPrompt now instead of opening on walk-up: `Workspace.GroupSign.Part.JoinPrompt` ("Join Group", 10 studs, instant) -> `StarterPlayerScripts.GroupSignClient` (ProximityPromptService, streaming-safe) opens Roblox's join-group prompt; hidden for group members. Sign's box text "WALK UP TO JOIN" -> "JOIN NOW". Tested: prompt hidden for Jacob (member), no errors.
+**Next:** Jacob says if Starter Pack should get a gift product.
+**Blockers / questions:** none
+
 ## 2026-11-14 02:05 CT · pigeon-claude
 **Done:** (pigeon) **Tanuki eyes fixed in the game.** The re-rigged `Rig_Tanuki.fbx` (eyes on `root`, arms still on the shoulders) went in without Import 3D: Open Cloud upload as a Model (asset 126204423021694, group), `game:GetObjects` in Edit, then `rig_swap.lua` + `rig_assemble.lua` rebuilt `ReplicatedStorage.BaseAnimals.Tanuki` + the 5 mutation Tanukis (new mesh 127576742901270, same textures/colours; old ones in `ServerStorage.OldAnimals_Backup`). Checked: shoulders swung 45° -> old eyes sink into the face, new ones stay; all 5 mutations look the same as before; Idle + Walk play in a play test. Saved v601. New `tools/rig/serve_file.ps1` (Studio pulls scripts from localhost).
 **Next:** publish. Gargoyle horns (on its wing bones) need the same fix; 17 more flagged animals to look at.
