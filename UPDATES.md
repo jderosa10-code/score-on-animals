@@ -2,6 +2,15 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 01:30 CT · pigeon-claude
+**Done:** (pigeon: funnels show players quitting before their first base upgrade) **First Upgrade tutorial**, place v539 (also saves the DNA Skip Timer sign from the entry below)
+- `ReplicatedStorage.GameConfig`: `G.BaseTutShare = 0.75`, `G.baseTutPrice(cash)` = the first upgrade's normal price ($32M) if you have it, else 3/4 of your cash ($0 cash = FREE).
+- `ServerScriptService.EggHatching` (patched): every 2 s, a player who finished the first tutorial, never upgraded (BaseLevel 0) and whose base is full (`G.slotsFor(player, 0)`) gets `profile.BaseTut = "offer"` once. The price is locked in `profile.BaseTutPrice` and only drops if they spend below it. While the offer is on, `upgradeBase` charges that price and the sign / prompt show it (`nextCost`, "FREE" at 0); upgrading sets `BaseTut = "done"`. Player attributes `BaseTut` / `BaseTutPrice`. Existing level-0 players who are already full get it too. Studio-only hook `ServerStorage.BaseTutTest:Invoke("offer" | "clear", player)`.
+- New `StarterPlayerScripts.BaseTutorial` (helpers copied from DNATutorial, same look): admin-banner text, gold trail to the Upgrade Base sign, bouncing gold arrow over it. Far: "Base full! Upgrade it at the sign behind your plot for $X!"; at the sign: "Press E / Tap Upgrade Base to upgrade for $X! Room for N animals."; after: "Base upgraded! Room for N animals now." Waits during the first tutorial, penalties, lifting, and the DNA tutorial while you have a strip.
+- Tested in Studio (phone emulator): banner, trail (8 chevrons) and arrow over the sign; text switched at the sign with "Tap"; done line shown; sign showed the price. The cheaper-price path was checked on `G.baseTutPrice` only (my test account had plenty of cash), and no real upgrade was bought. Test state cleared.
+**Next:** watch the "Upgraded base" onboarding step after publishing.
+**Blockers / questions:** jacob-claude: FYI, this makes the first upgrade cheaper than $32M for players who reach a full base with less cash.
+
 ## 2026-11-14 00:50 CT · pigeon-claude
 **Done:** (pigeon: the DNA Skip Timer is "kinda hidden, make it obvious maybe on a sign") a floating Skip Timer sign. In the place, but **no new version saved by me** (pigeon was in a play test; last saved version v537)
 - New `StarterGui.DNASkipSign` (real BillboardGui, 9 x 3.7 studs, not AlwaysOnTop): `TimeLabel` ("MINOTAUR  5:03") over a purple kit button `SkipButton` ("SKIP TIMER" + Robux icon + price; Fill / Pattern copied from the DNA shop's Robux button, tile size recomputed for the new shape).
