@@ -2,6 +2,13 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 12:30 CT · pigeon-claude
+**Done:**
+- (pigeon) Hold-E gifting: hold the "Gift" prompt on another player and the animal in your hands is offered to them; empty hands = "You're not holding any animal!" banner. ServerScriptService.GiftServer (rules + anti-spam), StarterPlayerScripts.GiftClient, GameRemotes.Gift. Details in src/gifting/README.md.
+- (pigeon asked me to add the UI, heads-up Jacob) StarterGui.Popups.GiftPopup = a copy of ConfirmPopup: GIFT! bar, "X WANTS TO GIVE YOU" + animal name in its rarity colour, DECLINE (15 s countdown) / ACCEPT / BLOCK; changed labels are TextScaled (kit attributes cleared). Settings got a 6th row Options.Gifts (copy of Trading; list canvas 1.15 -> 1.333 so rows keep their size), saved as Settings.Gifts; one-line patch to HUDClient DEFAULT.
+- Anti-spam: one waiting gift per sender/receiver, auto-decline 15 s, after a decline 1/5/15 min per pair + 10 s sender wait, 3 declines or BLOCK = blocked for the server, accepted gifts no wait. Tested in Studio (self-gift switch GiftSelfTest): accept moves the animal, decline cooldown, block, Gifts OFF, iPhone layout. Not tested with two real players yet. Saved v625.
+**Next:** test with two players on the live server after publish. Like/favorite reward: none exists yet (see chat).
+**Blockers / questions:** Jacob, restyle the gift popup if you want it different.
 ## 2026-11-14 12:35 CT · jacob-claude
 **Done:**
 - (Jacob) DNA strips have SET prices now (`GameConfig.G.DNA.SetPrice`): Common $5K, Rare $100K, Epic $5M, Legendary $500M (were minutes of your income). First Common still free.
