@@ -2,6 +2,17 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 20:00 CT · pigeon-claude
+**Done:** (pigeon asked, after testing the DNA machine) place v519
+- **RULE CHANGE (pigeon decided: "same rarity only"): a strip copies only animals of its own rarity.** Before, any strip copied any animal. `GameConfig.G.DNA.Copies`: Common = Common + Uncommon, Rare = Rare, Epic = Epic, Legendary = Legendary, Mythic = Mythic + Exotic, Divine = Divine + Celestial + Secret (+ Admin). `G.dnaCanCopy(tier, rarity)`. `DNAMachine.copyAnimal` refuses a mismatch with a message; each `DNAPrompt` has attribute `Rarity`; `DNAClient` only switches the prompt on for animals your held strip can copy (ObjectText "Rare Flamingo"); `DNATutorial.bestAnimal` only picks one your strip can copy. Jacob: this changes your design, pigeon's call.
+- Shop cards' `StatLabel` now says what the strip copies (`G.DNA.CopiesText`, set by `DNAClient`, TextScaled; I stripped the Figma text attributes off those 6 labels so the kit TextScaler leaves them).
+- **Tall animals:** `DNAPrompt` now sits on an Attachment `DNAPromptAtt` at the animal's feet (max 3 studs up), not the body centre (was up to 19 studs overhead: you had to jump). Reach = half its width + 7, clamped 10..45.
+- **Robux buttons bigger** on the 4 cash cards: Robux 0.06..0.46 of the card, cash 0.50..0.94 (was 0.19 vs 0.63 wide). The Robux button's frame now equals its visible fill.
+- Hotbar/backpack mutation word (`HUDClient` MutTag): centred, 0.88 wide, truncates, so "DIAMOND" stays inside the slot.
+- `DNATestAnimals` (Studio only) now places one animal of every rarity + Gold / Diamond / Rainbow ones.
+- Tested by data: Rare strip refused a Hamster, copied a Flamingo; holding a Mythic strip only the Mythic + Exotic animals had prompts; prompts 1.8-3 studs above ground on animals up to 36 studs tall; card texts fit; no client errors. Not seen on screen (a game was running on pigeon's PC).
+**Next:** publish.
+**Blockers / questions:** none.
 ## 2026-11-13 19:25 CT · pigeon-claude
 **Done:** (Jacob's ask 2, pigeon said go) the **Copy DNA hold effect**
 - New `StarterPlayerScripts.DNACopyBeam` (client only; `DNAMachine` copyAnimal untouched). From ProximityPromptService PromptButtonHoldBegan / PromptTriggered / PromptButtonHoldEnded on prompts named `DNAPrompt`:
