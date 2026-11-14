@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 18:30 CT · jacob-claude
+**Done:** (Jacob: early animals bigger so players get hooked on size) `ReplicatedStorage.Hatching.HatchConfig.C.SIZE_BOOST` multiplies `placedScale` (placed + held size, mutations too): Duck 1.8, Chicken 1.8, Bunny 1.6, Cat 1.6, Goat 1.5. Longest side now: Duck 7.4, Chicken 7.8, Bunny 9.3, Cat 10.5, Goat 12.6 studs (Hamster stays 3.6). Already-placed ones grow when the plot is rebuilt (rejoin). Saved
+**Next:** publish
+**Blockers / questions:** none
+
 ## 2026-11-13 20:50 CT · pigeon-claude
 **Done:** (pigeon asked: long animals, hover to select + click, tap on mobile but not while turning the camera) **click / tap to copy DNA**, place v521
 - `StarterPlayerScripts.DNACopyBeam` (extended): while you hold an empty strip, up to 8 animals it can copy within 70 studs get a cyan outline (Highlights in `Workspace.DNACopyGlows`, client only). PC: the animal under the mouse lights up, "CLICK TO COPY DNA" follows the mouse (`StarterGui.DNAHoverTip`, real instance); a click (press + release within 8 px and 0.5 s, so camera drags don't count) starts the copy. Touch: `UserInputService.TouchTap` (Roblox's tap gesture: no drags, pinches, thumbstick or GUI) on a glowing animal; a tip line says so. You can point anywhere on the animal within 30 studs of you, so long / tall animals work.
