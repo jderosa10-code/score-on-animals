@@ -536,7 +536,7 @@ G.ZoneStrength = {1.25, 1.1, 1, 0.7, 0.4}
 -- shifts a little every shot. Rarer eggs: smaller green, bigger and more red, bigger shifts.
 -- Zones are in goal studs, the same space as the aim: x = -9.2 (left) .. 9.2 (right), y = 0.7 (ground) .. 8.5 (bar).
 -- AimZones(egg, seed) -> { {kind = "green"|"red", x, y, r}, ... }. The server sends the seed (RollEgg).
-G.AimGreen, G.AimRed = 1.5, 0.5
+G.AimGreen, G.AimRed = 1.25, 0.5   -- (pigeon, 14 Nov) green was 1.5
 G.AimX, G.AimYLow, G.AimYHigh = 9.2, 0.7, 8.5
 local TIER_N = {Common = 1, Uncommon = 2, Rare = 3, Epic = 4, Legendary = 5, Mythic = 6, Exotic = 7, Divine = 8, Celestial = 9, Secret = 10, Admin = 5}
 local function hash(s) local h = 5381 for i = 1, #s do h = (h * 33 + s:byte(i)) % 2147483647 end return h end
