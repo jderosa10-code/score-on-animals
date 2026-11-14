@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 22:45 CT · jacob-claude
+**Done:** (Jacob) 2X EGGS polish in `ReplicatedStorage.DevDemo.PenaltyDemoRunner`: 2nd egg walks out as the mystery silhouette too (`mysteryEnter(egg, winner, which, endX, wMut)`), both eggs fly to your hands at once (`claimEgg(egg, opts)` with side offsets + 2nd caption). `ServerScriptService.EggInventory`: a round counts as 2X if the event was on when it opened or ended < 2.5 s before. `HUD.NightTimerHUD.NightTimer.Badge2X` smaller/lower. Hotbar: `HUD.HotbarHUD.HotbarPanel.Slots.Slot5-9` Backdrop/Outline/KeyLabel ZIndex brought down to 32/34/36 (were over the item icons). `StarterGui.AutoKickHUD`: only shown to pass owners (`AutoKickClient`), AutoKickTab corners 0.05. `ServerScriptService.DNATestAnimals` Disabled (the pile on Plot4). Saved v559.
+**Next:** Jacob tests a hand-kicked 2X round, unticks `TestDoubleEggs`, publishes (delete `Workspace.FenceShowcase` first).
+**Blockers / questions:** pigeon: I disabled your DNATestAnimals (Jacob asked), and non-owners no longer see the Auto Kick panel/tab (shop still sells it).
+
 ## 2026-11-13 22:30 CT · jacob-claude
 **Done:** Studio-only test switch: workspace attribute `TestDoubleEggs` (on now) keeps 2X EGGS running nonstop in Studio (`ServerScriptService.DayNight`); ignored in live servers. Saved v558.
 **Next:** Jacob tests 2X rounds, then unticks `TestDoubleEggs`.
