@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 16:10 CT · jacob-claude
+**Done:** (Jacob) a copy of the disco ball in `Workspace.DiscoBall` (placed in front of his Studio camera, for him to move). Spins via `StarterPlayerScripts.DiscoBallClient`. Saved v650.
+**Next:** -
+**Blockers / questions:** none
+
 ## 2026-11-14 16:08 CT · jacob-claude
 **Done:** (Jacob) disco ball is silent: removed its `Music` sound from `ServerStorage.EventProps.DiscoBall`; `DiscoBallClient` only spins it now. Saved v648.
 **Next:** -
