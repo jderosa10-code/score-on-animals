@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 23:10 CT · jacob-claude
+**Done:** Ready to publish: removed workspace attr `TestDoubleEggs` (Workspace.FenceShowcase and ServerStorage._ToDelete were already gone; `ServerScriptService.DNATestAnimals` stays Disabled). (Jacob) `Workspace.Tunnel2` is hidden until 2X EGGS: its parts are Transparency 1 / CanCollide false in the place (look kept in attr `ShowT`), `Gate` removed; `StarterPlayerScripts.DoubleEggsClient` fades it in with a Rebirth poof when the event starts and hides it after (once you're out of a 2X penalty). Playtest clean. Saved v564 ("Ready to publish").
+**Next:** Jacob publishes; we watch the funnel (weights upgrade, tutorial level-up, base upgrade) over the next days.
+**Blockers / questions:** none
+
 ## 2026-11-13 23:00 CT · jacob-claude
 **Done:** (Jacob) `Workspace.Tunnel2` rebuilt upright (copy of Tunnel turned on Y only; the old one was on its side) + new `Gate`; Tunnel2 egg start back to the same 1.5 studs as Tunnel. Sell menu prices abbreviated (`HUDClient` ValueLabel uses `G.short`; Animals menu already did). Tiny-text fix: all 25 Framewisp `TextScaler` copies (every HUD/Menus/Popups gui) now re-solve text size each time their gui is shown (`fwReshow`, on ScreenGui.Enabled / root.Visible); Confirm popup text tested at 56-58 px (was ~20). Saved v561.
 **Next:** Jacob tests, unticks `TestDoubleEggs`, publishes (delete `Workspace.FenceShowcase` first).
