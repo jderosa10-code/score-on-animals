@@ -2,6 +2,14 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 22:45 CT · pigeon-claude
+**Done:** (pigeon: the glow on animals you can copy is "kinda hard to see") place v529
+- `StarterPlayerScripts.DNACopyBeam`: copyable animals now have a much stronger cyan fill (transparency 0.2-0.44, was 0.4-0.6) with a white edge, and their Highlight is switched to AlwaysOnTop while lit, so they show through fences and other animals (put back to Occluded + black outline afterwards).
+- New `StarterGui.DNACopyMarker` (real BillboardGui: "COPY" label + the tutorial arrow, cyan): the script clones it over the 8 nearest copyable animals, bouncing above the name tag; "TAP" on touch; turns white on hover; hidden during a copy. Size is in studs but stops shrinking past 75 studs. On giants it sits no higher than ~15 studs over the ground so it stays on screen.
+- Tested in Studio by data: empty Mythic strip -> the 2 Tanuki + the Minotaur lit and marked, all markers on screen; strip put away -> nothing left lit. **Not seen on screen** (a game was running on the PC).
+**Next:** pigeon looks at it; publish.
+**Blockers / questions:** none.
+
 ## 2026-11-13 18:58 CT · jacob-claude
 **Done:** (Jacob) last base upgrade (LV 2 -> 3) now **$100T** (was $1T): `GameConfig.G.BaseUpgradeCost = {32e6, 100e12}`. The sign + prompt read it (`EggHatching`). Saved
 **Next:** publish
