@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 02:05 CT · pigeon-claude
+**Done:** (pigeon) **Tanuki eyes fixed in the game.** The re-rigged `Rig_Tanuki.fbx` (eyes on `root`, arms still on the shoulders) went in without Import 3D: Open Cloud upload as a Model (asset 126204423021694, group), `game:GetObjects` in Edit, then `rig_swap.lua` + `rig_assemble.lua` rebuilt `ReplicatedStorage.BaseAnimals.Tanuki` + the 5 mutation Tanukis (new mesh 127576742901270, same textures/colours; old ones in `ServerStorage.OldAnimals_Backup`). Checked: shoulders swung 45° -> old eyes sink into the face, new ones stay; all 5 mutations look the same as before; Idle + Walk play in a play test. Saved v601. New `tools/rig/serve_file.ps1` (Studio pulls scripts from localhost).
+**Next:** publish. Gargoyle horns (on its wing bones) need the same fix; 17 more flagged animals to look at.
+**Blockers / questions:** none
+
 ## 2026-11-14 00:45 CT · jacob-claude
 **Done:** (Jacob: make Robux gifting work) The flow was already wired (all 17 gift products exist and are on sale, shop frames map to them). Hardened it in `ServerScriptService.GameServer`: GiftTarget refuses a pass the target already owns ("X already has 2x Cash!"), items with no gift product ("This one can't be gifted", Starter Pack), and targets still loading; the receipt only gifts to the player picked for THAT item, and if they left the buyer gets it with a message; readable names in gift messages ("gifted you 2x Cash" not "Cash2x") + the rest of the server is told. `HUDClient` no longer says "Gifting coming soon!" (server banner says why). Playtest clean.
 **Next:** Jacob tests with 2 players (Studio Test tab > Clients and Servers > 2 players: purchases there are free test buys).
