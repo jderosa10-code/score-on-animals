@@ -2,6 +2,14 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 23:41 CT · jacob-claude
+**Done:** Fixed 2 of the 3 live error reports.
+- "AnimationTrack limit of 64 exceeded": every equip of a held animal loaded a NEW idle track on `<Tool>.HeldAnim` (on every screen). `StarterPlayerScripts.HatchClient` idleFor now loads once per tool and reuses it (`toolIdle`, freed on Destroying); setupAnimal can't run twice for one model (`settingUp`). Tested: 70 equips, 1 track playing, no warning.
+- "GameData: no animal model for Common/Legendary/Mythic": saved DNA strips with a lost Type were built as animals (and never showed up). `ServerScriptService.GameData` buildTool turns a non-animal strip-tier item back into Type "DNA"; the warn now has a traceback. Tested with a fake broken strip.
+- "Failed to load animation with sanitized ID": checked all 385 animation ids, all valid and group/Roblox-owned. Roblox-side load failures, no fix needed.
+**Next:** Jacob publishes; watch Error Reports drop over the next day.
+**Blockers / questions:** none
+
 ## 2026-11-14 01:35 CT · jacob-claude
 **Done:** (Jacob) Jacob's new sign by the pitch wall is now `Workspace.GroupSign` ("LIKE THE GAME / & JOIN THE GROUP / WALK UP TO JOIN", CanCollide off). New `StarterPlayerScripts.GroupSignClient`: within 10 studs it opens Roblox's join-group prompt (`GroupService:PromptJoinAsync(game.CreatorId)`), once per approach (re-arms past 16 studs), skipped for group members, during a penalty or the first tutorial. Saved.
 **Next:** Jacob publishes; test with a non-member account.
