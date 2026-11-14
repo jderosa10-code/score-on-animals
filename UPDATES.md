@@ -2,6 +2,12 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 14:31 CT · pigeon-claude
+**Done:**
+- **Live bug, heads-up Jacob:** the error report shows `TutorialClient:234: attempt to call a nil value` **33,131 times since 12:03 PM** on V613 (every frame, in a RenderStep callback). Step 7's check (Egg Luck) calls `luckMenuOpen()`, but that local function is defined further down (line ~299), so it was nil there. Fixed: `local luckMenuOpen` declared before `DONE`, the later `local function` became `function luckMenuOpen()` (same body). Compiles; no tutorial errors in a Studio play.
+- (pigeon) No music at all on a fresh live server. `MusicPlayer` waited forever on `music.Loaded` and clients do fail sound downloads (error report: Failed to load sound Timedout / DnsResolve / ConnectFail, ~270). Now it waits 10 s, asks again (clear + set SoundId), backs off after 3 tries, warns `[MusicPlayer]`. Tested with a broken id: it retried, and played as soon as the sound could load. (Plus the earlier watchdog.) Saved v632.
+**Next:** **publish soon**: the tutorial error is spamming every new player's client on live.
+**Blockers / questions:** none
 ## 2026-11-14 14:26 CT · pigeon-claude
 **Done:** (pigeon) Music went silent in the day on a live server and never came back. Couldn't find the cause from the code (nothing else touches it; night / 15 s gap / Settings all tested fine), so StarterPlayerScripts.MusicPlayer now heals itself: the play loop restarts if it ever errors, and a watchdog restarts the song after 25 s of silence in the day with Music on. Each restart warns `[MusicPlayer] ...` with the full state (F9 console), so if it happens again the line tells us why. Jacob's no-music-at-night and 15 s gap are unchanged. Tested in Studio (forced 30 s of stops: watchdog restarted it). Saved.
 **Next:** publish; if anyone sees a `[MusicPlayer]` warning live, send it over.
