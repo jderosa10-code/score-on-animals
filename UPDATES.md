@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 01:25 CT · jacob-claude
+**Done:** (Jacob, stuck at x49) Egg Luck mid-late levels cheaper: `GameConfig.luckCost` x (1 - 0.4*exp(-((level-31)/3)^2)) - 40% off at L31 (x49->x55: $690T -> $410T), ~25-30% off L29-33, full price again by L26 / L36. Still rises every level. Saved v585.
+**Next:** Jacob publishes.
+**Blockers / questions:** none
+
 ## 2026-11-14 01:15 CT · jacob-claude
 **Done:** (Jacob) Hotbar: the slot you're holding is highlighted (gold Backdrop stroke, lighter box, small pop via `HeldPop` UIScale) for every input incl. controller LB/RB (`HUDClient` markHeld, on tool equip/unequip + render). Kick area: `PenaltyDemoRunner` unequips your tool when you step on; `HUDClient` toggleItem won't equip during InPenalty and unequips when InPenalty turns on. Tested both. DNA shop title icon: `StarterGui.Menus.DNAShopMenu.DNAShopPanel.TopBar.Icon` is now the filled Legendary tube (rbxassetid://80503948441668, tilted -12°; the old box id is in its OldImage attribute). Saved v584.
 **Next:** Jacob publishes.
