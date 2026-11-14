@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 00:10 CT · jacob-claude
+**Done:** (Jacob) Muted music no longer blips: SoundService has a Sound AND a SoundGroup named Music; `HUDClient` now sets player attr `MusicOn` (+ Muted on both), `StarterPlayerScripts.MusicPlayer` finds the Sound by class, starts muted and waits for the saved setting, mutes instantly; `DayNightClient` night ambience follows MusicOn too. New funnels in `ServerScriptService.Funnels`, each its own group: **Base Upgrades** (1-15, fence names), **Base Upgrade Tutorial** (full / shown sign / upgraded; hooks in EggHatching), **DNA Machine** (opened shop / bought / copied / inserted / claimed; hooks in DNAMachine), **DNA Copies Claimed**, **2X Eggs Wins** (EggInventory). DNA strips 25% cheaper (`G.DNA.PriceMult = 0.75` in `G.dnaPrice`). UpgradeSign parts CanCollide off on all plots. Saved v572.
+**Next:** Jacob publishes; funnels show in Creator Hub after live traffic.
+**Blockers / questions:** none
+
 ## 2026-11-13 23:58 CT · jacob-claude
 **Done:** (Jacob) Giant Squid head: its Idle swings the mantle bone `joint2` 18-62°; new `StarterPlayerScripts.SquidHeadFix` overrides it after animation each frame with a small 4° sway (all mutations). Animals spread out: `HatchClient` edge margin = min(radius*0.5, 15% of plot) (was the full radius), and `pickTarget` walks to the roomiest of 6 nearby spots. 21 animals now span X -21..20 / Z -31..31 on a 51x72 plot. Saved v570.
 **Next:** Jacob publishes.
