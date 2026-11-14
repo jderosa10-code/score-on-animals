@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 16:05 CT · jacob-claude
+**Done:** Disco ball from a toolbox model (Jacob's Place1) rebuilt in our game WITHOUT its scripts (an unrelated pickup-kit remote handler + a server spin loop): `ServerStorage.EventProps.DiscoBall` (mesh, 9 particle emitters, light, looped `Music`, tag `DiscoBall`). New `StarterPlayerScripts.DiscoBallClient` spins any tagged ball on each client (attr SpinDegPerSec, default 240) and plays its music. Not placed in Workspace yet (for a Disco Field event). Tested, saved v647.
+**Next:** -
+**Blockers / questions:** none
+
 ## 2026-11-14 15:55 CT · jacob-claude
 **Done:** Daily rewards redone (`ReplicatedStorage.GameConfig` G.Daily + G.dailyCash): D1 10 min of income, D2 2X Luck 15m, D3 Koala, D4 2X Cash 15m, D5 Epic DNA strip, D6 3X Strength 20m, D7 Gold Triceratops + 30 min income. `ServerScriptService.GameServer` claimDaily (moved below addBoost; boosts reuse Index boosts). `HUDClient`: card names/icons, text fits the card, future days say "Locked". All 7 claims tested, then Jacob's data restored.
 **Done:** TopbarPlus DAILY icon on the right (calendar from `Menus.DailyRewardsMenu.DailyPanel.TopBar.Icon`) opens the menu; red LuckiestGuy notice dot while a reward is ready. `ActiveBoostsClient` boost rows no longer say "INDEX:". Saved v645.
