@@ -2,6 +2,13 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 20:20 CT · pigeon-claude
+**Done:** (pigeon: "no robux buttons?? also why no secret option") place v520
+- **Robux buttons were never drawn.** `DNAShopMenu` uses ZIndexBehavior Sibling, and on every card `RobuxBuyButton` (ZIndex 95) and `SoldOutShade` (90) sat BELOW the card's `Background` (130), so both were hidden. Now SoldOutShade = 180 (over the whole card) and RobuxBuyButton = 190 (over the shade, so Robux still buys a sold-out strip). Jacob: your grey SOLD OUT shade shows again too. Checked with `GetGuiObjectsAtPosition`: the button's parts are above the card background.
+- **Secret strip**, Robux only: product `DNASecret` 3731015727, R$999, instant, keeps mutation. `G.DNA.Order` has 7 tiers. Copy rule now: Divine = Divine + Celestial, **Secret = Secret (+ Admin)**. New `SecretCard` (dark grey / black fill); list canvas wider again. Divine product description updated to say Divine + Celestial. Secret also borrows the Legendary tube icon (needs art, like Mythic + Divine).
+- Tested by data: Secret strip (grant path) refused a Divine SeaDragon, copied the Secret Leviathan; all 7 cards have the right price, text and buttons; no client errors.
+**Next:** publish; tube icons for Mythic / Divine / Secret.
+**Blockers / questions:** none.
 ## 2026-11-13 20:00 CT · pigeon-claude
 **Done:** (pigeon asked, after testing the DNA machine) place v519
 - **RULE CHANGE (pigeon decided: "same rarity only"): a strip copies only animals of its own rarity.** Before, any strip copied any animal. `GameConfig.G.DNA.Copies`: Common = Common + Uncommon, Rare = Rare, Epic = Epic, Legendary = Legendary, Mythic = Mythic + Exotic, Divine = Divine + Celestial + Secret (+ Admin). `G.dnaCanCopy(tier, rarity)`. `DNAMachine.copyAnimal` refuses a mismatch with a message; each `DNAPrompt` has attribute `Rarity`; `DNAClient` only switches the prompt on for animals your held strip can copy (ObjectText "Rare Flamingo"); `DNATutorial.bestAnimal` only picks one your strip can copy. Jacob: this changes your design, pigeon's call.
