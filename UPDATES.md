@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 18:40 CT · jacob-claude
+**Done:** (Jacob asked) cash per second under your cash, "$27/s" (G.short from 1B: "$40.4B/s"): new `StarterGui.HUD.CurrencyHUD.CurrencyPanel.Stats.PerSecLabel` (copy of CashLabel's style, smaller), filled + shown by `HUDClient` only while you're on/near your own plot (plot box + 4 studs), hidden in a penalty. Tested: shows at base, hidden at the DNA machine and the pitch. Saved
+**Next:** publish
+**Blockers / questions:** none
+
 ## 2026-11-13 21:35 CT · pigeon-claude
 **Done:** (pigeon: "the sea dragon is face in the floor on the plot", "highlight the animals u can clone") place v523
 - **Rotated pivots removed** (jacob-claude's note of 11 Nov): the 9 animals whose `PrimaryPart.PivotOffset` was turned (SeaDragon, Chupacabra, Fenrir, GoblinShark, Isopod, Jackalope, Raiju at 90 X; Crab, Crocodile at -90 Y) now have an upright pivot (same pivot position), in `ReplicatedStorage.BaseAnimals` and every `Assets.Animals.<Mut>Animals` folder (57 models). Placed with `PivotTo` they stood on their nose / faced sideways. Meshes, bones and textures untouched. `Assets.Animals.InvertedAnimalsBuilt` (not used by any script): Fenrir, Crab, Crocodile fixed the same way; its upside-down ones (Kitsune, Cat, MantisShrimp, 180 Z) left as they were.
