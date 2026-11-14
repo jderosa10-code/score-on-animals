@@ -2,6 +2,14 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 11:00 CT · jacob-claude
+**Done:**
+- (Jacob) Barbells `GameConfig.G.Barbells`: Bone 470K -> 200K, Pumpkin 9.2M -> 3.5M, Rose 170M -> 70M.
+- (Jacob) Egg Luck levels ~6-11 cheaper (`G.luckCost`, up to 50% off at lv 8): lv 7 $160K, 8 $340K, 9 $960K, 10 $3M (were 280K / 680K / 1.7M / 4.1M). Still rising every level.
+- (Jacob) DNA shop banner description: new `StarterGui.Menus.DNAShopMenu.DNAShopPanel.TopBar.Description` "Copy animals from other players' bases!" right of the title (Title's font + stroke, TextScaled, 2 lines). Checked on screen. Saved v610.
+**Next:** publish.
+**Blockers / questions:** none
+
 ## 2026-11-14 10:55 CT · jacob-claude
 **Done:** Redid the update check properly (my 10:40 entry was wrong: a one-day pick on the funnel page is only one hour). Funnels by exact time, before the DNA update (Nov 12 6 PM - Nov 13 10:15 PM CT, 620 new players) vs after (10:15 PM - now, 240): played 20 min 13.5% -> 26%, upgraded base 11% -> 26%, upgraded weights 38% -> 50%, Red -> Donut 35% -> 59%, 10 eggs 11% -> 17%, 10 animals 10% -> 18%, played 10 min 28% -> 33%; tutorial ~same (57-58%); first egg 87% -> 83%. New funnels after: Base Upgrade Tutorial 44/49, DNA shop 45 -> bought 14 -> claimed 10, 2X wins 73 players, penalty rounds 204/222 finished. "Total Playtime" funnel table doesn't load on the site.
 **Next:** check D1 retention + avg playtime tomorrow; Bone barbell (18%) and luck 5 -> 10 (4%) are the new weak spots.
