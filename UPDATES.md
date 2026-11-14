@@ -2,6 +2,14 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 12:35 CT · jacob-claude
+**Done:**
+- (Jacob) DNA strips have SET prices now (`GameConfig.G.DNA.SetPrice`): Common $5K, Rare $100K, Epic $5M, Legendary $500M (were minutes of your income). First Common still free.
+- (Jacob) 3rd base upgrade $5M -> $2M (`G.BaseUpgradeCost[3]`).
+- (Jacob) Trade GUIs re-laid out bigger: TradeGui 0.74 screen tall (aspect 0.66), TradeWindowGui 0.72 tall (aspect 1.5), no 560 px cap; TopBar icon / X / pattern re-fit; player rows (aspect 4.2) with a green TRADE button each (`PlayerRowN.TradeButton`); trade window: avatars + names on top (`YourAvatar`/`YourName`, `TheirAvatar`/`TheirName`), offer boxes as 3x2 slot grids (`AddSlot`, `ItemSlot1-5`), search + ACCEPT / DECLINE along the bottom; text fits its boxes (removed their UITextSizeConstraints). Checked on screen. Saved v622.
+**Next:** trade logic if Jacob wants it.
+**Blockers / questions:** none
+
 ## 2026-11-14 12:20 CT · jacob-claude
 **Done:**
 - (Jacob asked) Restyled Jacob's new `StarterGui.TradeGui` + `StarterGui.TradeWindowGui` to our menu style: TopBar cloned from GiftMenu (green weld bar, their trade icon, red X `CloseButton`, LuckiestGuy "TRADE"), our dark Backdrop, rows / offer boxes / slots / search box as dark boxes with black outlines, all text LuckiestGuy + black stroke, Accept / Decline rebuilt from the Gift button (green / red, same names `AcceptButton` / `DeclineButton`). Text is TextScaled (no kit TextScaler in these GUIs). Originals backed up in `ServerStorage._TradeGuiBackups`. No scripts yet (UI only).
