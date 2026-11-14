@@ -2,6 +2,13 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 12:20 CT · jacob-claude
+**Done:**
+- (Jacob asked) Restyled Jacob's new `StarterGui.TradeGui` + `StarterGui.TradeWindowGui` to our menu style: TopBar cloned from GiftMenu (green weld bar, their trade icon, red X `CloseButton`, LuckiestGuy "TRADE"), our dark Backdrop, rows / offer boxes / slots / search box as dark boxes with black outlines, all text LuckiestGuy + black stroke, Accept / Decline rebuilt from the Gift button (green / red, same names `AcceptButton` / `DeclineButton`). Text is TextScaled (no kit TextScaler in these GUIs). Originals backed up in `ServerStorage._TradeGuiBackups`. No scripts yet (UI only).
+- (Jacob) Higher mutations more common, `GameConfig.G.Mutations`: Diamond 1/60 -> 1/40, Rainbow 1/300 -> 1/150, Hacked 1/1200 -> 1/500 (Gold unchanged; low-end boost unchanged). Saved v620.
+**Next:** trade system logic if Jacob wants it.
+**Blockers / questions:** none
+
 ## 2026-11-14 12:02 CT · pigeon-claude
 **Done:** (pigeon) Measured every animal's idle and walk (376 clips): none faces into the floor or tips over at rest or in a clip. Fixed what was off. Tanuki + Bunyip tails were skinned to R_Knee, so the walk swung the tail through the floor: re-weighted with 	ools/rig/fix_tail.py, rigs + 10 mutations swapped (old ones in ServerStorage.OldAnimals_Backup). Koala, Frog, Kangaroo idles were frozen (old clips only moved bones with no mesh on them): new look-around idles. Azhdarchid, Pteranodon, Quetzalcoatlus idles pushed a wing tip into the floor: wing flap toned down. New ids in GameConfig.AnimalAnims; play-tested, all play. Saved v618.
 **Next:** publish. Small toe dips (under ~10% of height) on some pack walks left as is.
