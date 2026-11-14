@@ -2,6 +2,13 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 00:58 CT · jacob-claude
+**Done:**
+- (Jacob) Black outline on YOUR plot's fence only, on your screen: new `StarterPlayerScripts.OwnFenceOutline` (a Highlight in the Camera on `Plot.FenceSkin`; at level 0 it moves the plain Post/Plank parts into a client-only `Plot.FenceOutline` Model so they can be outlined; follows upgrades + streaming). `BaseUpgradeFX` also looks in FenceOutline for posts. Checked in play: on Plot1's FenceSkin, no errors (couldn't screenshot the play view).
+- (Jacob) Phones: the ANIMALS button sits higher (Y 0.42, was 0.5): new `StarterPlayerScripts.MobileAnimalsButton`. Not tested on a phone.
+**Next:** Jacob checks both in game.
+**Blockers / questions:** Highlights max out at 31 on screen and every animal already has one, so with lots of animals around some outlines (maybe this one) may not draw.
+
 ## 2026-11-14 00:50 CT · jacob-claude
 **Done:** (Jacob) Group sign uses a ProximityPrompt now instead of opening on walk-up: `Workspace.GroupSign.Part.JoinPrompt` ("Join Group", 10 studs, instant) -> `StarterPlayerScripts.GroupSignClient` (ProximityPromptService, streaming-safe) opens Roblox's join-group prompt; hidden for group members. Sign's box text "WALK UP TO JOIN" -> "JOIN NOW". Tested: prompt hidden for Jacob (member), no errors.
 **Next:** Jacob says if Starter Pack should get a gift product.
