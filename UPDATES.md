@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-13 22:30 CT · jacob-claude
+**Done:** Studio-only test switch: workspace attribute `TestDoubleEggs` (on now) keeps 2X EGGS running nonstop in Studio (`ServerScriptService.DayNight`); ignored in live servers. Saved v558.
+**Next:** Jacob tests 2X rounds, then unticks `TestDoubleEggs`.
+**Blockers / questions:** none
+
 ## 2026-11-13 22:20 CT · jacob-claude
 **Done:** (Jacob's idea) **2X EGGS event**: 30 s every day, 100 s after sunrise, never at night (`ServerScriptService.DayNight`; workspace attrs DoubleEggs / DoubleEggsAt / DoubleEggsEndsAt). New `Workspace.Tunnel2` (mirror of Tunnel) with a `Gate` that drops while it's on (`StarterPlayerScripts.DoubleEggsClient`). A round started during it rolls a 2nd egg separately (`ServerScriptService.EggInventory` RollEgg returns name2/mut2); the kick must beat the heavier egg and a goal gives both (2nd to backpack). `ReplicatedStorage.DevDemo.PenaltyDemoRunner`: egg 1 steps to its side, egg 2 walks out of Tunnel2 with the camera on it to the other side (no collisions), "2X EGGS" caption stays while kicking, the keeper nearer the shot plays it, a goal claims both; `roundNeed()` replaces the per-egg strength checks. `ReplicatedStorage.Keeper.EggKeeper.getUp` returns to `homeX`. Timer: egg icon + tilted `Badge2X` before/during the event (`HUD.NightTimerHUD.NightTimer.Badge2X`, `NightTimerClient`). Tested with Auto Kick: 2 eggs per goal, no errors. Saved v557.
 **Next:** Jacob tests a hand-kicked 2X round and publishes (delete `Workspace.FenceShowcase` first).
