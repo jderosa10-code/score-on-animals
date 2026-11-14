@@ -2,6 +2,14 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 11:40 CT · jacob-claude
+**Done:**
+- (Jacob) Reset ONLY Jacob's save: `ServerScriptService.GameData` `D.Wipe` on, Tag "2026-11-14-jacob1", ids = {Jacob}, MinGroupRank = math.huge (no one else, not pigeon). Happens once on his next join (Studio or live).
+- Bug: Equip Best while an egg was hatching put the hatching animal on the plot AND gave it to you after the animation. `EggHatching` EquipBest skips Pending items; `GameData.giveItem` skips the tool if the item is no longer yours; `rebuildTools` skips Pending items.
+- Phones: Animals button higher again (`MobileAnimalsButton` Y 0.35); new `StarterPlayerScripts.MobileStrokes` thins the fixed-pixel text strokes in the Egg Luck menu (`Menus.UpgradesMenu`) to 0.55x on touch screens. Saved v611.
+**Next:** Jacob publishes, joins once (wipe), then I turn D.Wipe back off.
+**Blockers / questions:** not playtested (a playtest would wipe Jacob's save right away).
+
 ## 2026-11-14 11:00 CT · jacob-claude
 **Done:**
 - (Jacob) Barbells `GameConfig.G.Barbells`: Bone 470K -> 200K, Pumpkin 9.2M -> 3.5M, Rose 170M -> 70M.
