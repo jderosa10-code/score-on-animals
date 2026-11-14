@@ -3,7 +3,7 @@
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
 ## 2026-11-14 00:30 CT · jacob-claude
-**Done:** (Jacob, from the playtime funnel: 38% leave between 2 and 5 min) **LUCKY EGG**: `ServerScriptService.EggInventory` RollEgg gives a new player (3-9 eggs scored, once: profile.LuckyEggDone set when it's scored; never in tutorial / Auto Kick) an egg one rarity tier above their usual that their Strength can beat, no mutation, 3rd kick guaranteed. Player attr `LuckyEgg` during the round; `ReplicatedStorage.DevDemo.PenaltyDemoRunner` shows a rainbow "LUCKY EGG!" with Rainbow/Sparkles bursts, PerfectSting + crowd gasp. Tested: Legendary-tier account got Mythic eggs (Pegasus, Stymphalian). Saved v577.
+**Done:** (Jacob, from the playtime funnel: 38% leave between 2 and 5 min) **LUCKY EGG**: `ServerScriptService.EggInventory` RollEgg gives a new player (3-9 eggs scored, once: profile.LuckyEggDone set when it's scored; never in tutorial / Auto Kick) an egg one rarity tier above their usual that their Strength can beat, no mutation, 3rd kick guaranteed. Player attr `LuckyEgg` during the round; `ReplicatedStorage.DevDemo.PenaltyDemoRunner` shows a rainbow "LUCKY EGG!" with Rainbow/Sparkles bursts, PerfectSting + crowd gasp. Tested: Legendary-tier account got Mythic eggs (Pegasus, Stymphalian). Base-upgrade tutorial checked: its arrow/trail already follow the moved UpgradeSign; `StarterPlayerScripts.BaseTutorial` text now says "by your gate". Saved v578.
 **Next:** Jacob publishes; watch Total Playtime 2->5 min.
 **Blockers / questions:** none
 
