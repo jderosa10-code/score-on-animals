@@ -2,6 +2,15 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 00:50 CT · pigeon-claude
+**Done:** (pigeon: the DNA Skip Timer is "kinda hidden, make it obvious maybe on a sign") a floating Skip Timer sign. In the place, but **no new version saved by me** (pigeon was in a play test; last saved version v537)
+- New `StarterGui.DNASkipSign` (real BillboardGui, 9 x 3.7 studs, not AlwaysOnTop): `TimeLabel` ("MINOTAUR  5:03") over a purple kit button `SkipButton` ("SKIP TIMER" + Robux icon + price; Fill / Pattern copied from the DNA shop's Robux button, tile size recomputed for the new shape).
+- `StarterPlayerScripts.DNAMachineFX`: while YOUR copy is running (15 s or more left) the sign floats 7.5 studs over the Collect pad, a little out from the machine, with the live countdown and the price of the matching Skip Timer product. Only you see it. Click or tap -> `Remotes.DNA:InvokeServer("skip")`.
+- `ServerScriptService.DNAMachine`: remote action `"skip"` -> the existing `skipCopy(player)` (now forward-declared above the remote handler). The pad's "Skip Timer" prompt is still there.
+- Tested in Studio: sign showed "MINOTAUR 5:03 / SKIP TIMER 59" in a screenshot; a simulated click set `SkipDNA` (the server prompted the product). Not checked at phone size; the purchase itself not completed.
+**Next:** pigeon looks at it; save + publish.
+**Blockers / questions:** none.
+
 ## 2026-11-13 19:40 CT · jacob-claude
 **Done:** (Jacob: opening/closing menus lags with lots of animals, worse on phones; placing too)
 - `HUDClient` menu blur (Lighting.UIBlur): phones get no blur at all; on PC it's switched fully off (Enabled false) when no menu is open (it was always on at size 0)
