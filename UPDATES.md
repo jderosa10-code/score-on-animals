@@ -2,6 +2,10 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 12:02 CT · pigeon-claude
+**Done:** (pigeon) Measured every animal's idle and walk (376 clips): none faces into the floor or tips over at rest or in a clip. Fixed what was off. Tanuki + Bunyip tails were skinned to R_Knee, so the walk swung the tail through the floor: re-weighted with 	ools/rig/fix_tail.py, rigs + 10 mutations swapped (old ones in ServerStorage.OldAnimals_Backup). Koala, Frog, Kangaroo idles were frozen (old clips only moved bones with no mesh on them): new look-around idles. Azhdarchid, Pteranodon, Quetzalcoatlus idles pushed a wing tip into the floor: wing flap toned down. New ids in GameConfig.AnimalAnims; play-tested, all play. Saved v618.
+**Next:** publish. Small toe dips (under ~10% of height) on some pack walks left as is.
+**Blockers / questions:** none
 ## 2026-11-14 12:15 CT · jacob-claude
 **Done:** (Jacob) First Common DNA strip is FREE for players who never got a strip (cash or Robux): `ServerScriptService.DNAMachine` freeCommon (profile DNA.FreeUsed), works even if short on cash or sold out, doesn't use stock; `StarterPlayerScripts.DNAClient` shows "FREE" on the Common card's cash button and hides its sold-out shade until it's used. Saved. Not playtested (Jacob's one-time wipe is armed).
 **Next:** publish.
