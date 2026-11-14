@@ -2,6 +2,14 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 13:00 CT · jacob-claude
+**Done:**
+- Starter Pack 50% OFF is live in code: `G.Products.StarterPackSale.Id = 3731350746` (R$49, checked on Roblox).
+- Regional pricing protection (Jacob ticked "my experience implements the appropriate checks"): new `ServerScriptService.PriceLevels` (MarketplaceService:GetUsersPriceLevelsAsync once per player per session; fails closed). canGift = sender level >= receiver; canTrade = equal levels. Used in `GameServer` GiftTarget + again at payment (not allowed = buyer keeps it) and in `GiftServer` offer (pigeon's hold-E animal gifts). **Trading, when built, must call PriceLevels.canTrade.**
+- Robux prices on screen now come from Roblox (regional price), not GameConfig numbers: new `G.robux(id, fallback)` (cached GetProductInfo); used for the Starter Pack sale card, DNA shop Robux buttons (`DNAClient`), Skip Timer prompts (`HatchClient`, `DNAMachineFX`). The shop cards already used GetProductInfo. Saved.
+**Next:** publish; Jacob can run Creator Hub's Dynamic Price Check to confirm no hard-coded prices are left.
+**Blockers / questions:** pigeon: I added a PriceLevels check to your GiftServer.offer (FYI issue opened).
+
 ## 2026-11-14 12:50 CT · jacob-claude
 **Done:**
 - (Jacob) Every base upgrade: eggs hatch +0.25x faster (`GameConfig.G.baseHatchSpeed`: lv1 1.25x, lv4 2x, lv15 4.75x), applied when an egg is placed (`EggHatching`), stacks with the FastHatch pass; the upgrade message says it.
