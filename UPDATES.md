@@ -2,6 +2,12 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 12:48 CT · pigeon-claude
+**Done:**
+- (pigeon) Favorite reward: favorite the game once = a random **Rare** animal + cash (at least $5K, or 10 min of your income if more, via GameConfig.packCash). Once per account (profile.FavoriteRewarded). ServerScriptService.FavoriteReward, StarterPlayerScripts.FavoriteRewardClient, GameRemotes.FavoriteReward, plus a 2nd prompt on Workspace.GroupSign board: FavoritePrompt ("Favorite", F / gamepad Y, sits under Join). It claims from any confirmed favorite prompt, so Jacob's idle FavoritePromptClient ask pays out too. Likes can't be checked by any Roblox API, so "like" is only asked for.
+- Tested in Studio: Rare Stingray + $110Qa (10 min of pigeon's income), a 2nd claim gives nothing, the sign prompt hides. Test reward undone on pigeon's save. Saved.
+**Next:** publish. Jacob: the sign still says "LIKE THE GAME & JOIN THE GROUP"; maybe add "FAVORITE = FREE RARE PET" if you want.
+**Blockers / questions:** none
 ## 2026-11-14 13:00 CT · jacob-claude
 **Done:**
 - Starter Pack 50% OFF is live in code: `G.Products.StarterPackSale.Id = 3731350746` (R$49, checked on Roblox).
