@@ -2,6 +2,13 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 02:00 CT · pigeon-claude
+**Done:** (pigeon: "the serpents' idle doesn't move at all") place v540
+- `StarterPlayerScripts.HatchClient` `playOnly`: animals with only an Idle clip (Snake, Cobra, TripleCobra, Leviathan, SeaDragon, Seahorse, Blobfish...) have `tracks.Walk == tracks.Idle`. `playOnly` compared by key, so the same track got Play and Stop in table order, and about half of these animals stood frozen. It now compares the track itself.
+- Tested in Studio: before, the Rainbow SeaDragon and the Seahorse had no playing track; after, 15 of 17 placed animals move. The 2 left are Hamsters: their Idle clip (107337319263396) plays but moves no bones, so the clip itself is empty or its bone names don't match. Not fixed.
+**Next:** a new Hamster idle (Jacob / whoever made the clip).
+**Blockers / questions:** none.
+
 ## 2026-11-14 01:30 CT · pigeon-claude
 **Done:** (pigeon: funnels show players quitting before their first base upgrade) **First Upgrade tutorial**, place v539 (also saves the DNA Skip Timer sign from the entry below)
 - `ReplicatedStorage.GameConfig`: `G.BaseTutShare = 0.75`, `G.baseTutPrice(cash)` = the first upgrade's normal price ($32M) if you have it, else 3/4 of your cash ($0 cash = FREE).
