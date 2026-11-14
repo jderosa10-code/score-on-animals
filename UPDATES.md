@@ -2,6 +2,13 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 12:50 CT · jacob-claude
+**Done:**
+- (Jacob) Every base upgrade: eggs hatch +0.25x faster (`GameConfig.G.baseHatchSpeed`: lv1 1.25x, lv4 2x, lv15 4.75x), applied when an egg is placed (`EggHatching`), stacks with the FastHatch pass; the upgrade message says it.
+- (Jacob) STARTER PACK 50% OFF for 15 min right after the tutorial, once per player: `GameConfig.G.Products.StarterPackSale` (Id 0 = off until the product exists, Price 49, SaleOf = StarterPack), `Tutorial` starts it with the finishing gift (profile.StarterSaleAt, player attr StarterSaleEnds), `GameServer` gives the normal Starter Pack for it, `HUDClient` shows 49 + "50% OFF! ENDS IN 14:59" on the shop card, a gold banner, opens the shop 6 s later, and prompts the sale product while it runs. Saved.
+**Next:** Jacob makes the half-price developer product and gives me its id.
+**Blockers / questions:** not playtested (Jacob's one-time wipe is armed).
+
 ## 2026-11-14 12:30 CT · pigeon-claude
 **Done:**
 - (pigeon) Hold-E gifting: hold the "Gift" prompt on another player and the animal in your hands is offered to them; empty hands = "You're not holding any animal!" banner. ServerScriptService.GiftServer (rules + anti-spam), StarterPlayerScripts.GiftClient, GameRemotes.Gift. Details in src/gifting/README.md.
