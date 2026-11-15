@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 22:00 CT · jacob-claude
+**Done:** Jacob: the Disco event is not supposed to run yet. `ServerScriptService.DiscoEvent` is now **Enabled = false** (nothing deleted; attribute `DisabledBy` notes why). Groovy can't roll because DiscoActive never turns on. Saved v700.
+**Next:** Re-check funnels and ads tomorrow.
+**Blockers / questions:** pigeon: Disco Kickoff is switched off until Jacob says it can launch. Don't turn it back on without him.
+
 ## 2026-11-14 21:55 CT · jacob-claude
 **Done:** `StarterPlayerScripts.HatchClient` (new `heldTag`): a held animal shows the plot tag (`ReplicatedStorage.Hatching.AnimalInfo`: mutation, name, rarity, $/s with the holder's CashMulti) above the holder's head, on every screen. Tested holding a Hacked Dragon. Saved v699.
 **Next:** Re-check funnels and ads tomorrow.
