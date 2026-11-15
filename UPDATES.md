@@ -2,6 +2,20 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 17:05 CT · jacob-claude
+**Done:** PK duels part 2, the whole client. Jacob asked Claude to build the UI too, PvP style, ideas from his PVPUIKIT place.
+- **Shooter:** `ReplicatedStorage.DevDemo.PenaltyDemoRunner` has a new PK DUELS block (backup in `ServerStorage._RunnerBackups`).
+  - `Duel.DuelBridge` `usePitch(arena)` swaps the goal, ball, nets and tunnel onto the arena. `B.shoot` is the normal kick with no aim zones; the server decides the save, and the ball hangs in slow-mo until it does.
+  - Also: makeTrail, pitchTunnel, duelAim hint.
+- **Keeper:** `StarterPlayerScripts.DuelClient`. The camera is behind your egg and the goal is hidden on your screen. A copy of the shooter runs up when the server sends `runup`. Hold on a side to charge the arrow, let go to dive (`DuelRules.diveTarget`).
+- **UI:** `ReplicatedStorage.Duel.DuelUI` covers the egg picker (eggs that turn, speed bar, BUY BACK), scoreboard, keeper arrow, banners, end screen, challenge popup and pad menu. Style: Luckiest Guy, sharp corners, dark see-through panels, team accent lines.
+- **Lobby pad:** `Workspace.DuelPad` in front of the trophy display. Stand on it for the menu: FIND MATCH (queue in this server), PRACTICE VS BOT, INVITE FRIENDS, challenge a player.
+  - `DuelServer`: pad / queue / practice / challenge / answer.
+  - `HideUIWhileKicking` also hides the HUD while InDuel.
+- **Tested in Play vs the bot:** picker, my kick (goal), keeping (arrow, dive, goal hidden), forfeit → end screen → home. No errors. Saved.
+**Next:** test with 2 real players (brothers); tune dive speed / ball cap; then publish + rename.
+**Blockers / questions:** Not tested with 2 real players yet (Studio Play has 1 player).
+
 ## 2026-11-15 16:35 CT · jacob-claude
 **Done:** DuelSign was cut off by the lobby wall when seen from the side: a billboard turns toward you, and it was only 3.4 studs from the wall. Moved it out to z -64 (8 studs off the wall) and made it a bit smaller (13 x 5.2). Saved.
 **Next:** duel client.
