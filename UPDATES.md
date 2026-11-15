@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 01:20 CT · jacob-claude
+**Done:** Admin panel PLAYERS tab has a new TROLL / MODERATE section (`ServerStorage.AdminPanel.Window.Pages.Players.Controls`, buttons `Troll_<kind>`, attr `Troll`): KICK (needs a second tap), FREEZE / UNFREEZE (anchored, in an ice block), BRING, GO TO, FLING, SPIN, BLIND, TINY / GIANT / NORMAL. Server: `ServerScriptService.AdminEvents` action `troll` (admin-checked, this server only; blocked while the target is kicking or lifting, can't kick yourself, a respawn thaws). Fling / spin / blind run on the target's screen through new `GameRemotes.AdminTroll` + `StarterPlayerScripts.AdminTrollClient`. Tested every action on myself in Play, no errors. Saved v732.
+**Next:** none
+**Blockers / questions:** none
+
 ## 2026-11-15 01:05 CT · jacob-claude
 **Done:** (1) Amphiptere egg was off-centre on hatchery patches: its `EggCenter` X was +0.5 but the egg body sits at about -0.9 (the wings stick out on +X). Fixed in `ServerStorage.BaseEggs.Amphiptere` and all 6 mutation copies (`Assets.Eggs.<Mut>Eggs.Amphiptere`). Checked from above in Play: centred. (2) DNA shop Robux buttons (`StarterGui.Menus.DNAShopMenu` ... `<Card>.RobuxBuyButton`, all 7): `RobuxIcon` square and bigger (aspect 1, height 0.95), `PriceLabel` left-aligned right next to it, TextScaled + `FitMax` (max 100), same size as the cash price. Saved v731.
 **Next:** Other eggs might have wrong `EggCenter` values too. Check if Jacob spots more.
