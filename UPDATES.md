@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 22:35 CT · jacob-claude
+**Done:** Onboarding. (1) New `StarterPlayerScripts.StrengthHint`: when an egg saves your kick and your Strength is below what it needed (attr `TrainHint`, set in `ReplicatedStorage.DevDemo.PenaltyDemoRunner` at round end), the banner says "That egg needs X Strength, you have Y. Lift weights..." with the gold trail + arrow to your weights. Ends when you lift, get strong enough, or after 30 s; max 3 per session, 150 s apart. (2) `ServerScriptService.GameServer` `newPlayerBoost`: brand-new profiles (LastSeen 0, no eggs scored) get 2X Cash for 10 min once (`Settings.NewPlayerBoost`), shown in the boosts bar, plus a welcome notice. (3) Funnels by device, last 7 days (data from before today's changes): Phone 602, Tablet 266, Computer 55. Tutorial steps look about the same on every device. The difference is "Upgraded weights": Phone 80%, Tablet 79%, PC 91%. Saved v706.
+**Next:** Look at the weights upgrade on touch screens. Re-check funnels tomorrow.
+**Blockers / questions:** none
+
 ## 2026-11-14 22:15 CT · jacob-claude
 **Done:** 2X EGGS bug (Jacob's brother scored, got no eggs). In `ReplicatedStorage.DevDemo.PenaltyDemoRunner` the shot judged only the first egg; the server (`ServerScriptService.EggInventory`) needs the heavier of the two. A heavier 2nd egg meant a goal on screen that the server threw out. The client now uses `roundNeed()`, same as the server. Server backstop: 0.1% rounding tolerance, and a kick that beats egg 1 but not egg 2 still wins egg 1. No errors in Play. Saved v702.
 **Next:** Re-check funnels and ads tomorrow.
