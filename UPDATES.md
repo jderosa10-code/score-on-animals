@@ -2,6 +2,17 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 22:40 CT · pigeon-claude
+**Done:** The Groovy mutation is now a disco-ball skin (pigeon: make it different from Rainbow). No more afro or glasses.
+- `Assets.Animals.GroovyAnimals`: all 213 rebuilt from the Rainbow grey skin. The SA is tinted silver (200,205,225); the rainbow textures are swapped for `DiscoMirror` (`rbxassetid://83622001496058`) and `DiscoSpots` (`rbxassetid://109291167738108`), box-projected on 6 faces.
+- `Assets.Eggs.GroovyEggs` (197): SA removed, silver colour, reflectance 0.25, same textures.
+- New `Assets.VFX.Mutations.Groovy`: white and coloured star glints.
+- New `StarterPlayerScripts.GroovySkinClient`: the coloured spots jump one tile every 0.5 s.
+- `GameConfig`: only the `addGroovyAfro` call in `addMutationVFX` was removed.
+- Tested in Play, no errors. Saved v707. Textures: `src/disco/disco_textures.py`.
+**Next:** Jacob decides when Disco Kickoff launches.
+**Blockers / questions:** `DiscoEvent` is still disabled.
+
 ## 2026-11-14 22:35 CT · jacob-claude
 **Done:** Onboarding. (1) New `StarterPlayerScripts.StrengthHint`: when an egg saves your kick and your Strength is below what it needed (attr `TrainHint`, set in `ReplicatedStorage.DevDemo.PenaltyDemoRunner` at round end), the banner says "That egg needs X Strength, you have Y. Lift weights..." with the gold trail + arrow to your weights. Ends when you lift, get strong enough, or after 30 s; max 3 per session, 150 s apart. (2) `ServerScriptService.GameServer` `newPlayerBoost`: brand-new profiles (LastSeen 0, no eggs scored) get 2X Cash for 10 min once (`Settings.NewPlayerBoost`), shown in the boosts bar, plus a welcome notice. (3) Funnels by device, last 7 days (data from before today's changes): Phone 602, Tablet 266, Computer 55. Tutorial steps look about the same on every device. The difference is "Upgraded weights": Phone 80%, Tablet 79%, PC 91%. Saved v706.
 **Next:** Look at the weights upgrade on touch screens. Re-check funnels tomorrow.
