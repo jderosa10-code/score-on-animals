@@ -2,6 +2,24 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 17:55 CT · jacob-claude
+**Done:** Duel fixes from Jacob's test.
+- **Bug, a PERFECT came back "MISSED!" with no kick:** the server timed the shot out while the shooter's egg was still walking out. The 20 s now starts when the timing bar shows (new client → server `bar`). A real timeout says "TOO SLOW!", and the last 10 s count down on "YOUR KICK!".
+- **Keeper:**
+  - The goal's stud Textures are hidden too (LocalTransparencyModifier doesn't reach them).
+  - A big red target pops up where the shot is going, the ball has a trail, and there's a kick sound.
+- **Sounds:**
+  - Kick-side sounds for the keeper: whistle, dive whoosh, save / goal / miss.
+  - UI sounds from `SoundLibrary.Sounds`: hover / select / open / ready / invite / clock / win / lose.
+- **`Duel.DuelUI`:**
+  - Buttons grow from their centre.
+  - Egg cards use the `AnimalIcons.Eggs` icons instead of 3D views.
+  - The speed number sits beside the bar.
+  - No blue / red lines on the PK DUELS title bar.
+- Played a few kicks each way vs the bot, no errors. Saved.
+**Next:** 2-player test.
+**Blockers / questions:** none
+
 ## 2026-11-15 17:40 CT · jacob-claude
 **Done:**
 - **Lobby 16 studs deeper, plots moved back (Jacob, more room at the front):**
