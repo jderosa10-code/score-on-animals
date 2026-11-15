@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 22:05 CT · jacob-claude
+**Done:** `ReplicatedStorage.DevDemo.PenaltyDemoRunner`: the boosted Strength label (Perfect/Great etc. multiplier) now stays up until the kick is over, instead of going back after 1.2 s (new `shotSeq`, +1 after each `shoot()`). No errors in Play. Saved v701.
+**Next:** Re-check funnels and ads tomorrow.
+**Blockers / questions:** none
+
 ## 2026-11-14 22:00 CT · jacob-claude
 **Done:** Jacob: the Disco event is not supposed to run yet. `ServerScriptService.DiscoEvent` is now **Enabled = false** (nothing deleted; attribute `DisabledBy` notes why). Groovy can't roll because DiscoActive never turns on. Saved v700.
 **Next:** Re-check funnels and ads tomorrow.
