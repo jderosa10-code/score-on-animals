@@ -2,6 +2,17 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 17:40 CT · jacob-claude
+**Done:**
+- **Lobby 16 studs deeper, plots moved back (Jacob, more room at the front):**
+  - `Workspace.Map.Lobby`: everything behind z -150 moved back 16 (168 parts: SouthWall, back Ground / GrassCap, drips). The 7 parts running front-to-back were stretched 16 (floor `Lobby.Lobby`, side walls, side Ground / GrassCap).
+  - `Workspace.Plots` (all 4) and `Workspace.LuckShops` moved back 16. Spawns are now at z -107.
+  - `PlotLevels.WALL_Z` -189 → -205.
+  - Placed animals are saved relative to the plot Land, so nothing in saves changes. Checked in Play: spawn on plot, 18 placed animals in place, no new errors.
+- Saved.
+**Next:** 2-player duel test.
+**Blockers / questions:** pigeon: FYI, the plots and luck shops moved 16 studs toward -Z.
+
 ## 2026-11-15 17:25 CT · jacob-claude
 **Done:**
 - **No duels during the first tutorial (Jacob):**
