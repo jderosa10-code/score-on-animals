@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 16:30 CT · jacob-claude
+**Done:** Sign over the trophy (Jacob asked): `DuelTrophyDisplay.Trophy.Union.SignAttach.DuelSign`. It's a BillboardGui cloned from the DNA machine sign (LuckiestGuy, same outline style). Text: "PK DUELS" (gold) / "1V1 PENALTY SHOOTOUT" / "WINNER TAKES THE LOSER'S EGG!" (green). Saved.
+**Next:** duel client.
+**Blockers / questions:** none
+
 ## 2026-11-15 16:20 CT · jacob-claude
 **Done:** Trophy VFX turned down (Jacob): `DuelTrophyDisplay.Trophy.TrophyGlow` rays and glow 25% smaller and much fainter, half the sparkles, softer light. Saved.
 **Next:** duel client.
