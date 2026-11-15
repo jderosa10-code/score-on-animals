@@ -2,6 +2,17 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 00:30 CT · pigeon-claude
+**Done:** Groovy skin. pigeon asked for it a bit shinier and for the tiles to go on the body only, not the eyes.
+- **Shinier:** all 213 animals and 197 eggs now use SA `RoughnessMap` = 88354432906195 (approved, mostly black = glossy chrome), and the animal SA Color is white. Glints rate 12→22, coloured glints 6→10.
+- **Eyes kept clear:**
+  - Roblox can't mask a Texture. Reading the SA ColorMaps for a bake gives "no permission", and CreateAssetAsync is still unavailable.
+  - So each animal drops the `DiscoMirror`/`DiscoSpots` Textures on the box face its eyes point at. Eye direction comes from `ServerStorage.DiscoFit` (measure plus hand overrides): 94 front-eyed (Front removed), 118 side-eyed (Left/Right removed), Centipede (no eyes) keeps all.
+  - The stripped faces are stored in the model attribute `DiscoClearFaces`.
+- Saved v718.
+**Next:** Jacob decides when Disco Kickoff launches.
+**Blockers / questions:** `DiscoEvent` is still disabled.
+
 ## 2026-11-15 00:05 CT · pigeon-claude
 **Done:** pigeon asked for less on the field and the event spread over the map (`DiscoClient`).
 - **Field and ball, toned down:**
