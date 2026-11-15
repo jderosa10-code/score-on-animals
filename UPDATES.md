@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 16:20 CT · jacob-claude
+**Done:** Trophy VFX turned down (Jacob): `DuelTrophyDisplay.Trophy.TrophyGlow` rays and glow 25% smaller and much fainter, half the sparkles, softer light. Saved.
+**Next:** duel client.
+**Blockers / questions:** none
+
 ## 2026-11-15 16:15 CT · jacob-claude
 **Done:** The trophy display is now one model, `Workspace.DuelTrophyDisplay`: `Trophy` (was Workspace.Model, now holding TrophyGlow) + both `Podium`s (each with BlueSide/RedSide). `DuelLobbyDisplay` removed (empty). Saved.
 **Next:** duel client.
