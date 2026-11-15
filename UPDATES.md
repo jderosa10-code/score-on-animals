@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 22:15 CT · jacob-claude
+**Done:** 2X EGGS bug (Jacob's brother scored, got no eggs). In `ReplicatedStorage.DevDemo.PenaltyDemoRunner` the shot judged only the first egg; the server (`ServerScriptService.EggInventory`) needs the heavier of the two. A heavier 2nd egg meant a goal on screen that the server threw out. The client now uses `roundNeed()`, same as the server. Server backstop: 0.1% rounding tolerance, and a kick that beats egg 1 but not egg 2 still wins egg 1. No errors in Play. Saved v702.
+**Next:** Re-check funnels and ads tomorrow.
+**Blockers / questions:** none
+
 ## 2026-11-14 22:05 CT · jacob-claude
 **Done:** `ReplicatedStorage.DevDemo.PenaltyDemoRunner`: the boosted Strength label (Perfect/Great etc. multiplier) now stays up until the kick is over, instead of going back after 1.2 s (new `shotSeq`, +1 after each `shoot()`). No errors in Play. Saved v701.
 **Next:** Re-check funnels and ads tomorrow.
