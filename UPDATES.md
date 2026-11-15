@@ -2,6 +2,17 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 00:55 CT · pigeon-claude
+**Done:** pigeon: "sometimes proximity prompts dont work if u hold e". Two causes, both fixed (patched live, only these lines):
+- **`StarterPlayerScripts.PromptStyle`:** Roblox ignores a key that was already down when a prompt shows, so walking up while holding E did nothing, and a hold was lost when the nearest prompt switched.
+  - New `AUTO_HOLD` = HatchPrompt, DNAPrompt, DNAMachinePrompt. These start the hold themselves if E is down when they show, and letting go ends it.
+  - Cash/Robux prompts (Upgrade, Skip Timer) still need a fresh press.
+  - Tested in Play with real key input: held E fired the test HatchPrompt and did not fire a test UpgradePrompt; a fresh press did.
+- **`StarterPlayerScripts.GiftClient`:** the E Gift prompt on every nearby player now only shows while you hold an animal. It was stealing E from the patch/DNA prompts (OnePerButton). The `refresh()` condition is extended, and it refreshes on tool equip/unequip.
+- Saved v719.
+**Next:** Watch for reports in a multiplayer server.
+**Blockers / questions:** none
+
 ## 2026-11-15 00:30 CT · pigeon-claude
 **Done:** Groovy skin. pigeon asked for it a bit shinier and for the tiles to go on the body only, not the eyes.
 - **Shinier:** all 213 animals and 197 eggs now use SA `RoughnessMap` = 88354432906195 (approved, mostly black = glossy chrome), and the animal SA Color is white. Glints rate 12→22, coloured glints 6→10.
