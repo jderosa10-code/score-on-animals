@@ -86,7 +86,14 @@ You collect the animals that hatch. Each has one number that matters: cash per s
 - Index: sticker album, reward per finished page
 - Odds reveal (Jacob, 15 Nov 2026): the rarer the odds, the bigger the reveal. Final reveal at 1/100K+ counts up from 1/1, slams in, wobbles and shakes; 1/1M+ bigger, longer, a short freeze and a pulse.
 - Name (Jacob, 15 Nov 2026): rename the game to "Penalty Kicks for Animals" when the PK duels update ships, not before.
-- Next big feature (Jacob, 15 Nov 2026): egg collection + PK duels against other players (plan not locked yet).
+- PK duels (Jacob, 15 Nov 2026):
+  - Every egg you score also goes into a permanent egg collection.
+  - A duel pad on the other side of the lobby (like the DNA machine): step on it to queue with players in your server, or invite friends to your server.
+  - Loading screen: both players pick an egg from their collection. Better eggs dive faster and further.
+  - Separate hidden pitch. The egg walks out (no rarity roll), the shooter walks to the middle (no tunnel). Best of 5, then sudden death.
+  - Keeper: the goal is hidden on their screen; hold on a side to charge an arrow, let go to dive (time it with the run-up).
+  - Shooter: same kick as now. Strength counts, capped in duels.
+  - Stakes: the loser's egg goes to the winner. A lost egg can be bought back with cash from the egg picker. Leaving mid-match = a loss.
 
 ## Leagues (replace walk-to zones)
 Each promotion moves you up a league: a new egg pool and the stadium reskins to match.

@@ -2,6 +2,16 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 15:10 CT · jacob-claude
+**Done:** PK duels, part 1 (server side; no client yet, so nothing shows in game):
+- **Egg collection:** `ServerScriptService.GameData` now keeps `EggCol` (counts) and `EggSeen` (ever owned) per egg + mutation (key "Name" or "Name|Mut"), sent in Sync. Every scored egg is added (`EggInventory`: normal, 2X, Auto Kick, Buy Missed). Old saves are filled once from the Index plus held eggs. New `D.beforeLeave` hook runs before the last save.
+- **Rules:** `GameConfig.Duel` (+ duelBallSpeed cap 110, duelDiveTime, duelReach, DuelBuyBack) and `ReplicatedStorage.Duel.DuelRules` (dive target, egg position, shot resolve, decided).
+- **Arena:** `ServerStorage.DuelArena` (copy of the pitch, stadium, goal, ball, tunnel, no crowd), cloned at x+3000 per match into `Workspace.DuelArenas`.
+- **`ServerScriptService.DuelServer`:** pick → arena → best of 5 + sudden death → loser's egg to the winner, leave = loss, buy back. Remotes `ReplicatedStorage.Duel.DuelEvent` / `DuelRequest` (contract at the top of the script). Practice vs bot (no stakes). Studio-only test hook `ServerStorage.DuelDebug`. Tested a full bot match in Play: no errors, back home after.
+- Saved v744.
+**Next:** duel client (shooter kick on the arena via PenaltyDemoRunner, keeper view + arrow), then the duel pad / invites. Jacob: egg picker, keeper arrow and scoreboard UI.
+**Blockers / questions:** pigeon: FYI, duels are coming, PLAN.md has the decisions.
+
 ## 2026-11-15 10:55 CT · jacob-claude
 **Done:**
 - **Bigger odds reveal (Jacob's #4):** `ReplicatedStorage.DevDemo.PenaltyDemoRunner` showOdds now scales with the 1/N. Rolling eggs pop bigger at 1/1K+ (no new sounds). Final reveal 1/100K+: number counts up from 1/1 with ticks, slams in (BarPop, shake, FOV punch), wobbles; 1/1M+ peaks 2.3x, 0.25 s freeze, pulses, stays ~4 s. Camera stays on the egg longer to match (`oddsExtra`). Name label moves up so the big number doesn't cover it.
