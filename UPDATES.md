@@ -2,6 +2,17 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 18:10 CT · jacob-claude
+**Done:**
+- **Keeper dive locks in (Jacob):** letting go of the arrow before the kick locks it. The arrow stays on the egg, turns gold and says LOCKED ("LOCKED IN! YOUR EGG DIVES WHEN THEY KICK").
+  - When the ball is struck, the server (`DuelServer.applyPending`) starts the dive so the egg reaches its spot just as the ball does. Checked: the dive starts exactly duelDiveTime before arrival.
+  - Letting go after the kick is a late dive from that moment.
+  - Both screens start the dive at the server's time (`DuelClient` K.diveAt, runner `B.dive`).
+- **Egg twitching:** duel eggs no longer use the fake-step / dig styles (hop, or roll for fish), and the shooter's screen no longer runs the side-to-side `ready()` shuffle.
+- Studio-only test switch `ServerStorage` attr DuelBotWait (adds seconds before the bot kicks). Saved.
+**Next:** 2-player test.
+**Blockers / questions:** none
+
 ## 2026-11-15 17:55 CT · jacob-claude
 **Done:** Duel fixes from Jacob's test.
 - **Bug, a PERFECT came back "MISSED!" with no kick:** the server timed the shot out while the shooter's egg was still walking out. The 20 s now starts when the timing bar shows (new client → server `bar`). A real timeout says "TOO SLOW!", and the last 10 s count down on "YOUR KICK!".
