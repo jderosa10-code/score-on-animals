@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 17:15 CT · jacob-claude
+**Done:** Duels v3 (Jacob): shooter stops the power bar first, then clicks where to shoot; the keeper no longer pre-guesses: after the kick ("kick" event, ball on the server clock) they click where it's going and the egg dives from that moment (server judges with the time left). Keeper's screen hides the shooter. Bot keeper reacts too. ServerScriptService.DuelServer (runShot/botKeep/keep handler), StarterPlayerScripts.DuelClient (startKick/kick/diveTo/reveal), GameConfig.Duel FlightScale/FlightMin/FlightMax/TutorialFlight/LeadIn. Saved v782, not published.
+**Next:** 2-player test; tune FlightScale (ball travel time 1.2-2.2 s now).
+**Blockers / questions:** Backups ServerStorage._RunnerBackups *_preReactKeeper.
+
 ## 2026-11-15 16:42 CT · pigeon-claude
 **Done:** Quests removed (pigeon didn't like them on screen): deleted StarterGui.HUD.QuestHUD, ReplicatedStorage.QuestConfig, ServerScriptService.Quests. Kept GameServer _G.SOA_GiveReward (DuelServer's tutorial reward uses it). The REWARDS side button is gone too (StarterGui.HUD.RewardsButtonHUD + its HUDClient patch, incl. the Daily Rewards auto-open); the top-right TopbarPlus icon is back to how it was.
 **Done:** OVERNIGHT EGG. Finishing the tutorial now also gives a random Legendary egg into the backpack (not held) that takes a fixed 8 h on a patch, no speed-ups; Skip still works. Placing it fires the NotifyOptIn popup. ReplicatedStorage.TutorialConfig Gift.OvernightEgg {Rarity, Hours} + DoneText; ServerScriptService.Tutorial "gift" (item.Hatch, saved with the item); GameData buildTool names it "8 Hour X Egg" (no stacking); EggHatching onPrompt uses item.Hatch. Tested in Play: 7h58m on Patch1. Saved v780 (has Jacob's v779), not published.
