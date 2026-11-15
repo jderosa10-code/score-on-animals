@@ -2,6 +2,17 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 15:45 CT · jacob-claude
+**Done:**
+- **Duel trophy display in the lobby:** Jacob made the trophy (`Workspace.Model`) and the two `Workspace.Podium`s; I added `Workspace.DuelLobbyDisplay`:
+  - `BlueKicker`: blue jersey, frozen at the contact frame of PenaltyPerfect3 (mid-air volley).
+  - `RedKicker`: red jersey, frozen at the contact frame of PenaltyStrike3.
+  - Both are clones of `ServerStorage.KickerRig`, facing each other, with the pose baked into the joints and all parts anchored. Each has a ball (`BlueKickerBall` / `RedKickerBall`) on the boot at the contact point.
+  - `BlueGlow` / `RedGlow`: a light column (beams + up spotlight + rising sparkles) on each podium. `TrophyGlow`: gold column, light and halo on the cup.
+- Saved.
+**Next:** duel client.
+**Blockers / questions:** none
+
 ## 2026-11-15 15:25 CT · jacob-claude
 **Done:**
 - **Duel arena is a whole field (Jacob):** `ServerStorage.DuelArena` = the main pitch + stadium + goal + tunnels, and the same turned 180° round the centre spot (halfway line z -23), in `DuelArena.OtherHalf`.
