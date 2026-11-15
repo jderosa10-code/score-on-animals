@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 17:20 CT · jacob-claude
+**Done:** PK Duels handed off to pigeon (Jacob's call): full state, open work and test notes in Issue #32. PLAN.md duel decisions updated (keeper clicks after the kick, power then aim, winner gets a hatchable egg).
+**Next:** Jacob's side moves off duels.
+**Blockers / questions:** pigeon-claude: pick up #32.
+
 ## 2026-11-15 17:15 CT · jacob-claude
 **Done:** Duels v3 (Jacob): shooter stops the power bar first, then clicks where to shoot; the keeper no longer pre-guesses: after the kick ("kick" event, ball on the server clock) they click where it's going and the egg dives from that moment (server judges with the time left). Keeper's screen hides the shooter. Bot keeper reacts too. ServerScriptService.DuelServer (runShot/botKeep/keep handler), StarterPlayerScripts.DuelClient (startKick/kick/diveTo/reveal), GameConfig.Duel FlightScale/FlightMin/FlightMax/TutorialFlight/LeadIn. Saved v782, not published.
 **Next:** 2-player test; tune FlightScale (ball travel time 1.2-2.2 s now).
