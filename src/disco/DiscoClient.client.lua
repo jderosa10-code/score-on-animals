@@ -13,7 +13,9 @@ local Lighting = game:GetService("Lighting")
 local SoundService = game:GetService("SoundService")
 local player = Players.LocalPlayer
 
-local MUSIC_ID = "rbxassetid://130633590241078"   -- "Disco Funk Groove" (DistroKid, licensed for all experiences)
+-- music: APM Music tracks (Roblox's own licensed library, free for every experience), one picked per show
+local MUSIC_IDS = {"rbxassetid://1840082311", "rbxassetid://9038367768"}   -- "Feel The Energy", "Funky Disco Beats"
+local WASH = {Color3.fromRGB(255, 215, 245), Color3.fromRGB(215, 228, 255), Color3.fromRGB(238, 212, 255)}
 local CONFETTI = "rbxassetid://87631052434865"     -- plain white square
 local BPM = 120
 local HANG = 46           -- studs above the field
@@ -132,6 +134,12 @@ local function land(s, instant)
 	s.sparks.Enabled = true
 	s.motes.Enabled = true
 	s.twinkle.Enabled = true
+	s.fog.Enabled = true
+	for _, x in s.streaks do tw(x.b, t, {Width0 = 0.15, Width1 = 1.4}) end
+	if not instant then
+		for _, e in s.fountains do e.Enabled = true end
+		task.delay(2.5, function() for _, e in s.fountains do e.Enabled = false end end)
+	end
 	for _, tl in s.tiles do
 		local ring = math.max(math.abs(tl.x), math.abs(tl.z))
 		if instant then tl.on = true else task.delay(ring * 0.07, function() tl.on = true end) end
@@ -163,6 +171,14 @@ local function stop(instant)
 	s.sparks.Enabled = false
 	s.motes.Enabled = false
 	s.twinkle.Enabled = false
+	s.fog.Enabled = false
+	for _, e in s.fountains do e.Enabled = false end
+	for _, x in s.streaks do tw(x.b, 0.6, {Width0 = 0, Width1 = 0}) end
+	for _, b in s.bars do tw(b.p, 0.6, {Transparency = 1}) end
+	for _, f in s.fans do   -- the crowd back to how it was
+		if f.root.Parent then f.root.CFrame = f.base end
+		f.rs.C0, f.ls.C0 = f.rc0, f.lc0
+	end
 	local ball = s.ball
 	if instant then s.folder:Destroy() return end
 	-- back up into the sky
@@ -307,9 +323,72 @@ local function start(instant)
 	end
 	floor.Parent = s.folder
 
+	-- equalizer bars in a ring round the dance floor, jumping to the beat
+	s.bars = {}
+	for i = 1, 28 do
+		local a = i / 28 * math.pi * 2
+		local b = part("EQBar", Vector3.new(1.6, 1, 1.6), s.folder)
+		b.Material = Enum.Material.Neon
+		table.insert(s.bars, {p = b, base = Vector3.new(cx + math.cos(a) * 40, fy, cz + math.sin(a) * 40), i = i})
+	end
+	-- white mirror-ball reflections sweeping round the stadium, turning with the ball
+	s.streaks = {}
+	for i = 1, 12 do
+		local t = Instance.new("Attachment"); t.Parent = ground
+		local b = Instance.new("Beam"); b.Attachment0, b.Attachment1 = centreAtt, t
+		b.Width0, b.Width1 = 0, 0; b.FaceCamera = true; b.LightEmission = 1; b.LightInfluence = 0; b.Segments = 1
+		b.Color = ColorSequence.new(Color3.new(1, 1, 1)); b.Transparency = NumberSequence.new({kp(0, 0.35), kp(1, 1)})
+		b.Parent = core
+		table.insert(s.streaks, {b = b, att = t, a = i / 12 * math.pi * 2, h = (i % 3) * 9})
+	end
+	-- low purple fog over the field
+	local fogBox = part("DiscoFog", Vector3.new(80, 1, 80), s.folder)
+	fogBox.Position = Vector3.new(cx, fy + 0.5, cz)
+	local fog = Instance.new("ParticleEmitter")
+	fog.Shape = Enum.ParticleEmitterShape.Box; fog.Texture = "rbxasset://textures/particles/smoke_main.dds"
+	fog.Rate = 14; fog.Lifetime = NumberRange.new(5, 8); fog.Speed = NumberRange.new(0.4, 1.2)
+	fog.Size = NumberSequence.new({kp(0, 7), kp(1, 15)}); fog.Rotation = NumberRange.new(0, 360); fog.RotSpeed = NumberRange.new(-10, 10)
+	fog.Transparency = NumberSequence.new({kp(0, 1), kp(0.25, 0.72), kp(1, 1)}); fog.LightEmission = 0.25
+	fog.Color = ColorSequence.new(Color3.fromRGB(190, 130, 255), Color3.fromRGB(255, 140, 220)); fog.Enabled = false; fog.Parent = fogBox
+	s.fog = fog
+	-- pyro fountains at the corners of the dance floor (on the landing and on every 16th beat)
+	s.fountains = {}
+	for i = 1, 4 do
+		local sx, sz = (i <= 2) and -1 or 1, (i % 2 == 0) and -1 or 1
+		local p = part("Pyro", Vector3.one, s.folder)
+		p.Position = Vector3.new(cx + sx * 31, fy + 0.5, cz + sz * 31)
+		local e = Instance.new("ParticleEmitter")
+		e.Texture = "rbxasset://textures/particles/sparkles_main.dds"; e.Rate = 140; e.Lifetime = NumberRange.new(0.8, 1.3)
+		e.Speed = NumberRange.new(32, 44); e.SpreadAngle = Vector2.new(7, 7); e.Acceleration = Vector3.new(0, -45, 0)
+		e.EmissionDirection = Enum.NormalId.Top; e.Size = NumberSequence.new({kp(0, 0.9), kp(1, 0)}); e.LightEmission = 1
+		e.Color = ColorSequence.new(Color3.fromRGB(255, 240, 200), Color3.fromRGB(255, 150, 60)); e.Enabled = false; e.Parent = p
+		table.insert(s.fountains, e)
+	end
+	-- fireworks over the stadium (2 bursts every 8 beats)
+	s.fireworks = {}
+	for _ = 1, 4 do
+		local p = part("Firework", Vector3.one, s.folder)
+		local e = Instance.new("ParticleEmitter")
+		e.Texture = "rbxasset://textures/particles/sparkles_main.dds"; e.Rate = 0; e.Lifetime = NumberRange.new(1.2, 1.9)
+		e.Speed = NumberRange.new(35, 55); e.SpreadAngle = Vector2.new(180, 180); e.Drag = 2.5; e.Acceleration = Vector3.new(0, -12, 0)
+		e.Size = NumberSequence.new({kp(0, 3), kp(1, 0)}); e.LightEmission = 1; e.Parent = p
+		local l = Instance.new("PointLight"); l.Range = 60; l.Brightness = 0; l.Parent = p
+		table.insert(s.fireworks, {p = p, e = e, l = l})
+	end
+	-- the crowd in the stands dances: hops on the beat, arms up and waving (on your screen only)
+	s.fans = {}
+	local crowd = workspace:FindFirstChild("Crowd")
+	for i, fan in crowd and crowd:GetChildren() or {} do
+		local root, torso = fan:FindFirstChild("HumanoidRootPart"), fan:FindFirstChild("Torso")
+		local rs, ls = torso and torso:FindFirstChild("Right Shoulder"), torso and torso:FindFirstChild("Left Shoulder")
+		if root and root.Anchored and rs and ls then
+			table.insert(s.fans, {root = root, base = root.CFrame, rs = rs, ls = ls, rc0 = rs.C0, lc0 = ls.C0, ph = (i % 4) * 0.25, k = i % 3})
+		end
+	end
+
 	lightsOut(s, instant and 0.6 or 3.5)
 	-- disco music (follows the Music setting)
-	local m = Instance.new("Sound"); m.Name = "DiscoMusic"; m.SoundId = MUSIC_ID; m.Looped = true; m.Volume = 0
+	local m = Instance.new("Sound"); m.Name = "DiscoMusic"; m.SoundId = MUSIC_IDS[math.random(#MUSIC_IDS)]; m.Looped = true; m.Volume = 0
 	m.Parent = SoundService
 	s.music = m
 	m:Play()
@@ -350,9 +429,53 @@ local function start(instant)
 			end
 			local pat = PATTERNS[(beat // 8) % #PATTERNS + 1]
 			for _, tl in s.tiles do tl.p.Color = COLORS[pat(tl.x, tl.z, beat) % #COLORS + 1] end
+			for _, b in s.bars do b.p.Color = COLORS[(b.i // 4 + beat // 2) % #COLORS + 1] end
+			if s.landed then
+				-- crowd arms: hands up for 4 beats, then waving for 4
+				local up = beat % 8 >= 4
+				for _, f in s.fans do
+					local a = up and 2.8 or (((beat + f.k) % 2 == 0) and 2.2 or 0.7)
+					f.rs.C0 = f.rc0 * CFrame.Angles(0, 0, a)
+					f.ls.C0 = f.lc0 * CFrame.Angles(0, 0, -a)
+				end
+				if beat % 8 == 0 then
+					tw(s.cc, 1, {TintColor = WASH[(beat // 8) % #WASH + 1]})
+					for k = 1, 2 do   -- fireworks
+						local fw = s.fireworks[(beat // 8 * 2 + k) % #s.fireworks + 1]
+						fw.p.Position = Vector3.new(cx + math.random(-70, 70), fy + math.random(55, 85), cz + math.random(-70, 70))
+						local col = COLORS[math.random(#COLORS)]
+						fw.e.Color = ColorSequence.new(Color3.new(1, 1, 1), col); fw.l.Color = col
+						fw.e:Emit(140)
+						fw.l.Brightness = 8; tw(fw.l, 0.7, {Brightness = 0})
+					end
+				end
+				if beat % 16 == 0 then   -- pyro on the big beat
+					for _, e in s.fountains do e.Enabled = true end
+					task.delay(1.5, function() for _, e in s.fountains do e.Enabled = false end end)
+				end
+			end
 		end
-		local pulse = 0.2 + 0.35 * (bt - beat)
+		local frac = bt - beat
+		local pulse = 0.2 + 0.35 * frac
 		for _, tl in s.tiles do tl.p.Transparency = tl.on and pulse or 1 end
+		if s.landed then
+			s.bloom.Intensity = 0.4 + 0.35 * (1 - frac) ^ 2
+			local kick = (1 - frac) ^ 1.5
+			for _, b in s.bars do
+				local h = 1 + 9 * kick * (0.45 + math.clamp(math.noise(b.i * 0.37, t * 1.7) + 0.5, 0, 1) * 0.55)
+				b.p.Size = Vector3.new(1.6, h, 1.6)
+				b.p.CFrame = CFrame.lookAt(b.base + Vector3.new(0, h / 2, 0), Vector3.new(cx, fy + h / 2, cz))
+				b.p.Transparency = 0.1
+			end
+			local spin = t * 0.9
+			for _, x in s.streaks do
+				local a = x.a + spin
+				x.att.WorldPosition = Vector3.new(cx + math.cos(a) * 120, fy + 8 + x.h, cz + math.sin(a) * 120)
+			end
+			for _, f in s.fans do
+				if f.root.Parent then f.root.CFrame = f.base + Vector3.new(0, math.sin(((bt + f.ph) % 1) * math.pi) * 0.9, 0) end
+			end
+		end
 		m.Volume = (player:GetAttribute("MusicOn") ~= false) and math.min(0.4, t * 0.2) or 0
 	end)
 	if not instant then

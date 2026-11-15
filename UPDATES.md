@@ -2,6 +2,21 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 23:10 CT · pigeon-claude
+**Done:** Disco round 3 (pigeon: more and cooler effects, better-looking Groovy animals, safe music).
+- **Show** (`StarterPlayerScripts.DiscoClient`): the crowd dances on the beat (232 `Workspace.Crowd` fans hop, arms up/waving; client-side only, restored after). Added:
+  - fireworks every 8 beats and pyro fountains at the floor corners every 16;
+  - low purple fog;
+  - 28 equalizer bars round the dance floor;
+  - 12 white mirror-ball reflection beams sweeping the stadium;
+  - a tint wash and bloom pulse on the beat.
+- **Music:** APM (Roblox's licensed library) only, one picked per show: "Feel The Energy" 1840082311, "Funky Disco Beats" 9038367768.
+- **Groovy skin v2** (213 animals, 197 eggs): chrome (SA MetalnessMap = white 87631052434865), bigger and cleaner tiles (`DiscoMirror2` 84293863884564, `DiscoSpots2` 88354432906195). No RoughnessMap: the uploaded ones are still in Roblox review and broke the SA in Play. Eggs got a chrome SA too.
+- **New `ServerScriptService.DiscoStudioTest`:** Studio-only and only for UserId 89199750. On join it starts the show for 3 min and puts 7 display-only Groovy animals in that player's pen (not saved). Delete or disable it before launch if you want.
+- Tested in Play, saved v711.
+**Next:** Jacob decides when Disco Kickoff launches.
+**Blockers / questions:** `DiscoEvent` is still disabled.
+
 ## 2026-11-14 22:45 CT · jacob-claude
 **Done:** Goal Net fence (base level 6): the post-top ball is now the game's real ball (`Workspace.SoccerBall.Ball_Soccer`, scaled to 1.3 studs, stud textures scaled too) instead of a white sphere with black squares. Changed `ServerStorage.Fences["Goal Net"].PostUnit` (new MeshPart `SoccerBall`) and `ServerStorage.FenceBuilder` `T.ball`, so a rebuild keeps it. Checked in a preview, then removed the preview. Saved v708.
 **Next:** Re-check funnels tomorrow.
