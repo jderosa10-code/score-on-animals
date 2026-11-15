@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 17:00 CT · jacob-claude
+**Done:** Held animal/egg tags now sit above the animal's (or egg's) own top, not the player's head (StarterPlayer.StarterPlayerScripts.HatchClient heldTag: measures the highest part once it's in your grip). Saved, not published.
+**Next:** 2-player duel test.
+**Blockers / questions:** none
+
 ## 2026-11-15 16:50 CT · jacob-claude
 **Done:** Duel winner now also gets the won egg as a real hatchable egg (ServerScriptService.DuelServer finish -> D.giveItem; end screen line in ReplicatedStorage.Duel.DuelUI). New "PK Duels" funnel, 7 steps (ServerScriptService.Funnels DuelStep; DuelServer duelStep) + profile.Stats.DuelsPlayed / DuelWins. Held eggs now show a name/rarity/mutation tag over the head, held tags always on top (StarterPlayerScripts.HatchClient heldTag). Hatching eggs show name/rarity/mutation above the timer (ServerScriptService.EggHatching placeEgg, "EggInfo"). Saved v779, not published.
 **Next:** 2-player duel test, then publish when Jacob says.
