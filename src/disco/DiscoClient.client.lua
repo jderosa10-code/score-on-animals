@@ -81,6 +81,16 @@ local function banner(text, style)
 	if n and n:FindFirstChild("ShowBanner") then n.ShowBanner:Fire(text, style) end
 end
 local function fieldCentre()
+	-- (pigeon-claude, 15 Nov: "the floor and ball aren't centered") the middle of the pitch markings
+	-- (Workspace.Map.Pitch "Line" parts); the kick area / goal midpoint sat ~12 studs toward the kick end
+	local pitch = workspace:FindFirstChild("Map") and workspace.Map:FindFirstChild("Pitch")
+	if pitch then
+		local lo, hi, n = Vector3.one * 1e9, -Vector3.one * 1e9, 0
+		for _, d in pitch:GetDescendants() do
+			if d:IsA("BasePart") and d.Name == "Line" then n += 1; lo = lo:Min(d.Position - d.Size / 2); hi = hi:Max(d.Position + d.Size / 2) end
+		end
+		if n > 0 then return Vector3.new((lo.X + hi.X) / 2, lo.Y - 1, (lo.Z + hi.Z) / 2) end
+	end
 	local k, g = workspace:FindFirstChild("KickArea"), workspace:FindFirstChild("Goal")
 	if k and g then
 		local a = k.Position
