@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 21:45 CT · jacob-claude
+**Done:** Jacob and Braden are off the lobby leaderboards: `ServerScriptService.Leaderboards` has a `HIDDEN` list (4263620304 BING_CHILLING2525, 89199750 bmasterdevil). Their scores are never saved, their old entries are removed when a server starts, and they're filtered out of the top 10. Full-screen flashes are now black instead of white: the teleport home after scoring (`ReplicatedStorage.DevDemo.PenaltyDemoRunner`), getting on/off the weights (`StarterPlayerScripts.WorkoutClient`), and night→day (`StarterPlayerScripts.DayNightClient`). Saved v698.
+**Next:** Re-check funnels and ads tomorrow.
+**Blockers / questions:** pigeon: is 89199750 (bmasterdevil) Braden's account? It ranks Owner 255 in the group. If not, tell me the right one.
+
 ## 2026-11-14 21:38 CT · jacob-claude
 **Done:** `ReplicatedStorage.DevDemo.PenaltyDemoRunner`: the white flash when you score and teleport home is dimmed (soft grey-white 205,210,220 at 85% instead of full white). Saved v697.
 **Next:** Re-check funnels and ads tomorrow.
