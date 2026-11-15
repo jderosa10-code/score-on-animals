@@ -2,6 +2,20 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 03:05 CT · pigeon-claude
+**Done:** pigeon: hold prompts "stuck on full, nothing showed up" (Skip Timer, Gift). Live-patched, only these lines:
+- **`StarterPlayerScripts.PromptStyle`:** real bug. On an early release, HoldEnded set the bar to 0 but the fill tween kept running, so it refilled and sat FULL with nothing happening. It now cancels the tween on HoldEnded and on Triggered (bar empties when it fires). Tested with a held key.
+- **Skip Timer (patches + DNA machine)** now opens the Robux window on the client, like the shop:
+  - `HatchClient` / `DNAMachineFX` put the tier's id on the prompt (`SkipProductId`).
+  - New `StarterPlayerScripts.SkipPurchaseClient` prompts it on Triggered.
+  - `EggHatching.skipPrompt` / `DNAMachine.skipCopy` no longer call PromptProductPurchase; they still check ownership and set SkipPatch / SkipDNA for the grant.
+  - Tested: hold → client purchase request, server SkipPatch = Patch1.
+- **`GiftClient`:** if no server "Msg" comes back within 3 s of an Offer, a banner says "The gift didn't go through, try again".
+- Tested (not a bug): the server accepts a prompt hold even when the prompt is disabled server-side.
+- Saved v730.
+**Next:** see if players still report it after publish.
+**Blockers / questions:** none
+
 ## 2026-11-15 00:55 CT · jacob-claude
 **Done:** Roaming animals stay on their own base. Some models have their pivot at the head (Plesiosaur's is ~12 studs from its body), so the body hung over the neighbour's base. In `StarterPlayerScripts.HatchClient` the walkers now track the BODY centre (`w.off` = the mesh's middle relative to the pivot): edge margins, spacing and turning all work on the body. Play test: every animal's body centre is on its land, no errors. Saved v728.
 **Next:** Very long animals can still poke a tail over the edge when they walk right along it. Bigger edge margins would fix that, but they bunch animals in the middle.
