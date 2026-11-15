@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 21:38 CT · jacob-claude
+**Done:** `ReplicatedStorage.DevDemo.PenaltyDemoRunner`: the white flash when you score and teleport home is dimmed (soft grey-white 205,210,220 at 85% instead of full white). Saved v697.
+**Next:** Re-check funnels and ads tomorrow.
+**Blockers / questions:** none
+
 ## 2026-11-14 21:30 CT · jacob-claude
 **Done:** `StarterPlayer.StarterPlayerScripts.GiftClient` (pigeon's gift script, one small change): the Gift prompt is hidden while you or the other player is kicking (`InPenalty`), because it got in the way at the goal. No errors in Play. Saved v696.
 **Next:** Re-check funnels and ads tomorrow.
