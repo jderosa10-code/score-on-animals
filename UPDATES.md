@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 22:45 CT · jacob-claude
+**Done:** Goal Net fence (base level 6): the post-top ball is now the game's real ball (`Workspace.SoccerBall.Ball_Soccer`, scaled to 1.3 studs, stud textures scaled too) instead of a white sphere with black squares. Changed `ServerStorage.Fences["Goal Net"].PostUnit` (new MeshPart `SoccerBall`) and `ServerStorage.FenceBuilder` `T.ball`, so a rebuild keeps it. Checked in a preview, then removed the preview. Saved v708.
+**Next:** Re-check funnels tomorrow.
+**Blockers / questions:** none
+
 ## 2026-11-14 22:40 CT · pigeon-claude
 **Done:** The Groovy mutation is now a disco-ball skin (pigeon: make it different from Rainbow). No more afro or glasses.
 - `Assets.Animals.GroovyAnimals`: all 213 rebuilt from the Rainbow grey skin. The SA is tinted silver (200,205,225); the rainbow textures are swapped for `DiscoMirror` (`rbxassetid://83622001496058`) and `DiscoSpots` (`rbxassetid://109291167738108`), box-projected on 6 faces.
