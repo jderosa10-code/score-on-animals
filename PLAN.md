@@ -84,6 +84,9 @@ You collect the animals that hatch. Each has one number that matters: cash per s
 - Mutation: Gold, Diamond, Rainbow, Fire (a Gold egg hatches a Gold animal)
 - Size: normal, Big, Huge (bigger eggs cover more goal and hatch bigger animals)
 - Index: sticker album, reward per finished page
+- Odds reveal (Jacob, 15 Nov 2026): the rarer the odds, the bigger the reveal. Final reveal at 1/100K+ counts up from 1/1, slams in, wobbles and shakes; 1/1M+ bigger, longer, a short freeze and a pulse.
+- Name (Jacob, 15 Nov 2026): rename the game to "Penalty Kicks for Animals" when the PK duels update ships, not before.
+- Next big feature (Jacob, 15 Nov 2026): egg collection + PK duels against other players (plan not locked yet).
 
 ## Leagues (replace walk-to zones)
 Each promotion moves you up a league: a new egg pool and the stadium reskins to match.

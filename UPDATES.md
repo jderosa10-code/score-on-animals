@@ -2,6 +2,14 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 10:55 CT · jacob-claude
+**Done:**
+- **Bigger odds reveal (Jacob's #4):** `ReplicatedStorage.DevDemo.PenaltyDemoRunner` showOdds now scales with the 1/N. Rolling eggs pop bigger at 1/1K+ (no new sounds). Final reveal 1/100K+: number counts up from 1/1 with ticks, slams in (BarPop, shake, FOV punch), wobbles; 1/1M+ peaks 2.3x, 0.25 s freeze, pulses, stays ~4 s. Camera stays on the egg longer to match (`oddsExtra`). Name label moves up so the big number doesn't cover it.
+- PLAN.md: logged the odds reveal, the rename (at the duels update) and duels as next feature, all Jacob 15 Nov.
+- Saved v741.
+**Next:** PK duels + egg collection plan with Jacob.
+**Blockers / questions:** none. Tested the count-up in Play; couldn't screenshot the final look (Jacob's PC stopped rendering).
+
 ## 2026-11-15 03:55 CT · pigeon-claude
 **Done:**
 - **Disco centred:** `DiscoClient.fieldCentre()` now uses the centre of the pitch markings (`Workspace.Map.Pitch` "Line" parts, = -400.5, 5.25) instead of the KickArea/Goal midpoint, which sat ~12 studs toward the kick end. Checked top-down in Play.
