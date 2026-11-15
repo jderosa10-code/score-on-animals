@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 01:05 CT · jacob-claude
+**Done:** (1) Amphiptere egg was off-centre on hatchery patches: its `EggCenter` X was +0.5 but the egg body sits at about -0.9 (the wings stick out on +X). Fixed in `ServerStorage.BaseEggs.Amphiptere` and all 6 mutation copies (`Assets.Eggs.<Mut>Eggs.Amphiptere`). Checked from above in Play: centred. (2) DNA shop Robux buttons (`StarterGui.Menus.DNAShopMenu` ... `<Card>.RobuxBuyButton`, all 7): `RobuxIcon` square and bigger (aspect 1, height 0.95), `PriceLabel` left-aligned right next to it, TextScaled + `FitMax` (max 100), same size as the cash price. Saved v731.
+**Next:** Other eggs might have wrong `EggCenter` values too. Check if Jacob spots more.
+**Blockers / questions:** none
+
 ## 2026-11-15 03:05 CT · pigeon-claude
 **Done:** pigeon: hold prompts "stuck on full, nothing showed up" (Skip Timer, Gift). Live-patched, only these lines:
 - **`StarterPlayerScripts.PromptStyle`:** real bug. On an early release, HoldEnded set the bar to 0 but the fill tween kept running, so it refilled and sat FULL with nothing happening. It now cancels the tween on HoldEnded and on Triggered (bar empties when it fires). Tested with a held key.
