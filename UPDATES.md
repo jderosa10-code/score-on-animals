@@ -2,6 +2,14 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 01:10 CT · pigeon-claude
+**Done:** A real broken prompt, confirmed in Play.
+- **The bug:** `StarterPlayerScripts.HUDClient` (Egg Luck loop) hid other plots' upgrade prompt with `plot:FindFirstChild("UpgradePrompt", true)`. Each plot has two (UpgradeSign = base, WorkoutZone = weights), and on Plots 1-3 the search found the weights one first. So other people's **Upgrade Base** prompts stayed on, and pressing E did nothing (server `upgradeBase` is owner-only).
+- **The fix:** it now targets `UpgradeSign`'s prompt. Checked in Play: only your own plot's base and weights prompts are on. One block patched, saved v720.
+- The held-E change (v719) is a quality-of-life tweak, not a confirmed bug.
+**Next:** none
+**Blockers / questions:** none
+
 ## 2026-11-15 00:55 CT · pigeon-claude
 **Done:** pigeon: "sometimes proximity prompts dont work if u hold e". Two causes, both fixed (patched live, only these lines):
 - **`StarterPlayerScripts.PromptStyle`:** Roblox ignores a key that was already down when a prompt shows, so walking up while holding E did nothing, and a hold was lost when the nearest prompt switched.
