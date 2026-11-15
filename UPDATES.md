@@ -2,6 +2,14 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 02:35 CT · pigeon-claude
+**Done:** pigeon: "Jellyfish idle and walk makes it kind of sideways".
+- The Jellyfish Idle (also used to walk) holds a constant lean: bell bones joint1/joint3 average -20° roll and every tentacle bone (joint4-19) +10°, so the tips sit up to 43° off.
+- New `StarterPlayerScripts.JellyfishUntilt`: on Stepped it removes that average lean from each fresh animated pose, for every Jellyfish in workspace (plots, held, all mutations). It only acts on a pose the animation just wrote, so it can never stack.
+- Measured: bell 21°→9° average (just the sway), tips 31°→11°, max 43°→13°. Checked side by side in Play. Saved v726.
+**Next:** none
+**Blockers / questions:** none
+
 ## 2026-11-15 02:15 CT · pigeon-claude
 **Done:** pigeon: "giraffe head orbits when I hold it". Reproduced with a held test Giraffe2:
 - Its Idle swings neck bones joint9-joint11, so the head (joint12) traces a ~2.2 x 0.6 x 0.85 stud loop. At held size (23 studs tall) over your head that reads as orbiting. The other Giraffe barely moves.
