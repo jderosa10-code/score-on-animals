@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 16:15 CT · jacob-claude
+**Done:** The trophy display is now one model, `Workspace.DuelTrophyDisplay`: `Trophy` (was Workspace.Model, now holding TrophyGlow) + both `Podium`s (each with BlueSide/RedSide). `DuelLobbyDisplay` removed (empty). Saved.
+**Next:** duel client.
+**Blockers / questions:** none
+
 ## 2026-11-15 16:10 CT · jacob-claude
 **Done:** Glow boxes on the podiums (`Workspace.Podium.BlueSide/RedSide.*Glow`): the walls now overlap at the corners, so there are no gaps (Jacob). Saved.
 **Next:** duel client.
