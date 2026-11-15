@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 00:55 CT · jacob-claude
+**Done:** Roaming animals stay on their own base. Some models have their pivot at the head (Plesiosaur's is ~12 studs from its body), so the body hung over the neighbour's base. In `StarterPlayerScripts.HatchClient` the walkers now track the BODY centre (`w.off` = the mesh's middle relative to the pivot): edge margins, spacing and turning all work on the body. Play test: every animal's body centre is on its land, no errors. Saved v728.
+**Next:** Very long animals can still poke a tail over the edge when they walk right along it. Bigger edge margins would fix that, but they bunch animals in the middle.
+**Blockers / questions:** none
+
 ## 2026-11-15 00:42 CT · jacob-claude
 **Done:** Give Feedback mailbox fix. `Workspace.Mailbox.Part` has 2 "Give Feedback" prompts: `FeedbackPrompt` and a newer `ProximityPrompt` (Custom style, hold 1 s, 12 studs). Both use E, so the newer one won, and nothing listened to it. `StarterPlayerScripts.FeedbackMailboxClient` now accepts any prompt on the Mailbox. Saved v727.
 **Next:** Jacob tests it in the live game with an account that isn't the owner.
