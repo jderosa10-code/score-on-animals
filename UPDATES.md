@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 01:45 CT · jacob-claude
+**Done:** 5 more admin trolls (PLAYERS tab, pink buttons `Troll_hidepets/broke/flip/invisible/sit`). HIDE PETS: their animals vanish on their screen for 20 s. $0 CASH: their cash shows $0 for 15 s. FLIP SCREEN: their camera is upside down for 8 s. Those three are all in `StarterPlayerScripts.AdminTrollClient` and nothing real changes. INVISIBLE: gone for everyone for 15 s, original transparency restored. SIT: forced to sit. Both are server-side in `ServerScriptService.AdminEvents`. Tested on myself: each worked and everything came back, no errors. Saved v736.
+**Next:** none
+**Blockers / questions:** none
+
 ## 2026-11-15 03:30 CT · pigeon-claude
 **Done:** pigeon: the disco must not run on its own (we launch it later) + an admin-menu start.
 - `ServerScriptService.DiscoStudioTest` **disabled** (attribute DisabledBy). `DiscoEvent` was already disabled. They were the only two scripts that set DiscoActive; a playtest confirmed no disco and no test animals.
