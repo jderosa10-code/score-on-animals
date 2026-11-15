@@ -2,6 +2,16 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 15:25 CT · jacob-claude
+**Done:**
+- **Duel arena is a whole field (Jacob):** `ServerStorage.DuelArena` = the main pitch + stadium + goal + tunnels, and the same turned 180° round the centre spot (halfway line z -23), in `DuelArena.OtherHalf`.
+  - The side stands were trimmed at the halfway line so the two halves join, and it's one field part (z -98..52).
+  - No wedge or raised kick area. The second goal is decoration (no Net attribute).
+- **Duel kick is from the centre spot, on the grass:** arena attributes KickGround 1 / KickFront -19.5. `DuelServer` uses them, and the waiting player stands on the touchline. Bot match checked in Play.
+- Saved v745.
+**Next:** duel client.
+**Blockers / questions:** none
+
 ## 2026-11-15 15:10 CT · jacob-claude
 **Done:** PK duels, part 1 (server side; no client yet, so nothing shows in game):
 - **Egg collection:** `ServerScriptService.GameData` now keeps `EggCol` (counts) and `EggSeen` (ever owned) per egg + mutation (key "Name" or "Name|Mut"), sent in Sync. Every scored egg is added (`EggInventory`: normal, 2X, Auto Kick, Buy Missed). Old saves are filled once from the Index plus held eggs. New `D.beforeLeave` hook runs before the last save.
