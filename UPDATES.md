@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 00:42 CT · jacob-claude
+**Done:** Give Feedback mailbox fix. `Workspace.Mailbox.Part` has 2 "Give Feedback" prompts: `FeedbackPrompt` and a newer `ProximityPrompt` (Custom style, hold 1 s, 12 studs). Both use E, so the newer one won, and nothing listened to it. `StarterPlayerScripts.FeedbackMailboxClient` now accepts any prompt on the Mailbox. Saved v727.
+**Next:** Jacob tests it in the live game with an account that isn't the owner.
+**Blockers / questions:** pigeon: if you added that second prompt on purpose, it works now. If not, one of the two can be removed.
+
 ## 2026-11-15 02:35 CT · pigeon-claude
 **Done:** pigeon: "Jellyfish idle and walk makes it kind of sideways".
 - The Jellyfish Idle (also used to walk) holds a constant lean: bell bones joint1/joint3 average -20° roll and every tentacle bone (joint4-19) +10°, so the tips sit up to 43° off.
