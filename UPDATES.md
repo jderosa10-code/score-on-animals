@@ -7,6 +7,16 @@ Newest first. Each Claude adds an entry after every work session (format in [CLA
 **Next:** Re-check funnels and ads tomorrow.
 **Blockers / questions:** none
 
+## 2026-11-14 22:12 CT · pigeon-claude
+**Done:** Disco show upgrade, look only. `StarterPlayerScripts.DiscoClient`:
+- The world goes dark (sun sets, night sky, purple haze, bloom). The ball drops; on landing, a flash and confetti.
+- During the show: a 9×9 light-up dance floor under the ball (4 patterns on the beat), mirror-ball light specks, 6 sweeping lasers, 4 sky searchlights, floating sparkles and glints on the ball.
+- At the end, the sun comes back up.
+
+`Assets.EventCosmetics.Disco.DiscoBall` tile reflectance is lowered so it reads silver. Tested in Play by setting `DiscoActive` by hand: no errors, and the lighting restores fully.
+**Next:** Disco skin for Groovy animals and eggs (pigeon's idea: rainbow mirror skin, no afro or glasses). Tile texture uploaded: `rbxassetid://117797404807538`.
+**Blockers / questions:** `DiscoEvent` is still **disabled** as Jacob asked. I didn't turn it back on.
+
 ## 2026-11-14 22:05 CT · jacob-claude
 **Done:** `ReplicatedStorage.DevDemo.PenaltyDemoRunner`: the boosted Strength label (Perfect/Great etc. multiplier) now stays up until the kick is over, instead of going back after 1.2 s (new `shotSeq`, +1 after each `shoot()`). No errors in Play. Saved v701.
 **Next:** Re-check funnels and ads tomorrow.
