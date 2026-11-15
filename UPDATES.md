@@ -2,6 +2,17 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 15:55 CT · jacob-claude
+**Done:**
+- **Trophy display redo (Jacob), `Workspace.DuelLobbyDisplay`:**
+  - Kickers: classic yellow skin, with jersey and shorts in the team colour.
+  - Each kicker is centred on its podium and turned 45° toward the front.
+  - `BlueGlow` / `RedGlow`: see-through glowing box walls (SurfaceGui gradient) round each podium top, like a queue pad, plus a light.
+  - `TrophyGlow`: the Gold mutation aura (rays + glow + sparkles) behind the cup and a gold light.
+- Saved.
+**Next:** duel client.
+**Blockers / questions:** none
+
 ## 2026-11-15 15:45 CT · jacob-claude
 **Done:**
 - **Duel trophy display in the lobby:** Jacob made the trophy (`Workspace.Model`) and the two `Workspace.Podium`s; I added `Workspace.DuelLobbyDisplay`:
