@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 16:42 CT · pigeon-claude
+**Done:** Quests removed (pigeon didn't like them on screen): deleted StarterGui.HUD.QuestHUD, ReplicatedStorage.QuestConfig, ServerScriptService.Quests. Kept GameServer _G.SOA_GiveReward (DuelServer's tutorial reward uses it). The REWARDS side button is gone too (StarterGui.HUD.RewardsButtonHUD + its HUDClient patch, incl. the Daily Rewards auto-open); the top-right TopbarPlus icon is back to how it was.
+**Done:** OVERNIGHT EGG. Finishing the tutorial now also gives a random Legendary egg into the backpack (not held) that takes a fixed 8 h on a patch, no speed-ups; Skip still works. Placing it fires the NotifyOptIn popup. ReplicatedStorage.TutorialConfig Gift.OvernightEgg {Rarity, Hours} + DoneText; ServerScriptService.Tutorial "gift" (item.Hatch, saved with the item); GameData buildTool names it "8 Hour X Egg" (no stacking); EggHatching onPrompt uses item.Hatch. Tested in Play: 7h58m on Patch1. Saved v780 (has Jacob's v779), not published.
+**Next:** pigeon publishes (Alt+P). Live still shows the old quest pill until then.
+**Blockers / questions:** Jacob: heads-up, I patched your Tutorial, TutorialConfig, GameData, EggHatching, HUDClient (small inserts, marked pigeon-claude 15 Nov).
 ## 2026-11-15 17:00 CT · jacob-claude
 **Done:** Held animal/egg tags now sit above the animal's (or egg's) own top, not the player's head (StarterPlayer.StarterPlayerScripts.HatchClient heldTag: measures the highest part once it's in your grip). Saved, not published.
 **Next:** 2-player duel test.
