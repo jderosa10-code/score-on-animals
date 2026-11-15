@@ -91,9 +91,10 @@ You collect the animals that hatch. Each has one number that matters: cash per s
   - A duel pad on the other side of the lobby (like the DNA machine): step on it to queue with players in your server, or invite friends to your server.
   - Loading screen: both players pick an egg from their collection. Better eggs dive faster and further.
   - Separate hidden pitch. The egg walks out (no rarity roll), the shooter walks to the middle (no tunnel). Best of 5, then sudden death.
-  - Keeper: the goal is hidden on their screen; hold on a side to charge an arrow, let go to dive (time it with the run-up).
-  - Shooter: same kick as now. Strength counts, capped in duels.
-  - Stakes: the loser's egg goes to the winner. A lost egg can be bought back with cash from the egg picker. Leaving mid-match = a loss.
+  - Keeper (Jacob, 15 Nov 2026, replaces the arrow): no guessing first. After the ball is kicked, click where it's going; the egg dives from that click. The keeper's screen hides the shooter.
+  - Shooter (Jacob, 15 Nov 2026): stop the power bar first, then click where to shoot. Strength counts, capped in duels.
+  - Stakes: the loser's egg goes to the winner. The winner also gets it as a real egg in their backpack to hatch (Jacob, 15 Nov 2026). A lost egg can be bought back with cash from the egg picker. Leaving mid-match = a loss.
+  - Duel tutorial: first time on the pad = a 1-kick-each match vs a coach bot, reward 10 min of cash.
 
 ## Leagues (replace walk-to zones)
 Each promotion moves you up a league: a new egg pool and the stadium reskins to match.
