@@ -9,7 +9,7 @@
 local RS = game:GetService("ReplicatedStorage")
 local DURATION = 120
 local GAP_MIN, GAP_MAX = 12 * 60, 20 * 60
-local GROOVY_CHANCE = 0.35
+local GROOVY_CHANCE = 0.12   -- about 1 in 8 eggs (pigeon: just some, not every egg)
 
 workspace:SetAttribute("DiscoActive", false)
 workspace:SetAttribute("DiscoGroovyChance", GROOVY_CHANCE)

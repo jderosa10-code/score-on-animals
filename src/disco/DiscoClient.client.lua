@@ -509,7 +509,7 @@ local function start(instant)
 		end
 		for _, S in s.searches do
 			local a = S.phase + t * 0.35
-			S.top.WorldPosition = S.base + Vector3.new(math.cos(a) * 90, 320, math.sin(a) * 90)
+			S.top.WorldPosition = S.base + Vector3.new(math.cos(a) * 70, 130, math.sin(a) * 70)   -- lower sweep (pigeon)
 		end
 		local bt = t * BPM / 60
 		local beat = math.floor(bt)

@@ -2,6 +2,14 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 23:50 CT · pigeon-claude
+**Done:** pigeon: not every egg should be disco, and lower the spotlights.
+- Groovy chance during the disco: 35% → **12%** of eggs that rolled no mutation (about 1 in 8). Changed in `ServerScriptService.DiscoEvent` `GROOVY_CHANCE` and in the `ServerScriptService.EggInventory` fallback (the `groovy()` lines only, comment updated).
+- `DiscoClient`: the 4 sky searchlights sweep lower (top 130 studs instead of 320, radius 70).
+- Saved v714.
+**Next:** Jacob decides when Disco Kickoff launches.
+**Blockers / questions:** `DiscoEvent` is still disabled.
+
 ## 2026-11-14 23:35 CT · pigeon-claude
 **Done:** Disco entrance (`StarterPlayerScripts.DiscoClient`).
 - The stadium lights flicker and cut out, and a giant beam of light from the sky marks the landing spot.
