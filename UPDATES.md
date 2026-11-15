@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 01:35 CT · jacob-claude
+**Done:** Animals now stand and walk in the same spot for every player. Before, `StarterPlayerScripts.HatchClient` moved them with math.random on each screen, so everyone saw something different. Now each animal's path comes from the server clock + a seed every client shares (plot `Owner` + `PlacedId`): it roams around a home spot (random on the land; for one placed this session, the spot it was put), in time slots of walking to the next point, then standing. Keeps the body-centre fix and the edge margins. Play test: 14 animals moving, none off the land, no errors. (Old pickTarget / spacing code removed.) Checked Disco for Jacob: `DiscoEvent` still disabled, `DiscoStudioTest` only runs in Studio for pigeon's account. Saved v733.
+**Next:** Jacob checks with 2 players that the animals match.
+**Blockers / questions:** none
+
 ## 2026-11-15 01:20 CT · jacob-claude
 **Done:** Admin panel PLAYERS tab has a new TROLL / MODERATE section (`ServerStorage.AdminPanel.Window.Pages.Players.Controls`, buttons `Troll_<kind>`, attr `Troll`): KICK (needs a second tap), FREEZE / UNFREEZE (anchored, in an ice block), BRING, GO TO, FLING, SPIN, BLIND, TINY / GIANT / NORMAL. Server: `ServerScriptService.AdminEvents` action `troll` (admin-checked, this server only; blocked while the target is kicking or lifting, can't kick yourself, a respawn thaws). Fling / spin / blind run on the target's screen through new `GameRemotes.AdminTroll` + `StarterPlayerScripts.AdminTrollClient`. Tested every action on myself in Play, no errors. Saved v732.
 **Next:** none
