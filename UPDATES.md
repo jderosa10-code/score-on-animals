@@ -2,6 +2,16 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 03:55 CT · pigeon-claude
+**Done:**
+- **Disco centred:** `DiscoClient.fieldCentre()` now uses the centre of the pitch markings (`Workspace.Map.Pitch` "Line" parts, = -400.5, 5.25) instead of the KickArea/Goal midpoint, which sat ~12 studs toward the kick end. Checked top-down in Play.
+- **Groovy egg odds showed "1/1":** event-only mutations have `Chance = 0`, so the shown odds were egg odds x 0.
+  - `GameConfig.mutChanceFor` / `mutChance` now use `eventOdds()`: Groovy = 1 / DiscoGroovyChance (0.12, about 1 in 8), so it makes the odds rarer like Gold (Chicken 1/3 → 1/25, Corgi 1/8 → 1/67). Inverted leaves them as they are.
+  - Only PenaltyDemoRunner's odds display uses these; rolling is untouched.
+- Saved v739.
+**Next:** none
+**Blockers / questions:** none
+
 ## 2026-11-15 01:45 CT · jacob-claude
 **Done:** 5 more admin trolls (PLAYERS tab, pink buttons `Troll_hidepets/broke/flip/invisible/sit`). HIDE PETS: their animals vanish on their screen for 20 s. $0 CASH: their cash shows $0 for 15 s. FLIP SCREEN: their camera is upside down for 8 s. Those three are all in `StarterPlayerScripts.AdminTrollClient` and nothing real changes. INVISIBLE: gone for everyone for 15 s, original transparency restored. SIT: forced to sit. Both are server-side in `ServerScriptService.AdminEvents`. Tested on myself: each worked and everything came back, no errors. Saved v736.
 **Next:** none
