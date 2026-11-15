@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 21:20 CT · jacob-claude
+**Done:** Tutorial leaks (onboarding funnel: 7% lost at the first hatch, 8% before the first level-up): `ServerScriptService.EggHatching` tutorial egg (TutorialStep 3) is ready in 3 s and auto-hatches 4 s after READY if not pressed (step 4); `ServerScriptService.Workout` first rep in the lift step (TutorialStep 6) levels you up. No errors in Play. Saved v694.
+**Next:** funnel review (7 days): biggest progression drops are Base 1 -> 2 (35%), Red -> Donut barbell (51%), Egg Luck 1 -> 2 (47%), Visit 2 -> 3 (23%). Waiting on Jacob for which to tune.
+**Blockers / questions:** none
+
 ## 2026-11-14 18:30 CT · pigeon-claude
 **Done:** (pigeon) DISCO KICKOFF event + new event-only mutation **Groovy** (x3 income). Every 12-20 min a mirror disco ball drops over the field for 2 min (`ServerScriptService.DiscoEvent`, show `StarterPlayerScripts.DiscoClient`). During it, 35% of unmutated eggs roll Groovy (`EggInventory`). Groovy animals (213, `Assets.Animals.GroovyAnimals`) wear a black afro + pink disco glasses, every one hand-checked up close. Groovy eggs (197) wear a mini afro via `GameConfig G.addGroovyAfro` (inside `G.addMutationVFX`). Models: `Assets.EventCosmetics.Disco`. Notes in `src/disco/README.md`. Saved v688.
 **Next:** play-test one event (`ServerStorage.DiscoStart:Fire(120)`), check on phone; publish.
