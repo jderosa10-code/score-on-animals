@@ -2,6 +2,15 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 02:15 CT · pigeon-claude
+**Done:** pigeon: "giraffe head orbits when I hold it". Reproduced with a held test Giraffe2:
+- Its Idle swings neck bones joint9-joint11, so the head (joint12) traces a ~2.2 x 0.6 x 0.85 stud loop. At held size (23 studs tall) over your head that reads as orbiting. The other Giraffe barely moves.
+- New `StarterPlayerScripts.HeldNeckCalm` (on Stepped, like SquidHeadFix): while an animal in its `CALM` table is held, those bones keep 35% of the animation's rotation. The head loop is now 0.78 studs. Pens are unchanged.
+- Note: my walking test stepped on pigeon's DNA Collect pad, which claimed the Tanuki copy waiting there.
+- Saved v725.
+**Next:** none
+**Blockers / questions:** none
+
 ## 2026-11-15 01:50 CT · pigeon-claude
 **Done:** pigeon: "lag spike after tapping the combo on weights" and "stutters when pressing buttons after a while". Measured in Play, two fixes:
 - **Every `TextScaler` in StarterGui.HUD + StarterGui.Menus** (23 copies, only `fwReshow` patched):
