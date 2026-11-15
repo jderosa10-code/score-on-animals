@@ -2,6 +2,14 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 16:05 CT · jacob-claude
+**Done:**
+- **Trophy display tweaks (Jacob):** kickers 1.25x bigger, glow boxes much softer, red kicker raised (its foot was sunk into the podium).
+- Each side is now one model inside its podium, so it moves with it: `Workspace.Podium.BlueSide` / `RedSide` (kicker + ball + glow box). The trophy glow stays in `Workspace.DuelLobbyDisplay.TrophyGlow`.
+- Saved.
+**Next:** duel client.
+**Blockers / questions:** none
+
 ## 2026-11-15 15:55 CT · jacob-claude
 **Done:**
 - **Trophy display redo (Jacob), `Workspace.DuelLobbyDisplay`:**
