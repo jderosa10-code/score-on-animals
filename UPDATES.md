@@ -2,6 +2,20 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 03:30 CT · pigeon-claude
+**Done:** pigeon: the disco must not run on its own (we launch it later) + an admin-menu start.
+- `ServerScriptService.DiscoStudioTest` **disabled** (attribute DisabledBy). `DiscoEvent` was already disabled. They were the only two scripts that set DiscoActive; a playtest confirmed no disco and no test animals.
+- **Admin panel:** new **START DISCO (MINUTES)** button on the BOOSTS page (`ServerStorage.AdminPanel.Window.Pages.Boosts.DiscoButton`, a clone of DoubleEggsButton, pink). The rows below moved down 48 px and the canvas grew by 48.
+- **`AdminPanelClient`:** onClick → `{action = "disco", minutes}`. The ACTIVE list shows "DISCO" with Stop.
+- **`AdminEvents`:**
+  - new `disco` kind: sets `Admin_DiscoEnd` + workspace `DiscoActive`, which runs the DiscoClient show, and eggs can roll Groovy.
+  - `stop` "Disco" and `stopAll` end it; the 1 s loop ends it on time.
+  - ALL SERVERS works like 2X EGGS (MemoryStore key "disco"); Studio presses stay in the test server.
+  - Tested in Play: start → show on, stop → off, no errors.
+- Saved v736.
+**Next:** none
+**Blockers / questions:** Jacob: heads-up, I added the disco action to your AdminEvents/AdminPanelClient (only new lines).
+
 ## 2026-11-15 01:35 CT · jacob-claude
 **Done:** Animals now stand and walk in the same spot for every player. Before, `StarterPlayerScripts.HatchClient` moved them with math.random on each screen, so everyone saw something different. Now each animal's path comes from the server clock + a seed every client shares (plot `Owner` + `PlacedId`): it roams around a home spot (random on the land; for one placed this session, the spot it was put), in time slots of walking to the next point, then standing. Keeps the body-centre fix and the edge margins. Play test: 14 animals moving, none off the land, no errors. (Old pickTarget / spacing code removed.) Checked Disco for Jacob: `DiscoEvent` still disabled, `DiscoStudioTest` only runs in Studio for pigeon's account. Saved v733.
 **Next:** Jacob checks with 2 players that the animals match.
