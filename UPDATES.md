@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 16:35 CT · jacob-claude
+**Done:** DuelSign was cut off by the lobby wall when seen from the side: a billboard turns toward you, and it was only 3.4 studs from the wall. Moved it out to z -64 (8 studs off the wall) and made it a bit smaller (13 x 5.2). Saved.
+**Next:** duel client.
+**Blockers / questions:** none
+
 ## 2026-11-15 16:30 CT · jacob-claude
 **Done:** Sign over the trophy (Jacob asked): `DuelTrophyDisplay.Trophy.Union.SignAttach.DuelSign`. It's a BillboardGui cloned from the DNA machine sign (LuckiestGuy, same outline style). Text: "PK DUELS" (gold) / "1V1 PENALTY SHOOTOUT" / "WINNER TAKES THE LOSER'S EGG!" (green). Saved.
 **Next:** duel client.
