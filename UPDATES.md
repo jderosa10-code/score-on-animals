@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 21:55 CT · jacob-claude
+**Done:** `StarterPlayerScripts.HatchClient` (new `heldTag`): a held animal shows the plot tag (`ReplicatedStorage.Hatching.AnimalInfo`: mutation, name, rarity, $/s with the holder's CashMulti) above the holder's head, on every screen. Tested holding a Hacked Dragon. Saved v699.
+**Next:** Re-check funnels and ads tomorrow.
+**Blockers / questions:** none
+
 ## 2026-11-14 21:45 CT · jacob-claude
 **Done:** Jacob and Braden are off the lobby leaderboards: `ServerScriptService.Leaderboards` has a `HIDDEN` list (4263620304 BING_CHILLING2525, 89199750 bmasterdevil). Their scores are never saved, their old entries are removed when a server starts, and they're filtered out of the top 10. Full-screen flashes are now black instead of white: the teleport home after scoring (`ReplicatedStorage.DevDemo.PenaltyDemoRunner`), getting on/off the weights (`StarterPlayerScripts.WorkoutClient`), and night→day (`StarterPlayerScripts.DayNightClient`). Saved v698.
 **Next:** Re-check funnels and ads tomorrow.
