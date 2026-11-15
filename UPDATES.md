@@ -2,6 +2,23 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 18:40 CT · jacob-claude
+**Done:** PK duels v2, rebuilt as "both choose at once" (Jacob: the turn-by-turn version felt weird). v1 scripts are backed up in `ServerStorage._RunnerBackups` (*_v1_turnbased).
+- **Each kick (`G.Duel.ChooseSeconds` 10 s):**
+  - The shooter clicks a spot in the goal, then stops the REAL TimingBar (`B.timing` = the runner's waitForClick, same result words).
+  - The keeper clicks where to dive. Both happen at the same time.
+  - Then the server sends `reveal` and both screens play the same kick: a copy of the shooter runs up, the ball flies, the egg dives.
+- **Rules:** `DuelRules.keepSpot` / `judge`. A faster egg reaches its spot in time and has more reach. Weak kicks drift to the middle; a MISS goes over.
+- **Camera:** behind the ball, zoomed on the goal while choosing.
+- **Duel tutorial:**
+  - The first time you step on a pad, it starts a guided 1-kick-each match vs "Coach Bot" (it lets you score and save).
+  - Text uses the admin banner like the other tutorials (`DuelUI.say`). The reward is `G.Duel.TutorialReward` and it sets `profile.DuelTutDone`.
+- **Trigger:** `StarterPlayerScripts.DuelIntroHint` shows "NEW: PK DUELS" with the gold trail + arrow to the pads once you've finished the first tutorial and scored 10 eggs (player attr DuelIntro, set by DuelServer).
+- Removed the ticking clock sound (Jacob hated it). Fixed a leftover bar-stop signal that made the next kick an instant MISS.
+- Tested in Play: tutorial start to end with reward; a practice match with kicks both ways using the real bar. Saved.
+**Next:** 2-player test; tune ChooseSeconds / reach / save size.
+**Blockers / questions:** none
+
 ## 2026-11-15 18:10 CT · jacob-claude
 **Done:**
 - **Keeper dive locks in (Jacob):** letting go of the arrow before the kick locks it. The arrow stays on the egg, turns gold and says LOCKED ("LOCKED IN! YOUR EGG DIVES WHEN THEY KICK").
