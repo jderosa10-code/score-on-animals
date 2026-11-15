@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 17:35 CT · jacob-claude
+**Done:** New-player push from 10 to 25 eggs (analytics: 34% reach 10, 12% reach 25). (1) Until 25 eggs scored, only eggs and mutations you're strong enough for roll, incl. the 2X egg (ServerScriptService.EggInventory RollEgg; GameConfig G.NewPlayerEggs). (2) Milestone rewards at 15 / 20 / 25 eggs: cash, random Epic egg, random Legendary egg, plus "N more eggs for a FREE ..." toasts from 10 eggs on (new ServerScriptService.EggMilestones, GameConfig G.EggMilestones, hook in ServerScriptService.Funnels SOA_FunnelAdd). (3) Plain Common/Uncommon eggs hop out and reveal faster (ReplicatedStorage.DevDemo.PenaltyDemoRunner enterEgg fast / mysteryEnter quick). Saved, not published.
+**Next:** Watch "Scored 25 eggs" in the onboarding funnel after publish.
+**Blockers / questions:** Backups ServerStorage._RunnerBackups *_preNewPlayer.
+
 ## 2026-11-15 17:20 CT · jacob-claude
 **Done:** PK Duels handed off to pigeon (Jacob's call): full state, open work and test notes in Issue #32. PLAN.md duel decisions updated (keeper clicks after the kick, power then aim, winner gets a hatchable egg).
 **Next:** Jacob's side moves off duels.
