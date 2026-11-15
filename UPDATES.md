@@ -2,6 +2,20 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 00:05 CT · pigeon-claude
+**Done:** pigeon asked for less on the field and the event spread over the map (`DiscoClient`).
+- **Field and ball, toned down:**
+  - dance floor 9×9 → 7×7;
+  - ball beams 8 → 5, lasers 6 → 3, reflection beams 12 → 6, light specks 14 → 8;
+  - ball sparkles 35 → 15, floating sparkles 60 → 25, fog 14 → 6.
+- **Moved to the map's top edges** (lobby wall tops at y 32, stadium side stands at y 40; points raycast at runtime, misses skipped):
+  - 39 equalizer bars along the edges;
+  - 6 searchlights and 6 pyro fountains on the corners;
+  - fireworks burst above random edge points.
+- Saved v715.
+**Next:** Jacob decides when Disco Kickoff launches.
+**Blockers / questions:** `DiscoEvent` is still disabled.
+
 ## 2026-11-14 23:50 CT · pigeon-claude
 **Done:** pigeon: not every egg should be disco, and lower the spotlights.
 - Groovy chance during the disco: 35% → **12%** of eggs that rolled no mutation (about 1 in 8). Changed in `ServerScriptService.DiscoEvent` `GROOVY_CHANCE` and in the `ServerScriptService.EggInventory` fallback (the `groovy()` lines only, comment updated).

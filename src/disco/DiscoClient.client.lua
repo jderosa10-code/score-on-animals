@@ -22,7 +22,12 @@ local HANG = 46           -- studs above the field
 local INTRO, FALL = 1.4, 2.4   -- the lights cut out, then the ball falls out of the sky for FALL seconds
 local WHOOSH_ID = "rbxassetid://9114631265"   -- Pro Sound Effects "Gong Whoosh 4" (Roblox licensed SFX)
 local BOOM_ID = "rbxassetid://9125484526"     -- Pro Sound Effects "Deep Hits Big Reverberant Booms 1"
-local FLOOR_N, FLOOR_TILE = 9, 6
+local FLOOR_N, FLOOR_TILE = 7, 6   -- (pigeon: a bit less on the field)
+-- the map's top edges (lobby walls, stadium side stands): bars, searchlights, pyro and fireworks go up here (pigeon:
+-- spread the event out over the map). Points that miss (not there / not streamed in) are skipped.
+local EDGES = {{Vector2.new(-568, -215), Vector2.new(-568, -45)}, {Vector2.new(-238, -215), Vector2.new(-238, -45)},
+	{Vector2.new(-563, -220), Vector2.new(-243, -220)}, {Vector2.new(-485, -25), Vector2.new(-485, 110)}, {Vector2.new(-315, -25), Vector2.new(-315, 110)}}
+local CORNERS = {Vector2.new(-568, -220), Vector2.new(-238, -220), Vector2.new(-568, -45), Vector2.new(-238, -45), Vector2.new(-485, 40), Vector2.new(-315, 40)}
 local COLORS = {Color3.fromRGB(255, 60, 170), Color3.fromRGB(60, 220, 255), Color3.fromRGB(255, 220, 60),
 	Color3.fromRGB(170, 80, 255), Color3.fromRGB(80, 255, 140), Color3.fromRGB(255, 120, 40)}
 -- the dark look: night, but still easy to play in
@@ -249,6 +254,18 @@ local function start(instant)
 	for _, p in Players:GetPlayers() do if p.Character then table.insert(ignore, p.Character) end end
 	s.floorY = groundY(s.centre, ignore)
 	local cx, cz, fy = s.centre.X, s.centre.Z, s.floorY
+	local mp = RaycastParams.new(); mp.FilterType = Enum.RaycastFilterType.Include
+	mp.FilterDescendantsInstances = {workspace:FindFirstChild("Map") or workspace}
+	local function top(xz)   -- the top of the map at (x, z), or nil
+		local r = workspace:Raycast(Vector3.new(xz.X, 400, xz.Y), Vector3.new(0, -500, 0), mp)
+		return r and r.Position.Y > fy + 10 and r.Position or nil
+	end
+	s.edge, s.corners = {}, {}
+	for _, e in EDGES do
+		local n = math.max(2, math.floor((e[2] - e[1]).Magnitude / 22))
+		for k = 0, n do local p = top(e[1]:Lerp(e[2], k / n)); if p then table.insert(s.edge, p) end end
+	end
+	for _, c in CORNERS do local p = top(c); if p then table.insert(s.corners, p) end end
 
 	local ball = src:Clone()
 	ball.Parent = s.folder
@@ -267,7 +284,7 @@ local function start(instant)
 	table.insert(s.lights, glow); s.glow = glow
 	local sp = Instance.new("ParticleEmitter")
 	sp.Texture = "rbxasset://textures/particles/sparkles_main.dds"
-	sp.Rate = 35; sp.Lifetime = NumberRange.new(1.2, 2); sp.Speed = NumberRange.new(18, 30); sp.SpreadAngle = Vector2.new(180, 180)
+	sp.Rate = 15; sp.Lifetime = NumberRange.new(1.2, 2); sp.Speed = NumberRange.new(18, 30); sp.SpreadAngle = Vector2.new(180, 180)
 	sp.Size = NumberSequence.new({kp(0, 1.4), kp(1, 0)}); sp.LightEmission = 1
 	sp.Color = ColorSequence.new(Color3.new(1, 1, 1)); sp.Drag = 2; sp.Enabled = false; sp.Parent = core
 	s.sparks = sp
@@ -301,8 +318,8 @@ local function start(instant)
 		table.insert(s.confetti, c)
 	end
 	-- mirror-ball light specks: narrow spotlights pointing out of the ball, turning with it
-	for i = 1, 14 do
-		local yv = -0.8 - 0.18 * (i - 0.5) / 14
+	for i = 1, 8 do
+		local yv = -0.8 - 0.18 * (i - 0.5) / 8
 		local r = math.sqrt(1 - yv * yv)
 		local th = i * 2.39996
 		local a = Instance.new("Attachment")
@@ -334,7 +351,7 @@ local function start(instant)
 		task.delay(0.7, function() if showIs(s) then tw(lg, 0.6, {Size = Vector3.new(0.3, 22, 22)}) end end)
 		s.landGlow = lg
 	end
-	for i = 1, 8 do
+	for i = 1, 5 do
 		local t = Instance.new("Attachment"); t.Parent = ground
 		local col = COLORS[(i - 1) % #COLORS + 1]
 		local b = Instance.new("Beam"); b.Attachment0, b.Attachment1 = centreAtt, t
@@ -346,31 +363,30 @@ local function start(instant)
 		table.insert(s.beams, b); table.insert(s.pools, pl); table.insert(s.lights, pl)
 		table.insert(s.targets, {att = t, r = 14 + (i % 4) * 14, speed = (i % 2 == 0 and 1 or -1) * (0.35 + i * 0.05), phase = i * math.pi / 4})
 	end
-	for i = 1, 6 do
+	for i = 1, 3 do
 		local t = Instance.new("Attachment"); t.Parent = ground
 		local b = Instance.new("Beam"); b.Attachment0, b.Attachment1 = centreAtt, t
 		b.Width0, b.Width1 = 0, 0; b.FaceCamera = true; b.LightEmission = 1; b.LightInfluence = 0; b.Segments = 1
 		b.Color = ColorSequence.new(COLORS[(i % 2 == 0) and 2 or 1]); b.Transparency = NumberSequence.new(0.05)
 		b.Parent = core
-		table.insert(s.lasers, {b = b, att = t, phase = i * math.pi / 3})
+		table.insert(s.lasers, {b = b, att = t, phase = i * math.pi * 2 / 3})
 	end
-	for i = 1, 4 do
-		local sx, sz = (i <= 2) and -1 or 1, (i % 2 == 0) and -1 or 1
-		local base = Vector3.new(cx + sx * 55, fy + 22, cz + sz * 48)   -- starts above head height
+	for i, c in s.corners do   -- searchlights on the corners of the map's top edges
+		local base = c + Vector3.new(0, 1, 0)
 		local b0 = Instance.new("Attachment"); b0.Parent = ground; b0.WorldPosition = base
 		local b1 = Instance.new("Attachment"); b1.Parent = ground
 		local b = Instance.new("Beam"); b.Attachment0, b.Attachment1 = b0, b1
 		b.Width0, b.Width1 = 0, 0; b.FaceCamera = true; b.LightEmission = 1; b.LightInfluence = 0; b.Segments = 1
-		b.Color = ColorSequence.new(COLORS[i + 1]); b.Transparency = NumberSequence.new({kp(0, 0.5), kp(1, 1)})
+		b.Color = ColorSequence.new(COLORS[i % #COLORS + 1]); b.Transparency = NumberSequence.new({kp(0, 0.5), kp(1, 1)})
 		b.Parent = ground
-		table.insert(s.searches, {b = b, top = b1, base = base, phase = i * math.pi / 2})
+		table.insert(s.searches, {b = b, top = b1, base = base, phase = i * math.pi / 3})
 	end
 	-- floating sparkles over the field
 	local box = part("DiscoMotes", Vector3.new(120, 36, 120), s.folder)
 	box.Position = Vector3.new(cx, fy + 20, cz)
 	local mo = Instance.new("ParticleEmitter")
 	mo.Shape = Enum.ParticleEmitterShape.Box; mo.ShapeStyle = Enum.ParticleEmitterShapeStyle.Volume
-	mo.Texture = "rbxasset://textures/particles/sparkles_main.dds"; mo.Rate = 60
+	mo.Texture = "rbxasset://textures/particles/sparkles_main.dds"; mo.Rate = 25
 	mo.Lifetime = NumberRange.new(2.5, 4); mo.Speed = NumberRange.new(0.5, 2); mo.SpreadAngle = Vector2.new(180, 180)
 	mo.Size = NumberSequence.new({kp(0, 0), kp(0.3, 0.8), kp(1, 0)}); mo.LightEmission = 1
 	mo.Color = ColorSequence.new({ColorSequenceKeypoint.new(0, COLORS[1]), ColorSequenceKeypoint.new(0.5, COLORS[2]), ColorSequenceKeypoint.new(1, COLORS[4])})
@@ -389,40 +405,38 @@ local function start(instant)
 	end
 	floor.Parent = s.folder
 
-	-- equalizer bars in a ring round the dance floor, jumping to the beat
+	-- equalizer bars along the top edges of the map, jumping to the beat
 	s.bars = {}
-	for i = 1, 28 do
-		local a = i / 28 * math.pi * 2
-		local b = part("EQBar", Vector3.new(1.6, 1, 1.6), s.folder)
+	for i, p in s.edge do
+		local b = part("EQBar", Vector3.new(2.2, 1, 2.2), s.folder)
 		b.Material = Enum.Material.Neon
-		table.insert(s.bars, {p = b, base = Vector3.new(cx + math.cos(a) * 40, fy, cz + math.sin(a) * 40), i = i})
+		table.insert(s.bars, {p = b, base = p, i = i})
 	end
 	-- white mirror-ball reflections sweeping round the stadium, turning with the ball
 	s.streaks = {}
-	for i = 1, 12 do
+	for i = 1, 6 do
 		local t = Instance.new("Attachment"); t.Parent = ground
 		local b = Instance.new("Beam"); b.Attachment0, b.Attachment1 = centreAtt, t
 		b.Width0, b.Width1 = 0, 0; b.FaceCamera = true; b.LightEmission = 1; b.LightInfluence = 0; b.Segments = 1
 		b.Color = ColorSequence.new(Color3.new(1, 1, 1)); b.Transparency = NumberSequence.new({kp(0, 0.35), kp(1, 1)})
 		b.Parent = core
-		table.insert(s.streaks, {b = b, att = t, a = i / 12 * math.pi * 2, h = (i % 3) * 9})
+		table.insert(s.streaks, {b = b, att = t, a = i / 6 * math.pi * 2, h = (i % 3) * 9})
 	end
 	-- low purple fog over the field
 	local fogBox = part("DiscoFog", Vector3.new(80, 1, 80), s.folder)
 	fogBox.Position = Vector3.new(cx, fy + 0.5, cz)
 	local fog = Instance.new("ParticleEmitter")
 	fog.Shape = Enum.ParticleEmitterShape.Box; fog.Texture = "rbxasset://textures/particles/smoke_main.dds"
-	fog.Rate = 14; fog.Lifetime = NumberRange.new(5, 8); fog.Speed = NumberRange.new(0.4, 1.2)
+	fog.Rate = 6; fog.Lifetime = NumberRange.new(5, 8); fog.Speed = NumberRange.new(0.4, 1.2)
 	fog.Size = NumberSequence.new({kp(0, 7), kp(1, 15)}); fog.Rotation = NumberRange.new(0, 360); fog.RotSpeed = NumberRange.new(-10, 10)
 	fog.Transparency = NumberSequence.new({kp(0, 1), kp(0.25, 0.72), kp(1, 1)}); fog.LightEmission = 0.25
 	fog.Color = ColorSequence.new(Color3.fromRGB(190, 130, 255), Color3.fromRGB(255, 140, 220)); fog.Enabled = false; fog.Parent = fogBox
 	s.fog = fog
 	-- pyro fountains at the corners of the dance floor (on the landing and on every 16th beat)
 	s.fountains = {}
-	for i = 1, 4 do
-		local sx, sz = (i <= 2) and -1 or 1, (i % 2 == 0) and -1 or 1
+	for _, c in s.corners do   -- on the corners of the map's top edges
 		local p = part("Pyro", Vector3.one, s.folder)
-		p.Position = Vector3.new(cx + sx * 31, fy + 0.5, cz + sz * 31)
+		p.Position = c + Vector3.new(0, 0.5, 0)
 		local e = Instance.new("ParticleEmitter")
 		e.Texture = "rbxasset://textures/particles/sparkles_main.dds"; e.Rate = 140; e.Lifetime = NumberRange.new(0.8, 1.3)
 		e.Speed = NumberRange.new(32, 44); e.SpreadAngle = Vector2.new(7, 7); e.Acceleration = Vector3.new(0, -45, 0)
@@ -534,7 +548,8 @@ local function start(instant)
 					tw(s.cc, 1, {TintColor = WASH[(beat // 8) % #WASH + 1]})
 					for k = 1, 2 do   -- fireworks
 						local fw = s.fireworks[(beat // 8 * 2 + k) % #s.fireworks + 1]
-						fw.p.Position = Vector3.new(cx + math.random(-70, 70), fy + math.random(55, 85), cz + math.random(-70, 70))
+						local ep = (#s.edge > 0) and s.edge[math.random(#s.edge)] or Vector3.new(cx, fy, cz)   -- above the map's edges
+						fw.p.Position = ep + Vector3.new(math.random(-15, 15), math.random(40, 65), math.random(-15, 15))
 						local col = COLORS[math.random(#COLORS)]
 						fw.e.Color = ColorSequence.new(Color3.new(1, 1, 1), col); fw.l.Color = col
 						fw.e:Emit(140)
@@ -555,8 +570,8 @@ local function start(instant)
 			local kick = (1 - frac) ^ 1.5
 			for _, b in s.bars do
 				local h = 1 + 9 * kick * (0.45 + math.clamp(math.noise(b.i * 0.37, t * 1.7) + 0.5, 0, 1) * 0.55)
-				b.p.Size = Vector3.new(1.6, h, 1.6)
-				b.p.CFrame = CFrame.lookAt(b.base + Vector3.new(0, h / 2, 0), Vector3.new(cx, fy + h / 2, cz))
+				b.p.Size = Vector3.new(2.2, h, 2.2)
+				b.p.CFrame = CFrame.new(b.base + Vector3.new(0, h / 2, 0))
 				b.p.Transparency = 0.1
 			end
 			local spin = t * 0.9
