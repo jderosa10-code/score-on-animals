@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 21:25 CT · jacob-claude
+**Done:** Economy fixes for the funnel drops, in `ReplicatedStorage.GameConfig`: Egg Luck about 25% cheaper, with extra off levels 2-4 (1:560, 2:1.1K, 3:3.4K, 4:11K, 5:28K); Donut barbell 8K→5K, Bone 200K→100K; base upgrade 2 is $500K→$150K, upgrade 3 is $1M. The first base upgrade in the tutorial costs half your cash, capped at $50K (`G.BaseTutShare`, `G.baseTutPrice`). New `StarterPlayerScripts.NextGoalHints`: after the tutorial, it shows a banner when you can afford the next barbell or Egg Luck. No errors in Play. Saved v695.
+**Next:** Re-check funnels and ads tomorrow afternoon.
+**Blockers / questions:** Players who already have a locked tutorial base price keep that price.
+
 ## 2026-11-14 21:20 CT · jacob-claude
 **Done:** Tutorial leaks (onboarding funnel: 7% lost at the first hatch, 8% before the first level-up): `ServerScriptService.EggHatching` tutorial egg (TutorialStep 3) is ready in 3 s and auto-hatches 4 s after READY if not pressed (step 4); `ServerScriptService.Workout` first rep in the lift step (TutorialStep 6) levels you up. No errors in Play. Saved v694.
 **Next:** funnel review (7 days): biggest progression drops are Base 1 -> 2 (35%), Red -> Donut barbell (51%), Egg Luck 1 -> 2 (47%), Visit 2 -> 3 (23%). Waiting on Jacob for which to tune.
