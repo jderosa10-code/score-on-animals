@@ -2,6 +2,13 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 17:15 CT · jacob-claude
+**Done:**
+- **Duel pad split in two (Jacob):** `Workspace.DuelPad` now has two thin pads (0.2 tall, 4.6 x 4.6), named `Pad` with attribute Side = Blue / Red. Each is in front of its kicker's podium, with team-colour glow walls. One "PK DUELS / STEP IN TO DUEL!" sign hangs between them (`SignAnchor`).
+- `DuelClient`: standing on either pad opens the menu. Checked in Play. Saved.
+**Next:** 2-player duel test.
+**Blockers / questions:** none
+
 ## 2026-11-15 17:05 CT · jacob-claude
 **Done:** PK duels part 2, the whole client. Jacob asked Claude to build the UI too, PvP style, ideas from his PVPUIKIT place.
 - **Shooter:** `ReplicatedStorage.DevDemo.PenaltyDemoRunner` has a new PK DUELS block (backup in `ServerStorage._RunnerBackups`).
