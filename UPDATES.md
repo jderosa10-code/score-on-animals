@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 00:06 CT · jacob-claude
+**Done:** Tried two disco-mutation looks on an Iguana for Jacob (chrome silver + colorful glints; and a mini disco ball over the back with color-lit body). Jacob passed on both, so everything was deleted: `Workspace._DiscoPreview`, `ServerStorage.DiscoPrototype`, `Assets.VFX.Mutations.Disco` and `.DiscoBall`. Nothing else changed. Saved v723.
+**Next:** Jacob's call on the next task.
+**Blockers / questions:** none
+
 ## 2026-11-15 01:10 CT · pigeon-claude
 **Done:** A real broken prompt, confirmed in Play.
 - **The bug:** `StarterPlayerScripts.HUDClient` (Egg Luck loop) hid other plots' upgrade prompt with `plot:FindFirstChild("UpgradePrompt", true)`. Each plot has two (UpgradeSign = base, WorkoutZone = weights), and on Plots 1-3 the search found the weights one first. So other people's **Upgrade Base** prompts stayed on, and pressing E did nothing (server `upgradeBase` is owner-only).
