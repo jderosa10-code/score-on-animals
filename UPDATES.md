@@ -2,6 +2,15 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 17:25 CT · jacob-claude
+**Done:**
+- **No duels during the first tutorial (Jacob):**
+  - `DuelServer.canDuel` refuses anyone with TutorialStep ~= 0. That covers queue, practice, challenge and accept. They also show as BUSY in other players' challenge lists.
+  - `DuelClient`: the pad shows "FINISH THE TUTORIAL TO DUEL!" instead of the menu, and the menu works once the tutorial is done.
+- Checked in Play. Saved.
+**Next:** 2-player duel test.
+**Blockers / questions:** none
+
 ## 2026-11-15 17:15 CT · jacob-claude
 **Done:**
 - **Duel pad split in two (Jacob):** `Workspace.DuelPad` now has two thin pads (0.2 tall, 4.6 x 4.6), named `Pad` with attribute Side = Blue / Red. Each is in front of its kicker's podium, with team-colour glow walls. One "PK DUELS / STEP IN TO DUEL!" sign hangs between them (`SignAnchor`).
