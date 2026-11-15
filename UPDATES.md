@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 16:35 CT · jacob-claude
+**Done:** Reviewed duels code (ServerScriptService.DuelServer, GameData egg collection). No changes.
+**Next:** Jacob to pick from: real hatchable egg for the winner, Duels funnel, earlier duel intro, queue fallback to practice, server check on kick zone, duel wins stat. Then 2-player test.
+**Blockers / questions:** A won egg only goes into EggCol (the duel-only collection), so winning gives nothing usable outside duels.
+
 ## 2026-11-15 13:30 CT · jacob-claude
 **Done:** Analytics scan (last 7 days, live V736). Ads brought 978 of 1,035 new players, home recs 0. D1 3.97%, avg session 6.5 min new / 10.7 returning, 43% still playing at 5 min. Onboarding funnel: tutorial complete 62.4%, upgraded weights 49.9%, played 10 min 35.1%, scored 10 eggs 33.8%, scored 25 eggs 12.4%, came back 11.2%. Robux: 84 (dev products), ~0% payer conversion.
 **Next:** Fix the 5–10 min drop and eggs 10→25 drop before more ads; ship duels.
