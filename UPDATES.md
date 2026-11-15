@@ -2,6 +2,23 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 01:50 CT · pigeon-claude
+**Done:** pigeon: "lag spike after tapping the combo on weights" and "stutters when pressing buttons after a while". Measured in Play, two fixes:
+- **Every `TextScaler` in StarterGui.HUD + StarterGui.Menus** (23 copies, only `fwReshow` patched):
+  - Jacob's 13 Nov tiny-text fix re-solved ALL text twice (0.05 s + 0.4 s) on every show. That made opening a menu hitch: Index 61 ms frames vs 30 with TextScaler off.
+  - Now the first show still does the full re-solve, and later shows only call `applyIfChanged` (when the size changed).
+  - Index open after the fix: 25-34 ms (idle 25 ms); only the first open is 74 ms.
+  - The 4 popups (Confirm, Offline, Gift, BuyEgg) are untouched; their text changes every time.
+- **`StarterGui.HUD.LiftTapHUD.LiftTapClient` `emit()`:**
+  - It cloned every emitter of an effect on every burst (Diamond 11 per combo tap, LevelUp2 9) and Debris'd them. Now it keeps reusable `FX_<name>` attachments per effect + scale in Terrain; one is reused after 5 s idle (LockedToPart emitters are never moved while busy).
+  - All `VFX.Effects` textures are PreloadAsync'd on start.
+  - Level-up frames: 59 ms → 22-29 ms.
+- No leak found: GUI instances and memory stay flat over 180 menu opens.
+- Giraffe "head orbits while held": not reproduced. The Giraffe and Giraffe2 idles are fine on every mutation (max bone swing 20°), and there's no double animator. Waiting on a clip or more detail from pigeon.
+- Saved.
+**Next:** the giraffe, once we know when it happens.
+**Blockers / questions:** Jacob: heads-up, your `fwReshow` in TextScaler now only fully re-solves on the first show. If tiny text comes back on a menu, tell me which one.
+
 ## 2026-11-15 00:06 CT · jacob-claude
 **Done:** Tried two disco-mutation looks on an Iguana for Jacob (chrome silver + colorful glints; and a mini disco ball over the back with color-lit body). Jacob passed on both, so everything was deleted: `Workspace._DiscoPreview`, `ServerStorage.DiscoPrototype`, `Assets.VFX.Mutations.Disco` and `.DiscoBall`. Nothing else changed. Saved v723.
 **Next:** Jacob's call on the next task.
