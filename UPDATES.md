@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 16:50 CT · jacob-claude
+**Done:** Duel winner now also gets the won egg as a real hatchable egg (ServerScriptService.DuelServer finish -> D.giveItem; end screen line in ReplicatedStorage.Duel.DuelUI). New "PK Duels" funnel, 7 steps (ServerScriptService.Funnels DuelStep; DuelServer duelStep) + profile.Stats.DuelsPlayed / DuelWins. Held eggs now show a name/rarity/mutation tag over the head, held tags always on top (StarterPlayerScripts.HatchClient heldTag). Hatching eggs show name/rarity/mutation above the timer (ServerScriptService.EggHatching placeEgg, "EggInfo"). Saved v779, not published.
+**Next:** 2-player duel test, then publish when Jacob says.
+**Blockers / questions:** Backups in ServerStorage._RunnerBackups (*_2026-11-15_preReward, *_preTags).
+
 ## 2026-11-15 16:35 CT · jacob-claude
 **Done:** Reviewed duels code (ServerScriptService.DuelServer, GameData egg collection). No changes.
 **Next:** Jacob to pick from: real hatchable egg for the winner, Duels funnel, earlier duel intro, queue fallback to practice, server check on kick zone, duel wins stat. Then 2-player test.
