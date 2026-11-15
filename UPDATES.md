@@ -2,6 +2,16 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-14 23:35 CT · pigeon-claude
+**Done:** Disco entrance (`StarterPlayerScripts.DiscoClient`).
+- The stadium lights flicker and cut out, and a giant beam of light from the sky marks the landing spot.
+- The ball falls like a meteor: speeding up, spinning, with rainbow spiral trails and a whoosh (ProSoundEffects 9114631265).
+- It's caught by the chain with a springy bounce: a BOOM (ProSoundEffects 9125484526), a ForceField shockwave dome and a white shock disc across the field, a flash, a camera shake, sparks, confetti and pyro.
+- Fixed: the ball's exit back up could stall halfway and leave the DiscoShow folder behind. It now runs off the clock, with a 5 s cleanup backstop.
+- Tested in Play, no errors. Saved v713.
+**Next:** Jacob decides when Disco Kickoff launches.
+**Blockers / questions:** `DiscoEvent` is still disabled.
+
 ## 2026-11-14 23:10 CT · pigeon-claude
 **Done:** Disco round 3 (pigeon: more and cooler effects, better-looking Groovy animals, safe music).
 - **Show** (`StarterPlayerScripts.DiscoClient`): the crowd dances on the beat (232 `Workspace.Crowd` fans hop, arms up/waving; client-side only, restored after). Added:

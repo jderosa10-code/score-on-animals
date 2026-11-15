@@ -19,7 +19,9 @@ local WASH = {Color3.fromRGB(255, 215, 245), Color3.fromRGB(215, 228, 255), Colo
 local CONFETTI = "rbxassetid://87631052434865"     -- plain white square
 local BPM = 120
 local HANG = 46           -- studs above the field
-local DROP_TIME = 4.5
+local INTRO, FALL = 1.4, 2.4   -- the lights cut out, then the ball falls out of the sky for FALL seconds
+local WHOOSH_ID = "rbxassetid://9114631265"   -- Pro Sound Effects "Gong Whoosh 4" (Roblox licensed SFX)
+local BOOM_ID = "rbxassetid://9125484526"     -- Pro Sound Effects "Deep Hits Big Reverberant Booms 1"
 local FLOOR_N, FLOOR_TILE = 9, 6
 local COLORS = {Color3.fromRGB(255, 60, 170), Color3.fromRGB(60, 220, 255), Color3.fromRGB(255, 220, 60),
 	Color3.fromRGB(170, 80, 255), Color3.fromRGB(80, 255, 140), Color3.fromRGB(255, 120, 40)}
@@ -36,6 +38,26 @@ local PATTERNS = {
 
 local show   -- everything the current show made, to clean up
 local function showIs(s) return show == s end
+local function sfx(id, vol)
+	local snd = Instance.new("Sound"); snd.SoundId = id; snd.Volume = vol
+	local g = SoundService:FindFirstChild("SFX")
+	if g and g:IsA("SoundGroup") then snd.SoundGroup = g end   -- follows the SFX setting
+	snd.Parent = SoundService
+	snd:Play()
+	task.delay(8, function() snd:Destroy() end)
+end
+-- a short camera shake that fades out
+local function shake(power, time)
+	local t0 = os.clock()
+	pcall(function() RunService:UnbindFromRenderStep("DiscoShake") end)
+	RunService:BindToRenderStep("DiscoShake", Enum.RenderPriority.Camera.Value + 1, function()
+		local k = 1 - (os.clock() - t0) / time
+		if k <= 0 then RunService:UnbindFromRenderStep("DiscoShake") return end
+		local a = power * k * k
+		local cam = workspace.CurrentCamera
+		cam.CFrame = cam.CFrame * CFrame.new((math.random() - 0.5) * a, (math.random() - 0.5) * a, 0)
+	end)
+end
 local function kp(t, v) return NumberSequenceKeypoint.new(t, v) end
 local function tw(o, t, props, style, dir)
 	local x = TweenService:Create(o, TweenInfo.new(t, style or Enum.EasingStyle.Sine, dir or Enum.EasingDirection.Out), props)
@@ -145,6 +167,22 @@ local function land(s, instant)
 		if instant then tl.on = true else task.delay(ring * 0.07, function() tl.on = true end) end
 	end
 	if not instant then
+		-- the catch: BOOM, a shockwave dome + a flash across the field, the camera shakes
+		sfx(BOOM_ID, 0.9)
+		shake(1.3, 0.8)
+		s.sparks:Emit(120)
+		s.glow.Brightness = 12; tw(s.glow, 1.2, {Brightness = 1.5})
+		task.delay(0.35, function() for _, tr in s.trails do tr.Enabled = false end end)
+		if s.skyBeam then tw(s.skyBeam, 0.5, {Width0 = 0, Width1 = 0}) end
+		if s.landGlow then tw(s.landGlow, 0.6, {Transparency = 1}) end
+		local wave = part("Shockwave", Vector3.new(6, 6, 6), s.folder)
+		wave.Shape = Enum.PartType.Ball; wave.Material = Enum.Material.ForceField; wave.Color = COLORS[1]; wave.Transparency = 0
+		wave.Position = Vector3.new(s.centre.X, s.hangY, s.centre.Z)
+		tw(wave, 1.4, {Size = Vector3.new(320, 320, 320), Transparency = 1}, Enum.EasingStyle.Quart)
+		local disc = part("ShockDisc", Vector3.new(0.4, 6, 6), s.folder)
+		disc.Shape = Enum.PartType.Cylinder; disc.Material = Enum.Material.Neon; disc.Color = Color3.new(1, 1, 1); disc.Transparency = 0.45
+		disc.CFrame = CFrame.new(s.centre.X, s.floorY + 0.5, s.centre.Z) * CFrame.Angles(0, 0, math.pi / 2)
+		tw(disc, 1.1, {Size = Vector3.new(0.4, 240, 240), Transparency = 1}, Enum.EasingStyle.Quart)
 		for _, e in s.confetti do e:Emit(45) end
 		tw(s.cc, 0.08, {Brightness = 0.35}).Completed:Connect(function()
 			if s.cc.Parent and showIs(s) then tw(s.cc, 0.7, {Brightness = 0}) end
@@ -181,18 +219,19 @@ local function stop(instant)
 	end
 	local ball = s.ball
 	if instant then s.folder:Destroy() return end
-	-- back up into the sky
-	local v = Instance.new("NumberValue"); v.Value = 0
-	v.Changed:Connect(function(t) s.y = s.hangY + t * 420 end)
-	local up = tw(v, 3.2, {Value = 1}, Enum.EasingStyle.Quad, Enum.EasingDirection.In)
-	local spin = 0
-	local c2 = RunService.RenderStepped:Connect(function(dt)
+	-- back up into the sky (run off the clock, and the folder is always cleaned up)
+	local r0, spin = os.clock(), 0
+	local c2
+	c2 = RunService.RenderStepped:Connect(function(dt)
+		local u = math.min(1, (os.clock() - r0) / 3.2)
 		spin += dt * 1.2
-		ball:PivotTo(CFrame.new(s.centre.X, s.y, s.centre.Z) * CFrame.Angles(0, spin, 0))
+		ball:PivotTo(CFrame.new(s.centre.X, s.hangY + 420 * u * u, s.centre.Z) * CFrame.Angles(0, spin, 0))
+		if u >= 1 then c2:Disconnect(); s.folder:Destroy() end
 	end)
-	up.Completed:Wait()
-	c2:Disconnect()
-	s.folder:Destroy()
+	task.delay(5, function()
+		if c2.Connected then c2:Disconnect() end
+		s.folder:Destroy()
+	end)
 end
 
 local function start(instant)
@@ -225,7 +264,7 @@ local function start(instant)
 	-- (the coloured glow hangs under the ball, so the ball itself stays a silver mirror)
 	local under = Instance.new("Attachment"); under.Position = Vector3.new(0, -16, 0); under.Parent = core
 	local glow = Instance.new("PointLight"); glow.Range = 40; glow.Brightness = 1.5; glow.Color = COLORS[1]; glow.Parent = under
-	table.insert(s.lights, glow)
+	table.insert(s.lights, glow); s.glow = glow
 	local sp = Instance.new("ParticleEmitter")
 	sp.Texture = "rbxasset://textures/particles/sparkles_main.dds"
 	sp.Rate = 35; sp.Lifetime = NumberRange.new(1.2, 2); sp.Speed = NumberRange.new(18, 30); sp.SpreadAngle = Vector2.new(180, 180)
@@ -241,6 +280,17 @@ local function start(instant)
 	tk.Size = NumberSequence.new({kp(0, 0), kp(0.5, 3), kp(1, 0)}); tk.LightEmission = 1; tk.LockedToPart = true
 	tk.Enabled = false; tk.Parent = shell
 	s.twinkle = tk
+	-- rainbow streaks for the fall (a trail across the ball both ways, twisted into a spiral by the spin)
+	s.trails = {}
+	for k, off in {Vector3.new(11, 0, 0), Vector3.new(0, 0, 11)} do
+		local a0 = Instance.new("Attachment"); a0.Position = off; a0.Parent = core
+		local a1 = Instance.new("Attachment"); a1.Position = -off; a1.Parent = core
+		local tr = Instance.new("Trail"); tr.Attachment0, tr.Attachment1 = a0, a1
+		tr.Lifetime = 0.5; tr.LightEmission = 1; tr.LightInfluence = 0
+		tr.Color = ColorSequence.new({ColorSequenceKeypoint.new(0, COLORS[k]), ColorSequenceKeypoint.new(0.5, COLORS[k + 2]), ColorSequenceKeypoint.new(1, COLORS[k + 3])})
+		tr.Transparency = NumberSequence.new({kp(0, 0.1), kp(1, 1)}); tr.Enabled = false; tr.Parent = core
+		table.insert(s.trails, tr)
+	end
 	for i = 1, 4 do
 		local c = Instance.new("ParticleEmitter")
 		c.Texture = CONFETTI; c.Rate = 0; c.Lifetime = NumberRange.new(4, 6); c.Speed = NumberRange.new(35, 70)
@@ -268,6 +318,22 @@ local function start(instant)
 	local centreAtt = Instance.new("Attachment"); centreAtt.Parent = core
 	local ground = part("BeamTargets", Vector3.one, s.folder)
 	ground.Position = Vector3.new(cx, fy, cz)
+	if not instant then
+		-- a beam of light from the sky marks where the ball is coming down
+		local top = Instance.new("Attachment"); top.Parent = ground; top.WorldPosition = Vector3.new(cx, fy + 500, cz)
+		local bot = Instance.new("Attachment"); bot.Parent = ground; bot.WorldPosition = Vector3.new(cx, fy + 0.3, cz)
+		local sb = Instance.new("Beam"); sb.Attachment0, sb.Attachment1 = top, bot
+		sb.Width0, sb.Width1 = 0, 0; sb.FaceCamera = true; sb.LightEmission = 1; sb.LightInfluence = 0; sb.Segments = 1
+		sb.Color = ColorSequence.new(Color3.fromRGB(255, 190, 255), Color3.new(1, 1, 1))
+		sb.Transparency = NumberSequence.new({kp(0, 0.85), kp(1, 0.3)}); sb.Parent = ground
+		s.skyBeam = sb
+		task.delay(0.7, function() if showIs(s) then tw(sb, 0.5, {Width0 = 34, Width1 = 14}) end end)
+		local lg = part("LandingGlow", Vector3.new(0.3, 2, 2), s.folder)
+		lg.Shape = Enum.PartType.Cylinder; lg.Material = Enum.Material.Neon; lg.Color = Color3.fromRGB(255, 150, 255)
+		lg.CFrame = CFrame.new(cx, fy + 0.2, cz) * CFrame.Angles(0, 0, math.pi / 2); lg.Transparency = 0.35
+		task.delay(0.7, function() if showIs(s) then tw(lg, 0.6, {Size = Vector3.new(0.3, 22, 22)}) end end)
+		s.landGlow = lg
+	end
 	for i = 1, 8 do
 		local t = Instance.new("Attachment"); t.Parent = ground
 		local col = COLORS[(i - 1) % #COLORS + 1]
@@ -386,7 +452,16 @@ local function start(instant)
 		end
 	end
 
-	lightsOut(s, instant and 0.6 or 3.5)
+	if not instant then
+		-- power cut: the lights flicker and die before the ball comes
+		local fl = Instance.new("ColorCorrectionEffect"); fl.Name = "DiscoFlicker"; fl.Parent = Lighting
+		task.spawn(function()
+			for _, b in {-0.55, 0, -0.65, 0.05, -0.75, -0.2} do fl.Brightness = b; task.wait(0.07) end
+			tw(fl, 0.5, {Brightness = 0}).Completed:Wait()
+			fl:Destroy()
+		end)
+	end
+	lightsOut(s, instant and 0.6 or 1.6)
 	-- disco music (follows the Music setting)
 	local m = Instance.new("Sound"); m.Name = "DiscoMusic"; m.SoundId = MUSIC_IDS[math.random(#MUSIC_IDS)]; m.Looped = true; m.Volume = 0
 	m.Parent = SoundService
@@ -396,16 +471,33 @@ local function start(instant)
 
 	-- every frame: drop + spin the ball, sweep the lights, the floor and colours on the beat
 	local t0 = os.clock()
-	local dropT = instant and 1 or 0
 	local lastBeat = -1
-	s.conn = RunService.RenderStepped:Connect(function()
+	local spin = 0
+	s.conn = RunService.RenderStepped:Connect(function(dt)
 		local t = os.clock() - t0
-		if dropT < 1 then
-			dropT = math.min(1, t / DROP_TIME)
-			s.y = s.hangY + 420 * (1 - dropT) ^ 3
-			if dropT >= 1 then land(s, false) end
+		if not s.landed then
+			-- the ball falls out of the sky like a meteor: faster and faster, spinning, trailing rainbow streaks
+			local ft = t - INTRO
+			if ft >= 0 then
+				if not s.falling then
+					s.falling = true
+					sfx(WHOOSH_ID, 0.7)
+					s.sparks.Enabled = true
+					for _, tr in s.trails do tr.Enabled = true end
+				end
+				local u = math.min(1, ft / FALL)
+				s.y = s.hangY + 420 * (1 - u * u)
+				if u >= 1 then s.landedAt = t; land(s, false) end
+			end
 		end
-		ball:PivotTo(CFrame.new(cx, s.y + math.sin(t * 1.3) * 0.6, cz) * CFrame.Angles(0, t * 0.9, 0))
+		spin += dt * ((s.falling and not s.landed) and 8 or 0.9)
+		-- caught by the chain: a springy bounce
+		local bounce = 0
+		if s.landedAt and t - s.landedAt < 3 then
+			local u = t - s.landedAt
+			bounce = -7 * math.exp(-3 * u) * math.sin(8 * u)
+		end
+		ball:PivotTo(CFrame.new(cx, s.y + bounce + math.sin(t * 1.3) * 0.6, cz) * CFrame.Angles(0, spin, 0))
 		for _, tg in s.targets do
 			local a = tg.phase + t * tg.speed
 			tg.att.WorldPosition = Vector3.new(cx + math.cos(a) * tg.r, fy + 0.5, cz + math.sin(a) * tg.r)
