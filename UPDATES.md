@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 23:09 CT · pigeon-claude
+**Done:** PK duels (pigeon): goalie egg = the egg of the animal you bet (same mutation if that egg exists; no bet = best egg) (DuelServer runMatch). Ball goes exactly where you aim: DuelRules ZONE_PULL/ZONE_SAVE neutral (timing only changes speed) — **Jacob: your v3 drift/save-size rule is off, old values in a comment**. Whole ball stays inside the goal (clampShot margin BALL_R+0.3; aim clamps match), corner goals go straight back into the net (runner netHit from in front). No "teleport" into the egg: flyShot's home bend starts where the ball is, and DuelClient predicts the save on "dove" with R.judge. Opponent leaves mid-kick: B.shoot now stops (it used to walk you onto the lobby KickArea and start a normal kick); tested, you land on your spawn with a normal camera. DuelDebug "botleft" added. Saved, not published.
+**Next:** publish (Alt+P).
+**Blockers / questions:** Backups ServerStorage._RunnerBackups *_2026-11-15_preAimFix.
+
 ## 2026-11-15 22:52 CT · pigeon-claude
 **Done:** PK duels (pigeon): kick camera moved right so a big avatar doesn't hide the left of the goal (G.Duel.KickerCam side -13, up 4, back 21; was -5/3/18). Aim click zone: a click up to G.Duel.AimMargin (3 studs) outside the posts/bar now counts, pulled just inside, same rule for the ring and the click (DevDemo.PenaltyDemoRunner goalPoint when duelAim, DuelClient goalPoint); before, the ring showed near the post but the click was thrown away. Challenge send sound: SoundLibrary.Sounds.ChallengeSendSound (90377354922163) on SENT! (DuelUI pad). Saved, not published.
 **Next:** publish (Alt+P).
