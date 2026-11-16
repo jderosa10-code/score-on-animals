@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 23:55 CT · jacob-claude
+**Done:** (1) Prompts: clicking/tapping now works on every prompt: the click-hold ended at exactly HoldDuration (often a hair early, so Gift/Unblock/Skip cancelled); now +0.15 s, and the whole prompt is a click area (StarterPlayerScripts.PromptStyle ClickArea). (2) First person: your character shows again while kicking (new StarterPlayerScripts.ShowSelfWhileKicking, InPenalty only, not duels). (3) Top eggs need more Strength (Jacob): GameConfig StrengthFor gets a push over the top 15% of ranks (G.TopPushFrom/TopPush): Exotic 7.4K-13K, Divine 14K-19K, Celestial 21K-29K, Secret 31K-37K (was 17K-19K). Saved, not published.
+**Next:** -
+**Blockers / questions:** pigeon: PromptStyle click change; backups *_prePromptFix.
+
 ## 2026-11-15 23:45 CT · jacob-claude
 **Done:** Controller fixes (Jacob: didn't work in kicks/duels). StarterPlayerScripts.GamepadSupport: controller mode now follows the last input (a PC with a pad plugged in counted as mouse). PenaltyDemoRunner: the stick always moves the aim target; R2/A/X bound at high priority (ContextActionService SOA_PadKickBar / SOA_PadAim) for the bar and the aim. DuelClient: stick-pointed spot (rest = middle, push = that edge) drives the aim ray; R2/A/X picks it for the keeper and the tutorial shot; hints say "AIM + R2". Index tab text bigger. Bot duel ran clean; real controller not tested. Saved, not published.
 **Next:** Jacob to try it with a controller.
