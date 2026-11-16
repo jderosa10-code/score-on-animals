@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 20:15 CT · jacob-claude
+**Done:** Animal sizes (Jacob: some too big). Longest side now capped per rarity (ReplicatedStorage.Hatching.HatchConfig C.TIER_CAP: Legendary 45, Mythic 52, Exotic 60, Divine 68, Celestial 76, Secret 85); before, ~20 animals all hit the 100 cap, so a Mythic Griffin was as big as the Secret Dragon. Dragon 100 -> 85. Small creatures shrunk via C.SIZE_BOOST: Imp 0.6, Microraptor 0.65, YiQi 0.65, Gargoyle 0.8. Held size follows. Saved, not published.
+**Next:** -
+**Blockers / questions:** pigeon: this changes your C.SIZE tiering on the top end; backup ServerStorage._RunnerBackups.HatchConfig_2026-11-15_preSizeCaps.
+
 ## 2026-11-15 20:05 CT · jacob-claude
 **Done:** Egg reveal (Jacob): when the rolled egg lands in goal the odds read "???" (white), then every final reveal counts up from 1/1 (short for common odds, longer the rarer; smaller shake for common). ReplicatedStorage.DevDemo.PenaltyDemoRunner showOdds / mysteryEnter swapTo(isFinal). Tested in Play. Saved, not published.
 **Next:** -
