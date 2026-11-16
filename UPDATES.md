@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 20:05 CT · jacob-claude
+**Done:** Egg reveal (Jacob): when the rolled egg lands in goal the odds read "???" (white), then every final reveal counts up from 1/1 (short for common odds, longer the rarer; smaller shake for common). ReplicatedStorage.DevDemo.PenaltyDemoRunner showOdds / mysteryEnter swapTo(isFinal). Tested in Play. Saved, not published.
+**Next:** -
+**Blockers / questions:** Backup ServerStorage._RunnerBackups.PenaltyDemoRunner_2026-11-15_preMysteryOdds.
+
 ## 2026-11-15 17:48 CT · pigeon-claude
 **Done:** PK DUELS: BETS + EVEN DUELS (pigeon's call). Every goalie dives the same and every kick has the same speed (GameConfig.Duel SameKeeper/KeeperPower 0.5, EvenBallSpeed 80 x timing zone); the egg picker is now just the goalie's LOOK (no speed bar, eggs never change hands). New step before it: each player bets ONE animal (pen or backpack, same ones stack "x29") or NO BET; if both bet, both see both + a fairness line and must ACCEPT; then both animals go into escrow (profile.DuelEscrow, comes back on next join after a crash) and the winner gets both in their backpack. Draw/error/leaving before the kicks = refunds; leaving during kicks = loss (as before). ServerScriptService.DuelServer BETS section + runBets/payBets, ReplicatedStorage.Duel.DuelUI UI.bet + UI.animalView + end screen, StarterPlayerScripts.DuelClient bet events. Studio test hooks: DuelDebug "betbot"/"botforfeit"/"betlist". Tested win, loss, pen-animal, timeout. Saved v785, not published.
 **Next:** a real 2-player test; pigeon publishes.
