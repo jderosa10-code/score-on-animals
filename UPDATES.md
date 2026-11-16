@@ -2,6 +2,12 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-16 08:10 CT · jacob-claude
+**Done:** Analytics review (7 days): D1 3.97% (2nd pct), avg playtime 8.1 min, session dies at 5-20 min / 5-10 eggs (5->10 eggs 39%). Real duels only 18.
+**Done:** `GameConfig.EggMilestones` now 5 eggs Rare Egg, 10 eggs Epic Egg (+15/20/25 as before); "N more eggs for..." toast from 3 eggs (`G.EggMilestoneHintFrom`, `EggMilestones`). New `StarterPlayerScripts.LeaveReminder`: when the Roblox menu opens (Esc / mobile menu) a card shows the next daily reward and when it's ready.
+**Done:** Test wipe ON for ONLY Jacob (4263620304): `GameData` D.Wipe Tag "2026-11-16-jacob1", already ran in Studio. Old save backed up as DataStore key `backup_u_4263620304_2026-11-16`. Nobody else is touched (MinGroupRank = math.huge).
+**Blockers / questions:** not published. Turn D.Wipe Off once Jacob is done testing.
+
 ## 2026-11-16 07:55 CT · jacob-claude
 **Done:** New `StarterPlayerScripts.HideHUDWhileMenuOpen`: while any menu/popup (Menus, Popups, BuyEggPopup, DuelPadMenu) is open, `SideButtonsPanel`, `AnimalsButtonPanel` and `HotbarPanel` hide; they come back on close (all devices). Tested in Studio.
 **Done:** Phones: `MobileMenus` no zoom-up (MAX 1, was 1.3) and panels stay fully under Roblox's top bar again (they overlapped its buttons). `Duel.DuelUI`: match overlays (board, role, countdown, status, hint, banner, timing) sit under the top bar on phones so they stop overlapping; smaller scoreboard and pad menu on phones. v834, not published.
