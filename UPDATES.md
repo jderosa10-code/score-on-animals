@@ -2,6 +2,12 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-16 07:55 CT · jacob-claude
+**Done:** New `StarterPlayerScripts.HideHUDWhileMenuOpen`: while any menu/popup (Menus, Popups, BuyEggPopup, DuelPadMenu) is open, `SideButtonsPanel`, `AnimalsButtonPanel` and `HotbarPanel` hide; they come back on close (all devices). Tested in Studio.
+**Done:** Phones: `MobileMenus` no zoom-up (MAX 1, was 1.3) and panels stay fully under Roblox's top bar again (they overlapped its buttons). `Duel.DuelUI`: match overlays (board, role, countdown, status, hint, banner, timing) sit under the top bar on phones so they stop overlapping; smaller scoreboard and pad menu on phones. v834, not published.
+**Next:** -
+**Blockers / questions:** closed #33 (bets are live). Phone layout checked with a forced-phone Studio test, not a real phone.
+
 ## 2026-11-16 00:25 CT · jacob-claude
 **Done:** Super Kick button no longer opens the Animals menu (removed `OpensMenu` on `HUD.SuperKickHUD...SuperKickButton`); Y buys it on a controller (`SuperKickClient`). Duel end: players go home after 1.5 s (was 4.5, `DuelServer`).
 **Done:** Controller in duels: `GamepadSupport` turns the pointer on for the duel screens (pad menu, bet, end, challenge); the aim ray follows the stick (`DuelClient` aimRay + `PenaltyDemoRunner` `_G.SOA_AimTarget`), keeper ray before the kick too.
