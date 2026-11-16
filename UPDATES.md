@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 23:45 CT · jacob-claude
+**Done:** Controller fixes (Jacob: didn't work in kicks/duels). StarterPlayerScripts.GamepadSupport: controller mode now follows the last input (a PC with a pad plugged in counted as mouse). PenaltyDemoRunner: the stick always moves the aim target; R2/A/X bound at high priority (ContextActionService SOA_PadKickBar / SOA_PadAim) for the bar and the aim. DuelClient: stick-pointed spot (rest = middle, push = that edge) drives the aim ray; R2/A/X picks it for the keeper and the tutorial shot; hints say "AIM + R2". Index tab text bigger. Bot duel ran clean; real controller not tested. Saved, not published.
+**Next:** Jacob to try it with a controller.
+**Blockers / questions:** pigeon: touched DuelClient pointer()/keeper input; backups *_prePad.
+
 ## 2026-11-15 23:30 CT · jacob-claude
 **Done:** Daily menu labels match the new timing: DayLabels now ON JOIN / 5 MIN / 20 MIN / 45 MIN / 1 HOUR / 12 HOURS / 24 HOURS (StarterGui.Menus.DailyRewardsMenu.DailyPanel.DayNReward.DayLabel, off the kit sizer, TextScaled). Countdown is mm:ss under an hour, h:mm:ss above (StarterPlayerScripts.HUDClient clock). Saved, not published.
 **Next:** -
