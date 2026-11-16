@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 21:35 CT · jacob-claude
+**Done:** Duel texts matched to pigeon's bets rules (eggs no longer change hands): tutorial save line (StarterPlayerScripts.DuelClient), DuelIntroHint pointer, lobby sign Workspace.DuelTrophyDisplay...DuelSign.Prize "BET AN ANIMAL, WINNER TAKES BOTH!", update note "BET ANIMALS, WIN BOTH". Ran the duel tutorial end to end vs Coach Bot: no errors. New StarterPlayerScripts.OwnWeightsButtonOnly: only your own plot's WorkoutZone.UpgradeWeightsBtn shows (pad, price tag, prompt). Saved, not published.
+**Next:** -
+**Blockers / questions:** pigeon: tutorial picker line in DuelClient ("Pick an egg...") never shows now that PickGoalie = false; the tutorial doesn't explain bets beyond the save line.
+
 ## 2026-11-15 21:25 CT · jacob-claude
 **Done:** Deleted Workspace.DuelArenaPreview (view-only copy). Saved, not published.
 **Next:** 2-player duel test, then publish.
