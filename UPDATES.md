@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-16 00:15 CT · jacob-claude
+**Done:** Hatching egg tag is ONE billboard now (Jacob: name and timer overlapped from above): ServerScriptService.EggHatching placeEgg builds HatchTimer with an Info frame (mutation / name / rarity from Hatching.AnimalInfo) on top and Time / Ready under it; the separate EggInfo billboard is gone. Saved, not published.
+**Next:** publish (Jacob/pigeon).
+**Blockers / questions:** none
+
 ## 2026-11-16 00:05 CT · jacob-claude
 **Done:** Cross-server Find match (Jacob): ServerScriptService.DuelServer CROSS-SERVER section. A player waiting alone is also in MemoryStore sorted map "DuelQueue1"; two players in different servers pair if one server has a free plot; the other one teleports INTO that server (TeleportOptions.ServerInstanceId + TeleportData duelHost/duelVisitor) and the duel starts there once they've loaded (bets stay in one server). Claim via UpdateAsync; failed teleport = back in the queue; host gives up after 45 s. Off in Studio unless workspace attr DuelCrossTest. Loads clean; needs a live test with 2 servers. Saved, not published.
 **Next:** live test after publish.
