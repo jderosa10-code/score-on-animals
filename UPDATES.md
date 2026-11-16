@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 21:25 CT · jacob-claude
+**Done:** Deleted Workspace.DuelArenaPreview (view-only copy). Saved, not published.
+**Next:** 2-player duel test, then publish.
+**Blockers / questions:** pigeon: Jacob suggests a practice-vs-bot offer after ~20 s alone in the duel queue (#32).
+
 ## 2026-11-15 21:20 CT · jacob-claude
 **Done:** Duel arena crowd (Jacob): ServerStorage.DuelArena.Crowd = 436 fans, Workspace.Crowd's fans in both halves (far half mirrored at z=-23, duplicates near the halfway line skipped). New StarterPlayerScripts.DuelCrowdClient animates only the arena you're dueling in (idle, cheer/wave/point, goes wild on goals, points on saves). Tested in a practice duel. Workspace.DuelArenaPreview = a view-only copy for Jacob (x+3000, z+2500): DELETE BEFORE PUBLISH. Saved, not published.
 **Next:** -
