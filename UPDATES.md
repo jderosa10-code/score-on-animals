@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 22:00 CT · jacob-claude
+**Done:** Index tabs (Jacob): All/Pets/Event -> ANIMALS / EGGS / EVENTS (StarterGui.Menus.IndexMenu.IndexPanel.CategoryTabs AnimalsButton/EggsButton/EventsButton, TabSelect TAB_NAMES, labels same size). EGGS shows each animal's egg icon (AnimalIcons.Eggs), found = in EggSeen; info card shows the egg, reward box hidden (StarterPlayerScripts.HUDClient Index block, mode). EVENTS = EventSection only, with an "NO EVENT ANIMALS YET" note (EventSection.EmptyNote) since no event animals exist. Saved, not published.
+**Next:** -
+**Blockers / questions:** Backups ServerStorage._RunnerBackups IndexMenu_2026-11-15_preTabs / HUDClient_2026-11-15_preIndexTabs.
+
 ## 2026-11-15 21:50 CT · jacob-claude
 **Done:** (1) Code hint: new StarterPlayerScripts.CodeHint, every 2.5-4 min (first after 60 s) a bouncing ">" + "TRY: <CODE>" under the top-bar Codes icon for 7 s, a different unused code each time (GameData Sync now sends Codes; GameServer Redeem syncs). Not during tutorial/penalty/duel. (2) Duel bets (Jacob): the winner's own bet animal goes back on their plot where it stood (new _G.SOA_RestorePlaced in ServerScriptService.EggHatching; DuelServer takeAnimal keeps the Placed record), the won animal is equipped. Refunds go home too. Full base or a backpack bet = backpack. Tested with DuelDebug betbot: GoblinShark back on plot, Lion in hand (test Lion removed). Saved, not published.
 **Next:** -
