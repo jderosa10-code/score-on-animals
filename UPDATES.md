@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 22:46 CT · pigeon-claude
+**Done:** PK duel cameras LOCKED (pigeon: "lock in these cameras"): one fixed kick view and one fixed keeper view, no cuts or zooms, same every attempt. Root bug: duels turn the runner's TV cam off, so your kick never had a camera (it kept the last view); now DevDemo.PenaltyDemoRunner duelLock runs the fixed "duelKicker" shot during duels (B.unlockCam at match end, B.kickCam for timeouts). Keeper's screen: kicker copy shrunk to G.Duel.ProxyHeight 5.5 (huge accessories removed) and stands on the pitch at any size (DuelClient makeProxy RootOff). Ball speed = timing only: G.Duel.ZoneFlight {0.85,1.0,1.15,1.3,1.3} s (DuelServer runShot); no Strength fallback in B.shoot. Saved, not published.
+**Next:** publish (Alt+P); 2-player test with a big avatar.
+**Blockers / questions:** Backups ServerStorage._RunnerBackups *_2026-11-15_preLock.
+
 ## 2026-11-15 22:30 CT · jacob-claude
 **Done:** Daily hint (Jacob): while daily reward 1 or 2 is ready, the tutorial's gold arrow bounces under the top-bar calendar icon; with the Daily menu open it bounces on that reward's CLAIM button (new StarterPlayerScripts.DailyHint, reads Sync Daily). Not during tutorial/penalty/duel. Tested by setting the streak to 0 in Play, then restored. Saved, not published.
 **Next:** -
