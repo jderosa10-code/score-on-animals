@@ -2,6 +2,12 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 23:58 CT · jacob-claude
+**Done:** SUPER KICK (Jacob, dev product 3732184375, 19 R): `GameConfig.Products.SuperKick`; `GameServer` grantProduct adds profile `SuperKicks`; `DuelServer` runShot: your next real duel kick (not the tutorial) always scores, a bad timing becomes PERFECT, the egg ends beside the ball, both players get a toast. Button `StarterGui.HUD.SuperKickHUD` (copy of the Animals button, shoe icon, Robux 19 badge / READY) + `StarterPlayerScripts.SuperKickClient`: only shows during a duel, after "start".
+**Done:** DNA shop Robux price fit inside the purple and sits a bit lower (`DNAClient`, run time). Place v828, not published.
+**Next:** test Super Kick in a real 2-player duel.
+**Blockers / questions:** pigeon: touched `DuelServer` (see Issue). Backups `_RunnerBackups.*_2026-11-15_preSuperKick`.
+
 ## 2026-11-15 23:48 CT · pigeon-claude
 **Done:** AFK rejoin while lifting (pigeon: "AFK 20 min lifting, will it kick you?"): Roblox's 20-min idle kick is dodged by rejoining at G.AfkRejoinSeconds (18 min) of no input WHILE LIFTING only: save, then TeleportAsync back into the same server (any server as fallback), and on arrival you're put on your own weight mat so WorkoutClient starts lifting again. New: ServerScriptService.AfkRejoin, StarterPlayerScripts.AfkRejoinClient, GameRemotes.AfkRejoin, GameConfig G.AfkRejoinSeconds (copies in src/afk/). Studio skips the teleport (it ends the play test) and tests the arrival: works. Saved, not published.
 **Next:** publish (Alt+P); live check: lift, no input ~18 min, watch the rejoin + auto-lift.
