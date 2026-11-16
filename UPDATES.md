@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 22:10 CT · jacob-claude
+**Done:** Code hint restyled (Jacob): plain white text, no box: white "^" on top, "TRY: CODE" under it (StarterPlayerScripts.CodeHint). Name tags off on every NPC humanoid (Workspace.Noob, ServerStorage KickerRig/KickerRigR6, WeightShowcase ScaleDummy). Saved, not published.
+**Next:** publish; post the update in Events & Updates.
+**Blockers / questions:** none
+
 ## 2026-11-15 22:00 CT · jacob-claude
 **Done:** Index tabs (Jacob): All/Pets/Event -> ANIMALS / EGGS / EVENTS (StarterGui.Menus.IndexMenu.IndexPanel.CategoryTabs AnimalsButton/EggsButton/EventsButton, TabSelect TAB_NAMES, labels same size). EGGS shows each animal's egg icon (AnimalIcons.Eggs), found = in EggSeen; info card shows the egg, reward box hidden (StarterPlayerScripts.HUDClient Index block, mode). EVENTS = EventSection only, with an "NO EVENT ANIMALS YET" note (EventSection.EmptyNote) since no event animals exist. Saved, not published.
 **Next:** -
