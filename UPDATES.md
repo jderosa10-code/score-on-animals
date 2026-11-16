@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 20:55 CT · jacob-claude
+**Done:** New codes DUELS (15 min of income, min $10K) and KICKS (random Epic egg) in GameConfig G.Codes; Redeem now supports CashMinutes/CashMin and EggRarity (ServerScriptService.GameServer). New "Codes" funnel (ServerScriptService.Funnels CodeStep: opened menu, tried a code, redeemed 1/2/3/4+) + custom event "Code_<CODE>" per redeem; HUDClient fires "CodesOpened" once a session. Saved, not published.
+**Next:** -
+**Blockers / questions:** none
+
 ## 2026-11-15 20:45 CT · jacob-claude
 **Done:** UPDATE! popup: the notes are a ScrollingFrame now (StarterGui.Menus.UpdateLogMenu.UpdatePanel.NotesBox.NotesArea.Lines, Line1 = row template, any number of notes, 4 visible, opens at the top). StarterPlayerScripts.UpdateLogClient builds the rows. GameConfig UpdateVersion "DUELS1", UpdateTitle "PK DUELS UPDATE", 8 notes. GroupSign button text "FREE EPIC ANIMAL!", title back to "LIKE THE GAME". Saved, not published.
 **Next:** Jacob: name / description / promotional text in Creator Hub at publish.
