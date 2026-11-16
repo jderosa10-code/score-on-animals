@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 23:48 CT · pigeon-claude
+**Done:** AFK rejoin while lifting (pigeon: "AFK 20 min lifting, will it kick you?"): Roblox's 20-min idle kick is dodged by rejoining at G.AfkRejoinSeconds (18 min) of no input WHILE LIFTING only: save, then TeleportAsync back into the same server (any server as fallback), and on arrival you're put on your own weight mat so WorkoutClient starts lifting again. New: ServerScriptService.AfkRejoin, StarterPlayerScripts.AfkRejoinClient, GameRemotes.AfkRejoin, GameConfig G.AfkRejoinSeconds (copies in src/afk/). Studio skips the teleport (it ends the play test) and tests the arrival: works. Saved, not published.
+**Next:** publish (Alt+P); live check: lift, no input ~18 min, watch the rejoin + auto-lift.
+**Blockers / questions:** the real teleport can only be tested live.
+
 ## 2026-11-16 00:15 CT · jacob-claude
 **Done:** Hatching egg tag is ONE billboard now (Jacob: name and timer overlapped from above): ServerScriptService.EggHatching placeEgg builds HatchTimer with an Info frame (mutation / name / rarity from Hatching.AnimalInfo) on top and Time / Ready under it; the separate EggInfo billboard is gone. Saved, not published.
 **Next:** publish (Jacob/pigeon).
