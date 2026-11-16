@@ -2,6 +2,12 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-16 00:25 CT · jacob-claude
+**Done:** Super Kick button no longer opens the Animals menu (removed `OpensMenu` on `HUD.SuperKickHUD...SuperKickButton`); Y buys it on a controller (`SuperKickClient`). Duel end: players go home after 1.5 s (was 4.5, `DuelServer`).
+**Done:** Controller in duels: `GamepadSupport` turns the pointer on for the duel screens (pad menu, bet, end, challenge); the aim ray follows the stick (`DuelClient` aimRay + `PenaltyDemoRunner` `_G.SOA_AimTarget`), keeper ray before the kick too.
+**Done:** Phones: prompts 80% size (`PromptStyle`), menus sit higher and slide instead of jump (`MobileMenus` TOP_SHARE 0.25), duel scoreboard under Roblox's top bar (`DuelUI` board.show). Held animal/egg no longer drops on equip (new `StarterPlayerScripts.HoldWeldClient`), held tag hidden until placed (`HatchClient`). v832, not published.
+**Blockers / questions:** controller not tested on a real Xbox. Backups `_RunnerBackups.*_2026-11-16_*`.
+
 ## 2026-11-16 00:10 CT · jacob-claude
 **Done:** Duel GUI pass (Jacob): `ReplicatedStorage.Duel.DuelUI` UI.text adds a `FontNudge` UIPadding (text 10% lower, same size) so Luckiest Guy sits centred in every duel label/button. Spacing: pad menu rows evened out, bet-pick timer under VS, bet-offer THINKING... under their card (was in the 5.0X MORE line), player-card names off the edge, scoreboard names off the top, challenge popup text inside its card. Checked each screen in a playtest. Place v830, not published.
 **Next:** -
