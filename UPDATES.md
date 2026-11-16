@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 20:35 CT · jacob-claude
+**Done:** Group reward (Jacob): being in the group = a random Epic animal + cash, once per account (new ServerScriptService.GroupReward, remote ReplicatedStorage.GameRemotes.GroupReward, checked with GroupService:GetGroupsAsync on load and after a join from the sign; StarterPlayerScripts.GroupSignClient fires it + shows the banner). Off in Studio unless workspace attr TestGroupReward = true (real DataStore). Workspace.GroupSign text: "JOIN THE GROUP / FREE EPIC ANIMAL!". Favorite reward (pigeon's) unchanged; likes can't be detected. Saved, not published.
+**Next:** -
+**Blockers / questions:** none
+
 ## 2026-11-15 20:23 CT · pigeon-claude
 **Done:** PK Duel pass 2 (pigeon). Skill only: every kick (bots too) uses EvenBallSpeed x timing zone; on your own screen the B.shoot slow-mo/arc come from the zone, not Strength (runner evenT), and the "Strength: X" pop is hidden in duels. More reaction time: Duel FlightScale 1.7, flight 0.95-1.4 s. Keeper pointer (aim ray from the egg) shows from the start of the shot, not just after the kick. Keeper sees the kicker's run-up (proxy) from a camera 7 studs to the side (DuelClient bindCam). Phones: hold-drag-release to shoot in duels (runner aimShot, G.Duel.FingerUp = 0.07 screen-heights above the fingertip; letting go off the goal cancels); keeper dives on touch, or instantly at the kick if already holding. Tested vs bot, no errors. Saved, not published.
 **Next:** real 2-player + phone test.
