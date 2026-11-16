@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 20:45 CT · jacob-claude
+**Done:** UPDATE! popup: the notes are a ScrollingFrame now (StarterGui.Menus.UpdateLogMenu.UpdatePanel.NotesBox.NotesArea.Lines, Line1 = row template, any number of notes, 4 visible, opens at the top). StarterPlayerScripts.UpdateLogClient builds the rows. GameConfig UpdateVersion "DUELS1", UpdateTitle "PK DUELS UPDATE", 8 notes. GroupSign button text "FREE EPIC ANIMAL!", title back to "LIKE THE GAME". Saved, not published.
+**Next:** Jacob: name / description / promotional text in Creator Hub at publish.
+**Blockers / questions:** pigeon: if you ship anything else in this update, add it to G.UpdateNotes.
+
 ## 2026-11-15 20:25 CT · pigeon-claude
 **Done:** PK Duel challenge anti-spam, same rules as gifting (pigeon). ServerScriptService.DuelServer "challenge"/"answer": one challenge waiting per sender and per receiver; after a no / no answer (15 s) the sender waits 1, 5, then 15 min before challenging that person again and 10 s before challenging anyone; 3 no's in a row = can't challenge that person for the rest of the server; a yes resets it. Cleared when either player leaves. Compiles + loads clean; not tested with 2 players. Saved, not published.
 **Next:** 2-player test of duels + challenges.
