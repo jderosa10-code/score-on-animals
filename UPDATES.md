@@ -2,6 +2,10 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 20:11 CT · pigeon-claude
+**Done:** PK Duel feel (pigeon). (1) Ball faster: GameConfig.Duel FlightScale 2.5->1.35, FlightMin/Max 1.2/2.2 -> 0.75/1.15 (hard kick ~0.8 s); KeeperPower 0.5->0.75 so dives keep up; ChooseSeconds 10->16. (2) Your kick is the full cinematic one again: DuelClient calls PenaltyDemoRunner B.shoot (egg walks out of the tunnel to the middle, backstep, bar, aim, run-up, strike, slow-mo) with new hooks onAiming/onAim(target, zone, lead)/waitKick; the server's "kick" still drives the keeper live (aim now carries lead = run-up length; dove carries at). The duel tutorial keeps the simple kick. (3) Aim ray: glowing beam + ring from the ball (keeper: from the egg) to the spot under the mouse (DuelClient aimRay). (4) PRACTICE VS BOT removed from the pad (server "practice" refuses); Coach Bot tutorial + Studio DuelDebug bot stay. (5) No goalie picker (Duel.PickGoalie = false): best egg goes in goal. (6) No kick leaves the boot before EggInSeconds = 5 after the shot; keeper's own character hidden while keeping; keeper-view ball flies a curved, spinning path. Tested vs bot in Play, no errors. Saved, not published.
+**Next:** a real 2-player test.
+**Blockers / questions:** Jacob: this changes your v3 flight tuning and brings B.shoot back for the shooter. Backups ServerStorage._RunnerBackups.*_2026-11-15_preAimRay / _preCinematic.
 ## 2026-11-15 20:15 CT · jacob-claude
 **Done:** Animal sizes (Jacob: some too big). Longest side now capped per rarity (ReplicatedStorage.Hatching.HatchConfig C.TIER_CAP: Legendary 45, Mythic 52, Exotic 60, Divine 68, Celestial 76, Secret 85); before, ~20 animals all hit the 100 cap, so a Mythic Griffin was as big as the Secret Dragon. Dragon 100 -> 85. Small creatures shrunk via C.SIZE_BOOST: Imp 0.6, Microraptor 0.65, YiQi 0.65, Gargoyle 0.8. Held size follows. Saved, not published.
 **Next:** -
