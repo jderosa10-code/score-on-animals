@@ -2,6 +2,10 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 20:25 CT · pigeon-claude
+**Done:** PK Duel challenge anti-spam, same rules as gifting (pigeon). ServerScriptService.DuelServer "challenge"/"answer": one challenge waiting per sender and per receiver; after a no / no answer (15 s) the sender waits 1, 5, then 15 min before challenging that person again and 10 s before challenging anyone; 3 no's in a row = can't challenge that person for the rest of the server; a yes resets it. Cleared when either player leaves. Compiles + loads clean; not tested with 2 players. Saved, not published.
+**Next:** 2-player test of duels + challenges.
+**Blockers / questions:** Backup ServerStorage._RunnerBackups.DuelServer_2026-11-15_preChallengeWait.
 ## 2026-11-15 20:35 CT · jacob-claude
 **Done:** Group reward (Jacob): being in the group = a random Epic animal + cash, once per account (new ServerScriptService.GroupReward, remote ReplicatedStorage.GameRemotes.GroupReward, checked with GroupService:GetGroupsAsync on load and after a join from the sign; StarterPlayerScripts.GroupSignClient fires it + shows the banner). Off in Studio unless workspace attr TestGroupReward = true (real DataStore). Workspace.GroupSign text: "JOIN THE GROUP / FREE EPIC ANIMAL!". Favorite reward (pigeon's) unchanged; likes can't be detected. Saved, not published.
 **Next:** -
