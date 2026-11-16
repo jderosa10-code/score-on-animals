@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 23:30 CT · jacob-claude
+**Done:** Daily menu labels match the new timing: DayLabels now ON JOIN / 5 MIN / 20 MIN / 45 MIN / 1 HOUR / 12 HOURS / 24 HOURS (StarterGui.Menus.DailyRewardsMenu.DailyPanel.DayNReward.DayLabel, off the kit sizer, TextScaled). Countdown is mm:ss under an hour, h:mm:ss above (StarterPlayerScripts.HUDClient clock). Saved, not published.
+**Next:** -
+**Blockers / questions:** none
+
 ## 2026-11-15 23:25 CT · jacob-claude
 **Done:** Gift UNBLOCK (Jacob): someone you blocked (BLOCK button or 3 declines) now shows an "Unblock" prompt over them (hold E, no animal needed); it clears the block and their decline waits toward you. ServerScriptService.GiftServer sendBlocked/unblock + "Unblock" remote action + "Blocked" list to the blocker; StarterPlayerScripts.GiftClient prompt refresh. Loads clean; needs a 2-player test. Saved, not published.
 **Next:** -
