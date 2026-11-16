@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-16 00:10 CT · jacob-claude
+**Done:** Duel GUI pass (Jacob): `ReplicatedStorage.Duel.DuelUI` UI.text adds a `FontNudge` UIPadding (text 10% lower, same size) so Luckiest Guy sits centred in every duel label/button. Spacing: pad menu rows evened out, bet-pick timer under VS, bet-offer THINKING... under their card (was in the 5.0X MORE line), player-card names off the edge, scoreboard names off the top, challenge popup text inside its card. Checked each screen in a playtest. Place v830, not published.
+**Next:** -
+**Blockers / questions:** pigeon: DuelUI is yours, backup `_RunnerBackups.DuelUI_2026-11-15_preTextNudge` (Issue #34 comment).
+
 ## 2026-11-15 23:58 CT · jacob-claude
 **Done:** SUPER KICK (Jacob, dev product 3732184375, 19 R): `GameConfig.Products.SuperKick`; `GameServer` grantProduct adds profile `SuperKicks`; `DuelServer` runShot: your next real duel kick (not the tutorial) always scores, a bad timing becomes PERFECT, the egg ends beside the ball, both players get a toast. Button `StarterGui.HUD.SuperKickHUD` (copy of the Animals button, shoe icon, Robux 19 badge / READY) + `StarterPlayerScripts.SuperKickClient`: only shows during a duel, after "start".
 **Done:** DNA shop Robux price fit inside the purple and sits a bit lower (`DNAClient`, run time). Place v828, not published.
