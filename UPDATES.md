@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 23:25 CT · jacob-claude
+**Done:** Gift UNBLOCK (Jacob): someone you blocked (BLOCK button or 3 declines) now shows an "Unblock" prompt over them (hold E, no animal needed); it clears the block and their decline waits toward you. ServerScriptService.GiftServer sendBlocked/unblock + "Unblock" remote action + "Blocked" list to the blocker; StarterPlayerScripts.GiftClient prompt refresh. Loads clean; needs a 2-player test. Saved, not published.
+**Next:** -
+**Blockers / questions:** pigeon: your gifting code; backups ServerStorage._RunnerBackups *_preUnblock.
+
 ## 2026-11-15 23:19 CT · pigeon-claude
 **Done:** PK duel save sync (pigeon: kicker saw the ball "sucked into" the egg, keeper saw a clean save): no more home-bend into the egg on duel shots (runner B.shoot flyShot); the keeper's screen now draws the SAME curve as the kicker's (bend 2.2/0.5, arc G.BallArcSlow..Fast by timing zone, even speed) (DuelClient kick); on a save each screen stops the ball where it meets the egg (kicker: touchingEgg, keeper: predicted with DuelRules.judge at the click). Saved, not published.
 **Next:** publish (Alt+P); 2-player check of a save from both sides.
