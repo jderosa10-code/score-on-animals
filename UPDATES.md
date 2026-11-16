@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-16 08:15 CT · jacob-claude
+**Done:** `StarterPlayerScripts.LeaveReminder` is text only now (DON'T GO YET! / NEXT REWARD: ... / when), bigger lines on phones. `GameData` D.Wipe Off again: Jacob's save confirmed fresh ($500, 10 Strength, 0 items). v837, not published.
+**Next:** -
+**Blockers / questions:** -
+
 ## 2026-11-16 08:10 CT · jacob-claude
 **Done:** Analytics review (7 days): D1 3.97% (2nd pct), avg playtime 8.1 min, session dies at 5-20 min / 5-10 eggs (5->10 eggs 39%). Real duels only 18.
 **Done:** `GameConfig.EggMilestones` now 5 eggs Rare Egg, 10 eggs Epic Egg (+15/20/25 as before); "N more eggs for..." toast from 3 eggs (`G.EggMilestoneHintFrom`, `EggMilestones`). New `StarterPlayerScripts.LeaveReminder`: when the Roblox menu opens (Esc / mobile menu) a card shows the next daily reward and when it's ready.
