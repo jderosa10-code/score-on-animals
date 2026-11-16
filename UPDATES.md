@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 23:19 CT · pigeon-claude
+**Done:** PK duel save sync (pigeon: kicker saw the ball "sucked into" the egg, keeper saw a clean save): no more home-bend into the egg on duel shots (runner B.shoot flyShot); the keeper's screen now draws the SAME curve as the kicker's (bend 2.2/0.5, arc G.BallArcSlow..Fast by timing zone, even speed) (DuelClient kick); on a save each screen stops the ball where it meets the egg (kicker: touchingEgg, keeper: predicted with DuelRules.judge at the click). Saved, not published.
+**Next:** publish (Alt+P); 2-player check of a save from both sides.
+**Blockers / questions:** Backups ServerStorage._RunnerBackups *_2026-11-15_preSync.
+
 ## 2026-11-15 23:09 CT · pigeon-claude
 **Done:** PK duels (pigeon): goalie egg = the egg of the animal you bet (same mutation if that egg exists; no bet = best egg) (DuelServer runMatch). Ball goes exactly where you aim: DuelRules ZONE_PULL/ZONE_SAVE neutral (timing only changes speed) — **Jacob: your v3 drift/save-size rule is off, old values in a comment**. Whole ball stays inside the goal (clampShot margin BALL_R+0.3; aim clamps match), corner goals go straight back into the net (runner netHit from in front). No "teleport" into the egg: flyShot's home bend starts where the ball is, and DuelClient predicts the save on "dove" with R.judge. Opponent leaves mid-kick: B.shoot now stops (it used to walk you onto the lobby KickArea and start a normal kick); tested, you land on your spawn with a normal camera. DuelDebug "botleft" added. Saved, not published.
 **Next:** publish (Alt+P).
