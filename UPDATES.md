@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 22:15 CT · jacob-claude
+**Done:** Daily rewards (Jacob): first one ready on join (as before), then every 4 h, so all 7 fit in 24 h (ServerScriptService.GameData D.DAILY_COOLDOWN 20h -> 4h; reset still 48 h). Workspace.Noob anchored. Saved, not published.
+**Next:** -
+**Blockers / questions:** none
+
 ## 2026-11-15 22:10 CT · jacob-claude
 **Done:** Code hint restyled (Jacob): plain white text, no box: white "^" on top, "TRY: CODE" under it (StarterPlayerScripts.CodeHint). Name tags off on every NPC humanoid (Workspace.Noob, ServerStorage KickerRig/KickerRigR6, WeightShowcase ScaleDummy). Saved, not published.
 **Next:** publish; post the update in Events & Updates.
