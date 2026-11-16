@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 21:57 CT · pigeon-claude
+**Done:** PK duel fixes (pigeon): keeper camera low + 30 back on the left so the kicker's run-up, ball and goal are all on screen (was looking past them); kicker waits out to the side and runs across the screen, run-up as long as the lead allows (≤1.1 s) (StarterPlayerScripts.DuelClient bindCam/startKick/kick). Your kick: new "duelKicker" cam, low behind your right (DevDemo.PenaltyDemoRunner B.shoot). Values in GameConfig G.Duel.KeeperCam/KickerCam. Best of 3 + ONE overtime round, still tied = draw, everyone keeps their animals (G.Duel.Kicks 3, MaxSuddenDeath 1; OVERTIME! banner; draw end screen text in DuelUI). Over-the-bar misses keep flying instead of hanging mid-air (both screens). Challenge popup sound = SoundLibrary.Sounds.ChallengeSound + ChallengeBell (was InviteSound). Saved, not published.
+**Next:** publish (Alt+P); 2-player check of the new cameras.
+**Blockers / questions:** Backups ServerStorage._RunnerBackups *_2026-11-15_preCams.
+
 ## 2026-11-15 22:15 CT · jacob-claude
 **Done:** Daily rewards (Jacob): first one ready on join (as before), then every 4 h, so all 7 fit in 24 h (ServerScriptService.GameData D.DAILY_COOLDOWN 20h -> 4h; reset still 48 h). Workspace.Noob anchored. Saved, not published.
 **Next:** -
