@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 22:52 CT · pigeon-claude
+**Done:** PK duels (pigeon): kick camera moved right so a big avatar doesn't hide the left of the goal (G.Duel.KickerCam side -13, up 4, back 21; was -5/3/18). Aim click zone: a click up to G.Duel.AimMargin (3 studs) outside the posts/bar now counts, pulled just inside, same rule for the ring and the click (DevDemo.PenaltyDemoRunner goalPoint when duelAim, DuelClient goalPoint); before, the ring showed near the post but the click was thrown away. Challenge send sound: SoundLibrary.Sounds.ChallengeSendSound (90377354922163) on SENT! (DuelUI pad). Saved, not published.
+**Next:** publish (Alt+P).
+**Blockers / questions:** Backups ServerStorage._RunnerBackups *_2026-11-15_preAimMargin.
+
 ## 2026-11-15 22:46 CT · pigeon-claude
 **Done:** PK duel cameras LOCKED (pigeon: "lock in these cameras"): one fixed kick view and one fixed keeper view, no cuts or zooms, same every attempt. Root bug: duels turn the runner's TV cam off, so your kick never had a camera (it kept the last view); now DevDemo.PenaltyDemoRunner duelLock runs the fixed "duelKicker" shot during duels (B.unlockCam at match end, B.kickCam for timeouts). Keeper's screen: kicker copy shrunk to G.Duel.ProxyHeight 5.5 (huge accessories removed) and stands on the pitch at any size (DuelClient makeProxy RootOff). Ball speed = timing only: G.Duel.ZoneFlight {0.85,1.0,1.15,1.3,1.3} s (DuelServer runShot); no Strength fallback in B.shoot. Saved, not published.
 **Next:** publish (Alt+P); 2-player test with a big avatar.
