@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 22:30 CT · jacob-claude
+**Done:** Daily hint (Jacob): while daily reward 1 or 2 is ready, the tutorial's gold arrow bounces under the top-bar calendar icon; with the Daily menu open it bounces on that reward's CLAIM button (new StarterPlayerScripts.DailyHint, reads Sync Daily). Not during tutorial/penalty/duel. Tested by setting the streak to 0 in Play, then restored. Saved, not published.
+**Next:** -
+**Blockers / questions:** none
+
 ## 2026-11-15 22:20 CT · jacob-claude
 **Done:** Daily reward timing per reward (Jacob): 1 on join, 2 at +5 min, 3 at +20, 4 at +45, 5 at +1 h, 6 and 7 ~11.5 h apart (7 ~24 h after 1); next round 4 h after 7; 48 h miss = reset. ServerScriptService.GameData D.DAILY_GAPS + dailyState. Saved, not published.
 **Next:** -
