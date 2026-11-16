@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-16 00:05 CT · jacob-claude
+**Done:** Cross-server Find match (Jacob): ServerScriptService.DuelServer CROSS-SERVER section. A player waiting alone is also in MemoryStore sorted map "DuelQueue1"; two players in different servers pair if one server has a free plot; the other one teleports INTO that server (TeleportOptions.ServerInstanceId + TeleportData duelHost/duelVisitor) and the duel starts there once they've loaded (bets stay in one server). Claim via UpdateAsync; failed teleport = back in the queue; host gives up after 45 s. Off in Studio unless workspace attr DuelCrossTest. Loads clean; needs a live test with 2 servers. Saved, not published.
+**Next:** live test after publish.
+**Blockers / questions:** pigeon: your DuelServer (#32); backup ServerStorage._RunnerBackups.DuelServer_2026-11-15_preCrossServer.
+
 ## 2026-11-15 23:55 CT · jacob-claude
 **Done:** (1) Prompts: clicking/tapping now works on every prompt: the click-hold ended at exactly HoldDuration (often a hair early, so Gift/Unblock/Skip cancelled); now +0.15 s, and the whole prompt is a click area (StarterPlayerScripts.PromptStyle ClickArea). (2) First person: your character shows again while kicking (new StarterPlayerScripts.ShowSelfWhileKicking, InPenalty only, not duels). (3) Top eggs need more Strength (Jacob): GameConfig StrengthFor gets a push over the top 15% of ranks (G.TopPushFrom/TopPush): Exotic 7.4K-13K, Divine 14K-19K, Celestial 21K-29K, Secret 31K-37K (was 17K-19K). Saved, not published.
 **Next:** -
