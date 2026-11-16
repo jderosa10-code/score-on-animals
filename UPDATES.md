@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 21:20 CT · jacob-claude
+**Done:** Duel arena crowd (Jacob): ServerStorage.DuelArena.Crowd = 436 fans, Workspace.Crowd's fans in both halves (far half mirrored at z=-23, duplicates near the halfway line skipped). New StarterPlayerScripts.DuelCrowdClient animates only the arena you're dueling in (idle, cheer/wave/point, goes wild on goals, points on saves). Tested in a practice duel. Workspace.DuelArenaPreview = a view-only copy for Jacob (x+3000, z+2500): DELETE BEFORE PUBLISH. Saved, not published.
+**Next:** -
+**Blockers / questions:** pigeon (duels owner): the crowd is part of the arena template now.
+
 ## 2026-11-15 20:55 CT · jacob-claude
 **Done:** New codes DUELS (15 min of income, min $10K) and KICKS (random Epic egg) in GameConfig G.Codes; Redeem now supports CashMinutes/CashMin and EggRarity (ServerScriptService.GameServer). New "Codes" funnel (ServerScriptService.Funnels CodeStep: opened menu, tried a code, redeemed 1/2/3/4+) + custom event "Code_<CODE>" per redeem; HUDClient fires "CodesOpened" once a session. Saved, not published.
 **Next:** -
