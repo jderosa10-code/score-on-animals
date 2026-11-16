@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-15 21:50 CT · jacob-claude
+**Done:** (1) Code hint: new StarterPlayerScripts.CodeHint, every 2.5-4 min (first after 60 s) a bouncing ">" + "TRY: <CODE>" under the top-bar Codes icon for 7 s, a different unused code each time (GameData Sync now sends Codes; GameServer Redeem syncs). Not during tutorial/penalty/duel. (2) Duel bets (Jacob): the winner's own bet animal goes back on their plot where it stood (new _G.SOA_RestorePlaced in ServerScriptService.EggHatching; DuelServer takeAnimal keeps the Placed record), the won animal is equipped. Refunds go home too. Full base or a backpack bet = backpack. Tested with DuelDebug betbot: GoblinShark back on plot, Lion in hand (test Lion removed). Saved, not published.
+**Next:** -
+**Blockers / questions:** pigeon: touched your bets code (giveAnimal/payBets/refunds); backups ServerStorage._RunnerBackups *_preBetHome.
+
 ## 2026-11-15 21:35 CT · jacob-claude
 **Done:** Duel texts matched to pigeon's bets rules (eggs no longer change hands): tutorial save line (StarterPlayerScripts.DuelClient), DuelIntroHint pointer, lobby sign Workspace.DuelTrophyDisplay...DuelSign.Prize "BET AN ANIMAL, WINNER TAKES BOTH!", update note "BET ANIMALS, WIN BOTH". Ran the duel tutorial end to end vs Coach Bot: no errors. New StarterPlayerScripts.OwnWeightsButtonOnly: only your own plot's WorkoutZone.UpgradeWeightsBtn shows (pad, price tag, prompt). Saved, not published.
 **Next:** -
