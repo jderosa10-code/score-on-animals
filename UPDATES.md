@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-16 18:25 CT · pigeon-claude
+**Done:** Analytics (last 7 days): phones = 51% of joins and kick/onboard like PC, but won only 41% of duels (PC 6/6) because the keeper's tap hint showed only once the ball was flying. Fix: new DuelUI.saveHint (big pulsing gold line + small tip); the keeper now sees "TAP THE GOAL TO SAVE!" + "TIP: HOLD YOUR FINGER ON THE GOAL TO DIVE INSTANTLY" (PC: "CLICK THE GOAL TO SAVE!", pad: "AIM + R2 TO SAVE!") from the start of their turn, kept through the run-up (StarterPlayerScripts.DuelClient startKick/kick). Bot-tested on PC, no errors. Saved, not published.
+**Next:** publish (Alt+P); watch the phone duel win rate. Bigger retention drops: 5-10 min (52% -> 36%) and 20 min -> 25 eggs (29% -> 14%).
+**Blockers / questions:** Backups ServerStorage._RunnerBackups *_2026-11-16_preSaveHint.
+
 ## 2026-11-16 08:15 CT · jacob-claude
 **Done:** `StarterPlayerScripts.LeaveReminder` is text only now (DON'T GO YET! / NEXT REWARD: ... / when), bigger lines on phones. `GameData` D.Wipe Off again: Jacob's save confirmed fresh ($500, 10 Strength, 0 items). v837, not published.
 **Next:** -
