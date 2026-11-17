@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-16 23:55 CT · pigeon-claude
+**Done:** Duels on phones/iPads (pigeon: "hard to see the goal with the score and all that... even when you're kicking the goal is small"). (1) Scoreboard sits IN Roblox's top bar strip on touch screens and the YOU'RE THE KEEPER / YOUR KICK line right under it (DuelUI board.show; new UI.isTouch() via PreferredInput, screen() uses it). (2) Phone/iPad cameras moved back + zoomed in, still fixed: G.Duel.KeeperCamPhone fov 15 + push/aim (goal ~1.35x taller), new G.Duel.KickerCamPhone fov 18 + push/aim (goal ~1.6x taller, you on screen at your run-up spot and at the ball, never in front of the goal). push/aim = eye/look in the base camera's own space (DuelClient bindCam; runner duelCamCfg/duelPush, used by duelKicker + B.kickCam). (3) The keeper's copy of the kicker is see-through for the whole run-up now, and ghost() also kills particles/beams/trails/lights/highlights/guis and catches parts added later. (4) Removed the admin PRACTICE BOT test button again (pigeon: "remove bot mode, then I'm publishing"). Screenshots checked on iPhone 13 + iPad 9th gen emulators. Saved.
+**Next:** pigeon publishes.
+**Blockers / questions:** Backups ServerStorage._RunnerBackups *_2026-11-16_preGhostRun / preGhostAll / preTopBar / prePhoneZoom / preNoTestBot.
+
 ## 2026-11-16 23:00 CT · pigeon-claude
 **Done:** Test bot for duels (pigeon: "make it so I go against bot just to test"): admins (AdminEvents isAdmin: Studio, ADMIN_IDS, group rank >= 2) see a PRACTICE BOT (TEST) row with PLAY at the top of the duel pad menu's challenge list. It starts a normal practice match vs the bot (nothing at stake). Players still don't see it. AdminEvents exports `_G.SOA_IsAdmin`; DuelServer canTestBot() + pad info `testBot` + "practice" request; DuelClient passes it to DuelUI pad.open. Tested in Studio: the row shows, PLAY starts the match. Saved, not published.
 **Next:** publish (Alt+P).
