@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-17 00:50 CT · pigeon-claude
+**Done:** (pigeon: "make ball 10% slower instead" + "whatever gives the epic 1B/sec tiger, just make it less") Duel ZoneFlight now {0.94, 1.1, 1.27, 1.43, 1.43} (10% slower than the original; checked live: 1.43 s weak kicks). @Jacob your egg milestones are one tier lower with an income cap (new field MaxIncome, ServerScriptService.EggMilestones randomEgg): 5 eggs Uncommon <= $10K/s, 10 Rare <= $1M/s, 15 cash (same), 20 Rare <= $10M/s, 25 Epic <= $500M/s (4 cheapest Epics, no Tiger); were Rare / Epic / cash / Epic / Legendary. Code KICKS: only Epics <= $500M/s (GameServer code redeem reads MaxIncome). Unchanged: the tutorial's 8-hour Legendary egg (pigeon's own pick). Saved.
+**Next:** publish (Alt+P).
+**Blockers / questions:** Backups ServerStorage._RunnerBackups *_2026-11-17_preCheapEggs.
+
 ## 2026-11-17 00:30 CT · pigeon-claude
 **Done:** (1) GROUP REWARD much cheaper (pigeon: "1 billion a second, epic tiger ... too OP; you can still get an animal but worth way less"): ServerScriptService.GroupReward now gives a random UNCOMMON earning <= $10K/s (32 animals, $100-$9.2K/s; was a random Epic, $300M-$11B/s, to players making $5-90/s). Sign Workspace.GroupSign...Price now "FREE ANIMAL!", message "You got a <animal>". @Jacob your script, small change. (2) Duel ball ~15% slower: G.Duel.ZoneFlight {1.0, 1.15, 1.3, 1.5, 1.5} (was {0.85, 1.0, 1.15, 1.3, 1.3}; server, DuelRules and both screens read it). (3) Phone/iPad scoreboard: sized to fit GuiService.TopbarInset (the part of Roblox's top bar its buttons leave free; on iPhone 13 they take x 0-208, which covered the card), max 42% of the screen wide, re-fits when that changes. Emulator: card x 218-532, y 10-48, crossbar starts lower. Saved.
 **Next:** publish. Open question for pigeon/Jacob: egg milestones (Epic at 10 and 20 eggs, Legendary at 25) and the tutorial's 8-hour Legendary egg are the same size jump ($300M-$310B/s for new players).
