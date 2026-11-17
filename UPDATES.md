@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-16 22:40 CT · pigeon-claude
+**Done:** 2X EGGS bug (players: "it said both eggs were Diamond, only one was"). ReplicatedStorage.DevDemo.PenaltyDemoRunner mysteryEnter() did `if wMut == nil then wMut = roundMut end`, so a PLAIN 2nd egg fell back to the 1st egg's mutation: a Diamond 1st egg made the 2nd one's reveal say "Diamond ... Egg" with Diamond odds. The server (EggInventory) always gave the right eggs; only the reveal text was wrong. Fix: spawnBuddy passes `roundMut2 or false` and false means no mutation. @Jacob it's your 2X code, one-line change. A 2X round in Studio still reveals both eggs, no errors. Saved, not published.
+**Next:** publish (Alt+P).
+**Blockers / questions:** Backup ServerStorage._RunnerBackups PenaltyDemoRunner_2026-11-16_preDblMut.
+
 ## 2026-11-16 22:18 CT · pigeon-claude
 **Done:** PK duel goalie view with big avatars (pigeon, mobile: "I couldn't see the right side of the goal when they went for the kick"). The keeper's copy of the kicker is now also slimmed when it's WIDE, not just tall (G.Duel.ProxyWidth = 4, a normal avatar is ~4), and it fades see-through (G.Duel.ProxyGhost = 0.7, 0.1 s) at the moment of the strike, so the run-up stays solid to time the save and the ball never hides behind him. Cameras unchanged. StarterPlayerScripts.DuelClient makeProxy + new ghost() called at the strike (keeper only). Bot-tested on iPhone 13 + iPad 9th gen emulators: solid through the run-up, 0 -> 0.7 at the kick; a 7-wide test avatar came out 4.2 wide. Saved, not published.
 **Next:** publish (Alt+P); check with a real wide avatar on a phone.
