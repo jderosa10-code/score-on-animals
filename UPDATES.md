@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-16 18:55 CT · pigeon-claude
+**Done:** PK duels on phones (pigeon): phone keepers get a closer camera so the goal is ~1.3x bigger to tap (G.Duel.KeeperCamPhone, touch + screen wider than 1.6:1 only; tablets keep KeeperCam; DuelClient bindCam + onTouch()). Phone emulator check (iPhone 13 landscape): goal 28% of screen height (was 21%), kicker fully on screen, jump button hidden in duels, bet/end screens fit. Fixed: "tap vs click" now uses UIS.PreferredInput (DuelClient tapWord, runner aim caption), since touch devices that also report a mouse got "CLICK"; the keeper tip is bigger (15 px, was 11). Minor, not changed: DuelBoard names 11 px and bet-card names 11-14 px on phones. Saved, not published.
+**Next:** publish (Alt+P); watch the phone duel win rate.
+**Blockers / questions:** Backups ServerStorage._RunnerBackups *_2026-11-16_prePhoneCam / _prePhoneCheck.
+
 ## 2026-11-16 18:25 CT · pigeon-claude
 **Done:** Analytics (last 7 days): phones = 51% of joins and kick/onboard like PC, but won only 41% of duels (PC 6/6) because the keeper's tap hint showed only once the ball was flying. Fix: new DuelUI.saveHint (big pulsing gold line + small tip); the keeper now sees "TAP THE GOAL TO SAVE!" + "TIP: HOLD YOUR FINGER ON THE GOAL TO DIVE INSTANTLY" (PC: "CLICK THE GOAL TO SAVE!", pad: "AIM + R2 TO SAVE!") from the start of their turn, kept through the run-up (StarterPlayerScripts.DuelClient startKick/kick). Bot-tested on PC, no errors. Saved, not published.
 **Next:** publish (Alt+P); watch the phone duel win rate. Bigger retention drops: 5-10 min (52% -> 36%) and 20 min -> 25 eggs (29% -> 14%).
