@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-16 22:18 CT · pigeon-claude
+**Done:** PK duel goalie view with big avatars (pigeon, mobile: "I couldn't see the right side of the goal when they went for the kick"). The keeper's copy of the kicker is now also slimmed when it's WIDE, not just tall (G.Duel.ProxyWidth = 4, a normal avatar is ~4), and it fades see-through (G.Duel.ProxyGhost = 0.7, 0.1 s) at the moment of the strike, so the run-up stays solid to time the save and the ball never hides behind him. Cameras unchanged. StarterPlayerScripts.DuelClient makeProxy + new ghost() called at the strike (keeper only). Bot-tested on iPhone 13 + iPad 9th gen emulators: solid through the run-up, 0 -> 0.7 at the kick; a 7-wide test avatar came out 4.2 wide. Saved, not published.
+**Next:** publish (Alt+P); check with a real wide avatar on a phone.
+**Blockers / questions:** Backups ServerStorage._RunnerBackups DuelClient/GameConfig_2026-11-16_preWide.
+
 ## 2026-11-16 18:59 CT · pigeon-claude
 **Done:** PK duels on iPad (pigeon: "make sure ur doing this for ipad too"): on 4:3 the keeper view cut the kicker off the right edge and the kick view cut your avatar 20-25% off the left. Both duel cams now keep the same side-to-side view on narrower screens (refAspect in G.Duel.KeeperCam 1.78 / KeeperCamPhone 1.78 / KickerCam 2.2; DuelClient fitFov, runner duelFov + B.kickCam). iPads now also get the closer touch keeper cam. iPad 9th gen emulator: goalie view fov 30.4, goal + kicker on screen; kick view fov 47.7, avatar 24-38% across; "TAP THE GOAL TO SAVE!" at 49 px; jump button hidden. Studio device ids: StudioDeviceSimulatorService:GetDeviceListAsync(). Saved, not published.
 **Next:** publish (Alt+P).
