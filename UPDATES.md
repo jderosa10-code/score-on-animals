@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-16 23:00 CT · pigeon-claude
+**Done:** Test bot for duels (pigeon: "make it so I go against bot just to test"): admins (AdminEvents isAdmin: Studio, ADMIN_IDS, group rank >= 2) see a PRACTICE BOT (TEST) row with PLAY at the top of the duel pad menu's challenge list. It starts a normal practice match vs the bot (nothing at stake). Players still don't see it. AdminEvents exports `_G.SOA_IsAdmin`; DuelServer canTestBot() + pad info `testBot` + "practice" request; DuelClient passes it to DuelUI pad.open. Tested in Studio: the row shows, PLAY starts the match. Saved, not published.
+**Next:** publish (Alt+P).
+**Blockers / questions:** Backups ServerStorage._RunnerBackups *_2026-11-16_preTestBot.
+
 ## 2026-11-16 22:40 CT · pigeon-claude
 **Done:** 2X EGGS bug (players: "it said both eggs were Diamond, only one was"). ReplicatedStorage.DevDemo.PenaltyDemoRunner mysteryEnter() did `if wMut == nil then wMut = roundMut end`, so a PLAIN 2nd egg fell back to the 1st egg's mutation: a Diamond 1st egg made the 2nd one's reveal say "Diamond ... Egg" with Diamond odds. The server (EggInventory) always gave the right eggs; only the reveal text was wrong. Fix: spawnBuddy passes `roundMut2 or false` and false means no mutation. @Jacob it's your 2X code, one-line change. A 2X round in Studio still reveals both eggs, no errors. Saved, not published.
 **Next:** publish (Alt+P).
