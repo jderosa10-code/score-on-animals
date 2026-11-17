@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-16 18:59 CT · pigeon-claude
+**Done:** PK duels on iPad (pigeon: "make sure ur doing this for ipad too"): on 4:3 the keeper view cut the kicker off the right edge and the kick view cut your avatar 20-25% off the left. Both duel cams now keep the same side-to-side view on narrower screens (refAspect in G.Duel.KeeperCam 1.78 / KeeperCamPhone 1.78 / KickerCam 2.2; DuelClient fitFov, runner duelFov + B.kickCam). iPads now also get the closer touch keeper cam. iPad 9th gen emulator: goalie view fov 30.4, goal + kicker on screen; kick view fov 47.7, avatar 24-38% across; "TAP THE GOAL TO SAVE!" at 49 px; jump button hidden. Studio device ids: StudioDeviceSimulatorService:GetDeviceListAsync(). Saved, not published.
+**Next:** publish (Alt+P).
+**Blockers / questions:** Backups ServerStorage._RunnerBackups *_2026-11-16_preIpad.
+
 ## 2026-11-16 18:55 CT · pigeon-claude
 **Done:** PK duels on phones (pigeon): phone keepers get a closer camera so the goal is ~1.3x bigger to tap (G.Duel.KeeperCamPhone, touch + screen wider than 1.6:1 only; tablets keep KeeperCam; DuelClient bindCam + onTouch()). Phone emulator check (iPhone 13 landscape): goal 28% of screen height (was 21%), kicker fully on screen, jump button hidden in duels, bet/end screens fit. Fixed: "tap vs click" now uses UIS.PreferredInput (DuelClient tapWord, runner aim caption), since touch devices that also report a mouse got "CLICK"; the keeper tip is bigger (15 px, was 11). Minor, not changed: DuelBoard names 11 px and bet-card names 11-14 px on phones. Saved, not published.
 **Next:** publish (Alt+P); watch the phone duel win rate.
