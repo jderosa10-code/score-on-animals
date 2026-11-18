@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-17 20:15 CT · jacob-claude
+**Done:** Map fix: `Workspace.Map.Lobby.LobbyArt` (outer grass, grass caps, south wall, drips) had been moved off as one piece (-38.4, -18.4, -19). Moved back so its grass caps sit on `Map.Lobby.Walls` again. v854, not published.
+**Next:** -
+**Blockers / questions:** pigeon: if you moved LobbyArt on purpose, say so. Studio MCP for Jacob's Claude desktop app is now set up in its config file.
+
 ## 2026-11-17 00:50 CT · pigeon-claude
 **Done:** (pigeon: "make ball 10% slower instead" + "whatever gives the epic 1B/sec tiger, just make it less") Duel ZoneFlight now {0.94, 1.1, 1.27, 1.43, 1.43} (10% slower than the original; checked live: 1.43 s weak kicks). @Jacob your egg milestones are one tier lower with an income cap (new field MaxIncome, ServerScriptService.EggMilestones randomEgg): 5 eggs Uncommon <= $10K/s, 10 Rare <= $1M/s, 15 cash (same), 20 Rare <= $10M/s, 25 Epic <= $500M/s (4 cheapest Epics, no Tiger); were Rare / Epic / cash / Epic / Legendary. Code KICKS: only Epics <= $500M/s (GameServer code redeem reads MaxIncome). Unchanged: the tutorial's 8-hour Legendary egg (pigeon's own pick). Saved.
 **Next:** publish (Alt+P).
