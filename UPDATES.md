@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-18 00:05 CT · jacob-claude
+**Done:** (Jacob: "I became invisible after kicking") the camera could come back from the penalty zoomed all the way in, and first person hides your own character. `ReplicatedStorage.DevDemo.PenaltyDemoRunner` setTvCam(false) now pushes the zoom out to 10 studs for a moment (CameraMinZoomDistance 10, back after 0.3 s). Tested: 0.5 -> 10 studs. Backup `_RunnerBackups.PenaltyDemoRunner_2026-11-17_preZoomOut`. v862, not published.
+**Next:** Jacob checks it after a kick.
+**Blockers / questions:** none.
+
 ## 2026-11-17 23:55 CT · jacob-claude
 **Done:** (Jacob) EGG BOSS admin event. Admin panel BOOSTS -> `EGG BOSS (MINUTES)` (new `ServerStorage.AdminPanel.Window.Pages.Boosts.EggBossButton`; DiscoButton now half width). Egg = the one picked on EGGS (+ mutation), none = random Divine. New `ServerScriptService.EggBoss`: giant egg above the stands behind the goal, HP = 25 + 25 per player, every goal hits it (rarity rank dmg, x2 mutated; hook in `EggInventory`). Broken: everyone who hit it gets the egg (backpack), MVP gets Rainbow/Diamond/Gold. Timer ends: it flies away. Health bar = SurfaceGui above the egg + new `StarterGui.EggBossHUD`; FX in new `StarterPlayerScripts.EggBossClient`. `AdminEvents` kind eggBoss / stop "Boss" / ACTIVE row. Tested in Studio (spawn, hits, break, escape; prizes off for the test). v861, not published.
 **Next:** Jacob tries it and restyles the bar if he wants.
