@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-17 22:55 CT · jacob-claude
+**Done:** Analytics check (funnels as of Nov 17 9 PM; other stats lag to Nov 16). 7d: D1 4.95%, D7 0%, playtime 8.2 min, 97% of new players from ads, home recs 6. Onboarding fine (64% finish tutorial). Biggest leak 5->10 min / 5->10 eggs (42% -> 18%). Codes: 93 tried, 33 worked. Duels: 477 finished tutorial, 165 real duels. Robux 677 in last ~3 days. Also made + posted a YouTube Short (Sabertooth) to Jacob's channel.
+**Next:** wait 2-3 days for Rare@5 / Epic@10 egg data before more changes.
+**Blockers / questions:** none.
+
 ## 2026-11-17 20:55 CT · jacob-claude
 **Done:** Animals bunched at the front of plots: `HatchClient` walker homes were the drop spot (fresh) or Random(seed) with back-to-back seeds (most landed at +Z). Homes now spread by PlacedId (golden-ratio steps); a just-placed animal walks from the drop spot to its home first. Checked Plot1: 14 animals now spread over the whole land. v856, not published.
 
