@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-17 23:55 CT · jacob-claude
+**Done:** (Jacob) EGG BOSS admin event. Admin panel BOOSTS -> `EGG BOSS (MINUTES)` (new `ServerStorage.AdminPanel.Window.Pages.Boosts.EggBossButton`; DiscoButton now half width). Egg = the one picked on EGGS (+ mutation), none = random Divine. New `ServerScriptService.EggBoss`: giant egg above the stands behind the goal, HP = 25 + 25 per player, every goal hits it (rarity rank dmg, x2 mutated; hook in `EggInventory`). Broken: everyone who hit it gets the egg (backpack), MVP gets Rainbow/Diamond/Gold. Timer ends: it flies away. Health bar = SurfaceGui above the egg + new `StarterGui.EggBossHUD`; FX in new `StarterPlayerScripts.EggBossClient`. `AdminEvents` kind eggBoss / stop "Boss" / ACTIVE row. Tested in Studio (spawn, hits, break, escape; prizes off for the test). v861, not published.
+**Next:** Jacob tries it and restyles the bar if he wants.
+**Blockers / questions:** none. Note: 3D GUIs with AlwaysOnTop didn't draw on the pitch, so the bar has it off.
+
 ## 2026-11-17 22:55 CT · jacob-claude
 **Done:** Analytics check (funnels as of Nov 17 9 PM; other stats lag to Nov 16). 7d: D1 4.95%, D7 0%, playtime 8.2 min, 97% of new players from ads, home recs 6. Onboarding fine (64% finish tutorial). Biggest leak 5->10 min / 5->10 eggs (42% -> 18%). Codes: 93 tried, 33 worked. Duels: 477 finished tutorial, 165 real duels. Robux 677 in last ~3 days. Also made + posted a YouTube Short (Sabertooth) to Jacob's channel.
 **Next:** wait 2-3 days for Rare@5 / Epic@10 egg data before more changes.
