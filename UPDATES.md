@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-17 20:45 CT · jacob-claude
+**Done:** Disco left the sky gloomy after it ended: `DiscoClient` lightsOn put back the light from when the show STARTED (night look if it started at night / mid fade). Now it fades to the place's day look and calls `DayNightClient`'s setLook (new `_G.SOA_DayNight`) for the current time. Tested night→disco→day→end: Lighting matches normal day. v855, not published.
+**Next:** -
+**Blockers / questions:** pigeon: touched your DiscoClient, backup `_RunnerBackups.DiscoClient_2026-11-17_preDiscoLight`.
+
 ## 2026-11-17 20:15 CT · jacob-claude
 **Done:** Map fix: `Workspace.Map.Lobby.LobbyArt` (outer grass, grass caps, south wall, drips) had been moved off as one piece (-38.4, -18.4, -19). Moved back so its grass caps sit on `Map.Lobby.Walls` again. v854, not published.
 **Next:** -
