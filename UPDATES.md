@@ -2,6 +2,9 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-17 20:55 CT · jacob-claude
+**Done:** Animals bunched at the front of plots: `HatchClient` walker homes were the drop spot (fresh) or Random(seed) with back-to-back seeds (most landed at +Z). Homes now spread by PlacedId (golden-ratio steps); a just-placed animal walks from the drop spot to its home first. Checked Plot1: 14 animals now spread over the whole land. v856, not published.
+
 ## 2026-11-17 20:45 CT · jacob-claude
 **Done:** Disco left the sky gloomy after it ended: `DiscoClient` lightsOn put back the light from when the show STARTED (night look if it started at night / mid fade). Now it fades to the place's day look and calls `DayNightClient`'s setLook (new `_G.SOA_DayNight`) for the current time. Tested night→disco→day→end: Lighting matches normal day. v855, not published.
 **Next:** -
