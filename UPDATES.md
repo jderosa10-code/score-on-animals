@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-18 21:55 CT · jacob-claude
+**Done:** **Animal size + weight** (Jacob): `GameConfig` G.animalSize(id, name, override) = 0.90-1.10 from the item Id + name (same on server and client, survives pickup/place; item.Size would override), G.animalWeight / G.weightText (kg from the BaseAnimals box x 0.06 x size^3). `EggHatching` spawnAnimal scales the placed model by it (model attribute Size). Weight shows on `StarterGui.HeldStatsHUD.Card` and `Menus.PetsMenu.PetTooltip`. Held card: smaller, centred over the hotbar slot holding the item (`HUDClient` slots now carry an ItemKey attribute), fixed top-bar offset. Saved, not published.
+**Next:** —
+**Blockers / questions:** pigeon: placed animals now vary ±10% in size; traded/duel-won animals get a new Id so their size can change.
+
 ## 2026-11-18 21:35 CT · jacob-claude
 **Done:** Holding an animal or egg from the hotbar shows a stats card above the hotbar: new `StarterGui.HeldStatsHUD.Card` + `StarterPlayerScripts.HeldStats` (name, mutation, rarity, $/s or "hatches into" $/s, sell value; hidden while kicking). Long names shrink to fit there and in `Menus.PetsMenu.PetTooltip`. Tested in Play with a Disco egg (test egg removed after). Saved, not published.
 **Next:** —
