@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-18 21:58 CT · jacob-claude
+**Done:** Slot $/s no longer overlaps the slot number (`HUDClient` RateTag right-aligned, right of the number); hotbar/backpack egg & animal viewports framed tighter (`IconViewports`: ItemIcon FOV 21) so they fill the slot. Tested in Play (test eggs removed). Saved, not published.
+**Next:** —
+**Blockers / questions:** none.
+
 ## 2026-11-18 21:50 CT · jacob-claude
 **Done:** Hotbar/backpack slots (`HUDClient` setSlotItem): egg $/s (`RateTag`) now inside the box along its top, the egg picture moves down/smaller under it; the mutation word (`MutTag`) is hidden (DNA strips still show their rarity). `HeldStats` card sits right over the slot. Tested in Play (test eggs removed). Saved, not published.
 **Next:** —
