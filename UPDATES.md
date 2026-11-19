@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-18 21:35 CT · jacob-claude
+**Done:** Holding an animal or egg from the hotbar shows a stats card above the hotbar: new `StarterGui.HeldStatsHUD.Card` + `StarterPlayerScripts.HeldStats` (name, mutation, rarity, $/s or "hatches into" $/s, sell value; hidden while kicking). Long names shrink to fit there and in `Menus.PetsMenu.PetTooltip`. Tested in Play with a Disco egg (test egg removed after). Saved, not published.
+**Next:** —
+**Blockers / questions:** none.
+
 ## 2026-11-18 21:25 CT · jacob-claude
 **Done:** Disco (Groovy) mutation on the admin panel: new `ServerStorage.AdminPanel.Window.Pages.Eggs.MutGroovy` button ("DISCO", attribute Mut = "Groovy"); `ServerScriptService.AdminEvents` MUTATIONS allows Groovy (Chance 0 kept it out). Works for every-egg-gets-mutation, give egg/animal, every egg = this egg. Button checked in Play, no event run. Saved, not published.
 **Next:** —
