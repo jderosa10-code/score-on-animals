@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-18 18:20 CT · jacob-claude
+**Done:** (Jacob) New simpler UI, built in the style of a reference game, our LuckiestGuy font. New folder `StarterGui.NewUI`: NewHUD, NewNotify (popup + text toasts), NewEventBanner, NewSell, NewSettings, NewGift, NewInventory, NewShop (eggs, starter pack, cash + strength packs, 10 passes, card names = `G.ShopItems` keys), NewIndex (templates), NewPopups (Welcome Back, Confirm), NewWorkout (STOP + level bar, event timer). Header stripes clipped with CanvasGroup masks; icons taken from the old UI; eggs/animals are ViewportFrames filled by new `ReplicatedStorage.NewUIViewport`. ALL NewUI ScreenGuis are Enabled=false: not wired yet, old UI untouched and still live. v865, not published.
+**Next:** wire the new UI screen by screen (new client script), then hide the old UI (it stays at its paths: ~40 scripts find HUD/Menus/Popups by name).
+**Blockers / questions:** pigeon: heads up, the UI swap will touch scripts that point at the old HUD/Menus (tutorials, hints, MobileMenus, HideHUDWhileMenuOpen).
+
 ## 2026-11-18 00:05 CT · jacob-claude
 **Done:** (Jacob: "I became invisible after kicking") the camera could come back from the penalty zoomed all the way in, and first person hides your own character. `ReplicatedStorage.DevDemo.PenaltyDemoRunner` setTvCam(false) now pushes the zoom out to 10 studs for a moment (CameraMinZoomDistance 10, back after 0.3 s). Tested: 0.5 -> 10 studs. Backup `_RunnerBackups.PenaltyDemoRunner_2026-11-17_preZoomOut`. v862, not published.
 **Next:** Jacob checks it after a kick.
