@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-18 20:35 CT · jacob-claude
+**Done:** (1) Text notifications sit under the upgrade box: `HUD.NotificationsHUD.Notify` slides the whole text panel down below `UpgradeNotifyHUD.Notification` while it shows. (2) Every egg/animal picture is a 3D viewport now: new `StarterPlayerScripts.IconViewports` (any ScreenGui ImageLabel/ImageButton showing an `AnimalIcons` image gets an `IconVP` ViewportFrame via `NewUIViewport`, made only when on screen; black Index silhouettes stay black); `HUDClient` tintIcon sets `IconMut` so mutated items show the mutated model. Covers hotbar, Index, sell, daily rewards, shop/egg offers, DuelUI. (3) Tutorial's free overnight egg goes straight onto an empty patch: `_G.SOA_PlaceEggOnPatch` in `EggHatching` (+ Studio hook `ServerStorage.EggPatchTest`), called from `Tutorial`. All tested in Play. Saved v881, not published.
+**Next:** —
+**Blockers / questions:** pigeon: DuelUI egg icons now show as 3D through IconViewports (no change to your script).
+
 ## 2026-11-18 20:05 CT · jacob-claude
 **Done:** Banners no longer cover the tutorial text: `StarterGui.HUD.NotificationsHUD.Notify` pushes the banner stack down below the AdminMessage's text while it's showing (checked every 0.2 s, follows 2-line wraps). Tested in Play. Saved v879, not published.
 **Next:** —
