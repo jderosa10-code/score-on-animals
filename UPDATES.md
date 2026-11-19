@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-18 19:40 CT · jacob-claude
+**Done:** Reset ONLY Jacob's save (4263620304), nobody else: old save backed up as DataStore key `backup_u_4263620304_2026-11-18`, `ServerScriptService.GameData` D.Wipe Tag "2026-11-18-jacob1" ran once in Studio (now $500, 10 Strength), then D.Wipe Off = true again. Not published.
+**Next:** —
+**Blockers / questions:** none.
+
 ## 2026-11-18 19:35 CT · jacob-claude
 **Done:** `Workspace.Map.Leaderboards.LB_*`: TopBeam lowered onto the Header (no gap), Header part Transparency 1 (no teal behind the title). Saved v877, not published.
 **Next:** Jacob's call.
