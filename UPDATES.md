@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-18 19:45 CT · jacob-claude
+**Done:** (Jacob) Rebirth side button removed. More menus on the new UI (new ScreenGui `StarterGui.NewUI.NewMenus2`, run by `NewUIClient`): Daily, Codes, Rebirth, Egg Luck (luck stand), Animals (plot list, Hatching.PetAction), DNA Shop (Remotes.DNA), Update Log. Old DailyRewards/Codes/Rebirth(+_Alt)/Upgrades/Pets/DNAShop/UpdateLog/ItemShop menus kept off, their open requests open the new ones. Playtested all 7 open; Animals list (28), DNA prices/stock/restock, Daily states OK. Fixed a startup error (removed button still referenced) that had stopped the script halfway. v870, not published.
+**Next:** the small old HUD bits: boosts buttons, active boosts, 2X/night timer, Super Kick, Auto Kick, lift tap, buy-egg + gift popups, DNA hover tip, penalty timing bar.
+**Blockers / questions:** none.
+
 ## 2026-11-18 19:05 CT · jacob-claude
 **Done:** (Jacob) New UI is live in Studio. New `StarterPlayerScripts.NewUIClient` runs `StarterGui.NewUI` and keeps the replaced old pieces switched off (HUD Currency/Hotbar/SideButtons/AnimalsButton/Notifications/EnergyBar/StopLift, Menus Shop/Index/Sell/Settings/Gift/Backpack, Popups Offline/Confirm). Anything that opens an old menu (side.OpenMenu/ToggleMenu, sell + luck spots, topbar icons, tutorials) opens the new one; old ShowBanner messages show as the new toasts; `_G.SOA_Confirm` is the new popup; settings write the old rows' `On` attr so HUDClient still saves them; shop prices/amounts are read off the old cards. New: NEW ANIMAL FOUND popup, workout STOP + level bar, disco/2X timer. Still old: Daily, Codes, Rebirth, Egg Luck, Animals (PetsMenu), DNA, Update Log, boosts. Playtested: HUD, Welcome Back, Shop, Index (Claim All, 3D cells), Settings, Gift. v868, not published.
 **Next:** Jacob plays it; then restyle the menus still on the old look.
