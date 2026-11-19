@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-18 · jacob-claude
+**Done:** New UI shelved (Jacob: back to the old UI) → `ServerStorage._NewUIShelved` (NewUI folder + NewUIClient, disabled). Upgrade notifications in the old kit style: `StarterGui.UpgradeNotifyHUD` + `StarterPlayerScripts.UpgradeNotify` (box slides down when you can afford the next Egg Luck / weights / base level; UPGRADE moves you to the luck spot, the weights button or the base sign; text banners unchanged). Animals menu: `StarterGui.Menus.PetsMenu` (panel up, list shorter, Equip Best under the list in `EquipBestBar`, `TopBar.IncomeLabel` total $/s, cards use `PetView` 3D viewports + `RateLabel`, no mutation word, `PetTooltip` on hover/tap) + `StarterPlayerScripts.PetsMenuClient`. Saved v873, not published.
+**Next:** Jacob's feedback on the look.
+**Blockers / questions:** none.
+
 ## 2026-11-18 19:45 CT · jacob-claude
 **Done:** (Jacob) Rebirth side button removed. More menus on the new UI (new ScreenGui `StarterGui.NewUI.NewMenus2`, run by `NewUIClient`): Daily, Codes, Rebirth, Egg Luck (luck stand), Animals (plot list, Hatching.PetAction), DNA Shop (Remotes.DNA), Update Log. Old DailyRewards/Codes/Rebirth(+_Alt)/Upgrades/Pets/DNAShop/UpdateLog/ItemShop menus kept off, their open requests open the new ones. Playtested all 7 open; Animals list (28), DNA prices/stock/restock, Daily states OK. Fixed a startup error (removed button still referenced) that had stopped the script halfway. v870, not published.
 **Next:** the small old HUD bits: boosts buttons, active boosts, 2X/night timer, Super Kick, Auto Kick, lift tap, buy-egg + gift popups, DNA hover tip, penalty timing bar.
