@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-18 21:15 CT · jacob-claude
+**Done:** (Jacob) more Groovy during the Disco event: `ServerScriptService.DiscoEvent` GROOVY_CHANCE 0.12 -> 0.3 (about 1 in 3 unmutated eggs), fallbacks in `EggInventory` and `GameConfig` (shown odds) match. Saved v885, not published.
+**Next:** —
+**Blockers / questions:** pigeon: your Disco number changed (Jacob asked).
+
 ## 2026-11-18 21:30 CT · jacob-claude
 **Done:** (1) Duel tutorial end card restyled: `ReplicatedStorage.Duel.DuelUI` endScreen (tutorial: dark card, gold wash/accent, "TUTORIAL COMPLETE", big green reward, PK Duels pad line). (2) More reading time in the duel tutorial: `DuelServer` botChoose tutorial wait 1.5 s -> 7 s; `DuelClient` waits 3 s before the power bar in the tutorial. (3) `StarterPlayerScripts.UpgradeNotify` waits while InDuel / DuelEnd / DuelBoard is up. (4) Shop restyled like the upgrade notification: `StarterGui.Menus.ShopMenu.ShopPanel.Window.BlockBack` (dark rounded block behind header + list), gold rounded header, rounded close button, rounder corners on all cards. Backup: `ServerStorage._ShopMenuBackup_2026-11-18`. Saved, not published.
 **Next:** Jacob's call on the shop look.
