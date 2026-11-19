@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-18 19:40 CT · jacob-claude
+**Done:** Lobby leaderboards: removed the striped roofs (Roof1-8, Trim1-8) from `Workspace.Map.Leaderboards.LB_*`. `StarterGui.Leaderboards` *Title: smaller plate/icon/text. *List: all 10 rows fit (row 53px, padding 6, scrolling off). PixelsPerStud fixed to 58.8 (40/0.68) so the boards keep their old pixel layout. Saved v876, not published.
+**Next:** Jacob's call.
+**Blockers / questions:** none.
+
 ## 2026-11-18 19:30 CT · jacob-claude
 **Done:** Lobby leaderboards scaled to 0.68 and lined up side by side left of the group sign: `Workspace.Map.Leaderboards.LB_Strength` / `LB_Cash` / `LB_Index` (LB_Index moved over from x -509). `StarterGui.Leaderboards` SurfaceGuis PixelsPerStud 40 → 27.2 so the board UI keeps its layout. Saved v875, not published.
 **Next:** Jacob's call on the look.
