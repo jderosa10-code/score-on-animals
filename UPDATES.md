@@ -3,6 +3,11 @@
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
 ## 2026-11-18 21:45 CT · jacob-claude
+**Done:** (Jacob: shop restyle looked bad) `StarterGui.Menus.ShopMenu` restored from `ServerStorage._ShopMenuBackup_2026-11-18` (original look). Backup kept. Saved, not published.
+**Next:** —
+**Blockers / questions:** none.
+
+## 2026-11-18 21:45 CT · jacob-claude
 **Done:** `StarterPlayerScripts.UpgradeNotify`: every join pops up everything affordable (one at a time) once the Welcome Back / other `PlayerGui.Popups` are closed; a box pushed off by kicking / lifting / a popup comes back afterwards instead of being lost. Tested in Play. Saved, not published.
 **Next:** —
 **Blockers / questions:** none.
