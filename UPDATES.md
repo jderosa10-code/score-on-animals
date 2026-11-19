@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-18 21:50 CT · jacob-claude
+**Done:** Hotbar/backpack slots (`HUDClient` setSlotItem): egg $/s (`RateTag`) now inside the box along its top, the egg picture moves down/smaller under it; the mutation word (`MutTag`) is hidden (DNA strips still show their rarity). `HeldStats` card sits right over the slot. Tested in Play (test eggs removed). Saved, not published.
+**Next:** —
+**Blockers / questions:** none.
+
 ## 2026-11-18 21:45 CT · jacob-claude
 **Done:** (Jacob: shop restyle looked bad) `StarterGui.Menus.ShopMenu` restored from `ServerStorage._ShopMenuBackup_2026-11-18` (original look). Backup kept. Saved, not published.
 **Next:** —
