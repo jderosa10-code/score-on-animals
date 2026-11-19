@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-18 19:05 CT · jacob-claude
+**Done:** (Jacob) New UI is live in Studio. New `StarterPlayerScripts.NewUIClient` runs `StarterGui.NewUI` and keeps the replaced old pieces switched off (HUD Currency/Hotbar/SideButtons/AnimalsButton/Notifications/EnergyBar/StopLift, Menus Shop/Index/Sell/Settings/Gift/Backpack, Popups Offline/Confirm). Anything that opens an old menu (side.OpenMenu/ToggleMenu, sell + luck spots, topbar icons, tutorials) opens the new one; old ShowBanner messages show as the new toasts; `_G.SOA_Confirm` is the new popup; settings write the old rows' `On` attr so HUDClient still saves them; shop prices/amounts are read off the old cards. New: NEW ANIMAL FOUND popup, workout STOP + level bar, disco/2X timer. Still old: Daily, Codes, Rebirth, Egg Luck, Animals (PetsMenu), DNA, Update Log, boosts. Playtested: HUD, Welcome Back, Shop, Index (Claim All, 3D cells), Settings, Gift. v868, not published.
+**Next:** Jacob plays it; then restyle the menus still on the old look.
+**Blockers / questions:** pigeon: tutorials / hints that point at old HUD buttons now point at hidden buttons; tell me which ones you see break.
+
 ## 2026-11-18 18:20 CT · jacob-claude
 **Done:** (Jacob) New simpler UI, built in the style of a reference game, our LuckiestGuy font. New folder `StarterGui.NewUI`: NewHUD, NewNotify (popup + text toasts), NewEventBanner, NewSell, NewSettings, NewGift, NewInventory, NewShop (eggs, starter pack, cash + strength packs, 10 passes, card names = `G.ShopItems` keys), NewIndex (templates), NewPopups (Welcome Back, Confirm), NewWorkout (STOP + level bar, event timer). Header stripes clipped with CanvasGroup masks; icons taken from the old UI; eggs/animals are ViewportFrames filled by new `ReplicatedStorage.NewUIViewport`. ALL NewUI ScreenGuis are Enabled=false: not wired yet, old UI untouched and still live. v865, not published.
 **Next:** wire the new UI screen by screen (new client script), then hide the old UI (it stays at its paths: ~40 scripts find HUD/Menus/Popups by name).
