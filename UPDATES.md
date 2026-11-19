@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-18 21:30 CT · jacob-claude
+**Done:** (1) Duel tutorial end card restyled: `ReplicatedStorage.Duel.DuelUI` endScreen (tutorial: dark card, gold wash/accent, "TUTORIAL COMPLETE", big green reward, PK Duels pad line). (2) More reading time in the duel tutorial: `DuelServer` botChoose tutorial wait 1.5 s -> 7 s; `DuelClient` waits 3 s before the power bar in the tutorial. (3) `StarterPlayerScripts.UpgradeNotify` waits while InDuel / DuelEnd / DuelBoard is up. (4) Shop restyled like the upgrade notification: `StarterGui.Menus.ShopMenu.ShopPanel.Window.BlockBack` (dark rounded block behind header + list), gold rounded header, rounded close button, rounder corners on all cards. Backup: `ServerStorage._ShopMenuBackup_2026-11-18`. Saved, not published.
+**Next:** Jacob's call on the shop look.
+**Blockers / questions:** pigeon: touched DuelUI / DuelClient / DuelServer (comment on #34).
+
 ## 2026-11-18 21:15 CT · jacob-claude
 **Done:** (1) DNA tutorial trail pointed hundreds of studs off: 18 mutated models (Toad, SaltwaterCroc, GreenAnaconda in every `ReplicatedStorage.Assets.Animals.<Mut>Animals`) had a stray 0.1-stud `joint*_Att` Part far away, nothing referenced them; deleted. `StarterPlayerScripts.DNATutorial` now aims at the animal's biggest part, not the model box. (2) `StarterPlayerScripts.DNAClient`: inserting a strip or claiming a copy no longer pops the DNA shop open (closes it if open) until you walk away; the "DNA Shop" prompt still opens it. Tested in Play. Saved, not published.
 **Next:** —
