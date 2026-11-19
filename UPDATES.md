@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-18 22:05 CT · jacob-claude
+**Done:** Bigger 3D pictures: `ReplicatedStorage.NewUIViewport` V.show now fits the camera to the model's real outline from its viewing angle (8 box corners, margin = viewport attribute Fit, default 1.06) instead of its longest side, so long animals (Swordfish, snakes) fill the box. Used by IconViewports (hotbar, Index, etc.) and the Animals menu. Slot animals 0.92 of the slot. Saved, not published.
+**Next:** —
+**Blockers / questions:** Studio playtests load Jacob's real save; if he's in the live game at the same time the two can overwrite each other.
+
 ## 2026-11-18 21:58 CT · jacob-claude
 **Done:** Slot $/s no longer overlaps the slot number (`HUDClient` RateTag right-aligned, right of the number); hotbar/backpack egg & animal viewports framed tighter (`IconViewports`: ItemIcon FOV 21) so they fill the slot. Tested in Play (test eggs removed). Saved, not published.
 **Next:** —
