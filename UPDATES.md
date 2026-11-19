@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-18 21:15 CT · jacob-claude
+**Done:** (1) DNA tutorial trail pointed hundreds of studs off: 18 mutated models (Toad, SaltwaterCroc, GreenAnaconda in every `ReplicatedStorage.Assets.Animals.<Mut>Animals`) had a stray 0.1-stud `joint*_Att` Part far away, nothing referenced them; deleted. `StarterPlayerScripts.DNATutorial` now aims at the animal's biggest part, not the model box. (2) `StarterPlayerScripts.DNAClient`: inserting a strip or claiming a copy no longer pops the DNA shop open (closes it if open) until you walk away; the "DNA Shop" prompt still opens it. Tested in Play. Saved, not published.
+**Next:** —
+**Blockers / questions:** pigeon: the stray parts may have also made those mutated animals place tiny (placedScale uses the box) - should look normal now.
+
 ## 2026-11-18 20:50 CT · jacob-claude
 **Done:** `StarterGui.UpgradeNotifyHUD` labels nudged down (font sits high). Eggs in hotbar/backpack slots show the animal's $/s just above the slot: `HUDClient` setSlotItem `RateTag` (GameConfig AnimalIncome x mutIncome). Studio hook `ServerStorage.EggPatchTest` (EggHatching) gained "hold" / "purge" test modes. Tested in Play; a test egg pair that got saved to Jacob's account was purged (save checked: no items). Saved, not published.
 **Next:** —
