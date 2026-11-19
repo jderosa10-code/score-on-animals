@@ -2,6 +2,11 @@
 
 Newest first. Each Claude adds an entry after every work session (format in [CLAUDE.md](CLAUDE.md)).
 
+## 2026-11-18 19:30 CT · jacob-claude
+**Done:** Lobby leaderboards scaled to 0.68 and lined up side by side left of the group sign: `Workspace.Map.Leaderboards.LB_Strength` / `LB_Cash` / `LB_Index` (LB_Index moved over from x -509). `StarterGui.Leaderboards` SurfaceGuis PixelsPerStud 40 → 27.2 so the board UI keeps its layout. Saved v875, not published.
+**Next:** Jacob's call on the look.
+**Blockers / questions:** none.
+
 ## 2026-11-18 · jacob-claude
 **Done:** New UI shelved (Jacob: back to the old UI) → `ServerStorage._NewUIShelved` (NewUI folder + NewUIClient, disabled). Upgrade notifications in the old kit style: `StarterGui.UpgradeNotifyHUD` + `StarterPlayerScripts.UpgradeNotify` (box slides down when you can afford the next Egg Luck / weights / base level; UPGRADE moves you to the luck spot, the weights button or the base sign; text banners unchanged). Animals menu: `StarterGui.Menus.PetsMenu` (panel up, list shorter, Equip Best under the list in `EquipBestBar`, `TopBar.IncomeLabel` total $/s, cards use `PetView` 3D viewports + `RateLabel`, no mutation word, `PetTooltip` on hover/tap) + `StarterPlayerScripts.PetsMenuClient`. Saved v873, not published.
 **Next:** Jacob's feedback on the look.
